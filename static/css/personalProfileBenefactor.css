@@ -1,0 +1,321 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	border: none;
+}
+
+@font-face{
+	font-family: 'vazir';
+	src:url("../fonts/Vazir-FD.woff")format("woff"),
+	url("../fonts/Vazir-FD.eot")format("eot"),
+	url("../fonts/Vazir-FD.ttf")format("truetype")
+}
+
+body {
+	font-family: 'vazir';
+}
+
+h2{
+	margin-bottom: 10px;
+	margin-top: 30px;
+	width:400px;
+}
+.main .nav {
+	z-index: 3;
+	position: relative;
+	margin: 30px auto;
+	display: block;
+	background: #9370DB;
+	height: 50px;
+	white-space: cull;
+	width: 80%;
+	color: #eeeeee;
+	border-radius: 5px;
+	font-size: 15px;
+}
+.main .nav ul {
+	display: flex;
+	padding: 0;
+}
+.main .nav ul li {
+	display: inline-flex;
+	list-style: none;
+	text-align: center;
+	height: 50px;
+	margin: 0 0;
+	width: 33.33%;
+	text-align: center;
+	float: none;
+	position: relative;
+	padding: 0;
+	border-radius: 10px;
+}
+.main .nav ul li:hover {
+	background: #6A5ACD;
+}
+
+.main .nav ul li a {
+	text-decoration: none;
+	display: inline-block;
+	margin: 10px 0;
+	color: #eeeeee;
+	text-align: center;
+	width: 100%;
+	padding: 0;
+}
+.main .nav ul li h3{
+	display: inline;
+}
+.main .nav ul li .innermenu {
+	display: flex;
+	list-style: none;
+	position: absolute;
+	top: 55px;
+	right: 0px;
+	width: 450px;
+	background: #9370DB;
+	padding: 0;
+	opacity: 0;
+	margin-top: 20px;
+	border-radius: 5px;
+	visibility: hidden;
+	transition: all .5s ease;
+	-webkit-transition: all .5s ease;
+	-moz-transition: all .5s ease;
+	-o-transition: all .5s ease;
+}
+.main .nav ul li:hover ol, .main .nav ul li:hover ol:hover, .main .nav ul li ol:hover{
+	opacity: 1;
+	visibility: visible;
+	margin-top: 0;
+}
+.main .nav ul li .innermenu li{
+	display: block;
+	font-size: 12px;
+	width: 50%;
+}
+.main .nav ul li .innermenu li a {
+	text-decoration: none;
+	display: inline-block;
+	margin-top: 15px;
+	color: #eeeeee;
+	text-align: center;
+}
+
+
+.mainPage .container {
+	width: 80%;
+	z-index: 3;
+	box-sizing: border-box;
+	margin: 50px auto;
+	position: relative;
+}
+
+.mainPage .container .photo {
+	width: 20%;
+	float: left;
+	border: none;
+}
+
+.mainPage .container .photo img {
+	width: 100%;
+	height: 100%;
+	border-radius: 20%;
+}
+
+.mainPage .container .personal {
+	float: right;
+	color: #333333
+}
+
+.mainPage .container .personal h3{
+	margin-bottom: 5px;
+	font-size: 100%;
+}
+
+.mainPage .container .chartContainer {
+	width: 90%;
+	display: block;
+	position: relative;
+	margin: 10px auto; 
+}
+
+#chart {
+  margin-top: 50px;
+  position: relative;
+  border: none;
+}
+
+table {
+  width: 100%;
+  margin-top: 20px;
+  min-width: 415px;
+}
+
+.charttitle {
+  text-align: center;
+}
+
+.bars td {
+  vertical-align: top;
+  float: right;
+  width: 12%;
+  height: 150px;
+  border: none;
+  position: relative;
+}
+
+.bars div:hover {
+  opacity: 0.6;
+  color: white;
+}
+.bars div {
+  color: white;
+}
+
+.bars .legend {
+  vertical-align: top;
+  padding-left: 20px;
+  text-align: left;
+  width: 35%;
+  margin-right: 5%;
+}
+
+.legbox {
+  display: block;
+  clear: both;
+}
+
+.xaxisname {
+  margin: 5px;
+  color: #fff;
+  font-size: 77%;
+  padding: 5px;
+  float: right;
+}
+
+.legbox span {
+	float: right;
+}
+
+
+/*Flat UI colors*/
+
+.one {
+  background: rgb(0,49,162);
+  text-align: center;
+  color: #666;
+}
+
+.two {
+  background: rgb(4,80,255);
+  text-align: center;
+  color: #666;
+}
+
+.three {
+  background: rgb(15,157,242);
+  text-align: center;
+  color: #666;
+}
+
+.four {
+  background: rgb(9,201,249);
+  text-align: center;
+  color: #666;
+}
+
+.five {
+  background: rgb(151,208,255);
+  text-align: center;
+  color: #666;
+}
+
+#abilities, #weekfreetime {
+	width: 100%;
+	position: relative;
+	margin-top: 20px;
+}
+#projects li {
+	text-align: right;
+	width: 400px;
+}
+
+#weeklyfreetime {
+	margin-top: 20px;
+}
+
+#weektable tr td {
+	width: 20%;
+	border: none;
+	float: right;
+}
+
+.weektable tr td span {
+	width: 100%;
+	height: 30px;
+	border-radius: 15px;
+	box-sizing: border-box;
+	border: none;
+	float: right;
+}
+
+.weektable tr td .free {
+	background: rgb(191,215,157); 
+}
+
+.weektable tr td .busy {
+	background: rgb(150,150,150); 
+}
+
+td {
+	width: 20%;
+	text-align: center;
+}
+
+textarea {
+	padding: 18px;
+	border: 1px solid #c6c6c6;
+	width: 70%;
+	color: #888;
+	font-family: 'vazir';
+	border-radius: 3px;
+	text-align: right;
+	height: 150px;
+	margin: 10px 15%; 
+}
+
+.subreq {
+	font-family: 'vazir';
+	cursor: pointer;
+	background: #3498db;
+	border: none;
+	text-align: center;
+	width: 40%;
+	border-radius: 10px;
+	text-decoration: none;
+	margin: auto;
+	display: block;
+	padding: 5px;
+	color:#eeeeee;
+	margin-top: 10%;
+}
+.main .mainPage .container .orga{
+	font-family: 'vazir';
+	border: none;
+	text-decoration: none;
+	color: #111111;
+}
+
+.subreq:hover {
+	background: rgb(33,126,188);
+}
+.main .mainPage .container .orga:hover{
+	color: #A23BEC;
+}
+#projects ul , #abilitiesUl{
+	list-style: circle;
+}
+#more {
+	text-align: justify;
+}

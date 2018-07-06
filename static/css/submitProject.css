@@ -1,0 +1,276 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	border: none;
+}
+
+@font-face{
+	font-family: 'vazir';
+	src:url("../fonts/Vazir-FD.woff")format("woff"),
+	url("../fonts/Vazir-FD.eot")format("eot"),
+	url("../fonts/Vazir-FD.ttf")format("truetype")
+}
+
+body {
+	font-family: 'vazir';
+}
+
+.formm {
+	width: 100%;
+	margin: 50px auto;
+	position: relative;
+	z-index: 3;
+}
+
+form{
+	padding: 100px 0;
+	max-width: 400px;
+	min-width: 200px;
+	width: 40%;
+	margin: auto auto;
+}
+h2{
+	color: #666;
+	border-bottom: 1px solid #666;
+	margin-bottom: 20px;
+	text-align: right;
+	font-weight: 400;
+	margin-top: 40px;
+}
+.controls{
+	text-align: right;
+	position: relative;
+	margin-bottom: 20px;
+}
+
+input[type=text],
+input[type=email],
+input[type=tel],
+input[type=number],
+input[type=web],
+select,textarea,button{
+	padding: 18px;
+	border: 1px solid #c6c6c6;
+	width: 100%;
+	color: #888;
+	font-family: 'vazir';
+	border-radius: 3px;
+	text-align: right;
+}
+.educontrols {
+	text-align: right;
+	position: relative;
+	margin-bottom: 20px;
+}
+
+.educontrols input[type=text]{
+	display: none;
+}
+
+.label{
+	position: absolute;
+	top: 10px;
+	right: 12px;
+	display: inline-block;
+	padding: 2px 10px;
+	background: #fff;
+	transition: .3s ease-in-out;
+	color: #666
+}
+.label.active{
+	top: -11px;
+}
+.ion-navicon{
+	position: absolute;
+	left: 15px;
+	top: 20px;
+	color: #444444;
+	z-index: 3;
+	border: none;
+}
+select {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+}
+
+input[type=number] {
+	-moz-appearance: textfield;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+textarea{
+	height: 100px;
+}
+.radiobox{
+	display: none;
+}
+.radiobox + label span{
+	display: inline-block;
+	cursor: pointer;
+	background: url(../images/checks.png)no-repeat -4px -4px;
+	width: 16px;
+	height: 16px;
+	margin-left: 10px;
+}
+.radiobox:checked + label span{
+	background: url(../images/checks.png)no-repeat -4px -28px;
+}
+.radiobox + label {
+	cursor: pointer;
+	position: relative;
+	margin-left: 5px;
+}
+.checkbox{
+	display: none;
+}
+.checkbox + label span{
+	display: inline-block;
+	cursor: pointer;
+	background: url(../images/checks.png)no-repeat -4px -4px;
+	width: 16px;
+	height: 16px;
+	margin-left: 10px;
+}
+.checkbox:checked + label span{
+	background: url(../images/checks.png)no-repeat -4px -52px;
+}
+.checkbox + label {
+	cursor: pointer;
+	position: relative;
+	margin-left: 5px;
+}
+button{
+	font-family: 'vazir';
+	cursor: pointer;
+	background: #3498db;
+	border: none;
+	color: #fff;
+	padding: 12px 5px;
+	text-align: center;
+	width: 100%;
+}
+
+.controlsAbility{
+	text-align: right;
+	position: relative;
+	margin-bottom: 20px;
+}
+
+.controlsAbility select {
+	padding: 18px;
+	border: 1px solid #c6c6c6;
+	width: 85%;
+	color: #888;
+	font-family: 'vazir';
+	border-radius: 3px;
+	text-align: right;
+}
+
+.controlsAbility button {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	color: #eeeeee;
+	margin-right: 10px;
+	font-size: 20px;
+	text-align: center;
+	padding: 4px;
+	background: #33bb33;
+}
+
+.controlsAbility button:hover {
+	border-radius: 50%;
+	background: #1e771e;
+}
+
+.controlsAbility ul{
+	margin-top: 15px;
+	list-style: none;
+	position: relative; 
+}
+
+.controlsAbility ul li{
+	float: right;
+	width: 100%;
+	height: 25px;
+	display: block; 
+	margin-bottom: 5px;
+}
+
+.ull {
+	background: gray;
+	width: 100%;
+	color: white;
+	min-height: 10px;
+}
+
+table {
+	float: right;
+	border: none;
+	width: 100%;
+	margin-bottom: 20px;
+	box-sizing: border-box;
+	border-collapse: collapse;
+	display: none;
+}
+
+.formm table tbody tr td {
+	width: 20%;
+	height: 50px;
+	box-sizing: border-box;
+}
+
+.formm table tbody tr td span{
+	background: rgb(211,233,158);
+	width: 100%;
+	height: 30px;
+	margin-top: 10px;
+	display: inline-block;
+}
+.formm table tbody tr td span:hover{
+	background: rgb(163,207,69);
+}
+
+span {
+	background: rgb(194,22,22);
+	color: #eeeeee;
+	font-size: 15px;
+	width: 25px;
+	height: 25px;
+	float: right;
+	margin-left: 20px;
+	border-radius: 10%;
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+span:hover {
+	background: #992222;
+}
+
+.wrapper{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	min-height: 100%;
+	position: relative;
+}
+form button{
+	font-family: 'vazir';
+	cursor: pointer;
+	background: #3498db;
+	border: none;
+	color: #fff;
+	padding: 12px 5px;
+	text-align: center;
+	width: 100%;
+}
+form button:hover{
+	background: rgb(36,138,206);
+}

@@ -1,0 +1,493 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+margin: 0;
+padding: 0;
+border: 0;
+font-size: 100%;
+font: inherit;
+vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+display: block;
+}
+body {
+line-height: 1;
+}
+ol, ul {
+list-style: none;
+}
+blockquote, q {
+quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+content: '';
+content: none;
+}
+table {
+border-collapse: collapse;
+border-spacing: 0;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	background: #eeeeee;
+}
+
+
+.main {
+	width: 90%;
+	height: auto;
+	margin: 0 auto;
+	background: #eeeeee;
+	box-sizing: border-box;
+}
+
+.header {
+	width: 100%;
+	height: auto;
+	position: relative;
+	box-sizing: border-box;
+	font-size: 12px;
+}
+
+.header .topmenu {
+	width: 100%;
+	float: right;
+	background: rgb(4,4,90);
+	box-sizing: border-box;
+}
+
+.header .topmenu .container {
+	width: 90%;
+	margin: 0 auto;
+	box-sizing: border-box;
+}
+
+.header .topmenu .container .topmenuelements {
+	float: right;
+	width: 70%;
+	margin-top: 4px;
+	margin-bottom: 4px;
+	box-sizing: border-box;
+}
+
+.header .topmenu .container .topmenuelements h5 {
+	font-family: "yekan";
+	float: right;
+	width: auto; 
+	color: #999999;
+	text-decoration: none;
+	display: inline;
+	margin-top: 6px;
+	box-sizing: border-box;
+}
+
+.header .topmenu .container .topmenuelements a {
+	font-family: "yekan";
+	float: right;
+	width: auto;
+	min-width: 8%;
+	/*background: rgb(2,145,191); */
+	padding: 5px 10px;
+	color: #999999;
+	text-decoration: none;
+	display: inline-block;
+	/*border: 2px solid black;*/
+	margin-right: 2px;
+	box-sizing: border-box;
+}
+
+.header .topmenu .container .topmenuelements a:hover {
+	float: right;
+	/*background: rgb(55,204,253);*/ 
+	height: 90%;
+	color: rgb(55,204,253);
+	box-sizing: border-box;
+}
+
+.header .topmenu .container .topmenudate {
+	font-family: "yekan";
+	margin-top: 12px;
+	float: left;
+	color: #999999;
+	box-sizing: border-box;
+}
+
+.header .mainmenu {
+	width: 100%;
+	height: auto;
+	float: right;
+	box-sizing: border-box;
+}
+
+.header .mainmenu .menu {
+	margin-right: 10px;
+	width: 80%;
+	height: 50px;
+	margin-top: 20px;
+	display: inline-block;
+	box-sizing: border-box;
+}
+
+.header .mainmenu .menu ul {
+	width: 100%;
+	height: 100%;
+	list-style: none;
+	display: inline-block;
+	box-sizing: border-box;
+}
+
+.header .mainmenu .menu ul li{
+	display: inline-block;
+	float: right;
+	width: 20%;
+	height: 100%;
+	box-sizing: border-box;
+}
+
+.header .mainmenu .menu ul li a{
+	font-family: "yekan";
+	font-size: 20px;
+	float: right;
+	height: 100%;
+	padding: 5px 10px;
+	color: rgb(136,0,21);
+	text-decoration: none;
+	display: inline-block;
+	text-align: center;
+	margin-right: 2px;
+	box-sizing: border-box;
+}
+
+.header .mainmenu .menu ul li a:hover{
+	color: red;
+	box-sizing: border-box;
+}
+
+.header .mainmenu .logo {
+	float: left;
+	width: 68px;
+	height: 50px;
+	margin: 10px 0px 10px 10px;
+	display: inline-block;
+	box-sizing: border-box;
+}
+
+.clear {
+	clear: both;
+}
+
+img{
+	max-width: 100%;
+	max-height: 100%;
+	float: right;
+}
+
+.gallery {
+	width: 100%;
+	float: right;
+	display: inline-block;
+	box-sizing: border-box;
+}
+
+.gallery .gallery-item {
+	width: 33.33333%;
+	height: 100%;
+	float: right;
+	display: inline-block;
+	box-sizing: border-box;
+}
+
+.gallery .gallery-item img{
+	float: right;
+	box-sizing: border-box;
+}
+
+.team {
+	margin-top: 30px;
+	font-size: 16px;
+	font-family: "yekan";
+	text-align: center;
+	width: 100%;
+	float: right;
+	box-sizing: border-box;
+}
+
+.team .title {
+	text-align: center;
+	font-family: "yekan";
+	font-size: 30px;
+	color: #333333;
+	box-sizing: border-box;
+	padding: 10px;
+}
+
+.team .people {
+	margin-top: 10px;
+	width: 100%;
+	float: right;
+	margin-right: 5px;
+	box-sizing: border-box;
+}
+
+.team .people .person {
+	width: 19%;
+	box-sizing: border-box;
+	float: right;
+	margin-right: 5px;
+	height: 100%;
+}
+
+.team .people .person .photo{
+	width: 100%;
+	display: block;
+	box-sizing: border-box;
+	float: right;
+	height: 80%;
+}
+
+.team .people .person .photo img {
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+}
+
+.team .people .person h5{
+	width: 100%;
+	display: block;
+	padding: 12px;
+	font-size: 12px;
+	box-sizing: border-box;
+	float: right;
+	height: 80%;
+	background: #e0e0e0;
+	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;
+}
+
+.customer {
+	float: right;
+	width: 100%;
+	margin-top: 20px;
+}
+
+.customer .container {
+	width: 100%;
+	margin: 0 auto;
+	box-sizing: border-box;
+}
+
+.customer .container .title {
+	text-align: center;
+	font-family: "yekan";
+	font-size: 30px;
+	color: #333333;
+	box-sizing: border-box;
+	padding: 10px;
+}
+
+.customer .container .boxes {
+	float: right;
+	width: 100%;
+	margin: 0 auto;
+	box-sizing: border-box;
+}
+
+.customer .container .boxes .box {
+	width: 33.333%;
+	float: right;
+	margin: 10px 0px 10px 0px;
+	border: 5px solid #eeeeee;
+	box-sizing: border-box;
+	position: relative;
+}
+
+.customer .container .boxes .box .title {
+	text-align: center;
+	font-family: "yekan";
+	font-size: 20px;
+	color: #333333;
+	box-sizing: border-box;
+	padding: 10px;
+	background: #dddddd;
+}
+
+.customer .container .boxes .box .body {
+	text-align: center;
+	font-family: "yekan";
+	font-size: 12px;
+	color: #333333;
+	box-sizing: border-box;
+	padding: 10px;
+	background: #dddddd;
+}
+.customer .container .boxes .box .body:hover {
+	text-align: center;
+	font-family: "yekan";
+	font-size: 12px;
+	color: #333333;
+	box-sizing: border-box;
+	padding: 10px;
+	background: #aaaaaa;
+}
+
+.customer .container .boxes .box .photo {
+	width: 30%;
+	float: right;
+	margin: 10px auto;
+	box-sizing: border-box;
+}
+
+.customer .container .boxes .box .photo img{
+	border-radius: 50%;
+	float: right;
+	margin: 10px auto;
+	box-sizing: border-box;
+}
+
+.customer .container .boxes .box .spans{
+	display: inline;
+	width: 68%;
+	font-family: "yakan";
+	font-size: 12px;
+	float: right;
+	margin: 10px auto;
+	padding: 10px;
+	box-sizing: border-box;
+}
+
+.customer .container .boxes .box .spans span.name{
+	display: inline;
+	font-family: "yakan";
+	font-size: 17px;
+	float: right;
+	margin: 5px auto;
+	box-sizing: border-box;
+}
+
+.customer .container .boxes .box .spans span{
+	display: inline;
+	font-family: "yakan";
+	font-size: 12px;
+	float: right;
+	margin: 5px auto;
+	box-sizing: border-box;
+}
+
+.newsletter {
+	background-image: url(images/21.jpg);
+	width: 100%;
+	height: 160px;
+	position: relative;
+	float: right;
+	margin: 20px auto;
+	box-sizing: border-box;
+}
+
+.newsletter .overlay {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0,100,100,0.5);
+}
+
+.newsletter .rightOne {
+	position: relative;
+	margin: 60px 0px 60px 0px; 
+	width: 50%;
+	height: 40px;
+	display: inline-block;
+	border-radius: 20px;
+	float: right;
+	text-align: center;
+	box-sizing: border-box;
+}
+
+.newsletter .rightOne a{
+	font-family: "yekan";
+	font-size: 20px;
+	margin: 10px auto;
+	text-decoration: none;
+	display: inline-block;
+	color: #cccccc;
+}
+
+.newsletter .rightOne a:hover{
+	color: #eeeeee;
+}
+
+.newsletter .leftOne {
+	position: relative;
+	margin: 60px 0px 60px 0px; 
+	width: 50%;
+	height: 40px;
+	display: inline-block;
+	float: left;
+	text-align: center;
+	box-sizing: border-box;
+}
+
+.newsletter .leftOne input[type="text"]{
+	width: 70%;
+	height: 40px;
+	display: inline-block;
+	float: right;
+	text-align: center;
+	box-sizing: border-box;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+
+.newsletter .leftOne input[type="text"]:focus{
+	outline: 0;
+}
+
+.newsletter .leftOne input[type="submit"]{
+	width: 20%;
+	height: 40px;
+	display: inline-block;
+	float: right;
+	border: 0;
+	text-align: center;
+	box-sizing: border-box;
+	color: #eeeeee;
+	background: rgb(4,4,102);
+	border-bottom-left-radius: 10px;
+	border-top-left-radius: 10px;
+}
+.newsletter .leftOne input[type="submit"]:focus{
+	outline: 0;
+}
+.newsletter .leftOne input[type="submit"]:hover{
+	background: #4444bb;
+}
+
+.footer {
+	width: 100%;
+	height: 30px;
+	background: #111155;
+	color: #eeeeee;
+	text-align: center;
+	font-family: "yekan";
+	font-size: 10px;
+	padding: 10px;
+}

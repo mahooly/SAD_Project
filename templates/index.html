@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="fa" dir="rtl">
+<head>
+	<title>مهرانه</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href={% static "css/index.css" %}/>
+</head>
+<body>
+	<div id="ad" class="main">
+		<div class="header">
+			<div class="topmenu" id="topmenu">
+			</div>
+		</div>
+		<div class="mainPage">
+			<div class="wrappera"></div>
+			<div id="test">
+				<div class="wrappers">
+
+					<form class="login" method="post">
+                        {% csrf_token %}
+						<button id="button2" class="exit1" onclick="popdown()">x</button>
+						<p class="title">ورود</p>
+						<p>
+							<input type="text" placeholder="نام کاربری" class="login-text" name="username">
+							<i class="ion-person"></i>
+						</p>
+						<p>
+							<input type="password" placeholder="رمز عبور" class="login-text" name="password">
+							<i class="ion-ios-locked"></i>
+						</p>
+						<div class="enter"><button>ورود</button></div>
+						<button class="forget">فراموشی رمز عبور</button>
+
+						<p> اگر هنوز حساب کاربری برای خود ایجاد نکرده‌اید، </p> <button class="reg" id="buttonreg" onclick="popupregister()">ثبت نام</button> <p>کنید</p>
+					</form>
+				</div>
+			</div>
+			<div id="testreg">
+				<div class="wrappers">
+					<form class="register">
+						<button id="buttonreg2" class="exit" onclick="popdownregister()">x</button>
+						<p class="title">ثبت نام</p>
+						<div class="enter"><a href="{% url 'register' %}">نیکوکار</a></div>
+						<div class="enter"><a href="{% url 'registerOrg' %}">موسسه</a></div>
+					</form>
+				</div>
+			</div>
+			<div class="nav" id="nav"></div>
+			<div id="cc">
+				<div class="wrapper"></div>
+				<div class="section1" id="c1">
+					<p class="p1" id="p1">
+					امروزه، پتانسیل‌های فراوانی برای انجام امور خیریه در بین مردم ایران نهفته است که به دلیل وجود نداشتن بستری مناسب برای یافتن این پتانسیل‌ها، به نوعی شاهد اتلاف آن‌ها هستیم.
+
+					همچنین، موسسه‌های خیریه فراوانی در سرتاسر کشورمان احداث شده‌اند که در اکثر آن‌ها، شاهد کمبود نیروی انسانی هستیم و به همین دلیل، این موسسات در یاری‌رسانی به نیازمندان دچار مشکل‌هایی هستند.
+
+					به همین صورت، پروژه‌های خیریه زیادی نیز وجود دارند که موسسات آن‌ها را شروع می‌کنند اما به دلیل تامین نشدن بودجه مورد نیاز برای انجام پروژه، پروژه‌ها اغلب با شکست مواجه می‌شوند.
+
+					سامانه مهرانه، بستری فراهم کرده است تا نیکوکاران و موسسات بتوانند یکدیگر را بشناسند و بتوانند به همکاری یکدیگر، به انجام امور خیر بپردازند.
+					</p>
+				</div>
+				<div class="section2" id="c2">
+					<div id="p2">
+
+					</div>
+					<p id="p21">
+						موسسات خیریه به راحتی می‌توانند با ثبت‌نام در این سامانه، توانمندی‌های مورد نیازشان را در میان نیکوکاران جستجو کنند و با آن‌ها همکاری کنند و همچنین، با ثبت پروژه‌هایشان، از خیرین برای تامین مالی آن‌ها کمک بگیرند.
+					</p>
+					<div id="p22" class="enter"><a href="{% url 'registerOrg' %}">ثبت نام موسسات</a></div>
+				</div>
+				<div class="section3" id="c3">
+
+				</div>
+				<div class="section4" id="c4">
+					<div id="p4">
+
+					</div>
+					<p id="p41">
+						افراد علاقه‌مند به انجام کارهای خیر که به دنبال فعالیت در موسسات خیریه هستند، می‌توانند با ثبت نام در سامانه مهرانه، مناسب‌ترین موسسه را انتخاب کنند و در آن مشغول به فعالیت شوند.
+					</p>
+					<div id="p42" class="enter"><a href="{% url 'register' %}">ثبت نام نیکوکاران</a></div>
+				</div>
+				<div class="section5" id="c5">
+
+				</div>
+			</div>
+		</div>
+		<div class="footer">
+			<div class="container">
+				<div class="addr">
+					<h4> خیابان آزادی، بلوار اکبری، خیابان قاسمی، پلاک ۳۶، واحد ۲ </h4>
+					<h4>تلفن: ۰۲۱۸۸۳۴۲۸۹۱</h4>
+				</div>
+			</div>
+			<div class="copy">
+				<h4>کپی‌رایت رعایت شود.</h4>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src={% static "js/index.js" %}></script>
+	<script type="text/javascript" src={% static "js/main.js" %}></script>
+</body>
+</html>
+
+
+

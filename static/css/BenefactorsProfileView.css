@@ -1,0 +1,239 @@
+.mainPage .container {
+	width: 80%;
+	z-index: 3;
+	box-sizing: border-box;
+	margin: 50px auto;
+	position: relative;
+}
+
+.mainPage .container .photo {
+	width: 20%;
+	float: left;
+	border: none;
+}
+
+.mainPage .container .photo img {
+	width: 100%;
+	height: 100%;
+	border-radius: 20%;
+}
+
+.mainPage .container .personal {
+	float: right;
+	color: #333333
+}
+
+.mainPage .container .personal h3{
+	margin-bottom: 5px;
+	font-size: 100%;
+}
+
+.mainPage .container .chartContainer {
+	width: 99%;
+	display: block;
+	position: relative;
+	margin: 10px auto; 
+}
+
+#chart {
+  margin-top: 50px;
+  position: relative;
+  border: none;
+}
+
+table {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.charttitle {
+  text-align: center;
+}
+
+.bars td {
+  vertical-align: top;
+  float: right;
+  width: 12%;
+  height: 150px;
+  border: none;
+  position: relative;
+}
+
+.bars div:hover {
+  opacity: 0.6;
+  color: white;
+}
+.bars div {
+  color: white;
+}
+
+.bars .legend {
+  vertical-align: top;
+  padding-left: 20px;
+  text-align: left;
+  width: 35%;
+  margin-right: 5%;
+}
+
+.legbox {
+  display: block;
+  clear: both;
+}
+
+.xaxisname {
+  margin: 5px;
+  color: #fff;
+  font-size: 77%;
+  padding: 5px;
+  float: right;
+}
+
+.legbox span {
+	float: right;
+}
+
+
+/*Flat UI colors*/
+
+.one {
+  background: rgb(0,49,162);
+  text-align: center;
+  color: #666;
+}
+
+.two {
+  background: rgb(4,80,255);
+  text-align: center;
+  color: #666;
+}
+
+.three {
+  background: rgb(15,157,242);
+  text-align: center;
+  color: #666;
+}
+
+.four {
+  background: rgb(9,201,249);
+  text-align: center;
+  color: #666;
+}
+
+.five {
+  background: rgb(151,208,255);
+  text-align: center;
+  color: #666;
+}
+
+#abilities, #weekfreetime {
+	width: 100%;
+	position: relative;
+	margin-top: 20px;
+}
+
+#abilities span {
+	color: #f0f0f0;
+	width: 20%;
+	text-align: center;
+	background: rgba(0,0,0,0.4);
+	border-radius: 10px;
+}
+
+#abilities span:hover {
+	background: rgb(15,157,242);
+}
+
+#weeklyfreetime {
+	margin-top: 20px;
+}
+
+#weektable tr td {
+	width: 20%;
+	border: none;
+	float: right;
+}
+
+.weektable tr td span {
+	width: 100%;
+	height: 30px;
+	border-radius: 15px;
+	box-sizing: border-box;
+	border: none;
+	float: right;
+}
+
+.weektable tr td .free {
+	background: rgb(191,215,157); 
+}
+
+.weektable tr td .free:hover {
+	background: rgb(151,190,97); 
+}
+
+.weektable tr td .busy {
+	background: rgb(150,150,150); 
+}
+
+td {
+	width: 20%;
+	text-align: center;
+}
+
+textarea {
+	padding: 18px;
+	border: 1px solid #c6c6c6;
+	width: 70%;
+	color: #888;
+	font-family: 'vazir';
+	border-radius: 3px;
+	text-align: right;
+	height: 150px;
+	margin: 10px 15%; 
+}
+
+.subreq {
+	font-family: 'vazir';
+	cursor: pointer;
+	background: #3498db;
+	border: none;
+	color: #fff;
+	padding: 12px 5px;
+	text-align: center;
+	width: 60%;
+	margin: 30px 20%;
+	border-radius: 10px;
+}
+
+.subreq:hover {
+	background: rgb(33,126,188);
+}
+@media only screen and (max-width: 530px) {
+	.mainPage .container .photo {
+		width: 70%;
+		margin-left: 15%;
+	}
+	.mainPage .container .personal h3 {
+		font-size: 12px;
+	}
+	h2 {
+		font-size: 14px;
+	}
+	table {
+		font-size: 10px;
+	}
+	#abilities span {
+		width: 80%;
+		display: inline-block;
+	}
+
+}
+@media only screen and (max-width: 400px) {
+	.bars .legend {
+		display: none;
+		width: 0;
+	}
+	.bars td {
+		width: 19%;
+	}
+
+}

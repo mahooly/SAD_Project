@@ -1,0 +1,770 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	border: none;
+}
+
+@font-face{
+	font-family: 'vazir';
+	src:url("../../fonts/Vazir-FD.woff")format("woff"),
+	url("../../fonts/Vazir-FD.eot")format("eot"),
+	url("../../fonts/Vazir-FD.ttf")format("truetype")
+}
+
+body {
+	font-family: 'vazir';
+	height: 1000px;
+}
+
+h2{
+	margin-bottom: 10px;
+	margin-top: 30px;
+}
+
+.main {
+	width: 100%;
+	float: right;
+	background: url('../../images/back1.jpg') fixed;
+	height: 100%; 
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
+	min-width: 300px;
+}
+
+.main .header {
+	width: 100%;
+	height: 60px;
+	color: #eeeeee;
+	float: right;
+	position: fixed;
+	min-width: 300px;
+	z-index: 6;
+}
+
+.header .topmenu {
+	width: 100%;
+	height: 60px;
+	float: right;
+	background: #777777;
+	box-sizing: border-box;
+	position: relative;
+	display: block;
+}
+
+.header .topmenu .container {
+	width: 100%;
+	margin: 0 auto;
+	position: relative;
+	box-sizing: border-box;
+}
+
+.header .topmenu .container .topPhoto{
+	float: right;
+	width: 50px;
+	height: 50px;
+	margin: 5px 20px 5px 0px;
+	box-sizing: border-box;
+}
+
+.header .topmenu .container .topPhoto img{
+	float: right;
+	border-radius: 50%;
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+}
+
+.header .topmenu .container .topmenuelements {
+	float: right;
+	margin: 15px 15px 0 15px;
+	box-sizing: border-box;
+	display: inline-block;
+	position: relative;
+}	
+
+.header .topmenu .container .topmenuelements a {
+	font-family: 'vazir';
+	float: right;
+	width: auto;
+	min-width: 8%;
+	color: #aaaaaa;
+	border: none;
+	position: relative;
+	text-decoration: none;
+	display: inline-block;
+	margin-right: 2px;
+	box-sizing: border-box;
+}
+
+.header .topmenu .container .topmenuelements a:hover { 
+	color: rgb(55,204,253);
+}
+
+.header .topmenu .container .topmenudate a, 
+.header .topmenu .container .topmenudate button {
+	font-family: 'vazir';
+	float: right;
+	width: auto;
+	min-width: 8%;
+	color: #aaaaaa;
+	border: none;
+	text-decoration: none;
+	display: inline-block;
+	margin-right: 2px;
+	box-sizing: border-box;
+}
+
+.header .topmenu .container .topmenudate a:hover, .header .topmenu .container .topmenudate button:hover { 
+	color: rgb(55,204,253);
+}
+
+.header .topmenu .container .topmenudate {
+	font-family: 'vazir';
+	float: right;
+	margin-top: 15px;
+	margin-right: 10px;
+	position: relative;
+	color: #999999;
+	box-sizing: border-box;
+}
+
+.header .topmenu .container .logo {
+	float: left;
+	height: 60px;
+	width: 30%;
+	margin-left: 5px;
+	box-sizing: border-box;
+}
+
+.header .topmenu .container .logo img{
+	height: 100%;
+	float: left;
+	box-sizing: border-box;
+}
+.header .mainmenu {
+	width: 100%;
+	position: relative;
+	height: 60px;
+	margin-top: 60px;
+}
+
+.main .mainPage {
+	width: 100%;
+	min-height: 650px;
+	position: relative;
+	display: inline-block;
+	z-index: 2;
+	margin-top: 60px;
+}
+
+.main .mainPage .wrapper {
+	width: 100%;
+	height: 100%;
+	background: rgba(255,255,255,.6);
+	position: fixed;
+	z-index: 1;
+}
+
+.main .footer {
+	width: 100%;
+	float: right;
+	background: #777777;
+	position: absolute;
+	bottom: 0;
+	z-index: 2;
+}
+
+.main .footer .container {
+	float: right;
+	width: 100%;
+}
+
+.main .footer .container .addr {
+	color: #eeeeee;
+	float: right;
+	display: block;
+	margin-right: 50px;
+}
+
+.main .footer .container .addr h4{
+	margin-top: 10px;
+}
+
+.main .footer .copy {
+	color: #dddddd;
+	margin: 10px auto;
+	text-align: center;
+	font-size: 12px;
+}
+@font-face{
+	font-family: 'vazir';
+	src:url("../../fonts/Vazir-FD.woff")format("woff"),
+	url("../../fonts/Vazir-FD.eot")format("eot"),
+	url("../../fonts/Vazir-FD.ttf")format("truetype")
+}
+#test {
+	display: none;
+	position: fixed;
+	width: 100%;
+	height: 1200px;
+	top: 0;
+	right: 0;
+	background: rgba(0,0,0,0.6);
+	z-index: 9;
+}
+.exit {
+    max-width: 25px;
+    max-height: 25px;
+    margin-top: -10px;
+    margin-right: -30px;
+    border-radius: 50%;
+    font-size: 14px;
+    font-family: 'vazir';
+    border: none;
+    background: #fdfdfd;
+    text-align: center;
+    display: block;
+}
+.exit1 {
+    max-width: 25px;
+    max-height: 25px;
+    margin-top: -10px;
+    margin-right: -30px;
+    border-radius: 50%;
+    font-size: 14px;
+    font-family: 'vazir';
+    border: none;
+    background: #fdfdfd;
+    text-align: center;
+    display: inline;
+	position: absolute;
+	top: -28px;
+}
+#testreg {
+	display: none;
+	position: fixed;
+	width: 100%;
+	height: 1200px;
+	top: 0;
+	right: 0;
+	background: rgba(0,0,0,0.6);
+	z-index: 10;
+}
+
+
+.topmenudate h3{
+	color: #dddddd;
+	font-size: 15px;
+	margin-right: 30px;
+}
+
+.topmenudate button, .topmenudate a {
+	background: none;
+	font-size: 15px;
+}
+.topmenudate button:hover, .topmenudate a:hover {
+	color: rgb(55,204,253);
+}
+.topmenuelement {
+	float: right;
+	font-family: 'vazir';
+	font-size: 12px;
+	margin-right: 20px;
+	margin-top: 5px;
+}
+.menu {
+	width: 70%;
+	margin: auto;
+	height: 60px;
+	position: relative;
+}
+.menu ul {
+	display: inline;
+	float: right;
+	width: 100%;
+}
+.menu ul li {
+	display: inline-block;
+	width: 18%;
+	float: right;
+	margin: 1%;
+}
+.menu ul li a {
+	text-decoration: none;
+	color: red;
+}
+.wrappers{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	min-height: 100%;
+	position: relative;
+}
+.login, .register{
+	border-radius: 10px;
+	padding: 0px 20px 20px 20px;
+	width: 100%;
+	max-width: 400px;
+	background: #fff;
+	box-shadow: 0px 1px 5px rgba(0,0,0,.3);
+	position: relative;
+	margin: 0px auto;
+	margin-top: -500px;
+}
+.login input.login-text{
+	display: block;
+	padding: 15px 10px;
+	margin-bottom: 10px;
+	width: 100%;
+	border: 1px solid #ddd;
+	-webkit-transition: border-width .2s ease;
+	-o-transition: border-width .2s ease;
+	transition: border-width .2s ease;
+	color: #ccc;
+	text-align: right;
+}
+.login input.login-text + i{
+	color: #fff;
+	font-size: 1em;
+	position: absolute;
+	margin-top: -44px;
+	right: 0;
+	opacity: 0;
+	transition: all .2s;
+	margin-right: 3px;
+}
+.login input.login-text:focus{
+	outline: none;
+	color: #444;
+	border-color: #2196f3;
+	border-right-width: 35px;
+}
+.login input.login-text:focus + i{
+	opacity: 1;
+	right: 30px;
+	transition: all .2s
+}
+.login .title, .register .title{
+	text-align: right;
+	color: #444;
+	font-size: 19px;
+	margin: 10px 0 30px 0;
+	border-bottom: 1px solid #eee;
+	padding-bottom: 20px;
+	width: 100%;
+	height: 30px;
+	display: inline-block;
+}
+
+.login .forget{
+	padding: 13px 5px;
+	text-align: center;
+	color: #fff;
+	background: #d75c4c;
+	width: 45%;
+	margin-left: 2.5%;
+	margin-right: 2.5%;
+	float: right;	
+	border-radius: 10px;
+}
+
+.login .forget:hover{
+	background: #f72c2c;
+}
+
+.enter {
+	width: 45%;
+	margin-left: 2.5%;
+	margin-right: 2.5%;
+	float: right;
+}
+
+.enter button, .enter a{
+	padding: 13px 5px;
+	text-align: center;
+	color: #fff;
+	background: #229922;
+	width: 100%;
+	border: none;
+	border-radius: 10px;
+	text-decoration: none;
+	display: inline-block;
+}
+.register .enter button, .register .enter a {
+	background: rgb(119,136,153);
+}
+.register .enter button:hover, .register .enter a:hover {
+	background: rgb(176,196,222);
+}
+
+.enter button:hover{
+	background: #22cc22;
+	width: 100%;
+}
+
+.login p {
+	margin-top: 20px;
+	display: inline;
+	font-family: 'vazir';
+	font-size: 13px;
+}
+
+.login a, .login button{
+	margin-top: 20px;
+	font-size: 13px;
+	text-decoration: none;
+}
+.login .reg{
+	background: none;
+}
+.login a:hover, .login button:hover {
+	color: #9999ee;
+}
+
+
+.ion-navicon{
+	position: absolute;
+	left: 15px;
+	top: 18px;
+	color: #444444;
+	z-index: 3;
+	border: none;
+}
+
+
+#cc{
+	width: 100%;
+	
+}
+.main {
+	background: url('../../images/5.png');
+	height: 3200px;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+.section1, .section2, .section3, .section4, .section5 {
+	width: 100%;
+	height: 500px;
+	display: block;
+	text-align: justify;
+	position: relative;
+	z-index: 5;
+}
+
+.section1 p, .section2 p, .section3 p , .section4 p {
+	font-size: 18px;
+	width: 50%;
+	margin-top: 20%;
+	float: right;
+	margin-right: 6%;
+	position: absolute;
+	z-index: 7;
+}
+#p21, #p41 {
+	font-size: 18px;
+	width: 70%;
+	float: right;
+	margin-right: 15%;
+	position: absolute;
+	z-index: 5;
+	margin-top: 250px;
+	color: #fafafa;
+	background: rgba(0,0,0,0.3);
+	padding: 0 30px;
+}
+
+.section1 img {
+	float: left;
+	width: 40%;
+	margin-top: 45%;
+	margin-left: 5%;
+	position: relative;
+}
+
+#p2 {
+	margin-top: 200px;
+	width: 100%;
+	display: block;
+	height: 300px;
+	position: absolute;
+	opacity: 0.5;
+	background: url('../../images/9.jpg') fixed;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+#p4 {
+	margin-top: 200px;
+	width: 100%;
+	display: block;
+	height: 300px;
+	position: absolute;
+	opacity: 0.5;
+	background: url('../../images/8.jpg') fixed;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+#c2 .enter, #c4 .enter {
+	width: 20%;
+	margin-left: 0;
+	margin-right: 40%;
+	height: 20px;
+	font-size: 14px;
+	float: right;
+	position: absolute;
+	margin-top: 400px;
+
+}
+
+#c2 .enter a, #c4 .enter a{
+	background: rgb(3,185,245);
+	color: #222222;
+}
+
+#c2 .enter a:hover, #c4 .enter a:hover{
+	opacity: 0.7;
+}
+
+.organization {
+	width: 21%;
+	margin: 10% 2% 0 2%;
+	display: inline-block;
+	float: right;
+	text-align: center;
+	border-radius: 10px;
+	background: #FFE5B4;
+	padding-bottom: 30px;
+}
+.organization h3 {
+	background: #FFA62F;
+	color: #eeeeee;
+	border-top-right-radius: 10px;
+	border-top-left-radius: 10px;
+	padding: 5px 0;
+}
+
+#chart {
+  margin-top: 50px;
+  position: relative;
+  border: none;
+}
+
+table {
+  width: 80%;
+  margin: 20px auto; 
+  margin-bottom: 0;
+}
+
+.charttitle {
+  text-align: center;
+}
+.bars td {
+  vertical-align: top;
+  float: right;
+  width: 19%;
+  height: 150px;
+  border: none;
+  position: relative;
+}
+
+.bars div:hover {
+  opacity: 0.6;
+  color: white;
+}
+.bars div {
+  color: white;
+}
+
+.bars .legend {
+  vertical-align: top;
+  padding-left: 20px;
+  text-align: left;
+  width: 35%;
+  margin-right: 5%;
+}
+
+.legbox {
+  display: block;
+  clear: both;
+}
+
+.xaxisname {
+  margin: 5px;
+  color: #fff;
+  font-size: 77%;
+  padding: 5px;
+  float: right;
+}
+
+.legbox span {
+	float: right;
+}
+
+
+/*Flat UI colors*/
+
+.one {
+  background: #004bbc;
+  text-align: center;
+  color: #666;
+}
+
+.two {
+  background: #195dc2;
+  text-align: center;
+  color: #666;
+}
+
+.three {
+  background: #326ec9;
+  text-align: center;
+  color: #666;
+}
+
+.four {
+  background: #4c81d0;
+  text-align: center;
+  color: #666;
+}
+
+.five {
+  background: #6693d6;
+  text-align: center;
+  color: #666;
+}
+.organization .projects {
+	width: 90%;
+	margin-top: 20px;
+}
+.projects ul {
+	font-size: 12px;
+	list-style-type: circle;
+}
+.projects ul li{
+	text-align: right;
+}
+.organization h2 {
+	font-size: 18px;
+}
+
+@media only screen and (max-width: 900px) {
+	#cc #c1 p{
+		width: 80%;
+		font-size: 14px;
+	}
+	#cc #c3 .organization h3, #cc #c5 .organization h3 {
+		font-size: 14px;
+	}
+	#cc #c3 .organization .projects, #cc #c5 .organization .projects {
+		font-size: 12px;
+		width: 100%;
+	}
+	#cc #c3 .organization .projects ul, #cc #c5 .organization .projects ul{
+		font-size: 10px;
+		padding: 0;
+	}
+}
+@media only screen and (max-width: 680px) {
+	#cc #c2 p, #cc #c4 p{
+		width: 90%;
+		margin-right: 5%;
+		font-size: 14px;
+	}
+	#cc #c3 .organization .projects ul , #cc #c5 .organization .projects ul{
+		list-style: none;
+	}
+}
+
+.main .nav {
+	z-index: 60;
+	position: fixed;
+	width: 100%;
+	margin: 0px 0;
+	display: block;
+	background: #1E90FF;
+	opacity: 0.8;
+	height: 35px;
+	white-space: cull;
+	color: #eeeeee;
+	font-size: 12px;
+}
+.main .nav ul {
+	display: flex;
+	padding: 0;
+}
+.main .nav ul li {
+	display: inline-flex;
+	list-style: none;
+	text-align: center;
+	height: 35px;
+	margin: 0 0;
+	width: 150px;
+	text-align: center;
+	float: none;
+	position: relative;
+	padding: 0;
+	border-radius: 5px;
+}
+.main .nav ul li:hover {
+	background: #00008B;
+}
+
+.main .nav ul li a {
+	text-decoration: none;
+	display: inline-block;
+	margin: 5px 0;
+	color: #eeeeee;
+	text-align: center;
+	width: 100%;
+	padding: 0;
+}
+.main .nav ul li h3{
+	display: inline;
+}
+.main .nav ul li .innermenu, .main .nav ul li .innermenu1 {
+	display: flex;
+	list-style: none;
+	position: absolute;
+	top: 40px;
+	right: 0px;
+	width: 350px;
+	background: #1E90FF;
+	padding: 0;
+	opacity: 0;
+	margin-top: 20px;
+	border-radius: 5px;
+	visibility: hidden;
+	transition: all .5s ease;
+	-webkit-transition: all .5s ease;
+	-moz-transition: all .5s ease;
+	-o-transition: all .5s ease;
+}
+.main .nav ul li .innermenu {
+	width: 250px;
+}
+.main .nav ul li:hover ol, .main .nav ul li:hover ol:hover, .main .nav ul li ol:hover{
+	opacity: 1;
+	visibility: visible;
+	margin-top: 0;
+}
+.main .nav ul li .innermenu li{
+	display: block;
+	font-size: 10px;
+	width: 50%;
+}
+.main .nav ul li .innermenu1 li{
+	display: block;
+	font-size: 10px;
+	width: 33.33%;
+}
+.main .nav ul li .innermenu li a {
+	text-decoration: none;
+	display: inline-block;
+	color: #eeeeee;
+	text-align: center;
+}

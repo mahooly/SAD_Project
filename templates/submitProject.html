@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="fa" dir="rtl">
+<head>
+	<title>ثبت پروژه جدید </title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href= {% static "css/submitProject.css" %}>
+	<link rel="stylesheet" type="text/css" href= {% static "css/style.css" %}>
+	<link rel="stylesheet" href= {% static "css/ionicons.min.css" %}>
+</head>
+<body>
+	<div class="main">
+		<div class="header">
+			<div class="topmenu" id="topmenu">
+				
+			</div>
+		</div>
+		<div class="mainPage">
+			<div class="wrapper"></div>
+			<div id="test">
+				<div class="wrappers">
+			
+					<form class="login" method="post">
+						<button id="button2" class="exit1" onclick="popdown()">x</button>
+						<p class="title">ورود</p>
+						<p>
+							<input type="text" placeholder="نام کاربری" class="login-text">
+							<i class="ion-person"></i>
+						</p>
+						<p>
+							<input type="password" placeholder="رمز عبور" class="login-text">
+							<i class="ion-ios-locked"></i>
+						</p>
+						<div class="enter"><button>ورود</button></div>
+						<button class="forget">فراموشی رمز عبور</button>
+						
+						<p> اگر هنوز حساب کاربری برای خود ایجاد نکرده‌اید، </p> <button class="reg" id="buttonreg" onclick="popupregister()">ثبت نام</button> <p>کنید</p>
+					</form>
+				</div>
+			</div>
+			<div id="testreg">
+				<div class="wrappers">
+					<form class="register">
+						<button id="buttonreg2" class="exit" onclick="popdownregister()">x</button>
+						<p class="title">ثبت نام</p>
+						<div class="enter"><a href="{% url 'register' %}">نیکوکار</a></div>
+						<div class="enter"><a href="{% url 'registerOrg' %}">موسسه</a></div>
+					</form>
+				</div>
+			</div>
+			<div class="nav" id="nav"></div>
+			<div class="formm">
+                {% csrf_token %}
+				<form method="post">
+					<h2>مشخصات</h2>
+					<div class="controls">
+						<input type="text" id="projectname" class="floatlabel" placeholder="نام پروژه" name="name">
+					</div>
+					
+					<div class="controls">
+						<input type="text" id="budget" class="floatlabel" placeholder="مبلغ مورد نیاز جهت تکمیل پروژه (تومان)" name="budget">
+					</div>
+	
+
+					<div class="controls">
+						<i class="ion-navicon"></i>
+						<select id="city" class="floatlabel" name="city">
+							<option value="blank">شهر</option>
+							
+						</select>
+					</div>
+
+		
+					<div class="controls">
+						<textarea id="cm" class="floatlabel" placeholder="توضیحات مربوط به پروژه" name="description"></textarea>
+					</div>
+					
+					<div class="controls">
+						<i class="ion-navicon"></i>
+						<select id="way" class="floatlabel" onchange="changed()" name="paymethod">
+							<option value="blank">نحوه پرداخت</option>
+							<option value="card">به شماره کارت بانکی</option>
+							<option value="account">به شماره حساب</option>
+						</select>
+					</div>
+					
+					<div class="controls">
+						<input type="number" id="cardNum" class="floatlabel" placeholder="شماره کارت بانکی" style="display: none" name="cardno">
+					</div>
+					
+					<div class="controls">
+						<input type="number" id="accNum" class="floatlabel" placeholder="شماره حساب بانکی" style="display: none" name="accno">
+					</div>
+
+					<div class="controls">
+						<input type="checkbox" id="checkbox" class="checkbox" name="terms">
+						<label for="checkbox"><span></span>قوانین را قبول دارم</label>
+					</div>
+					
+					<button>ثبت</button>
+				</form>
+			</div>
+		</div>
+		<div class="footer">
+			<div class="container">
+				<div class="addr">
+					<h4> خیابان آزادی، بلوار اکبری، خیابان قاسمی، پلاک ۳۶، واحد ۲ </h4>
+					<h4>تلفن: ۰۲۱۸۸۳۴۲۸۹۱</h4>
+				</div>
+			</div>
+			<div class="copy">
+				<h4>کپی‌رایت رعایت شود.</h4>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src= {% static "js/submitProject.js" %}></script>
+	<script type="text/javascript" src= {% static "js/main.js" %}></script>
+	<script src= {% static "js/jquery.min.js" %}></script>
+</body>
+</html>

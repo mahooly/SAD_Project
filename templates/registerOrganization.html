@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="fa" dir="rtl">
+<head>
+	<title>ثبت نام- موسسات </title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href={% static "css/style.css" %}>
+	<link rel="stylesheet" type="text/css" href={% static "css/editProfileBenefactor.css" %}>
+	<link rel="stylesheet" href={% static "css/ionicons.min.css" %}>
+</head>
+<body>
+    {{  form.errors }}
+	<div class="main">
+		<div class="header">
+			<div class="topmenu" id="topmenu">
+			</div>
+		</div>
+		<div class="mainPage">
+			<div class="wrapper"></div>
+			<div id="test">
+				<div class="wrappers">
+			
+					<form class="login">
+						<button id="button2" class="exit1" onclick="popdown()">x</button>
+						<p class="title">ورود</p>
+						<p>
+							<input type="text" placeholder="نام کاربری" class="login-text">
+							<i class="ion-person"></i>
+						</p>
+						<p>
+							<input type="password" placeholder="رمز عبور" class="login-text">
+							<i class="ion-ios-locked"></i>
+						</p>
+						<div class="enter"><button>ورود</button></div>
+						<button class="forget">فراموشی رمز عبور</button>
+						
+						<p> اگر هنوز حساب کاربری برای خود ایجاد نکرده‌اید، </p> <button class="reg" id="buttonreg" onclick="popupregister()">ثبت نام</button> <p>کنید</p>
+					</form>
+				</div>
+			</div>
+			<div id="testreg">
+				<div class="wrappers">
+					<form class="register">
+						<button id="buttonreg2" class="exit" onclick="popdownregister()">x</button>
+						<p class="title">ثبت نام</p>
+						<div class="enter"><a href="{% url 'register' %}">نیکوکار</a></div>
+						<div class="enter"><a href="{% url 'registerOrg' %}">موسسه</a></div>
+					</form>
+				</div>
+			</div>
+			<div class="nav" id="nav"></div>
+			<div class="formm" style="z-index:9">
+				<form method="post" enctype="multipart/form-data">
+					<h2>مشخصات</h2>
+					{% csrf_token %}
+					<div class="controls">
+						<input type="text" id="name" class="floatlabel" placeholder="نام موسسه" name="name">
+					</div>
+					
+					<div class="controls">
+						<input type="text" id="username" class="floatlabel" placeholder="نام کاربری" name="username">
+					</div>
+					<div class="controls">
+						<input type="password" id="pass1" class="floatlabel" placeholder="کلمه عبور" name="password">
+					</div>
+					<div class="controls">
+						<input type="password" id="pass2" class="floatlabel" placeholder="تکرار کلمه عبور" name="password2">
+					</div>
+
+					<div class="controls">
+						<input type="text" id="addr" class="floatlabel" placeholder="آدرس" name="address">
+					</div>
+
+					<div class="controls">
+						<input type="email" id="email" class="floatlabel" placeholder="ایمیل" name="email">
+					</div>
+					
+					<div class="controls">
+						<input type="tel" id="tel" class="floatlabel" placeholder="تلفن" name="phone">
+					</div>
+					<div class="controls">
+						<input type="web" id="web" class="floatlabel" placeholder="وب سایت" name="website">
+					</div>
+
+					<div class="controls">
+						<input type="text" id="parvaneh" class="floatlabel" placeholder="پروانه فعالیت" name="license">
+					</div>
+					
+					<div class="controls">
+						<h4 style="display: inline; margin-left: 10px;"> لوگو </h4>
+						<input type="file" id="photo" name="image">
+					</div>
+
+					<div class="controls">
+						<input type="checkbox" id="checkbox" class="checkbox" name="terms">
+						<label class="checkb" style="display: inline;" for="checkbox"><span></span><a href="terms.html" style="text-decoration: none; color: #009966">قوانین</a> را قبول دارم</label>
+					</div>
+					
+					<button>ثبت</button>
+				</form>
+			</div>
+		</div>
+		<div class="footer">
+			<div class="container">
+				<div class="addr">
+					<h4> خیابان آزادی، بلوار اکبری، خیابان قاسمی، پلاک ۳۶، واحد ۲ </h4>
+					<h4>تلفن: ۰۲۱۸۸۳۴۲۸۹۱</h4>
+				</div>
+			</div>
+			<div class="copy">
+				<h4>کپی‌رایت رعایت شود.</h4>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src={% static "js/registerOrganization.js" %}></script>
+	<script type="text/javascript" src={% static "js/main.js" %}></script>
+	<script src={% static "js/jquery.min.js" %}></script>
+</body>
+</html>
