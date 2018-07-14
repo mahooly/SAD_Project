@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.template.context_processors import static
 from django.urls import path
 
+from userTest import settings
 from users import views
 
 urlpatterns = [
@@ -25,5 +27,10 @@ urlpatterns = [
     url(r'^register_benefactor/', views.benefactor_registration, name='register'),
     url(r'^register_organization/', views.organization_registration, name='registerOrg'),
     url(r'^create_project/', views.project_creation, name='createProject'),
+    url(r'^login/', views.mylogin, name='login'),
+    url(r'^editprofileben/', views.update_benefactor_profile, name='editprofileben'),
+    url(r'^editprofileorg/', views.update_organization_profile, name='editprofileorg'),
+    url(r'^terms/', views.terms, name='terms'),
 
 ]
+

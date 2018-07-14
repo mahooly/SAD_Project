@@ -16,8 +16,7 @@
 			<div class="wrappera"></div>
 			<div id="test">
 				<div class="wrappers">
-
-					<form class="login" method="post">
+					<form class="login" method="post" action="{% url 'login' %}">
                         {% csrf_token %}
 						<button id="button2" class="exit1" onclick="popdown()">x</button>
 						<p class="title">ورود</p>
@@ -34,9 +33,9 @@
 
 						<p> اگر هنوز حساب کاربری برای خود ایجاد نکرده‌اید، </p> <button class="reg" id="buttonreg" onclick="popupregister()">ثبت نام</button> <p>کنید</p>
 					</form>
-				</div>
-			</div>
-			<div id="testreg">
+                </div>
+            </div>
+            <div id="testreg">
 				<div class="wrappers">
 					<form class="register">
 						<button id="buttonreg2" class="exit" onclick="popdownregister()">x</button>

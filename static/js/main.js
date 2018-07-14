@@ -38,7 +38,7 @@ if (isLogedIn) {
 	var logo = document.createElement('div');
 	logo.setAttribute('class', "logo");
 	var image = document.createElement('img');
-	image.setAttribute('src', "/images/logo.jpg");
+	image.setAttribute('src', "../static/images/logo.png");
 	logo.appendChild(image);
 	container.appendChild(logo);
 	topmenu.appendChild(container);
@@ -145,7 +145,7 @@ if (isLogedIn && personal.isOrg) {
 	
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "editProfileOrganization.html");
+	a1.setAttribute('href', "editprofileorg");
 	a1.innerText = "ویرایش حساب کاربری";
 	li1.appendChild(a1);
 	ul1.appendChild(li1);
@@ -196,7 +196,7 @@ else if (isLogedIn && personal.isBen) {
 	
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "editProfileBenefactor.html");
+	a1.setAttribute('href', "editprofileben");
 	a1.innerText = "ویرایش حساب کاربری";
 	li1.appendChild(a1);
 	ul1.appendChild(li1);

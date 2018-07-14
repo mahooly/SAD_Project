@@ -1,4 +1,4 @@
-SEX_CHOICES = (('male', 'Male'), ('female', 'Female'), ('other', 'Other'))
+SEX_CHOICES = (('male', 'Male'), ('female', 'Female'), ('other', 'Other'), ('blank', 'blank'))
 
 EDUCATION_CHOICES = (
 ('nothing', 'nothing'), ('diploma', 'diploma'), ('bachelor', 'bachelor'), ('master', 'master'), ('phd', 'phd'))

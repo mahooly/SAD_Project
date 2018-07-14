@@ -48,10 +48,6 @@
 
                     {{ user_form.errors }}
 
-                    <div class="controls">
-						<input type="email" id="email" class="floatlabel" placeholder="ایمیل" name="email">
-					</div>
-
 					<div class="controls">
 						<i class="ion-navicon"></i>
 						<select id="sex" class="floatlabel" name="gender">
@@ -63,8 +59,59 @@
 					</div>
 
                     <div class="controls">
+						<h3>تاریخ تولد</h3>
+						<input type="number" id="date" class="birthday" placeholder="روز" name="day">
+						<input type="number" id="month" class="birthday" placeholder="ماه" name="month">
+						<input type="number" id="year" class="birthday" placeholder="سال" name="year">
+					</div>
+
+					<div class="controls">
+						<i class="ion-navicon"></i>
+						<select id="education" class="floatlabel" onchange="eduChanged()" name="education">
+							<option value="blank"> میزان تحصیلات </option>
+							<option value="nothing">-</option>
+							<option value="diploma">دیپلم و فوق دیپلم</option>
+							<option value="bachelor">لیسانس</option>
+							<option value="master">فوق لیسانس</option>
+							<option value="phd">دکتری و بالاتر</option>
+						</select>
+					</div>
+
+					<div class="educontrols">
+						<input type="text" id="fieldOfEducation" class="floatlabel" placeholder="رشته تحصیلی" name="major">
+					</div>
+
+					<div class="controls">
+						<input type="number" id="nationalId" class="NID" placeholder="کد ملی" name="nationalId">
+					</div>
+
+					<div class="controls">
+						<i class="ion-navicon"></i>
+						<select id="city" class="floatlabel" name="city">
+							<option value="blank">شهر محل سکونت</option>
+						</select>
+					</div>
+
+					<div class="controls">
+						<input type="text" id="addr" class="floatlabel" placeholder="آدرس" name="address">
+					</div>
+
+					<div class="controls">
+						<input type="email" id="email" class="floatlabel" placeholder="ایمیل" name="email">
+					</div>
+
+					<div class="controls">
+						<input type="tel" id="tel" class="floatlabel" placeholder="تلفن" name="phone">
+					</div>
+
+                    <div class="controls">
 						<h4 style="display: inline; margin-left: 10px;"> عکس </h4>
 						<input type="file" id="photo" name="photo">
+					</div>
+
+                    <div class="controls">
+						<input type="checkbox" id="checkbox" class="checkbox" name="terms">
+						<label class="checkb" style="display: inline;" for="checkbox"><span></span><a href={% url 'terms' %} style="text-decoration: none; color: #009966">قوانین</a> را قبول دارم</label>
 					</div>
 
 					<button>ثبت</button>
