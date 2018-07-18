@@ -27,7 +27,7 @@ var params = ["فعالیت اعضا", "مسءولیت پذیری", "صداقت"
 var hours = ["۸-۱۰", "۱۰-۱۲", "۱۲-۱۵", "۱۵-۱۷"]
 var days = ["شنبه", "یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنجشنبه", "جمعه"]
 var projects = {
-  "projs": [
+  "data": [
     {"id":1,"benefactor": "پژمان علی‌مرادی", "organization": "جمعیت امام علی", "ttype": "امتیازدهی", 
     "disc": "خیلی کادر خوبی دارن و خیلی تجربه خوبی بود", "rate": [3,4,2,3,5], "first": 1, "date": "1397/4/22-14:22"},
     {"id":2,"benefactor": "پویان شیرزادیان", "organization": "جمعیت امام علی", "ttype": "پیشنهاد همکاری", 
@@ -51,42 +51,42 @@ var beneName = document.getElementById("beneName").value;
   while(divv.hasChildNodes()){
     divv.removeChild(divv.childNodes[0])
   }
-  for (var i = 0; i < projects.projs.length; i++) {
-    if ((orgname=='' || orgname==projects.projs[i].organization)
-      &&(projectfield=="blank" ||projects.projs[i].ttype==projectfield)
-      &&(beneName=='' ||projects.projs[i].benefactor>=beneName)){
+  for (var i = 0; i < projects.data.length; i++) {
+    if ((orgname=='' || orgname==projects.data[i].organization)
+      &&(projectfield=="blank" ||projects.data[i].ttype==projectfield)
+      &&(beneName=='' ||projects.data[i].benefactor>=beneName)){
       var rep = document.createElement('div');
       rep.setAttribute('class', "report");
-	  rep.setAttribute('id', projects.projs[i].id);
+	  rep.setAttribute('id', projects.data[i].id);
       var peop = document.createElement('div');
       peop.setAttribute('class', "people");
       var benef = document.createElement('span');
       benef.setAttribute('class', "benefactor");
-      benef.innerText = projects.projs[i].benefactor + "(نیکوکار)";
+      benef.innerText = projects.data[i].benefactor + "(نیکوکار)";
       var org = document.createElement('span');
       org.setAttribute('class', "organization");
-      org.innerText = projects.projs[i].organization + "(موسسه)";
+      org.innerText = projects.data[i].organization + "(موسسه)";
       var typ = document.createElement('span');
       typ.setAttribute('class', "type");
-      typ.innerText = projects.projs[i].ttype;
+      typ.innerText = projects.data[i].ttype;
 	  var dat = document.createElement('span');
       dat.setAttribute('class', "type");
-      dat.innerText = projects.projs[i].date;
-      if (projects.projs[i].first==1) {
+      dat.innerText = projects.data[i].date;
+      if (projects.data[i].first==1) {
         peop.appendChild(benef);
         peop.appendChild(org);
-      } if (projects.projs[i].first==2) {
+      } if (projects.data[i].first==2) {
         peop.appendChild(org);
         peop.appendChild(benef);
-      } if (projects.projs[i].first==3) {
+      } if (projects.data[i].first==3) {
         peop.appendChild(benef);
-      } if (projects.projs[i].first==4) {
+      } if (projects.data[i].first==4) {
         peop.appendChild(org);
       }
       peop.appendChild(typ);
 	  peop.appendChild(dat);
       rep.appendChild(peop);
-      if(projects.projs[i].ttype=="امتیازدهی") {
+      if(projects.data[i].ttype=="امتیازدهی") {
           var rating = document.createElement('div');
           rating.setAttribute('class', "rating");
           var ratingtable = document.createElement('table');
@@ -96,7 +96,7 @@ var beneName = document.getElementById("beneName").value;
             ttd.setAttribute('class', "firstTd");
             ttd.innerText = params[k];
             ttr.appendChild(ttd);
-            for (var j = 0; j < projects.projs[i].rate[k]; j++) {
+            for (var j = 0; j < projects.data[i].rate[k]; j++) {
                 var ttd = document.createElement('td');
                 var bbutton = document.createElement('button');
                 ttd.appendChild(bbutton);
@@ -109,17 +109,17 @@ var beneName = document.getElementById("beneName").value;
           var more = document.createElement('div');
           more.setAttribute('class', "more");
           var hh3 = document.createElement('h3');
-          hh3.innerHTML = projects.projs[i].disc;
+          hh3.innerHTML = projects.data[i].disc;
           more.appendChild(hh3);
           var bbutton = document.createElement('button');
           bbutton.setAttribute('class', "remove");
-          bbutton.setAttribute('onclick', "remove("+projects.projs[i].id+")");
+          bbutton.setAttribute('onclick', "remove("+projects.data[i].id+")");
           bbutton.innerText = "حذف";
           rep.appendChild(more);
           rep.appendChild(bbutton);
           divv.appendChild(rep);
       }   
-      else if (projects.projs[i].ttype=="پیشنهاد همکاری" && projects.projs[i].first==1) {
+      else if (projects.data[i].ttype=="پیشنهاد همکاری" && projects.data[i].first==1) {
         var wweek = document.createElement('div');
         wweek.setAttribute('class', "week");
         var ttable = document.createElement('table');
@@ -146,7 +146,7 @@ var beneName = document.getElementById("beneName").value;
             var ttd = document.createElement('td');
             ttd.setAttribute('class', "otherCol");
             ttd.innerText = "";
-            if (projects.projs[i].week[4*j+k]==1) {
+            if (projects.data[i].week[4*j+k]==1) {
               ttd.style.backgroundColor = "rgb(211,233,158)";
             } else {
               ttd.style.backgroundColor = "#999999";
@@ -162,12 +162,12 @@ var beneName = document.getElementById("beneName").value;
         var mmore = document.createElement('div');
         mmore.setAttribute('class', "more");
         var hh3 = document.createElement('h3');
-        hh3.innerHTML = projects.projs[i].disc;
+        hh3.innerHTML = projects.data[i].disc;
         mmore.appendChild(hh3);
         rep.appendChild(mmore);
         divv.appendChild(rep);
       }
-      else if (projects.projs[i].ttype=="پیشنهاد همکاری" && projects.projs[i].first==2) {
+      else if (projects.data[i].ttype=="پیشنهاد همکاری" && projects.data[i].first==2) {
         var wweek = document.createElement('div');
         wweek.setAttribute('class', "week");
         var ttable = document.createElement('table');
@@ -194,7 +194,7 @@ var beneName = document.getElementById("beneName").value;
             var ttd = document.createElement('td');
             ttd.setAttribute('class', "otherCol");
             ttd.innerText = "";
-            if (projects.projs[i].week[4*j+k]==1) {
+            if (projects.data[i].week[4*j+k]==1) {
               ttd.style.backgroundColor = "rgb(211,233,158)";
             } else {
               ttd.style.backgroundColor = "#999999";
@@ -210,19 +210,19 @@ var beneName = document.getElementById("beneName").value;
         var more = document.createElement('div');
         more.setAttribute('class', "more");
         var hh3 = document.createElement('h3');
-        hh3.innerHTML = projects.projs[i].disc;
+        hh3.innerHTML = projects.data[i].disc;
         more.appendChild(hh3);
         rep.appendChild(more);
         divv.appendChild(rep);
-      } else if (projects.projs[i].ttype=="تغییر اطلاعات حساب کاربری") {
+      } else if (projects.data[i].ttype=="تغییر اطلاعات حساب کاربری") {
         var mmore = document.createElement('div');
         mmore.setAttribute('class', "more");
         var ull = document.createElement('ul');
 		ull.style.listStyle= "circle";
-		for(j=0;j<projects.projs[i].disc.length;j++){
+		for(j=0; j<projects.data[i].disc.length; j++){
 			var lli = document.createElement('li');
 			lli.style.fontSize = "15px";
-			lli.innerHTML = projects.projs[i].disc[j];
+			lli.innerHTML = projects.data[i].disc[j];
 			ull.appendChild(lli);
 		}
         mmore.appendChild(ull);
@@ -233,14 +233,14 @@ var beneName = document.getElementById("beneName").value;
         var ddiv = document.createElement('div');
         ddiv.setAttribute('class', "proj");
         var hh3 = document.createElement('h3');
-        hh3.innerHTML = "مبلغ: " + projects.projs[i].payment;
+        hh3.innerHTML = "مبلغ: " + projects.data[i].payment;
         ddiv.appendChild(hh3);
         rep.appendChild(ddiv);
 
         var more = document.createElement('div');
         more.setAttribute('class', "more");
         var hh3 = document.createElement('h3');
-        hh3.innerHTML = projects.projs[i].disc;
+        hh3.innerHTML = projects.data[i].disc;
         more.appendChild(hh3);
         rep.appendChild(more);
         divv.appendChild(rep);

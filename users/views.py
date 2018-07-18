@@ -1,11 +1,14 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from .forms import *
 
 
 def index(request):
-    return render(request, 'index.html')
+    orgs = Organizer.objects.all()[:4]
+    bens = Benefactor.objects.all()[:4]
+    return render(request, 'index.html', {'bens': bens, 'orgs': orgs})
 
 
 def terms(request):
@@ -14,6 +17,7 @@ def terms(request):
 
 def benefactor_registration(request):
     if request.method == 'POST':
+        abilities = Ability.objects.all()
         user_form = UserForm(request.POST, request.FILES)
         form = BenefactorRegistraton(request.POST)
         if form.is_valid() and user_form.is_valid():
@@ -29,9 +33,10 @@ def benefactor_registration(request):
             print(user_form.errors, form.errors)
 
     else:
+        abilities = Ability.objects.all()
         user_form = UserForm()
         form = BenefactorRegistraton()
-    return render(request, 'registerBenefactor.html', {'user_form': user_form, 'form': form})
+    return render(request, 'registerBenefactor.html', {'user_form': user_form, 'form': form, 'abilities': abilities})
 
 
 def organization_registration(request):
@@ -58,6 +63,7 @@ def organization_registration(request):
     return render(request, 'registerOrganization.html', {'user_form': user_form, 'form': form})
 
 
+@login_required
 def project_creation(request):
     if request.method == 'POST':
         form = ProjectRegistration(request.POST)
@@ -92,6 +98,7 @@ def mylogin(request):
             return
 
 
+@login_required
 def update_benefactor_profile(request):
     if request.method == 'POST':
         user_form = EditUser(request.POST)
@@ -119,6 +126,7 @@ def update_benefactor_profile(request):
     return render(request, 'editProfileBenefactor.html', {'user_form': user_form, 'form': form})
 
 
+@login_required
 def update_organization_profile(request):
     if request.method == 'POST':
         user_form = EditUser(request.POST)
@@ -160,3 +168,23 @@ def rate(request):
         form = RateForm()
 
     return render(request, 'submitProject.html', {'form': form})
+
+
+def list_projects(request):
+
+    if request.method == 'POST':
+        name = request.POST['org']
+        projects = Project.objects.filter(user__organizer__name=name)
+        return render(request, 'searchProject.html', {'projects': projects})
+    else:
+        return render(request, 'searchProject.html')
+
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect('/')
+
+
+
+

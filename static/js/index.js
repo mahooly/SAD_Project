@@ -150,72 +150,72 @@ var organization = [
 ]
 
 
-for (var j = 0; j < organization.length; j++) {
-	var div1 = document.createElement('div');
-	div1.setAttribute('class', "organization");
-	var h2name = document.createElement('h3');
-	h2name.innerHTML = organization[j].name;
-	div1.appendChild(h2name);
-	//chart colors
-	var colors = ['one', 'two', 'three', 'four', 'five'];
-	var TROW = 'tr', TDATA = 'td';
-
-	var chart = document.createElement('div');
-	//create the chart canvas
-	var barchart = document.createElement('table');
-
-	chart.appendChild(barchart);
-
-	//create the bar row
-	var barrow = document.createElement(TROW);
-	barrow.setAttribute('class', 'bars');
-
-	//lets add data to the chart
-	for (var i = 0; i < 5; i++) {
-	  //create the bar data
-	  var bardata = document.createElement(TDATA);
-	  var bar = document.createElement('div');
-	  bar.setAttribute('class', colors[i]);
-	  //bar.innerText = organization[j].ratings[i] + "%"; 
-	  bar.style.height = organization[j].ratings[i] + "%";
-	  bar.style.position = "absolute";
-	  bar.style.width = "100%";
-	  bar.style.bottom = "0";
-	  bardata.appendChild(bar);
-	  barrow.appendChild(bardata);
-	}
-
-	barchart.appendChild(barrow);
-	chart.appendChild(barchart);
-	div1.appendChild(chart);
-	var projects1 = document.createElement('div');
-	projects1.setAttribute('class', "projects");
-	var h5title = document.createElement('h5');
-	h5title.innerHTML = "آخرین پروژه‌های ثبت شده";
-	projects1.appendChild(h5title);
-	var ul1 = document.createElement('ul');
-	for (var i = 0; i < organization[j].projects.length; i++) {
-		var li1 = document.createElement('li');
-		li1.innerText = organization[j].projects[i];
-		ul1.appendChild(li1);
-	}
-	projects1.appendChild(ul1);
-	div1.appendChild(projects1);
-	var projects1 = document.createElement('div');
-	projects1.setAttribute('class', "projects");
-	var h5title = document.createElement('h5');
-	h5title.innerHTML = "نیازمندی‌های غیرنقدی";
-	projects1.appendChild(h5title);
-	var ul1 = document.createElement('ul');
-	for (var i = 0; i < organization[j].requierments.length; i++) {
-		var li1 = document.createElement('li');
-		li1.innerText = organization[j].requierments[i];
-		ul1.appendChild(li1);
-	}
-	projects1.appendChild(ul1);
-	div1.appendChild(projects1);
-	document.getElementById("c3").appendChild(div1);
-}
+// for (var j = 0; j < organization.length; j++) {
+// 	var div1 = document.createElement('div');
+// 	div1.setAttribute('class', "organization");
+// 	var h2name = document.createElement('h3');
+// 	h2name.innerHTML = organization[j].name;
+// 	div1.appendChild(h2name);
+// 	//chart colors
+// 	var colors = ['one', 'two', 'three', 'four', 'five'];
+// 	var TROW = 'tr', TDATA = 'td';
+//
+// 	var chart = document.createElement('div');
+// 	//create the chart canvas
+// 	var barchart = document.createElement('table');
+//
+// 	chart.appendChild(barchart);
+//
+// 	//create the bar row
+// 	var barrow = document.createElement(TROW);
+// 	barrow.setAttribute('class', 'bars');
+//
+// 	//lets add data to the chart
+// 	for (var i = 0; i < 5; i++) {
+// 	  //create the bar data
+// 	  var bardata = document.createElement(TDATA);
+// 	  var bar = document.createElement('div');
+// 	  bar.setAttribute('class', colors[i]);
+// 	  //bar.innerText = organization[j].ratings[i] + "%";
+// 	  bar.style.height = organization[j].ratings[i] + "%";
+// 	  bar.style.position = "absolute";
+// 	  bar.style.width = "100%";
+// 	  bar.style.bottom = "0";
+// 	  bardata.appendChild(bar);
+// 	  barrow.appendChild(bardata);
+// 	}
+//
+// 	barchart.appendChild(barrow);
+// 	chart.appendChild(barchart);
+// 	div1.appendChild(chart);
+// 	var projects1 = document.createElement('div');
+// 	projects1.setAttribute('class', "projects");
+// 	var h5title = document.createElement('h5');
+// 	h5title.innerHTML = "آخرین پروژه‌های ثبت شده";
+// 	projects1.appendChild(h5title);
+// 	var ul1 = document.createElement('ul');
+// 	for (var i = 0; i < organization[j].projects.length; i++) {
+// 		var li1 = document.createElement('li');
+// 		li1.innerText = organization[j].projects[i];
+// 		ul1.appendChild(li1);
+// 	}
+// 	projects1.appendChild(ul1);
+// 	div1.appendChild(projects1);
+// 	var projects1 = document.createElement('div');
+// 	projects1.setAttribute('class', "projects");
+// 	var h5title = document.createElement('h5');
+// 	h5title.innerHTML = "نیازمندی‌های غیرنقدی";
+// 	projects1.appendChild(h5title);
+// 	var ul1 = document.createElement('ul');
+// 	for (var i = 0; i < organization[j].requierments.length; i++) {
+// 		var li1 = document.createElement('li');
+// 		li1.innerText = organization[j].requierments[i];
+// 		ul1.appendChild(li1);
+// 	}
+// 	projects1.appendChild(ul1);
+// 	div1.appendChild(projects1);
+// 	document.getElementById("c3").appendChild(div1);
+// }
 
 var benefactors = [
 	{"name": "سید علی حسین‌زاده", "ratings": [90,73,80,89,64], "abilities": ["حسابداری", "آموزش"], "worked": ["جمعیت امام علی", "یاوران ایتام"]},

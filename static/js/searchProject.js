@@ -23,15 +23,7 @@ function rate (e1,e2) {
   }
 }
 
-var projects = {
-  "projs": [
-    {"type": [0],"name": "جمعیت امام علی", "disc": "خرید پوشاک برای کودکان", "cost": 153000, "NOP": 10,"rate":3},
-    {"type": [2],"name": "جمعیت امام علی", "disc": "خرید چرخ خیاطی برای زنان سرپرست خانوار", "cost": 3240000, "NOP": 10,"rate":3.5},
-    {"type": [0],"name": "یاوران ایتام", "disc": "افطاری به کودکان یتیم", "cost": 1000000, "NOP": 10,"rate":2},
-    {"type": [0,4],"name": "مهرانه", "disc": "خرید دفتر و کتاب برای کودکان", "cost": 500000, "NOP": 10,"rate":1.4},
-    {"type": [5],"name": "یاوران ایتام", "disc": "جهیزیه ", "cost": 21000000, "NOP": 10,"rate":4}
-  ]
-}
+var projects = {}
 
 function show() {
 var orgname = document.getElementById("orgName").value;
@@ -40,33 +32,33 @@ var projectfield = document.getElementById("field").value;
 var minimumBudget = document.getElementById("minimumbudget").value;
 var minimumtotalrating = document.getElementById("minimumtotalrating").value;
   var divv = document.getElementById("result");
-  while(divv.hasChildNodes()){
-    divv.removeChild(divv.childNodes[0])
-  }
-  for (var i = 0; i < projects.projs.length; i++) {
+  // while(divv.hasChildNodes()){
+  //   divv.removeChild(divv.childNodes[0])
+  // }
+  for (var i = 0; i < projects.data.length; i++) {
 	  var check = 1;
-	  for(j=0;j<projects.projs[i].type.length;j++)
-		  if(projects.projs[i].type[j]==projectfield)
+	  for(j=0; j<projects.data[i].type.length; j++)
+		  if(projects.data[i].type[j]==projectfield)
 			  check = 2;
-    if ((orgname=='' || orgname==projects.projs[i].name)
+    if ((orgname=='' || orgname==projects.data[i].name)
       &&(projectfield=="blank" ||check == 2)
-      &&(minimumBudget=='' ||projects.projs[i].cost>=minimumBudget)
-      &&(minimumtotalrating=='' ||projects.projs[i].rate>=minimumtotalrating)){
+      &&(minimumBudget=='' ||projects.data[i].cost>=minimumBudget)
+      &&(minimumtotalrating=='' ||projects.data[i].rate>=minimumtotalrating)){
     var divProject = document.createElement('div');
     divProject.setAttribute('class', "project");
     var divspec = document.createElement('div');
     divspec.setAttribute('class', "specifications");
     var aname = document.createElement('a');
     aname.setAttribute('href', "#");
-    aname.innerText = projects.projs[i].name;
+    aname.innerText = projects.data[i].name;
     divspec.appendChild(aname);
     var h3disc = document.createElement('h3');
-    h3disc.innerHTML = projects.projs[i].disc;
+    h3disc.innerHTML = projects.data[i].disc;
     divspec.appendChild(h3disc);
 	var ull = document.createElement('ul');
-	for(j=0;j<projects.projs[i].type.length;j++){
+	for(j=0; j<projects.data[i].type.length; j++){
 		var lli = document.createElement('li');
-		lli.innerText = fields.data[projects.projs[i].type[j]];
+		lli.innerText = fields.data[projects.data[i].type[j]];
 		ull.appendChild(lli);
 	}
 	divspec.appendChild(ull);
@@ -100,7 +92,7 @@ var minimumtotalrating = document.getElementById("minimumtotalrating").value;
     divcost.appendChild(h3disc);
     var spancost = document.createElement('span');
     spancost.setAttribute('class', "budget");
-    spancost.innerHTML = projects.projs[i].cost + "تومان";
+    spancost.innerHTML = projects.data[i].cost + "تومان";
     divcost.appendChild(spancost);
     divProject.appendChild(divcost);
     divv.appendChild(divProject);

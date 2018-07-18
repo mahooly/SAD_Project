@@ -8,8 +8,56 @@
 </head>
 <body>
 	<div id="ad" class="main">
+        {% if not request.user.is_authenticated %}
+           <div id="checkspann" class="1"></div>
+          {% endif %}
+          {% if request.user.is_authenticated %}
+           {% if request.user.isOrg %}
+            <div id="checkspann" class="2"></div>
+           {% endif %}
+           {% if request.user.isBen %}
+            <div id="checkspann" class="3"></div>
+            {% endif %}
+           {% if not request.user.isOrg and not request.user.isBen %}
+            <div id="checkspann" class="4"></div>
+           {% endif %}
+        {% endif %}
 		<div class="header">
 			<div class="topmenu" id="topmenu">
+                {% if request.user.is_authenticated %}
+				<div class="container">
+					<div class="topPhoto">
+						<img src="{{ request.user.image }}">
+					</div>
+					<div class="topmenuelements">
+						{% if request.user.isOrg %}
+						<a href="personalProfileOrganization.html">{{request.user.organizer.name}}</a>
+						{% endif %}
+						{% if request.user.isBen %}
+						<a href="personalProfileBenefactor.html">{{request.user.benefactor.name}}  {{request.user.benefactor.surname}}</a>
+						{% endif %}
+					</div>
+					<div class="topmenudate">
+						<a href="{% url 'logout' %}">خروج</a>
+					</div>
+					<div class="logo">
+						<img src="../static/images/logo.png">
+					</div>
+				</div>
+				{% endif %}
+                {% if not request.user.is_authenticated %}
+                     <div class="container">
+                     <div class="topmenudate">
+                      <h3>شما هنوز وارد نشده‌اید،</h3>
+                     </div>
+                     <div class="topmenudate">
+                      <button onclick="popup()">ورود</button>
+                     </div>
+                     <div class="topmenudate">
+                      <button onclick="popupregister()">ثبت نام</button>
+                     </div>
+                    </div>
+                {% endif %}
 			</div>
 		</div>
 		<div class="mainPage">
@@ -35,6 +83,7 @@
 					</form>
                 </div>
             </div>
+
             <div id="testreg">
 				<div class="wrappers">
 					<form class="register">
@@ -69,7 +118,32 @@
 					<div id="p22" class="enter"><a href="{% url 'registerOrg' %}">ثبت نام موسسات</a></div>
 				</div>
 				<div class="section3" id="c3">
-
+                    {% for org in orgs %}
+                     <div class="organization">
+                      <h3>{{ org.name }}</h3>
+                      <!-- <div>
+                       <table>
+                        <tr class="bars">
+                         <td>
+                          <div class="one" style="height: {{org.rating}}"></div>
+                         </td>
+                         <td>
+                          <div class="tow"></div>
+                         </td>
+                         <td>
+                          <div class="three"></div>
+                         </td>
+                         <td>
+                          <div class="four"></div>
+                         </td>
+                         <td>
+                          <div class="five"></div>
+                         </td>
+                        </tr>
+                       </table>
+                      </div> -->
+                     </div>
+                     {% endfor %}
 				</div>
 				<div class="section4" id="c4">
 					<div id="p4">

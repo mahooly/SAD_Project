@@ -109,6 +109,20 @@
 						<input type="file" id="photo" name="photo">
 					</div>
 
+                    <h2> توانایی‌ها </h2>
+					<div class="controlsAbility">
+						<select id="candidate" class="floatlabel" name="ability">
+                            {% for ability in abilities %}
+                            <option value="{{ability.name}}">{{ability.name}}</option>
+                           {% endfor %}
+						</select>
+                        {% for ability in abilities %}
+                            <input type="checkbox" name="{{ability.name}}" id="{{ability.name}}" style="display: block">
+                        {% endfor %}
+	    				<button id="add" onclick="addItem()"><h3>+</h3></button>
+						<ul id="dynamiclist"></ul>
+					</div>
+
                     <div class="controls">
 						<input type="checkbox" id="checkbox" class="checkbox" name="terms">
 						<label class="checkb" style="display: inline;" for="checkbox"><span></span><a href={% url 'terms' %} style="text-decoration: none; color: #009966">قوانین</a> را قبول دارم</label>
