@@ -115,14 +115,14 @@
 					</div>
 
 					<div class="controls">
-						<input type="text" id="username" class="floatlabel" placeholder="{{ person.username }}" name="username">
+						<input type="text" id="username" class="floatlabel" placeholder="{{ person.user }}" name="username">
 					</div>
 
 					<div class="controls">
 						<input type="password" id="pass1" class="floatlabel" placeholder="" name="password">
 					</div>
 					<div class="controls">
-						<input type="password" id="pass1" class="floatlabel" placeholder="" name="password2">
+						<input type="password" id="pass2" class="floatlabel" placeholder="" name="password2">
 					</div>
 
                     {{ user_form.errors }}
@@ -130,13 +130,13 @@
 					<div class="controls">
 						<i class="ion-navicon"></i>
                         <select id="sex" class="floatlabel" name="gender">
-                            {% if person.sex == "male" %}
+                            {% if person.gender == "male" %}
 							    <option value="blank" selected>مرد</option>
                             {% endif %}
-                            {% if person.sex == "female" %}
+                            {% if person.gender == "female" %}
 							    <option value="blank" selected>زن</option>
                             {% endif %}
-                            {% if person.sex == "other" %}
+                            {% if person.gender == "other" %}
 							    <option value="blank" selected>سایر</option>
                             {% endif %}
                             <option value="male">مرد</option>
@@ -147,9 +147,9 @@
 
                     <div class="controls">
 						<h3>تاریخ تولد</h3>
-						<input type="number" id="date" class="birthday" placeholder="{{ person.birthDate }}" name="day">
-						<input type="number" id="month" class="birthday" placeholder="{{ person.birthMonth }}" name="month">
-						<input type="number" id="year" class="birthday" placeholder="{{ person.birthYear }}" name="year">
+						<input type="number" id="date" class="birthday" placeholder="{{ person.day }}" name="day">
+						<input type="number" id="month" class="birthday" placeholder="{{ person.month }}" name="month">
+						<input type="number" id="year" class="birthday" placeholder="{{ person.year }}" name="year">
 					</div>
 
 					<div class="controls">
@@ -178,20 +178,25 @@
 						</select>
 					</div>
 
-                    {% if person.education == "phd" or person.education == "master" or person.education == "bachelor" or person.education == "diploma" %}
+                    {% if person.major != "phd" or person.education == "master" or person.education == "bachelor" or person.education == "diploma" %}
 					<div class="educontrols">
-						<input type="text" id="fieldOfEducation" class="floatlabel" placeholder="{{ person.fieldOfEducation }}" name="major">
+						<input type="text" id="fieldOfEducation" class="floatlabel" placeholder="{{ person.major }}" name="major">
 					</div>
                     {% endif %}
 
 					<div class="controls">
-						<input type="number" id="nationalId" class="NID" placeholder="person.nationalId" name="nationalId">
+						<input type="number" id="nationalId" class="NID" placeholder="{{ person.nationalId }}" name="nationalId">
 					</div>
 
 					<div class="controls">
 						<i class="ion-navicon"></i>
 						<select id="city" class="floatlabel" name="city">
-							<option value="blank">شهر محل سکونت</option>
+                            {% if person.city == "blank" %}
+                                <option value="blank">-</option>
+                            {% endif %}
+                            {% if not person.city == "blank" %}
+							<option value="blank">{{ person.city }}</option>
+                            {% endif %}
 						</select>
 					</div>
 
@@ -200,11 +205,7 @@
 					</div>
 
 					<div class="controls">
-						<input type="email" id="email" class="floatlabel" placeholder="{{ person.email }}" name="email">
-					</div>
-
-					<div class="controls">
-						<input type="tel" id="tel" class="floatlabel" placeholder="{{ person.tell }}" name="phone">
+						<input type="tel" id="tel" class="floatlabel" placeholder="{{ person.phone }}" name="phone">
 					</div>
 
                     <div class="controls">
@@ -214,17 +215,22 @@
 
                     <h2> توانایی‌ها </h2>
 					<div class="controlsAbility">
-						<select id="candidate" class="floatlabel">
-							<option value="blank"></option>
+						<select id="candidate" class="floatlabel" name="ability">
+                            {% for ability in abilities %}
+                            <option value="{{ability.name}}">{{ability.name}}</option>
+                           {% endfor %}
 						</select>
+                        {% for ability in abilities %}
+                            <input type="checkbox" name="{{ability.name}}" id="{{ability.name}}" style="display: none">
+                        {% endfor %}
 	    				<button id="add" onclick="addItem()"><h3>+</h3></button>
-						<ul id="dynamiclist">
-{#                            {% for ability in abilities %}#}
-{#                                <li id="{{ ability.name }}">#}
-{#                                    <span class="close" onclick="del()">\u00D7</span>#}
-{#                                    #}
-{#                                </li>#}
-{#                            {% endfor %}#}
+                        <ul id="templist">
+                        {% for ability in user_abilities %}
+                            <li id="{{ ability.name }}">
+                            </li>
+                        {% endfor %}
+                        </ul>
+                        <ul id="dynamiclist">
                         </ul>
 					</div>
 
@@ -232,19 +238,19 @@
                     <div class="controls">
 						<i class="ion-navicon"></i>
 						<select id="typeOfParticipation" class="floatlabel" onchange="participation()">
-                            {% if person.typeOfParticipation == "inOffice10" %}
+                            {% if person.typeOfCooperation == "inOffice10" %}
                                 <option value="blank">حضوری، کمتر از ۱۰ ساعت در هفته</option>
                             {% endif %}
-                            {% if person.typeOfParticipation == "inOffice10" %}
+                            {% if person.typeOfCooperation == "inOffice10" %}
 							    <option value="blank">حضوری، بین ۱۰ تا ۲۰ ساعت در هفته</option>
                             {% endif %}
-                            {% if person.typeOfParticipation == "inOffice10" %}
+                            {% if person.typeOfCooperation == "inOffice10" %}
 							    <option value="blank">حضوری، بین ۲۰ تا ۳۰ ساعت در هفته</option>
                             {% endif %}
-                            {% if person.typeOfParticipation == "inOffice10" %}
+                            {% if person.typeOfCooperation == "inOffice10" %}
 							    <option value="blank">حضوری، بیش از ۳۰ ساعت در هفته</option>
                             {% endif %}
-                            {% if person.typeOfParticipation == "inOffice10" %}
+                            {% if person.typeOfCooperation == "inOffice10" %}
 							    <option value="blank">دورکاری</option>
                             {% endif %}
 							<option value="inOffice10">حضوری، کمتر از ۱۰ ساعت در هفته</option>
@@ -254,6 +260,7 @@
 							<option value="atHome">دورکاری</option>
 						</select>
 					</div>
+                    {% if person.typeOfCooperation == "inOffice10" or person.typeOfCooperation == "inOffice20" or person.typeOfCooperation == "inOffice30" or person.typeOfCooperation == "inOfficemore" %}
                     <table id="tab">
 						<tbody>
                             <tr>
@@ -315,6 +322,7 @@
 						</tbody>
                         <h5 id="tab2" style="display: none">لطفا زمان‌های غیرفعال خود را علامت بزنید</h5>
 					</table>
+                    {% endif %}
                     {% for i in rangee %}
                          <input type="checkbox" name="a{{ i }}" id="a{{ i }}" style="display: none">
                     {% endfor %}

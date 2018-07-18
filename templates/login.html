@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" type="text/css" href={% static "css/style.css" %}>
+	<link rel="stylesheet" type="text/css" href={% static "css/login.css" %}>
+	<link rel="stylesheet" href={% static "css/ionicons.min.css" %}>
+</head>
+<body>
+	
+	<div class="wrapper">
+		
+		<form class="login">
+			
+			<p class="title">ورود</p>
+			
+			<p>
+				<input type="text" placeholder="نام کاربری" class="login-text">
+				<i class="ion-person"></i>
+			</p>
+			<p>
+				<input type="password" placeholder="رمز عبور" class="login-text">
+				<i class="ion-ios-locked"></i>
+			</p>
+			<div class="enter"><button>ورود</button></div>
+			<button>فراموشی رمز عبور</button>
+			
+		</form>
+		
+	</div>
+	
+</body>
+</html>

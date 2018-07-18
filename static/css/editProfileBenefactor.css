@@ -218,7 +218,7 @@ table {
 	margin-bottom: 20px;
 	box-sizing: border-box;
 	border-collapse: collapse;
-	display: none;
+	/*display: none;*/
 }
 
 .formm table tbody tr td {

@@ -112,7 +112,7 @@ def update_benefactor_profile(request):
     abilities = Ability.objects.all()
     user = CustomUser.objects.get(username=request.user.username)
     benefactor = user.benefactor
-    week = WeeklySchedule.objects.get(id=benefactor.wId)
+    week = WeeklySchedule.objects.get(id=benefactor.wId.id)
     user_abilities = UserAbilities.objects.filter(username=user.username)
     if request.method == 'POST':
         user_form = EditUser(request.POST)
@@ -136,7 +136,7 @@ def update_benefactor_profile(request):
         user_form = UserForm()
         form = EditBenefactorProfile()
 
-    return render(request, 'editProfileBenefactor.html', {'user_form': user_form, 'form': form, 'abilities': abilities, 'user': user, 'benefactor': benefactor, 'week': week, 'user_abilities': user_abilities, 'rangee': range(28)})
+    return render(request, 'editProfileBenefactor.html', {'user_form': user_form, 'form': form, 'abilities': abilities, 'user': user, 'person': benefactor, 'week': week, 'user_abilities': user_abilities, 'rangee': range(28)})
 
 
 @login_required

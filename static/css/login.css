@@ -1,0 +1,251 @@
+@font-face{
+	font-family: 'vazir';
+	src:url("../fonts/Vazir-FD.woff")format("woff"),
+	url("../fonts/Vazir-FD.eot")format("eot"),
+	url("../fonts/Vazir-FD.ttf")format("truetype")
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'vazir', sans-serif;
+	direction: rtl
+}
+
+body {
+	font-family: 'vazir', sans-serif;
+	height: 100vh;
+	/*background: url('../images/back1.jpg') 50% fixed;*/
+	background-size: cover;
+}
+
+.wrapper{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	min-height: 100%;
+	padding: 20px;
+	background: rgba(4,40,68,.45);
+}
+.login{
+	border-radius: 2px 5px 5px 5px;
+	padding: 10px 20px 20px 20px;
+	width: 100%;
+	max-width: 320px;
+	background: #fff;
+	box-shadow: 0px 1px 5px rgba(0,0,0,.3);
+	position: fixed;
+	margin: auto;
+}
+.login input.login-text{
+	display: block;
+	padding: 15px 10px;
+	margin-bottom: 10px;
+	width: 100%;
+	border: 1px solid #ddd;
+	-webkit-transition: border-width .2s ease;
+	-o-transition: border-width .2s ease;
+	transition: border-width .2s ease;
+	color: #ccc;
+	text-align: right;
+}
+.login input.login-text + i{
+	color: #fff;
+	font-size: 1em;
+	position: absolute;
+	margin-top: -47px;
+	right: 0;
+	opacity: 0;
+	transition: all .2s
+}
+.login input.login-text:focus{
+	outline: none;
+	color: #444;
+	border-color: #2196f3;
+	border-right-width: 35px;
+}
+.login input.login-text:focus + i{
+	opacity: 1;
+	right: 30px;
+	transition: all .2s
+}
+.login .title{
+	text-align: center;
+	color: #444;
+	font-size: 19px;
+	margin: 10px 0 30px 0;
+	border-bottom: 1px solid #eee;
+	padding-bottom: 20px;
+}
+.checkbox{
+	display: none;
+}
+.checkbox + label span{
+	margin-left: 4px;
+}
+.checkbox + label span:after{
+	content: "\f372";
+	font-size: 18px;
+	font-family: "Ionicons";
+	display: inline-block;
+	color: #1abc9c
+}
+.checkbox:checked + label span:after{
+	content: "\f373";
+}
+.radio{
+	display: none;
+}
+.radio + label span{
+	margin-left: 4px;
+}
+.radio + label span:after{
+	content: "\f401";
+	font-size: 18px;
+	font-family: "Ionicons";
+	display: inline-block;
+	color: #1abc9c
+}
+.radio:checked + label span:after{
+	content: "\f400";
+}
+.selectdiv{
+	position: relative;
+	width: 100%;
+	float: right;
+	min-width: 200px;
+}
+.selectdiv:after{
+	content: '<>';
+	font: 17px "Consolas";
+	color: #333;
+	-webkit-transform: rotate(90deg);
+	-ms-transform: rotate(90deg);
+	-o-transform: rotate(90deg);
+	transform: rotate(90deg);
+	position: absolute;
+	left: 11px;
+	top: 18px;
+	padding: 0 0 2px;
+	border-top: 1px solid #999;
+	
+}
+select{
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	display: block;
+	width: 100%;
+	height: 50px;
+	float: right;
+	margin: 5px 0;
+	padding: 0 24px;
+	font-size: 16px;
+	line-height: 1.75;
+	color: #333;
+	background: #fff;
+	border: 1px solid #ccc;
+}
+.file input{
+	position: absolute;
+	width: 100%;
+	overflow: hidden;
+	opacity: 0;
+	cursor: pointer;
+	z-index: 1;
+}
+.file{
+	margin:  10px 0;
+	width: 100%;
+	min-width: 200px;
+	height: 30px;
+	line-height: 28px !important;
+	cursor: pointer;
+	position: relative;
+	float: right
+}
+.file:before{
+	font-family: 'vazir';
+	content: 'فایلی انتخاب نشده است';
+	display: block;
+	position: absolute;
+	box-sizing: border-box;
+	width: 100%;
+	padding: 0 80px 0 10px;
+	border: 0px solid #e8eeef;
+	border-width: 2px 0 3px 3px;
+	border-radius: 3px 0 0 3px;
+	background: #fff;
+	color: #34495e;
+	font-size: 12px;
+	overflow: hidden;
+	text-align: center;
+	vertical-align: middle;
+}
+.file[title]:not([title=""]):before{
+	content: attr(title);
+	color: #162f44
+}
+.file:after{
+	font-family: 'vazir';
+	content: 'انتخاب فایل';
+	display: inline-block;
+	position: relative;
+	box-sizing: border-box;
+	width: 74px;
+	height: 32px;
+	padding: 0 4px;
+	border-radius: 0 3px 3px 0;
+	background: #a0b7c5;
+	color: #fff;
+	overflow: hidden;
+	font-size: 10px;
+	font-weight: bold;
+	text-align: center;
+	vertical-align: middle;
+}
+button{
+	padding: 13px 5px;
+	text-align: center;
+	color: #fff;
+	background: #d75c4c;
+	width: 45%;
+	margin-left: 2.5%;
+	margin-right: 2.5%;
+	float: right;
+	border: none
+}
+
+button:hover{
+	padding: 13px 5px;
+	text-align: center;
+	color: #fff;
+	background: #f72c2c;
+	width: 45%;
+	margin-left: 2.5%;
+	margin-right: 2.5%;
+	float: right;
+	border: none
+}
+
+.enter {
+	width: 45%;
+	margin-left: 2.5%;
+	margin-right: 2.5%;
+	float: right;
+}
+
+.enter button{
+	padding: 13px 5px;
+	text-align: center;
+	color: #fff;
+	background: #229922;
+	width: 100%;
+	border: none
+}
+
+.enter button:hover{
+	background: #22cc22;
+}
