@@ -31,10 +31,10 @@
 					</div>
 					<div class="topmenuelements">
 						{% if request.user.isOrg %}
-						<a href="personalProfileOrganization.html">{{request.user.organizer.name}}</a>
+						<a href={% url 'profile_org' request.user.username %}>{{request.user.organizer.name}}</a>
 						{% endif %}
 						{% if request.user.isBen %}
-						<a href="personalProfileBenefactor.html">{{request.user.benefactor.name}}  {{request.user.benefactor.surname}}</a>
+						<a href={% url 'profile_ben' request.user.username %}>{{request.user.benefactor.name}}  {{request.user.benefactor.surname}}</a>
 						{% endif %}
 					</div>
 					<div class="topmenudate">

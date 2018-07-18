@@ -10,3 +10,5 @@ ABILITY_CHOICES = (
 ('driving', 'Driving'), ('pr', 'Public Relations'), ('accounting', 'Accounting'), ('teaching', 'Teaching'))
 
 BANK_CHOICES = (('card', '1'), ('account', '2'))
+
+COOP_CHOICES = (('inOffice10', 'inOffice10'), ('inOffice20', 'inOffice20'), ('inOffice30', 'inOffice30'), ('inOfficemore', 'inOfficemore'), ('atHome', 'atHome'))

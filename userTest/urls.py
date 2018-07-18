@@ -17,7 +17,6 @@ from django.conf.urls import url
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
-
 from userTest import settings
 from users import views
 
@@ -33,5 +32,7 @@ urlpatterns = [
     url(r'^terms/', views.terms, name='terms'),
     url(r'^search_projects', views.list_projects, name='search_projects'),
     url(r'^logout', views.user_logout, name='logout'),
+    url(r'^profile_benefactor/(?P<username>[a-zA-Z0-9]+)$', views.user_profile_benefactor, name='profile_ben'),
+    url(r'^profile_organization/(?P<username>[a-zA-Z0-9]+)$', views.user_profile_organization, name='profile_org'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

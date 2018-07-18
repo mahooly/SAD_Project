@@ -13,19 +13,6 @@ class CustomUser(AbstractUser):
         return self.username
 
 
-class Ability(models.Model):
-    id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=20)
-
-
-class UserAbilities(models.Model):
-    class Meta:
-        unique_together = ('abilityId', 'username')
-
-    abilityId = models.ForeignKey(Ability, on_delete=models.CASCADE, related_name='ability')
-    username = models.ForeignKey(CustomUser, to_field='username', on_delete=models.CASCADE, related_name='benefactorusername')
-
-
 class WeeklySchedule(models.Model):
     id = models.AutoField(primary_key=True)
     a0 = models.CharField(max_length=5, default='off', blank=True)
@@ -74,6 +61,7 @@ class Benefactor(models.Model):
     city = models.CharField(max_length=10, choices=CITY_CHOICES, default='blank')
     address = models.CharField(max_length=100, default='st')
     phone = models.CharField(max_length=12)
+    typeOfCooperation = models.CharField(max_length=15, choices=COOP_CHOICES, default='inOffice10')
     wId = models.ForeignKey(WeeklySchedule, on_delete=models.DO_NOTHING, related_name='userWeek')
 
 
@@ -116,6 +104,19 @@ class Rate(models.Model):
     f4 = models.IntegerField()
     f5 = models.IntegerField()
     description = models.TextField(max_length=300)
+
+
+class Ability(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=20)
+
+
+class UserAbilities(models.Model):
+    class Meta:
+        unique_together = ('abilityId', 'username')
+
+    abilityId = models.ForeignKey(Ability, on_delete=models.CASCADE, related_name='ability')
+    username = models.ForeignKey(CustomUser, to_field='username', on_delete=models.CASCADE, related_name='benefactorusername')
 
 
 # class Requirement(models.Model):

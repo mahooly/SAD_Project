@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .forms import *
 
 
@@ -26,17 +26,17 @@ def benefactor_registration(request):
             user.set_password(user.password)
             user.isBen = True
             user.save()
+            week = week_form.save()
+            week.save()
             benefactor = form.save(commit=False)
             benefactor.user = user
+            benefactor.wId = week
             benefactor.save()
 
             for a in abilities:
                 name = a.name
                 if request.POST.get(name) is not None:
                     UserAbilities.objects.create(abilityId=a, username=user)
-
-            week = week_form.save()
-            week.save()
 
         else:
             print(user_form.errors, form.errors)
@@ -199,5 +199,14 @@ def user_logout(request):
     return HttpResponseRedirect('/')
 
 
+def user_profile_benefactor(request, username):
+    user = get_object_or_404(CustomUser, username=username)
+    benefactor = Benefactor.objects.get(user=user)
+    return render(request, 'personalProfileBenefactor.html', {'user': user, 'benefactor': benefactor})
 
+
+def user_profile_organization(request, username):
+    user = get_object_or_404(CustomUser, username=username)
+    organization = Organizer.objects.get(user=user)
+    return render(request, 'personalProfileOrganization.html', {'user': user, 'organization': organization})
 
