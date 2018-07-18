@@ -92,3 +92,9 @@ class RateForm(forms.ModelForm):
         model = Rate
         fields = ('f1', 'f2', 'f3', 'f3', 'f4', 'f5', 'description')
 
+
+class WeekForm(forms.ModelForm):
+    class Meta:
+        model = WeeklySchedule
+        exclude = ('id',)
+

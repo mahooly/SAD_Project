@@ -17,4 +17,5 @@ admin.site.register(Organizer)
 admin.site.register(Project)
 admin.site.register(Ability)
 admin.site.register(UserAbilities)
+admin.site.register(WeeklySchedule)
 

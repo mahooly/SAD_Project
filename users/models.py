@@ -13,6 +13,51 @@ class CustomUser(AbstractUser):
         return self.username
 
 
+class Ability(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=20)
+
+
+class UserAbilities(models.Model):
+    class Meta:
+        unique_together = ('abilityId', 'username')
+
+    abilityId = models.ForeignKey(Ability, on_delete=models.CASCADE, related_name='ability')
+    username = models.ForeignKey(CustomUser, to_field='username', on_delete=models.CASCADE, related_name='benefactorusername')
+
+
+class WeeklySchedule(models.Model):
+    id = models.AutoField(primary_key=True)
+    a0 = models.CharField(max_length=5, default='off', blank=True)
+    a1 = models.CharField(max_length=5, default='off', blank=True)
+    a2 = models.CharField(max_length=5, default='off', blank=True)
+    a3 = models.CharField(max_length=5, default='off', blank=True)
+    a4 = models.CharField(max_length=5, default='off', blank=True)
+    a5 = models.CharField(max_length=5, default='off', blank=True)
+    a6 = models.CharField(max_length=5, default='off', blank=True)
+    a7 = models.CharField(max_length=5, default='off', blank=True)
+    a8 = models.CharField(max_length=5, default='off', blank=True)
+    a9 = models.CharField(max_length=5, default='off', blank=True)
+    a10 = models.CharField(max_length=5, default='off', blank=True)
+    a11 = models.CharField(max_length=5, default='off', blank=True)
+    a12 = models.CharField(max_length=5, default='off', blank=True)
+    a13 = models.CharField(max_length=5, default='off', blank=True)
+    a14 = models.CharField(max_length=5, default='off', blank=True)
+    a15 = models.CharField(max_length=5, default='off', blank=True)
+    a16 = models.CharField(max_length=5, default='off', blank=True)
+    a17 = models.CharField(max_length=5, default='off', blank=True)
+    a18 = models.CharField(max_length=5, default='off', blank=True)
+    a19 = models.CharField(max_length=5, default='off', blank=True)
+    a20 = models.CharField(max_length=5, default='off', blank=True)
+    a21 = models.CharField(max_length=5, default='off', blank=True)
+    a22 = models.CharField(max_length=5, default='off', blank=True)
+    a23 = models.CharField(max_length=5, default='off', blank=True)
+    a24 = models.CharField(max_length=5, default='off', blank=True)
+    a25 = models.CharField(max_length=5, default='off', blank=True)
+    a26 = models.CharField(max_length=5, default='off', blank=True)
+    a27 = models.CharField(max_length=5, default='off', blank=True)
+
+
 class Benefactor(models.Model):
 
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='benefactor')
@@ -29,6 +74,7 @@ class Benefactor(models.Model):
     city = models.CharField(max_length=10, choices=CITY_CHOICES, default='blank')
     address = models.CharField(max_length=100, default='st')
     phone = models.CharField(max_length=12)
+    wId = models.ForeignKey(WeeklySchedule, on_delete=models.DO_NOTHING, related_name='userWeek')
 
 
 class Organizer(models.Model):
@@ -70,24 +116,6 @@ class Rate(models.Model):
     f4 = models.IntegerField()
     f5 = models.IntegerField()
     description = models.TextField(max_length=300)
-
-
-class Ability(models.Model):
-    id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=20)
-
-
-class UserAbilities(models.Model):
-    class Meta:
-        unique_together = ('abilityId', 'username')
-
-    abilityId = models.ForeignKey(Ability, on_delete=models.CASCADE, related_name='ability')
-    username = models.ForeignKey(CustomUser, to_field='username', on_delete=models.CASCADE, related_name='benefactorusername')
-
-
-class WeeklySchedule(models.Model):
-    id = models.AutoField(primary_key=True)
-
 
 
 # class Requirement(models.Model):
