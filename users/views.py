@@ -16,8 +16,8 @@ def terms(request):
 
 
 def benefactor_registration(request):
+    abilities = Ability.objects.all()
     if request.method == 'POST':
-        abilities = Ability.objects.all()
         user_form = UserForm(request.POST, request.FILES)
         form = BenefactorRegistraton(request.POST)
         if form.is_valid() and user_form.is_valid():
@@ -28,12 +28,14 @@ def benefactor_registration(request):
             benefactor = form.save(commit=False)
             benefactor.user = user
             benefactor.save()
-
+            for a in abilities:
+                name = a.name
+                if request.POST.get(name) is not None:
+                    UserAbilities.objects.create(abilityId=a, username=user)
         else:
             print(user_form.errors, form.errors)
 
     else:
-        abilities = Ability.objects.all()
         user_form = UserForm()
         form = BenefactorRegistraton()
     return render(request, 'registerBenefactor.html', {'user_form': user_form, 'form': form, 'abilities': abilities, 'rangee': range(28)})
