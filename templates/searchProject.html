@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="fa" dir="rtl">
+<head>
+	<title>جستجوی پروژه</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href={% static "css/style.css" %}>
+	<link rel="stylesheet" type="text/css" href={% static "css/search.css" %}>
+	<link rel="stylesheet" href={% static "css/ionicons.min.css" %}>
+</head>
+<body>
+	<div class="main">
+		<div class="header">
+			<div class="topmenu" id="topmenu">
+				
+			</div>
+		</div>
+		<div class="mainPage">
+			<div class="wrapper"></div>
+			<div id="test">
+				<div class="wrappers">
+					<form class="login" method="post" action="{% url 'login' %}">
+                        {% csrf_token %}
+						<button id="button2" class="exit1" onclick="popdown()">x</button>
+						<p class="title">ورود</p>
+						<p>
+							<input type="text" placeholder="نام کاربری" class="login-text" name="username">
+							<i class="ion-person"></i>
+						</p>
+						<p>
+							<input type="password" placeholder="رمز عبور" class="login-text" name="password">
+							<i class="ion-ios-locked"></i>
+						</p>
+						<div class="enter"><button>ورود</button></div>
+						<button class="forget">فراموشی رمز عبور</button>
+
+						<p> اگر هنوز حساب کاربری برای خود ایجاد نکرده‌اید، </p> <button class="reg" id="buttonreg" onclick="popupregister()">ثبت نام</button> <p>کنید</p>
+					</form>
+				</div>
+			</div>
+			<div id="testreg">
+				<div class="wrappers">
+					<form class="register">
+						<button id="buttonreg2" class="exit" onclick="popdownregister()">x</button>
+						<p class="title">ثبت نام</p>
+						<div class="enter"><a href="{% url 'register' %}">نیکوکار</a></div>
+						<div class="enter"><a href="{% url 'registerOrg' %}">موسسه</a></div>
+					</form>
+				</div>
+			</div>
+			<div class="nav" id="nav"></div>
+			<div class="container">
+				<div class="filter">
+					<p>جستجوی پروژه‌های نقدی	</p>
+					<div class="controlsSelect">
+						<i class="ion-navicon"></i>
+						<select id="field" onchange="show()"></select>
+					</div>
+					<div class="controls">
+						<input id="minimumbudget"  onchange="show()" type="number" placeholder="حداقل بودجه مورد نیاز (تومان)">
+					</div>
+					<div class="controls">
+						<input id="minimumtotalrating"  onchange="show()" type="number" placeholder="حداقل امتیاز مجری پروژه (۵-۱)">
+					</div>
+					<div class="rating">
+					<button class="mybutton" onclick="show()">اعمال تغییرات</button>
+				</div>
+				</div>
+				<div class="searchBar">
+					<div class="container">
+						<div class="controlsname">
+                            <form method="post">
+                                {% csrf_token %}
+                                <input id="orgName" type="text" placeholder="نام موسسه"  onchange="show()" name="org">
+							    <img src="../static/images/search.png" onclick="show()">
+                            </form>
+						</div>
+						<h4> مرتب‌سازی بر اساس </h4>
+						<select id="sortType">
+							<option value="budgetD">بودجه، نزولی</option>
+							<option value="budgetA">بودجه، صعودی</option>
+							<option value="participantsD">تعداد مشارکت کنندگان، نزولی</option>
+							<option value="participantsA">تعداد مشارکت کنندگان، صعودی</option>
+						</select>
+					</div>
+				</div>
+				<div id="result">
+                    {% for project in projects %}
+                        {{ project.name }}
+                    {% endfor %}
+				</div>
+			</div>
+		</div>
+
+		<div class="footer">
+			<div class="container">
+				<div class="addr">
+					<h4> خیابان آزادی، بلوار اکبری، خیابان قاسمی، پلاک ۳۶، واحد ۲ </h4>
+					<h4>تلفن: ۰۲۱۸۸۳۴۲۸۹۱</h4>
+				</div>
+			</div>
+			<div class="copy">
+				<h4>کپی‌رایت رعایت شود.</h4>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src={% static "js/searchProject.js" %}></script>
+	<script type="text/javascript" src={% static "js/main.js" %}></script>
+	<script src={% static "js/jquery.min.js" %}></script>
+</body>
+</html>

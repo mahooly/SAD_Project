@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+	<title>درگاه پرداخت بانک </title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/bank.css">
+	<link rel="stylesheet" href="css/ionicons.min.css">
+</head>
+<body>
+	<div class="main">
+		<div class="header">
+			<div class="topmenu">
+				<div class="container">
+					
+				</div>
+			</div>
+		</div>
+		<div class="mainPage">
+			<div class="wrapper"></div>
+			<h2>درگاه پرداخت اینترنتی</h2>
+			
+			<div class="topPage">
+				<div class="texts">
+					<div class="topcontrols" id="name"> 
+						<label for="receivername">نام پذیرنده: </label>
+					</div>
+					<div class="topcontrols" id="payment">
+						<label for="price">مبلغ (تومان): </label>
+					</div>
+					<div class="topcontrols" id="site">
+						<label for="site">سایت پذیرنده: </label>
+					</div>
+				</div>
+				<div class="photo">
+					<img src="images/bank.png">
+				</div>
+			</div>
+			<div class="formm">
+				<form>
+					<div class="controls">
+						<label for="t1"> شماره کارت </label>
+						<div class="cont">
+							<input class="num" type="text" id="fourth" maxlength="4" >
+							<h3>-</h3><input class="num" type="text" id="third" maxlength="4" onkeyup="movetoNext(this, 'fourth')">
+							<h3>-</h3><input class="num" type="text" id="second" maxlength="4" onkeyup="movetoNext(this, 'third')">
+							<h3>-</h3><input class="num" type="text" id="first" maxlength="4" onkeyup="movetoNext(this, 'second')">
+						</div>
+					</div>
+					
+					<div class="controls">
+						<label for="pass">رمز اینترنتی</label>
+						<input class="pass" type="text" name="pass">
+					</div>
+					<div class="controls">
+						<label for="cvv2"> رمز دوم کارت</label>
+						<input class="pass" type="text" name="cvv2">
+					</div>
+					<div class="controls">
+						<label for="expdate">تاریخ انقضای کارت</label>
+						<span> ماه </span>
+						<input type="number" id="expmonth">
+						<span> سال </span>
+						<input type="number" id="expyear">
+					</div>
+					<div class="buttonclass">
+						<button>پرداخت</button>
+						<button>انصراف</button>
+					</div>
+	
+				</form>
+				
+			</div>
+			
+			<!--<div class="photo">
+				<img src="images/bank.png">
+			</div>-->
+		</div>
+		<div class="footer">
+			
+			<div class="copy">
+				<h4>کپی‌رایت رعایت شود.</h4>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/bank.js"></script>
+	<script src="js/jquery.min.js"></script>
+</body>
+</html>
