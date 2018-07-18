@@ -47,15 +47,18 @@
 				{% endif %}
                 {% if not request.user.is_authenticated %}
                      <div class="container">
-                     <div class="topmenudate">
-                      <h3>شما هنوز وارد نشده‌اید،</h3>
-                     </div>
-                     <div class="topmenudate">
-                      <button onclick="popup()">ورود</button>
-                     </div>
-                     <div class="topmenudate">
-                      <button onclick="popupregister()">ثبت نام</button>
-                     </div>
+                        <div class="topmenudate">
+                            <h3>شما هنوز وارد نشده‌اید،</h3>
+                         </div>
+                         <div class="topmenudate">
+                            <button onclick="popup()">ورود</button>
+                         </div>
+                         <div class="topmenudate">
+                            <button onclick="popupregister()">ثبت نام</button>
+                         </div>
+                         <div class="logo">
+                            <img src="../static/images/logo.png">
+                        </div>
                     </div>
                 {% endif %}
 			</div>
