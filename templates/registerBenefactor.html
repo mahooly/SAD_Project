@@ -117,12 +117,88 @@
                            {% endfor %}
 						</select>
                         {% for ability in abilities %}
-                            <input type="checkbox" name="{{ability.name}}" id="{{ability.name}}" style="display: block">
+                            <input type="checkbox" name="{{ability.name}}" id="{{ability.name}}" style="display: none">
                         {% endfor %}
 	    				<button id="add" onclick="addItem()"><h3>+</h3></button>
 						<ul id="dynamiclist"></ul>
 					</div>
 
+                    <h2>زمانبندی هفتگی</h2>
+                    <div class="controls">
+						<i class="ion-navicon"></i>
+						<select id="typeOfParticipation" class="floatlabel" onchange="participation()">
+							<option value="blank">نوع همکاری</option>
+							<option value="inOffice10">حضوری، کمتر از ۱۰ ساعت در هفته</option>
+							<option value="inOffice20">حضوری، بین ۱۰ تا ۲۰ ساعت در هفته</option>
+							<option value="inOffice30">حضوری، بین ۲۰ تا ۳۰ ساعت در هفته</option>
+							<option value="inOfficemore">حضوری، بیش از ۳۰ ساعت در هفته</option>
+							<option value="atHome">دورکاری</option>
+						</select>
+					</div>
+                    <table id="tab">
+						<tbody>
+                            <tr>
+                                <td></td>
+                                <td> 8-10 </td>
+                                <td> 10-12 </td>
+                                <td> 12-15 </td>
+                                <td> 15-17 </td>
+                            </tr>
+							<tr>
+								<td>شنبه</td>
+								<td> <span id="11" onclick="week(11,0)" value="1"></span> </td>
+								<td> <span id="12" onclick="week(12,1)" value="1"></span> </td>
+								<td> <span id="13" onclick="week(13,2)" value="1"></span> </td>
+								<td> <span id="14" onclick="week(14,3)" value="1"></span> </td>
+							</tr>
+							<tr>
+								<td>یکشنبه</td>
+								<td> <span id="21" onclick="week(21,4)" value="1"></span> </td>
+								<td> <span id="22" onclick="week(22,5)" value="1"></span> </td>
+								<td> <span id="23" onclick="week(23,6)" value="1"></span> </td>
+								<td> <span id="24" onclick="week(24,7)" value="1"></span> </td>
+							</tr>
+							<tr>
+								<td>دوشنبه</td>
+								<td> <span id="31" onclick="week(31,8)" value="1"></span> </td>
+								<td> <span id="32" onclick="week(32,9)" value="1"></span> </td>
+								<td> <span id="33" onclick="week(33,10)" value="1"></span> </td>
+								<td> <span id="34" onclick="week(34,11)" value="1"></span> </td>
+							</tr>
+							<tr>
+								<td>سه‌شنبه</td>
+								<td> <span id="41" onclick="week(41,12)" value="1"></span> </td>
+								<td> <span id="42" onclick="week(42,13)" value="1"></span> </td>
+								<td> <span id="43" onclick="week(43,14)" value="1"></span> </td>
+								<td> <span id="44" onclick="week(44,15)" value="1"></span> </td>
+							</tr>
+							<tr>
+								<td>چهارشنبه</td>
+								<td> <span id="51" onclick="week(51,16)" value="1"></span> </td>
+								<td> <span id="52" onclick="week(52,17)" value="1"></span> </td>
+								<td> <span id="53" onclick="week(53,18)" value="1"></span> </td>
+								<td> <span id="54" onclick="week(54,19)" value="1"></span> </td>
+							</tr>
+							<tr>
+								<td>پنجشنبه</td>
+								<td> <span id="61" onclick="week(61,20)" value="1"></span> </td>
+								<td> <span id="62" onclick="week(62,21)" value="1"></span> </td>
+								<td> <span id="63" onclick="week(63,22)" value="1"></span> </td>
+								<td> <span id="64" onclick="week(64,23)" value="1"></span> </td>
+							</tr>
+							<tr>
+								<td> جمعه </td>
+								<td> <span id="71" onclick="week(71,24)" value="1"></span> </td>
+								<td> <span id="72" onclick="week(72,25)" value="1"></span> </td>
+								<td> <span id="73" onclick="week(73,26)" value="1"></span> </td>
+								<td> <span id="74" onclick="week(74,27)" value="1"></span> </td>
+							</tr>
+						</tbody>
+                        <h5 id="tab2" style="display: none">لطفا زمان‌های غیرفعال خود را علامت بزنید</h5>
+					</table>
+                    {% for i in rangee %}
+                         <input type="checkbox" name="a{{ i }}" id="a{{ i }}" style="display: none">
+                    {% endfor %}
                     <div class="controls">
 						<input type="checkbox" id="checkbox" class="checkbox" name="terms">
 						<label class="checkb" style="display: inline;" for="checkbox"><span></span><a href={% url 'terms' %} style="text-decoration: none; color: #009966">قوانین</a> را قبول دارم</label>

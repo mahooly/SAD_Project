@@ -36,7 +36,7 @@ def benefactor_registration(request):
         abilities = Ability.objects.all()
         user_form = UserForm()
         form = BenefactorRegistraton()
-    return render(request, 'registerBenefactor.html', {'user_form': user_form, 'form': form, 'abilities': abilities})
+    return render(request, 'registerBenefactor.html', {'user_form': user_form, 'form': form, 'abilities': abilities, 'rangee': range(28)})
 
 
 def organization_registration(request):
