@@ -104,25 +104,31 @@
 					{% csrf_token %}
 					<div class="controls">
 						<input type="text" id="name" class="floatlabel" placeholder="{{ person.name }}" name="name">
-					</div>
+					    <label>نام</label>
+                    </div>
 
 					<div class="controls">
 						<input type="text" id="lastname" class="floatlabel" placeholder="{{ person.surname }}" name="surname">
+                        <label>نام خانوادگی</label>
 					</div>
 
 					<div class="controls">
 						<input type="text" id="nickname" class="floatlabel" placeholder="{{ person.nickname }}" name="nickname">
+                        <label>نام مستعار</label>
 					</div>
 
 					<div class="controls">
 						<input type="text" id="username" class="floatlabel" placeholder="{{ person.user }}" name="username">
+                        <label>نام کاربری</label>
 					</div>
 
 					<div class="controls">
 						<input type="password" id="pass1" class="floatlabel" placeholder="" name="password">
+                        <label>کلمه عبور</label>
 					</div>
 					<div class="controls">
 						<input type="password" id="pass2" class="floatlabel" placeholder="" name="password2">
+                        <label>تکرار کلمه عبور</label>
 					</div>
 
                     {{ user_form.errors }}
@@ -143,6 +149,7 @@
 							<option value="female">زن</option>
 							<option value="other">سایر</option>
 						</select>
+                        <label>جنسیت</label>
 					</div>
 
                     <div class="controls">
@@ -176,16 +183,19 @@
                             <option value="master">فوق لیسانس</option>
                             <option value="phd">دکتری و بالاتر</option>
 						</select>
+                        <label>میزان تحصیلات</label>
 					</div>
 
                     {% if person.major != "phd" or person.education == "master" or person.education == "bachelor" or person.education == "diploma" %}
 					<div class="educontrols">
 						<input type="text" id="fieldOfEducation" class="floatlabel" placeholder="{{ person.major }}" name="major">
+                        <label>رشته تحصیلی</label>
 					</div>
                     {% endif %}
 
 					<div class="controls">
 						<input type="number" id="nationalId" class="NID" placeholder="{{ person.nationalId }}" name="nationalId">
+                        <label>کد ملی</label>
 					</div>
 
 					<div class="controls">
@@ -198,14 +208,17 @@
 							<option value="blank">{{ person.city }}</option>
                             {% endif %}
 						</select>
+                        <label>شهر</label>
 					</div>
 
 					<div class="controls">
 						<input type="text" id="addr" class="floatlabel" placeholder="{{ person.address }}" name="address">
+                        <label>آدرس</label>
 					</div>
 
 					<div class="controls">
 						<input type="tel" id="tel" class="floatlabel" placeholder="{{ person.phone }}" name="phone">
+                        <label>تلفن</label>
 					</div>
 
                     <div class="controls">
@@ -221,15 +234,10 @@
                            {% endfor %}
 						</select>
                         {% for ability in abilities %}
-                            <input type="checkbox" name="{{ability.name}}" id="{{ability.name}}" style="display: none">
+                            <input type="checkbox" name="{{ability.name}}" id="b{{ability.name}}" style="display: none">
                         {% endfor %}
 	    				<button id="add" onclick="addItem()"><h3>+</h3></button>
-                        <ul id="templist">
-                        {% for ability in user_abilities %}
-                            <li id="{{ ability.name }}">
-                            </li>
-                        {% endfor %}
-                        </ul>
+                        <ul id="templist">{% for ability in user_abilities %}<li id="{{ ability.abilityId.name }}"></li>{% endfor %}</ul>
                         <ul id="dynamiclist">
                         </ul>
 					</div>
@@ -241,16 +249,16 @@
                             {% if person.typeOfCooperation == "inOffice10" %}
                                 <option value="blank">حضوری، کمتر از ۱۰ ساعت در هفته</option>
                             {% endif %}
-                            {% if person.typeOfCooperation == "inOffice10" %}
+                            {% if person.typeOfCooperation == "inOffice20" %}
 							    <option value="blank">حضوری، بین ۱۰ تا ۲۰ ساعت در هفته</option>
                             {% endif %}
-                            {% if person.typeOfCooperation == "inOffice10" %}
+                            {% if person.typeOfCooperation == "inOffice30" %}
 							    <option value="blank">حضوری، بین ۲۰ تا ۳۰ ساعت در هفته</option>
                             {% endif %}
-                            {% if person.typeOfCooperation == "inOffice10" %}
+                            {% if person.typeOfCooperation == "inOfficemore" %}
 							    <option value="blank">حضوری، بیش از ۳۰ ساعت در هفته</option>
                             {% endif %}
-                            {% if person.typeOfCooperation == "inOffice10" %}
+                            {% if person.typeOfCooperation == "atHome" %}
 							    <option value="blank">دورکاری</option>
                             {% endif %}
 							<option value="inOffice10">حضوری، کمتر از ۱۰ ساعت در هفته</option>
@@ -272,7 +280,7 @@
                             </tr>
 							<tr>
 								<td>شنبه</td>
-								<td> <span id="11" onclick="week(11,0)" value="1"></span> </td>
+								<td> <span id="11" onclick="week(11,0)"></span> </td>
 								<td> <span id="12" onclick="week(12,1)" value="1"></span> </td>
 								<td> <span id="13" onclick="week(13,2)" value="1"></span> </td>
 								<td> <span id="14" onclick="week(14,3)" value="1"></span> </td>
@@ -323,10 +331,62 @@
                         <h5 id="tab2" style="display: none">لطفا زمان‌های غیرفعال خود را علامت بزنید</h5>
 					</table>
                     {% endif %}
-                    {% for i in rangee %}
-                         <input type="checkbox" name="a{{ i }}" id="a{{ i }}" style="display: none">
-                    {% endfor %}
-
+                    {% if week.a0 == "on" %}<input type="checkbox" name="a0" id="a0" style="display: none" checked>{% endif %}
+                    {% if week.a0 == "off" %}<input type="checkbox" name="a0" id="a0" style="display: none" >{% endif %}
+                    {% if week.a1 == "on" %}<input type="checkbox" name="a1" id="a1" style="display: none" checked>{% endif %}
+                    {% if week.a1 == "off" %}<input type="checkbox" name="a1" id="a1" style="display: none" >{% endif %}
+                    {% if week.a2 == "on" %}<input type="checkbox" name="a2" id="a2" style="display: none" checked>{% endif %}
+                    {% if week.a2 == "off" %}<input type="checkbox" name="a2" id="a2" style="display: none" >{% endif %}
+                    {% if week.a3 == "on" %}<input type="checkbox" name="a3" id="a3" style="display: none" checked>{% endif %}
+                    {% if week.a3 == "off" %}<input type="checkbox" name="a3" id="a3" style="display: none" >{% endif %}
+                    {% if week.a4 == "on" %}<input type="checkbox" name="a4" id="a4" style="display: none" checked>{% endif %}
+                    {% if week.a4 == "off" %}<input type="checkbox" name="a4" id="a4" style="display: none" >{% endif %}
+                    {% if week.a5 == "on" %}<input type="checkbox" name="a5" id="a5" style="display: none" checked>{% endif %}
+                    {% if week.a5 == "off" %}<input type="checkbox" name="a5" id="a5" style="display: none" >{% endif %}
+                    {% if week.a6 == "on" %}<input type="checkbox" name="a6" id="a6" style="display: none" checked>{% endif %}
+                    {% if week.a6 == "off" %}<input type="checkbox" name="a6" id="a6" style="display: none" >{% endif %}
+                    {% if week.a7 == "on" %}<input type="checkbox" name="a7" id="a7" style="display: none" checked>{% endif %}
+                    {% if week.a7 == "off" %}<input type="checkbox" name="a7" id="a7" style="display: none" >{% endif %}
+                    {% if week.a8 == "on" %}<input type="checkbox" name="a8" id="a8" style="display: none" checked>{% endif %}
+                    {% if week.a8 == "off" %}<input type="checkbox" name="a8" id="a8" style="display: none" >{% endif %}
+                    {% if week.a9 == "on" %}<input type="checkbox" name="a9" id="a9" style="display: none" checked>{% endif %}
+                    {% if week.a9 == "off" %}<input type="checkbox" name="a9" id="a9" style="display: none" >{% endif %}
+                    {% if week.a10 == "on" %}<input type="checkbox" name="a10" id="a10" style="display: none" checked>{% endif %}
+                    {% if week.a10 == "off" %}<input type="checkbox" name="a10" id="a10" style="display: none" >{% endif %}
+                    {% if week.a11 == "on" %}<input type="checkbox" name="a11" id="a11" style="display: none" checked>{% endif %}
+                    {% if week.a11 == "off" %}<input type="checkbox" name="a11" id="a11" style="display: none" >{% endif %}
+                    {% if week.a12 == "on" %}<input type="checkbox" name="a12" id="a12" style="display: none" checked>{% endif %}
+                    {% if week.a12 == "off" %}<input type="checkbox" name="a12" id="a12" style="display: none" >{% endif %}
+                    {% if week.a13 == "on" %}<input type="checkbox" name="a13" id="a13" style="display: none" checked>{% endif %}
+                    {% if week.a13 == "off" %}<input type="checkbox" name="a13" id="a13" style="display: none" >{% endif %}
+                    {% if week.a14 == "on" %}<input type="checkbox" name="a14" id="a14" style="display: none" checked>{% endif %}
+                    {% if week.a14 == "off" %}<input type="checkbox" name="a14" id="a14" style="display: none" >{% endif %}
+                    {% if week.a15 == "on" %}<input type="checkbox" name="a15" id="a15" style="display: none" checked>{% endif %}
+                    {% if week.a15 == "off" %}<input type="checkbox" name="a15" id="a15" style="display: none" >{% endif %}
+                    {% if week.a16 == "on" %}<input type="checkbox" name="a16" id="a16" style="display: none" checked>{% endif %}
+                    {% if week.a16 == "off" %}<input type="checkbox" name="16" id="a16" style="display: none" >{% endif %}
+                    {% if week.a17 == "on" %}<input type="checkbox" name="a17" id="a17" style="display: none" checked>{% endif %}
+                    {% if week.a17 == "off" %}<input type="checkbox" name="a17" id="a17" style="display: none" >{% endif %}
+                    {% if week.a18 == "on" %}<input type="checkbox" name="a18" id="a18" style="display: none" checked>{% endif %}
+                    {% if week.a18 == "off" %}<input type="checkbox" name="a18" id="a18" style="display: none" >{% endif %}
+                    {% if week.a19 == "on" %}<input type="checkbox" name="a19" id="a19" style="display: none" checked>{% endif %}
+                    {% if week.a19 == "off" %}<input type="checkbox" name="a19" id="a19" style="display: none" >{% endif %}
+                    {% if week.a20 == "on" %}<input type="checkbox" name="a20" id="a20" style="display: none" checked>{% endif %}
+                    {% if week.a20 == "off" %}<input type="checkbox" name="a20" id="a20" style="display: none" >{% endif %}
+                    {% if week.a21 == "on" %}<input type="checkbox" name="a21" id="a21" style="display: none" checked>{% endif %}
+                    {% if week.a21 == "off" %}<input type="checkbox" name="a21" id="a21" style="display: none" >{% endif %}
+                    {% if week.a22 == "on" %}<input type="checkbox" name="a22" id="a22" style="display: none" checked>{% endif %}
+                    {% if week.a22 == "off" %}<input type="checkbox" name="a22" id="a22" style="display: none" >{% endif %}
+                    {% if week.a23 == "on" %}<input type="checkbox" name="a23" id="a23" style="display: none" checked>{% endif %}
+                    {% if week.a23 == "off" %}<input type="checkbox" name="a23" id="a23" style="display: none" >{% endif %}
+                    {% if week.a24 == "on" %}<input type="checkbox" name="a24" id="a24" style="display: none" checked>{% endif %}
+                    {% if week.a24 == "off" %}<input type="checkbox" name="a24" id="a24" style="display: none" >{% endif %}
+                    {% if week.a25 == "on" %}<input type="checkbox" name="a25" id="a25" style="display: none" checked>{% endif %}
+                    {% if week.a25 == "off" %}<input type="checkbox" name="a25" id="a25" style="display: none" >{% endif %}
+                    {% if week.a26 == "on" %}<input type="checkbox" name="a26" id="a26" style="display: none" checked>{% endif %}
+                    {% if week.a26 == "off" %}<input type="checkbox" name="a26" id="a26" style="display: none" >{% endif %}
+                    {% if week.a27 == "on" %}<input type="checkbox" name="a27" id="a27" style="display: none" checked>{% endif %}
+                    {% if week.a27 == "off" %}<input type="checkbox" name="a27" id="a27" style="display: none" >{% endif %}
 					<button>ثبت تغییرات</button>
 				</form>
 			</div>
