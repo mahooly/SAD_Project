@@ -55,8 +55,8 @@ class ProjectRegistration(forms.ModelForm):
 class EditUser(forms.ModelForm):
 
     username = forms.CharField(max_length=30, required=False)
-    password = forms.CharField(widget=forms.PasswordInput)
-    password2 = forms.CharField(widget=forms.PasswordInput)
+    password = forms.CharField(widget=forms.PasswordInput, required=False)
+    password2 = forms.CharField(widget=forms.PasswordInput, required=False)
     email = forms.EmailField(required=False)
     image = forms.ImageField(required=False)
     class Meta:

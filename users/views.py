@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from .forms import *
@@ -117,7 +118,8 @@ def update_benefactor_profile(request):
     if request.method == 'POST':
         user_form = EditUser(request.POST)
         form = EditBenefactorProfile(request.POST)
-        if user_form.is_valid() and form.is_valid():
+        week_form = WeekForm(request.POST)
+        if user_form.is_valid() and form.is_valid() and week_form.is_valid():
             for attr in user_form.data:
                 if attr in user_form.fields and user_form.data[attr] is not '':
                     if attr != 'password2':
@@ -129,6 +131,26 @@ def update_benefactor_profile(request):
                 if attr in form.fields and form.data[attr] is not '' and form.data[attr] is not 'blank':
                     setattr(benefactor, attr, form.data[attr])
             benefactor.save()
+
+            for a in abilities:
+                name = a.name
+                if request.POST.get(name) is not None:
+                    try:
+                        UserAbilities.objects.get(abilityId=a, username=user)
+                    except ObjectDoesNotExist:
+                        UserAbilities.objects.create(abilityId=a, username=user)
+                else:
+                    try:
+                        usab = UserAbilities.objects.get(abilityId=a, username=user)
+                        usab.delete()
+                    except ObjectDoesNotExist:
+                        pass
+
+            for attr in week_form.data:
+                if getattr(week, attr) is not week_form.data[attr]:
+                    setattr(week, attr, week_form.data[attr])
+            week.save()
+
         else:
             print(user_form.errors, form.errors)
 
