@@ -12,16 +12,16 @@
 	
 	<div class="wrapper">
 		
-		<form class="login">
-			
+		<form class="login" method="POST">
+			{% csrf_token %}
 			<p class="title">ورود</p>
 			
 			<p>
-				<input type="text" placeholder="نام کاربری" class="login-text">
+				<input type="text" placeholder="نام کاربری" class="login-text" name="username">
 				<i class="ion-person"></i>
 			</p>
 			<p>
-				<input type="password" placeholder="رمز عبور" class="login-text">
+				<input type="password" placeholder="رمز عبور" class="login-text" name="password">
 				<i class="ion-ios-locked"></i>
 			</p>
 			<div class="enter"><button>ورود</button></div>

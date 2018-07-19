@@ -149,3 +149,12 @@ class Report(models.Model):
     wId = models.ForeignKey(WeeklySchedule, on_delete=models.DO_NOTHING, related_name='weekly')
     payment = models.CharField(max_length=10)
 
+
+class TotalRate(models.Model):
+    id = models.AutoField(primary_key=True)
+    totalRate = models.FloatField()
+    f1 = models.FloatField()
+    f2 = models.FloatField()
+    f3 = models.FloatField()
+    f4 = models.FloatField()
+    f5 = models.FloatField()

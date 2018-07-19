@@ -106,6 +106,8 @@ def mylogin(request):
         else:
             # invalid login
             return
+    else:
+        return render(request, 'login.html')
 
 
 @login_required
@@ -128,7 +130,7 @@ def update_benefactor_profile(request):
             user.save()
             benefactor = Benefactor.objects.get(user=user)
             for attr in form.data:
-                if attr in form.fields and form.data[attr] is not '' and form.data[attr] is not 'blank':
+                if attr in form.fields and form.data[attr] is not '' and form.data[attr] != 'blank':
                     setattr(benefactor, attr, form.data[attr])
             benefactor.save()
 
@@ -147,7 +149,7 @@ def update_benefactor_profile(request):
                         pass
 
             for attr in week_form.data:
-                if getattr(week, attr) is not week_form.data[attr]:
+                if attr in week_form.fields and getattr(week, attr) is not week_form.data[attr]:
                     setattr(week, attr, week_form.data[attr])
             week.save()
 
@@ -157,8 +159,9 @@ def update_benefactor_profile(request):
     else:
         user_form = UserForm()
         form = EditBenefactorProfile()
+        week_form = WeekForm()
 
-    return render(request, 'editProfileBenefactor.html', {'user_form': user_form, 'form': form, 'abilities': abilities, 'user': user, 'person': benefactor, 'week': week, 'user_abilities': user_abilities, 'rangee': range(28)})
+    return render(request, 'editProfileBenefactor.html', {'user_form': user_form, 'form': form, 'week_form': week_form, 'abilities': abilities, 'user': user, 'person': benefactor, 'week': week, 'user_abilities': user_abilities, 'rangee': range(28)})
 
 
 @login_required
@@ -224,7 +227,9 @@ def user_logout(request):
 def user_profile_benefactor(request, username):
     user = get_object_or_404(CustomUser, username=username)
     benefactor = Benefactor.objects.get(user=user)
-    return render(request, 'personalProfileBenefactor.html', {'user': user, 'benefactor': benefactor})
+    week = WeeklySchedule.objects.get(id=benefactor.wId.id)
+    user_abilities = UserAbilities.objects.filter(username=user.username)
+    return render(request, 'benefactorsProfileView.html', {'user': user, 'benefactor': benefactor, 'week': week, 'user_abilities': user_abilities, 'rangee': range(28)})
 
 
 def user_profile_organization(request, username):
