@@ -46,7 +46,9 @@ def benefactor_registration(request):
         user_form = UserForm()
         form = BenefactorRegistraton()
         week_form = WeekForm()
-    return render(request, 'registerBenefactor.html', {'user_form': user_form, 'form': form, 'week_form': week_form, 'abilities': abilities, 'rangee': range(28)})
+    return render(request, 'registerBenefactor.html',
+                  {'user_form': user_form, 'form': form, 'week_form': week_form, 'abilities': abilities,
+                   'rangee': range(28)})
 
 
 def organization_registration(request):
@@ -161,7 +163,9 @@ def update_benefactor_profile(request):
         form = EditBenefactorProfile()
         week_form = WeekForm()
 
-    return render(request, 'editProfileBenefactor.html', {'user_form': user_form, 'form': form, 'week_form': week_form, 'abilities': abilities, 'user': user, 'person': benefactor, 'week': week, 'user_abilities': user_abilities, 'rangee': range(28)})
+    return render(request, 'editProfileBenefactor.html',
+                  {'user_form': user_form, 'form': form, 'week_form': week_form, 'abilities': abilities, 'user': user,
+                   'person': benefactor, 'week': week, 'user_abilities': user_abilities, 'rangee': range(28)})
 
 
 @login_required
@@ -209,7 +213,6 @@ def rate(request):
 
 
 def list_projects(request):
-
     if request.method == 'POST':
         name = request.POST['org']
         projects = Project.objects.filter(user__organizer__name=name)
@@ -229,7 +232,9 @@ def user_profile_benefactor(request, username):
     benefactor = Benefactor.objects.get(user=user)
     week = WeeklySchedule.objects.get(id=benefactor.wId.id)
     user_abilities = UserAbilities.objects.filter(username=user.username)
-    return render(request, 'benefactorsProfileView.html', {'user': user, 'benefactor': benefactor, 'week': week, 'user_abilities': user_abilities, 'rangee': range(28)})
+    return render(request, 'benefactorsProfileView.html',
+                  {'user': user, 'benefactor': benefactor, 'week': week, 'user_abilities': user_abilities,
+                   'rangee': range(28)})
 
 
 def user_profile_organization(request, username):
@@ -237,3 +242,28 @@ def user_profile_organization(request, username):
     organization = Organizer.objects.get(user=user)
     return render(request, 'personalProfileOrganization.html', {'user': user, 'organization': organization})
 
+
+def user_profile(request, username):
+    user = get_object_or_404(CustomUser, username=username)
+    if user.isBen:
+        benefactor = Benefactor.objects.get(user=user)
+        week = WeeklySchedule.objects.get(id=benefactor.wId.id)
+        user_abilities = UserAbilities.objects.filter(username=user.username)
+        return render(request, 'personalProfileBenefactor.html', {'user': user, 'benefactor': benefactor, 'week': week, 'user_abilities': user_abilities})
+    elif user.isOrg:
+        organization = Organizer.objects.get(user=user)
+        return render(request, 'personalProfileOrganization.html', {'user': user, 'organization': organization})
+
+
+def comment(request, username):
+    user = get_object_or_404(CustomUser, username=username)
+    if user.isBen:
+        benefactor = Benefactor.objects.get(user=user)
+        return render(request, 'comment.html', {'user': user, 'benefactor': benefactor})
+    else:
+        organization = Organizer.objects.get(user=user)
+        return render(request, 'comment.html', {'user': user, 'organization': organization})
+
+
+def thanks(request):
+    return render(request, 'thanks.html')

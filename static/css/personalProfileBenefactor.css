@@ -245,27 +245,26 @@ table {
 	margin-top: 20px;
 }
 
-#weektable tr td {
+#tab tbody tr {
+	width: 100%;
+	display: inline-block;
+}
+#tab tbody tr td, #tab thead tr td {
 	width: 20%;
 	border: none;
 	float: right;
+	text-align: center;
+	display: inline-block;
 }
 
-.weektable tr td span {
+#tab tbody tr td span {
 	width: 100%;
 	height: 30px;
 	border-radius: 15px;
 	box-sizing: border-box;
 	border: none;
 	float: right;
-}
-
-.weektable tr td .free {
-	background: rgb(191,215,157); 
-}
-
-.weektable tr td .busy {
-	background: rgb(150,150,150); 
+	display: inline-block;
 }
 
 td {

@@ -131,7 +131,7 @@ table {
 	margin-top: 20px;
 }
 
-#abilities span {
+#abilities span , .abilitySpan {
 	color: #f0f0f0;
 	width: 20%;
 	text-align: center;
@@ -139,7 +139,7 @@ table {
 	border-radius: 10px;
 }
 
-#abilities span:hover {
+#abilities span:hover , .abilitySpan:hover{
 	background: rgb(15,157,242);
 }
 

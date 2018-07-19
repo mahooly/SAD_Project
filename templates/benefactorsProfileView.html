@@ -33,10 +33,10 @@
 					</div>
 					<div class="topmenuelements">
 						{% if request.user.isOrg %}
-						<a href={% url 'profile_org' request.user.username %}>{{request.user.organizer.name}}</a>
+						<a href={% url 'profile' request.user.username %}>{{request.user.organizer.name}}</a>
 						{% endif %}
 						{% if request.user.isBen %}
-						<a href={% url 'profile_ben' request.user.username %}>{{request.user.benefactor.name}}  {{request.user.benefactor.surname}}</a>
+						<a href={% url 'profile' request.user.username %}>{{request.user.benefactor.name}}  {{request.user.benefactor.surname}}</a>
 						{% endif %}
 					</div>
 					<div class="topmenudate">
@@ -100,18 +100,28 @@
 			</div>
 			<div class="nav" id="nav"></div>
 			<div class="container">
-				<div class="photo"><div id="photo"><img src="{{ benefactor.image }}" alt=""></div></div>
+				<div class="photo"><div id="photo"><img src="{{ user.image }}" alt=""></div></div>
 				<div class="personal">
 					<h2> مشخصات </h2>
 					<div id="personal">
-                        <h3>نام و نام خانوادگی: {{ benefactor.name }} {{ benefactor.surname }}</h3>
+                        <h3>نام مستعار: {{ benefactor.nickname }}</h3>
                         <h3>سال تولد: {{ benefactor.year }}</h3>
                         {% if benefactor.education == "nothing" %}
                             <h3>تحصیلات: ندارد</h3>
                         {% endif %}
-                        {% if not benefactor.education == "nothing" %}
-                            <h3>تحصیلات: {{ benefactor.education }} ( {{ benefactor.major }} )</h3>
+                        {% if benefactor.education == "diploma" %}
+                            <h3>تحصیلات: دیپلم یا فوق‌دیپلم ( {{ benefactor.major }} )</h3>
                         {% endif %}
+                        {% if benefactor.education == "bachelor" %}
+                            <h3>تحصیلات: لیسانس ( {{ benefactor.major }} )</h3>
+                        {% endif %}
+                        {% if benefactor.education == "master" %}
+                            <h3>تحصیلات: فوق‌لیسانس ( {{ benefactor.major }} )</h3>
+                        {% endif %}
+                        {% if benefactor.education == "phd" %}
+                            <h3>تحصیلات: دکتری یا بالاتر ( {{ benefactor.major }} )</h3>
+                        {% endif %}
+                        <h3>شهر محل سکونت: {{ benefactor.city }}</h3>
                     </div>
 				</div>
                 <div class="chartContainer">
@@ -158,6 +168,7 @@
                         </div>
                     </div>
                 </div>
+                <a style="display: inline-block; padding: 2px 10px; font-size: 14px;  text-decoration: none; color: #fdfdfd; height: 30px; background: #1E90FF; border-radius: 15px;" href={% url 'comment' user.username %}>امتیازدهی به نیکوکار</a>
                 <div id="abilities">
 					<h2>توانایی‌ها </h2>
                     <div id="abilities1">{% for ability in user_abilities %}<span class="abilitySpan" style="display: block;margin: 2px 20px 2px 0px" value="1" id="{{ ability.abilityId.name }}">{{ ability.abilityId.name }}</span>{% endfor %}</div>

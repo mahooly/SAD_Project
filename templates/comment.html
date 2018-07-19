@@ -10,9 +10,59 @@
 </head>
 <body>
 	<div class="main">
+		{% if not request.user.is_authenticated %}
+           <div id="checkspann" class="1"></div>
+          {% endif %}
+          {% if request.user.is_authenticated %}
+           {% if request.user.isOrg %}
+            <div id="checkspann" class="2"></div>
+           {% endif %}
+           {% if request.user.isBen %}
+            <div id="checkspann" class="3"></div>
+            {% endif %}
+           {% if not request.user.isOrg and not request.user.isBen %}
+            <div id="checkspann" class="4"></div>
+           {% endif %}
+        {% endif %}
 		<div class="header">
 			<div class="topmenu" id="topmenu">
-				
+                {% if request.user.is_authenticated %}
+				<div class="container">
+					<div class="topPhoto">
+						<img src="{{ request.user.image }}">
+					</div>
+					<div class="topmenuelements">
+						{% if request.user.isOrg %}
+						<a href={% url 'profile' request.user.username %}>{{request.user.organizer.name}}</a>
+						{% endif %}
+						{% if request.user.isBen %}
+						<a href={% url 'profile' request.user.username %}>{{request.user.benefactor.name}}  {{request.user.benefactor.surname}}</a>
+						{% endif %}
+					</div>
+					<div class="topmenudate">
+						<a href="{% url 'logout' %}">خروج</a>
+					</div>
+					<div class="logo">
+						<img src="../static/images/logo.png">
+					</div>
+				</div>
+				{% endif %}
+                {% if not request.user.is_authenticated %}
+                     <div class="container">
+                         <div class="topmenudate">
+                            <h3>شما هنوز وارد نشده‌اید،</h3>
+                         </div>
+                         <div class="topmenudate">
+                            <button onclick="popup()">ورود</button>
+                         </div>
+                         <div class="topmenudate">
+                            <button onclick="popupregister()">ثبت نام</button>
+                         </div>
+                         <div class="logo">
+                            <img src="../static/images/logo.png">
+                        </div>
+                    </div>
+                {% endif %}
 			</div>
 		</div>
 		<div class="mainPage">
@@ -100,7 +150,7 @@
 					
 				</div>
 				<div class="controls">
-						<textarea maxlength="400" name="description"> </textarea>
+						<textarea maxlength="400" name="description"  id="textbox" onchange="changed()"> </textarea>
 				</div>
 				<br>
 				<div class="nokte">
@@ -110,10 +160,25 @@
 				<button class="mybutton" onclick="show()">نظر دهید</button>
 			</div>
 				<div id="profile">
+                    <img src="{{ user.image }}">
+                    {% if user.isBen %}
+                        <a href="">{{ benefactor.name }} {{ benefactor.surname }}</a>
+                    {% endif %}
+                    {% if not user.isBen %}
+                        <a href="">{{ organization.name }}</a>
+                    {% endif %}
 				</div>
 				
 				
 			</div>
+            <form method="post" enctype="multipart/form-data">
+                <input type="number" name="f1" id="f1" value="1" style="display: none;">
+                <input type="number" name="f2" id="f2" value="1" style="display: none;">
+                <input type="number" name="f3" id="f3" value="1" style="display: none;">
+                <input type="number" name="f4" id="f4" value="1" style="display: none;">
+                <input type="number" name="f5" id="f5" value="1" style="display: none;">
+                <input type="text" name="box"  id="box" value="" style="display: none;">
+            </form>
 		</div>
 
 		<div class="footer">
