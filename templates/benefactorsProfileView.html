@@ -1,0 +1,316 @@
+﻿<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="fa" dir="rtl">
+<head>
+	<title id="title"> صفحه شخصی {{ benefactor.name }} {{ benefactor.surname }} </title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href={% static "css/BenefactorsProfileView.css" %}>
+	<link rel="stylesheet" type="text/css" href={% static "css/style.css" %}>
+	<link rel="stylesheet" href={% static "css/ionicons.min.css" %}>
+</head>
+<body>
+	<div class="main">
+		{% if not request.user.is_authenticated %}
+           <div id="checkspann" class="1"></div>
+          {% endif %}
+          {% if request.user.is_authenticated %}
+           {% if request.user.isOrg %}
+            <div id="checkspann" class="2"></div>
+           {% endif %}
+           {% if request.user.isBen %}
+            <div id="checkspann" class="3"></div>
+            {% endif %}
+           {% if not request.user.isOrg and not request.user.isBen %}
+            <div id="checkspann" class="4"></div>
+           {% endif %}
+        {% endif %}
+		<div class="header">
+			<div class="topmenu" id="topmenu">
+                {% if request.user.is_authenticated %}
+				<div class="container">
+					<div class="topPhoto">
+						<img src="{{ request.user.image }}">
+					</div>
+					<div class="topmenuelements">
+						{% if request.user.isOrg %}
+						<a href={% url 'profile_org' request.user.username %}>{{request.user.organizer.name}}</a>
+						{% endif %}
+						{% if request.user.isBen %}
+						<a href={% url 'profile_ben' request.user.username %}>{{request.user.benefactor.name}}  {{request.user.benefactor.surname}}</a>
+						{% endif %}
+					</div>
+					<div class="topmenudate">
+						<a href="{% url 'logout' %}">خروج</a>
+					</div>
+					<div class="logo">
+						<img src="../static/images/logo.png">
+					</div>
+				</div>
+				{% endif %}
+                {% if not request.user.is_authenticated %}
+                     <div class="container">
+                        <div class="topmenudate">
+                            <h3>شما هنوز وارد نشده‌اید،</h3>
+                         </div>
+                         <div class="topmenudate">
+                            <button onclick="popup()">ورود</button>
+                         </div>
+                         <div class="topmenudate">
+                            <button onclick="popupregister()">ثبت نام</button>
+                         </div>
+                         <div class="logo">
+                            <img src="../static/images/logo.png">
+                        </div>
+                    </div>
+                {% endif %}
+			</div>
+		</div>
+		<div class="mainPage">
+			<div class="wrapper"></div>
+			<div id="test">
+				<div class="wrappers">
+			
+					<form class="login">
+						<button id="button2" class="exit1" onclick="popdown()">x</button>
+						<p class="title">ورود</p>
+						<p>
+							<input type="text" placeholder="نام کاربری" class="login-text">
+							<i class="ion-person"></i>
+						</p>
+						<p>
+							<input type="password" placeholder="رمز عبور" class="login-text">
+							<i class="ion-ios-locked"></i>
+						</p>
+						<div class="enter"><button>ورود</button></div>
+						<button class="forget">فراموشی رمز عبور</button>
+						
+						<p> اگر هنوز حساب کاربری برای خود ایجاد نکرده‌اید، </p> <button class="reg" id="buttonreg" onclick="popupregister()">ثبت نام</button> <p>کنید</p>
+					</form>
+				</div>
+			</div>
+			<div id="testreg">
+				<div class="wrappers">
+					<form class="register">
+						<button id="buttonreg2" class="exit" onclick="popdownregister()">x</button>
+						<p class="title">ثبت نام</p>
+						<div class="enter"><a href="registerBenefactor.html">نیکوکار</a></div>
+						<div class="enter"><a href="registerOrganization.html">موسسه</a></div>
+					</form>
+				</div>
+			</div>
+			<div class="nav" id="nav"></div>
+			<div class="container">
+				<div class="photo"><div id="photo"><img src="{{ benefactor.image }}" alt=""></div></div>
+				<div class="personal">
+					<h2> مشخصات </h2>
+					<div id="personal">
+                        <h3>نام و نام خانوادگی: {{ benefactor.name }} {{ benefactor.surname }}</h3>
+                        <h3>سال تولد: {{ benefactor.year }}</h3>
+                        {% if benefactor.education == "nothing" %}
+                            <h3>تحصیلات: ندارد</h3>
+                        {% endif %}
+                        {% if not benefactor.education == "nothing" %}
+                            <h3>تحصیلات: {{ benefactor.education }} ( {{ benefactor.major }} )</h3>
+                        {% endif %}
+                    </div>
+				</div>
+                <div class="chartContainer">
+                    <div id="chart">
+                        <div>
+                            <table>
+                                <tbody>
+                                <tr class="bars">
+                                    <td>
+                                        <div class="one" style="height: 70%; position: absolute; width: 100%; bottom: 0px;">70%</div>
+                                    </td>
+                                    <td>
+                                        <div class="two" style="height: 70%; position: absolute; width: 100%; bottom: 0px;">70%</div>
+                                    </td>
+                                    <td>
+                                        <div class="three" style="height: 70%; position: absolute; width: 100%; bottom: 0px;">70%</div>
+                                    </td>
+                                    <td>
+                                        <div class="four" style="height: 70%; position: absolute; width: 100%; bottom: 0px;">70%</div>
+                                    </td>
+                                    <td>
+                                        <div class="five" style="height: 70%; position: absolute; width: 100%; bottom: 0px;">70%</div>
+                                    </td>
+                                    <td class="legend">
+                                            <span class="legbox">
+                                                <span class="one xaxisname"></span><span>صداقت</span>
+                                            </span>
+                                        <span class="legbox">
+                                                <span class="two xaxisname"></span><span>تعهد</span>
+                                            </span>
+                                        <span class="legbox">
+                                                <span class="three xaxisname"></span><span>مسئولیت‌پذیری</span>
+                                            </span>
+                                        <span class="legbox">
+                                                <span class="four xaxisname"></span><span>وقت‌شناسی</span>
+                                            </span>
+                                        <span class="legbox">
+                                                <span class="five xaxisname"></span><span>علاقه به کار</span>
+                                            </span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div id="abilities">
+					<h2>توانایی‌ها </h2>
+                    <div id="abilities1">{% for ability in user_abilities %}<span class="abilitySpan" style="display: block;margin: 2px 20px 2px 0px" value="1" id="{{ ability.abilityId.name }}">{{ ability.abilityId.name }}</span>{% endfor %}</div>
+                    {% for ability in user_abilities %}
+                        <input type="checkbox" style="display: none;" name="{{ ability.abilityId.name }}" id="d{{ ability.abilityId.name }}">
+                    {% endfor %}
+				</div>
+				<div id="weeklyfreetime">
+					<h2>زمانبندی هفتگی</h2>
+                    {% if benefactor.typeOfCooperation == "inOffice10" or benefactor.typeOfCooperation == "inOffice20" or benefactor.typeOfCooperation == "inOffice30" or benefactor.typeOfCooperation == "inOfficemore" %}
+                    <table id="tab">
+						<tbody>
+                            <tr>
+                                <td></td>
+                                <td> 8-10 </td>
+                                <td> 10-12 </td>
+                                <td> 12-15 </td>
+                                <td> 15-17 </td>
+                            </tr>
+							<tr>
+								<td>شنبه</td>
+								<td> <span id="11" onclick="week(11,0)" value="1"></span> </td>
+								<td> <span id="12" onclick="week(12,1)" value="1"></span> </td>
+								<td> <span id="13" onclick="week(13,2)" value="1"></span> </td>
+								<td> <span id="14" onclick="week(14,3)" value="1"></span> </td>
+							</tr>
+							<tr>
+								<td>یکشنبه</td>
+								<td> <span id="21" onclick="week(21,4)" value="1"></span> </td>
+								<td> <span id="22" onclick="week(22,5)" value="1"></span> </td>
+								<td> <span id="23" onclick="week(23,6)" value="1"></span> </td>
+								<td> <span id="24" onclick="week(24,7)" value="1"></span> </td>
+							</tr>
+							<tr>
+								<td>دوشنبه</td>
+								<td> <span id="31" onclick="week(31,8)" value="1"></span> </td>
+								<td> <span id="32" onclick="week(32,9)" value="1"></span> </td>
+								<td> <span id="33" onclick="week(33,10)" value="1"></span> </td>
+								<td> <span id="34" onclick="week(34,11)" value="1"></span> </td>
+							</tr>
+							<tr>
+								<td>سه‌شنبه</td>
+								<td> <span id="41" onclick="week(41,12)" value="1"></span> </td>
+								<td> <span id="42" onclick="week(42,13)" value="1"></span> </td>
+								<td> <span id="43" onclick="week(43,14)" value="1"></span> </td>
+								<td> <span id="44" onclick="week(44,15)" value="1"></span> </td>
+							</tr>
+							<tr>
+								<td>چهارشنبه</td>
+								<td> <span id="51" onclick="week(51,16)" value="1"></span> </td>
+								<td> <span id="52" onclick="week(52,17)" value="1"></span> </td>
+								<td> <span id="53" onclick="week(53,18)" value="1"></span> </td>
+								<td> <span id="54" onclick="week(54,19)" value="1"></span> </td>
+							</tr>
+							<tr>
+								<td>پنجشنبه</td>
+								<td> <span id="61" onclick="week(61,20)" value="1"></span> </td>
+								<td> <span id="62" onclick="week(62,21)" value="1"></span> </td>
+								<td> <span id="63" onclick="week(63,22)" value="1"></span> </td>
+								<td> <span id="64" onclick="week(64,23)" value="1"></span> </td>
+							</tr>
+							<tr>
+								<td> جمعه </td>
+								<td> <span id="71" onclick="week(71,24)" value="1"></span> </td>
+								<td> <span id="72" onclick="week(72,25)" value="1"></span> </td>
+								<td> <span id="73" onclick="week(73,26)" value="1"></span> </td>
+								<td> <span id="74" onclick="week(74,27)" value="1"></span> </td>
+							</tr>
+						</tbody>
+                        <h5 id="tab2" style="display: none">لطفا زمان‌های غیرفعال خود را علامت بزنید</h5>
+					</table>
+                    {% endif %}
+                    {% if week.a0 == "on" %}<input type="checkbox" name="a0" id="a0" style="display: none" checked>{% endif %}
+                    {% if week.a0 == "off" %}<input type="checkbox" name="a0" id="a0" style="display: none" >{% endif %}
+                    {% if week.a1 == "on" %}<input type="checkbox" name="a1" id="a1" style="display: none" checked>{% endif %}
+                    {% if week.a1 == "off" %}<input type="checkbox" name="a1" id="a1" style="display: none" >{% endif %}
+                    {% if week.a2 == "on" %}<input type="checkbox" name="a2" id="a2" style="display: none" checked>{% endif %}
+                    {% if week.a2 == "off" %}<input type="checkbox" name="a2" id="a2" style="display: none" >{% endif %}
+                    {% if week.a3 == "on" %}<input type="checkbox" name="a3" id="a3" style="display: none" checked>{% endif %}
+                    {% if week.a3 == "off" %}<input type="checkbox" name="a3" id="a3" style="display: none" >{% endif %}
+                    {% if week.a4 == "on" %}<input type="checkbox" name="a4" id="a4" style="display: none" checked>{% endif %}
+                    {% if week.a4 == "off" %}<input type="checkbox" name="a4" id="a4" style="display: none" >{% endif %}
+                    {% if week.a5 == "on" %}<input type="checkbox" name="a5" id="a5" style="display: none" checked>{% endif %}
+                    {% if week.a5 == "off" %}<input type="checkbox" name="a5" id="a5" style="display: none" >{% endif %}
+                    {% if week.a6 == "on" %}<input type="checkbox" name="a6" id="a6" style="display: none" checked>{% endif %}
+                    {% if week.a6 == "off" %}<input type="checkbox" name="a6" id="a6" style="display: none" >{% endif %}
+                    {% if week.a7 == "on" %}<input type="checkbox" name="a7" id="a7" style="display: none" checked>{% endif %}
+                    {% if week.a7 == "off" %}<input type="checkbox" name="a7" id="a7" style="display: none" >{% endif %}
+                    {% if week.a8 == "on" %}<input type="checkbox" name="a8" id="a8" style="display: none" checked>{% endif %}
+                    {% if week.a8 == "off" %}<input type="checkbox" name="a8" id="a8" style="display: none" >{% endif %}
+                    {% if week.a9 == "on" %}<input type="checkbox" name="a9" id="a9" style="display: none" checked>{% endif %}
+                    {% if week.a9 == "off" %}<input type="checkbox" name="a9" id="a9" style="display: none" >{% endif %}
+                    {% if week.a10 == "on" %}<input type="checkbox" name="a10" id="a10" style="display: none" checked>{% endif %}
+                    {% if week.a10 == "off" %}<input type="checkbox" name="a10" id="a10" style="display: none" >{% endif %}
+                    {% if week.a11 == "on" %}<input type="checkbox" name="a11" id="a11" style="display: none" checked>{% endif %}
+                    {% if week.a11 == "off" %}<input type="checkbox" name="a11" id="a11" style="display: none" >{% endif %}
+                    {% if week.a12 == "on" %}<input type="checkbox" name="a12" id="a12" style="display: none" checked>{% endif %}
+                    {% if week.a12 == "off" %}<input type="checkbox" name="a12" id="a12" style="display: none" >{% endif %}
+                    {% if week.a13 == "on" %}<input type="checkbox" name="a13" id="a13" style="display: none" checked>{% endif %}
+                    {% if week.a13 == "off" %}<input type="checkbox" name="a13" id="a13" style="display: none" >{% endif %}
+                    {% if week.a14 == "on" %}<input type="checkbox" name="a14" id="a14" style="display: none" checked>{% endif %}
+                    {% if week.a14 == "off" %}<input type="checkbox" name="a14" id="a14" style="display: none" >{% endif %}
+                    {% if week.a15 == "on" %}<input type="checkbox" name="a15" id="a15" style="display: none" checked>{% endif %}
+                    {% if week.a15 == "off" %}<input type="checkbox" name="a15" id="a15" style="display: none" >{% endif %}
+                    {% if week.a16 == "on" %}<input type="checkbox" name="a16" id="a16" style="display: none" checked>{% endif %}
+                    {% if week.a16 == "off" %}<input type="checkbox" name="16" id="a16" style="display: none" >{% endif %}
+                    {% if week.a17 == "on" %}<input type="checkbox" name="a17" id="a17" style="display: none" checked>{% endif %}
+                    {% if week.a17 == "off" %}<input type="checkbox" name="a17" id="a17" style="display: none" >{% endif %}
+                    {% if week.a18 == "on" %}<input type="checkbox" name="a18" id="a18" style="display: none" checked>{% endif %}
+                    {% if week.a18 == "off" %}<input type="checkbox" name="a18" id="a18" style="display: none" >{% endif %}
+                    {% if week.a19 == "on" %}<input type="checkbox" name="a19" id="a19" style="display: none" checked>{% endif %}
+                    {% if week.a19 == "off" %}<input type="checkbox" name="a19" id="a19" style="display: none" >{% endif %}
+                    {% if week.a20 == "on" %}<input type="checkbox" name="a20" id="a20" style="display: none" checked>{% endif %}
+                    {% if week.a20 == "off" %}<input type="checkbox" name="a20" id="a20" style="display: none" >{% endif %}
+                    {% if week.a21 == "on" %}<input type="checkbox" name="a21" id="a21" style="display: none" checked>{% endif %}
+                    {% if week.a21 == "off" %}<input type="checkbox" name="a21" id="a21" style="display: none" >{% endif %}
+                    {% if week.a22 == "on" %}<input type="checkbox" name="a22" id="a22" style="display: none" checked>{% endif %}
+                    {% if week.a22 == "off" %}<input type="checkbox" name="a22" id="a22" style="display: none" >{% endif %}
+                    {% if week.a23 == "on" %}<input type="checkbox" name="a23" id="a23" style="display: none" checked>{% endif %}
+                    {% if week.a23 == "off" %}<input type="checkbox" name="a23" id="a23" style="display: none" >{% endif %}
+                    {% if week.a24 == "on" %}<input type="checkbox" name="a24" id="a24" style="display: none" checked>{% endif %}
+                    {% if week.a24 == "off" %}<input type="checkbox" name="a24" id="a24" style="display: none" >{% endif %}
+                    {% if week.a25 == "on" %}<input type="checkbox" name="a25" id="a25" style="display: none" checked>{% endif %}
+                    {% if week.a25 == "off" %}<input type="checkbox" name="a25" id="a25" style="display: none" >{% endif %}
+                    {% if week.a26 == "on" %}<input type="checkbox" name="a26" id="a26" style="display: none" checked>{% endif %}
+                    {% if week.a26 == "off" %}<input type="checkbox" name="a26" id="a26" style="display: none" >{% endif %}
+                    {% if week.a27 == "on" %}<input type="checkbox" name="a27" id="a27" style="display: none" checked>{% endif %}
+                    {% if week.a27 == "off" %}<input type="checkbox" name="a27" id="a27" style="display: none" >{% endif %}
+
+                    {% for i in rangee %}<input type="checkbox" id="c{{ i }}" name="c{{ i }}" style="display: none">{% endfor %}
+				</div>
+				<h2>توضیحات بیشتر</h2>
+				<div class="controls">
+					<textarea id="cm" class="floatlabel" placeholder="توضیحات بیشتر"></textarea>
+				</div>
+				<button class="subreq"> ارسال پیشنهاد همکاری</button>
+			</div>
+		</div>
+
+		<div class="footer">
+			<div class="container">
+				<div class="addr">
+					<h4> خیابان آزادی، بلوار اکبری، خیابان قاسمی، پلاک ۳۶، واحد ۲ </h4>
+					<h4>تلفن: ۰۲۱۸۸۳۴۲۸۹۱</h4>
+				</div>
+			</div>
+			<div class="copy">
+				<h4>کپی‌رایت رعایت شود.</h4>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src={% static "js/BenefactorsProfileView.js" %}></script>
+	<script type="text/javascript" src={% static "js/main.js" %}></script>
+	<script src={% static "js/jquery.min.js" %}></script>
+</body>
+</html>
