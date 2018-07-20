@@ -35,7 +35,6 @@ urlpatterns = [
     url(r'^profile/(?P<username>[a-zA-Z0-9]+)$', views.user_profile, name='profile'),#man
     url(r'^comment/(?P<username>[a-zA-Z0-9]+)$', views.comment, name='comment'),#man
     url(r'^project/(?P<username>[a-zA-Z0-9]+)/(?P<pId>[a-zA-Z0-9]+)/$', views.project, name='project'),#man
-    url(r'^thanks/', views.thanks, name='thanks'),#man
     url(r'^profile_benefactor/(?P<username>[a-zA-Z0-9]+)$', views.user_profile_benefactor, name='profile_ben'),
     url(r'^profile_organization/(?P<username>[a-zA-Z0-9]+)$', views.user_profile_organization, name='profile_org'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
