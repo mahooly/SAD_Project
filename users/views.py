@@ -39,6 +39,8 @@ def benefactor_registration(request):
                 if request.POST.get(name) is not None:
                     UserAbilities.objects.create(abilityId=a, username=user)
 
+            return render(request, 'thanks.html')
+
         else:
             print(user_form.errors, form.errors)
 
@@ -65,6 +67,8 @@ def organization_registration(request):
             organizer.user = user
             organizer.save()
 
+            return render(request, 'thanks.html')
+
         else:
             print(user_form.errors, form.errors)
 
@@ -77,6 +81,8 @@ def organization_registration(request):
 
 @login_required
 def project_creation(request):
+    categories = Category.objects.all()
+    cities = City.objects.all()
     if request.method == 'POST':
         form = ProjectRegistration(request.POST)
         if form.is_valid():
@@ -89,8 +95,6 @@ def project_creation(request):
 
     else:
         form = ProjectRegistration()
-    categories = Category.objects.all()
-    cities = City.objects.all()
     return render(request, 'submitProject.html', {'form': form, 'categories': categories, 'cities': cities})
 
 
@@ -201,22 +205,6 @@ def update_organization_profile(request):
     return render(request, 'editProfileOrganization.html', {'user_form': user_form, 'form': form, 'user': user, 'org': organization})
 
 
-def rate(request):
-    if request.method == 'POST':
-        form = RateForm(request.POST)
-        if form.is_valid():
-            new_rate = form.save(commit=False)
-            new_rate.user = request.user
-            new_rate.save()
-        else:
-            print(form.errors)
-
-    else:
-        form = RateForm()
-
-    return render(request, 'submitProject.html', {'form': form})
-
-
 def list_projects(request):
     if request.method == 'POST':
         name = request.POST['org']
@@ -270,10 +258,6 @@ def comment(request, username):
     else:
         organization = Organizer.objects.get(user=user)
         return render(request, 'comment.html', {'user': user, 'organization': organization})
-
-
-def thanks(request):
-    return render(request, 'thanks.html')
 
 
 def project(request, username, pId):

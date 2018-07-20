@@ -18,4 +18,7 @@ admin.site.register(Project)
 admin.site.register(Ability)
 admin.site.register(UserAbilities)
 admin.site.register(WeeklySchedule)
+admin.site.register(City)
+admin.site.register(Category)
+admin.site.register(CategoryProject)
 

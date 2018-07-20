@@ -36,7 +36,7 @@ var ul1 = document.createElement('ul');
 if (mm === "2") {
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "index.html");
+	a1.setAttribute('href', "");
 	a1.innerText = "صفحه اصلی";
 	li1.appendChild(a1);
 	ul1.appendChild(li1);
@@ -94,7 +94,7 @@ if (mm === "2") {
 else if (mm === "3") {
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "index.html");
+	a1.setAttribute('href', "");
 	a1.innerText = "صفحه اصلی";
 	li1.appendChild(a1);
 	ul1.appendChild(li1);
@@ -153,7 +153,7 @@ else if (mm === "3") {
 else if (mm === "4") {
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "index.html");
+	a1.setAttribute('href', "");
 	a1.innerText = "صفحه اصلی";
 	li1.appendChild(a1);
 	ul1.appendChild(li1);
