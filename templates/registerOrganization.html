@@ -129,6 +129,9 @@
 						<i class="ion-navicon"></i>
 						<select id="city" class="floatlabel" name="city">
 							<option value="blank">شهر</option>
+                            {% for city in cities %}
+                            <option value="{{city.name}}">{{city.name}}</option>
+                           {% endfor %}
 						</select>
 					</div>
 

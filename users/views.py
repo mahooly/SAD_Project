@@ -48,9 +48,13 @@ def benefactor_registration(request):
         user_form = UserForm()
         form = BenefactorRegistraton()
         week_form = WeekForm()
+    cities = City.objects.all()
     return render(request, 'registerBenefactor.html',
                   {'user_form': user_form, 'form': form, 'week_form': week_form, 'abilities': abilities,
-                   'rangee': range(28)})
+                   'rangee': range(28), 'cities': cities})
+    # return render(request, 'submitRequirement.html',
+    #               {'user_form': user_form, 'form': form, 'week_form': week_form, 'abilities': abilities,
+    #                'rangee': range(28), 'cities': cities})
 
 
 def organization_registration(request):
@@ -75,8 +79,8 @@ def organization_registration(request):
     else:
         user_form = UserForm()
         form = BenefactorRegistraton()
-
-    return render(request, 'registerOrganization.html', {'user_form': user_form, 'form': form})
+    cities = City.objects.all()
+    return render(request, 'registerOrganization.html', {'user_form': user_form, 'form': form, 'cities': cities})
 
 
 @login_required

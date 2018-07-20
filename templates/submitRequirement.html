@@ -1,15 +1,14 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 {% load staticfiles %}
 <html lang="fa" dir="rtl">
 <head>
-	<title>ثبت نام- نیکوکاران </title>
+	<title>ثبت نیازمندی جدید </title>
 	<meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" href={% static "css/style.css" %}>
-	<link rel="stylesheet" type="text/css" href={% static "css/editProfileBenefactor.css" %}>
-	<link rel="stylesheet" href={% static "css/ionicons.min.css" %}>
+	<link rel="stylesheet" type="text/css" href= {% static "css/submitProject.css" %}>
+	<link rel="stylesheet" type="text/css" href= {% static "css/style.css" %}>
+	<link rel="stylesheet" href= {% static "css/ionicons.min.css" %}>
 </head>
 <body>
-    {{ form.errors }}
 	<div class="main">
 		{% if not request.user.is_authenticated %}
            <div id="checkspann" class="1"></div>
@@ -68,98 +67,57 @@
 		</div>
 		<div class="mainPage">
 			<div class="wrapper"></div>
+			<div id="test">
+				<div class="wrappers">
+			
+					<form class="login">
+						<button id="button2" class="exit1" onclick="popdown()">x</button>
+						<p class="title">ورود</p>
+						<p>
+							<input type="text" placeholder="نام کاربری" class="login-text">
+							<i class="ion-person"></i>
+						</p>
+						<p>
+							<input type="password" placeholder="رمز عبور" class="login-text">
+							<i class="ion-ios-locked"></i>
+						</p>
+						<div class="enter"><button>ورود</button></div>
+						<button class="forget">فراموشی رمز عبور</button>
+						
+						<p> اگر هنوز حساب کاربری برای خود ایجاد نکرده‌اید، </p> <button class="reg" id="buttonreg" onclick="popupregister()">ثبت نام</button> <p>کنید</p>
+					</form>
+				</div>
+			</div>
+			<div id="testreg">
+				<div class="wrappers">
+					<form class="register">
+						<button id="buttonreg2" class="exit" onclick="popdownregister()">x</button>
+						<p class="title">ثبت نام</p>
+						<div class="enter"><a href="registerBenefactor.html">نیکوکار</a></div>
+						<div class="enter"><a href="registerOrganization.html">موسسه</a></div>
+					</form>
+				</div>
+			</div>
 			<div class="nav" id="nav"></div>
-			<div class="formm" style="z-index:9">
-				<form method="post" enctype="multipart/form-data" action={% url 'thanks' %}>
-					{% csrf_token %}
+			<div class="formm">
+				<form>
 					<h2>مشخصات</h2>
 					<div class="controls">
-						<input type="text" id="name" class="floatlabel" placeholder="نام" name="name">
-					</div>
-
-					<div class="controls">
-						<input type="text" id="lastname" class="floatlabel" placeholder="نام خانوادگی", name="surname">
-					</div>
-
-					<div class="controls">
-						<input type="text" id="nickname" class="floatlabel" placeholder="نام مستعار", name="nickname">
-					</div>
-
-					<div class="controls">
-						<input type="text" id="username" class="floatlabel" placeholder="نام کاربری", name="username">
-					</div>
-
-					<div class="controls">
-						<input type="password" id="pass1" class="floatlabel" placeholder="کلمه عبور", name="password">
-					</div>
-					<div class="controls">
-						{{ user_form.password2 }}
-					</div>
-
-                    {{ user_form.errors }}
-
-					<div class="controls">
-						<i class="ion-navicon"></i>
-						<select id="sex" class="floatlabel" name="gender">
-							<option value="blank"> جنسیت </option>
-							<option value="male">مرد</option>
-							<option value="female">زن</option>
-							<option value="other">سایر</option>
-						</select>
-					</div>
-
-                    <div class="controls">
-						<h3>تاریخ تولد</h3>
-						<input type="number" id="date" class="birthday" placeholder="روز" name="day">
-						<input type="number" id="month" class="birthday" placeholder="ماه" name="month">
-						<input type="number" id="year" class="birthday" placeholder="سال" name="year">
+						<input type="text" id="projectname" class="floatlabel" placeholder="عنوان نیازمندی">
 					</div>
 
 					<div class="controls">
 						<i class="ion-navicon"></i>
-						<select id="education" class="floatlabel" onchange="eduChanged()" name="education">
-							<option value="blank"> میزان تحصیلات </option>
-							<option value="nothing">-</option>
-							<option value="diploma">دیپلم و فوق دیپلم</option>
-							<option value="bachelor">لیسانس</option>
-							<option value="master">فوق لیسانس</option>
-							<option value="phd">دکتری و بالاتر</option>
-						</select>
-					</div>
-
-					<div class="educontrols">
-						<input type="text" id="fieldOfEducation" class="floatlabel" placeholder="رشته تحصیلی" name="major">
-					</div>
-
-					<div class="controls">
-						<input type="number" id="nationalId" class="NID" placeholder="کد ملی" name="nationalId">
-					</div>
-
-					<div class="controls">
-						<i class="ion-navicon"></i>
-						<select id="city" class="floatlabel" name="city">
-							<option value="blank">شهر محل سکونت</option>
-                            {% for city in cities %}
-                            <option value="{{city.name}}">{{city.name}}</option>
-                           {% endfor %}
+						<select id="city" class="floatlabel">
+							<option value="blank">شهر</option>
+							{% for city in cities %}
+                                <option value="{{ city.name }}">{{ city.name }}</option>
+                            {% endfor %}
 						</select>
 					</div>
 
 					<div class="controls">
-						<input type="text" id="addr" class="floatlabel" placeholder="آدرس" name="address">
-					</div>
-
-					<div class="controls">
-						<input type="email" id="email" class="floatlabel" placeholder="ایمیل" name="email">
-					</div>
-
-					<div class="controls">
-						<input type="tel" id="tel" class="floatlabel" placeholder="تلفن" name="phone">
-					</div>
-
-                    <div class="controls">
-						<h4 style="display: inline; margin-left: 10px;"> عکس </h4>
-						<input type="file" id="photo" name="photo">
+						<input type="text" id="address" class="floatlabel" placeholder="آدرس">
 					</div>
 
                     <h2> توانایی‌ها </h2>
@@ -170,13 +128,13 @@
                            {% endfor %}
 						</select>
                         {% for ability in abilities %}
-                            <input type="checkbox" name="{{ability.name}}" id="{{ability.name}}" style="display: none">
+                            <input type="checkbox" name="{{ability.name}}" id="a{{ability.name}}" style="display: none">
                         {% endfor %}
 	    				<button id="add" onclick="addItem()"><h3>+</h3></button>
 						<ul id="dynamiclist"></ul>
 					</div>
 
-                    <h2>زمانبندی هفتگی</h2>
+					<h2>زمانبندی هفتگی</h2>
                     <div class="controls">
 						<i class="ion-navicon"></i>
 						<select id="typeOfParticipation" class="floatlabel" onchange="participation()">
@@ -252,11 +210,11 @@
                     {% for i in rangee %}
                          <input type="checkbox" name="a{{ i }}" id="a{{ i }}" style="display: none">
                     {% endfor %}
-                    <div class="controls">
-						<input type="checkbox" id="checkbox" class="checkbox" name="terms">
-						<label class="checkb" style="display: inline;" for="checkbox"><span></span><a href={% url 'terms' %} style="text-decoration: none; color: #009966">قوانین</a> را قبول دارم</label>
+		
+					<div class="controls">
+						<textarea id="cm" class="floatlabel" placeholder="توضیحات مربوط به نیازمندی"></textarea>
 					</div>
-
+					
 					<button>ثبت</button>
 				</form>
 			</div>
@@ -273,7 +231,8 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript" src={% static "js/registerBenefactor.js" %}></script>
-	<script src={% static "js/jquery.min.js" %}></script>
+	<script type="text/javascript" src={%  static "js/submitRequirement.js" %}></script>
+	<script type="text/javascript" src={%  static "js/main.js" %}></script>
+	<script src={%  static "js/jquery.min.js" %}></script>
 </body>
 </html>

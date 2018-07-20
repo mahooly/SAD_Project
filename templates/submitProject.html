@@ -155,7 +155,7 @@
 						</select>
 	    				<button id="add" onclick="addItem()"><h3>+</h3></button>
                         {% for cat in categories %}
-                            <input type="checkbox" name="{{ cat.id }}" id="a{{ cat.name }}">
+                            <input type="checkbox" name="{{ cat.id }}" id="a{{ cat.name  }}">
                         {% endfor %}
                         <ul id="dynamiclist"></ul>
 					</div>
