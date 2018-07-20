@@ -94,6 +94,14 @@ def project_creation(request):
             project.user = request.user
             project.save()
 
+            print(request.POST)
+            for c in categories:
+                name = c.name
+                if request.POST.get(name) is not None:
+                    CategoryProject.objects.create(categoryId=c, projectId=project)
+
+            return render(request, 'thanks.html')
+
         else:
             print(form.errors)
 

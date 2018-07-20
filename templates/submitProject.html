@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 {% load staticfiles %}
 <html lang="fa" dir="rtl">
 <head>
@@ -155,9 +155,14 @@
 						</select>
 	    				<button id="add" onclick="addItem()"><h3>+</h3></button>
                         {% for cat in categories %}
-                            <input type="checkbox" name="{{ cat.id }}" id="a{{ cat.name  }}">
+                            <input type="checkbox" name="{{ cat.name }}" id="a{{ cat.name }}" style="display: none">
                         {% endfor %}
                         <ul id="dynamiclist"></ul>
+					</div>
+
+                    <div class="controls">
+						<input type="checkbox" id="checkbox" class="checkbox" name="terms">
+						<label class="checkb" style="display: inline;" for="checkbox"><span></span><a href={% url 'terms' %} style="text-decoration: none; color: #009966">قوانین</a> را قبول دارم</label>
 					</div>
 					
 					<button>ثبت</button>
