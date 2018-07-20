@@ -21,4 +21,5 @@ admin.site.register(WeeklySchedule)
 admin.site.register(City)
 admin.site.register(Category)
 admin.site.register(CategoryProject)
+admin.site.register(Requirement)
 
