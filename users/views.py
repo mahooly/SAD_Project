@@ -277,3 +277,32 @@ def project(request, username, pId):
     organization = Organizer.objects.get(user=user)
     proj = get_object_or_404(Project, id=pId)
     return render(request, 'project.html', {'user': user, 'org': organization, 'project': proj})
+
+
+@login_required
+def submit_requirement(request):
+    abilities = Ability.objects.all()
+    cities = City.objects.all()
+    if request.method == 'POST':
+        form = RequirementForm(request.POST)
+        week_form = WeekForm(request.POST)
+        if form.is_valid() and week_form.is_valid():
+            week = week_form.save()
+            week.save()
+            requirement = form.save(commit=False)
+            requirement.user = request.user
+            requirement.wId = week
+            requirement.save()
+
+            for a in abilities:
+                name = a.name
+                if request.POST.get(name) is not None:
+                    RequirementAbilities.objects.create(abilityId=a, reqId=requirement)
+
+        else:
+            print(form.errors, week_form.errors)
+    else:
+        form = RequirementForm()
+        week_form = WeekForm()
+
+    return render(request, 'submitRequirement.html', {'form': form, 'week_form': week_form, 'abilities': abilities, 'rangee': range(28), 'cities': cities})

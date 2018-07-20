@@ -98,3 +98,8 @@ class WeekForm(forms.ModelForm):
         model = WeeklySchedule
         exclude = ('id',)
 
+
+class RequirementForm(forms.ModelForm):
+    class Meta:
+        model = Requirement
+        exclude = ('id', 'user', 'wId',)

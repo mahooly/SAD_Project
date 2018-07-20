@@ -37,5 +37,6 @@ urlpatterns = [
     url(r'^project/(?P<username>[a-zA-Z0-9]+)/(?P<pId>[a-zA-Z0-9]+)/$', views.project, name='project'),#man
     url(r'^profile_benefactor/(?P<username>[a-zA-Z0-9]+)$', views.user_profile_benefactor, name='profile_ben'),
     url(r'^profile_organization/(?P<username>[a-zA-Z0-9]+)$', views.user_profile_organization, name='profile_org'),
+    url(r'^submit_requirement/', views.submit_requirement, name='submit_requirement'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
