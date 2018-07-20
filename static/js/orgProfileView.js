@@ -4,3 +4,12 @@ for (var i = 0 ; i < buttons.length; i ++) {
 		event.preventDefault()
 	});
 }
+
+
+function popupProject(e) {
+    document.getElementById(e).style.display = "block";
+}
+
+function popdownProject(e) {
+    document.getElementById(e).style.display = "none";
+}

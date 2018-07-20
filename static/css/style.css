@@ -45,6 +45,7 @@ h2{
     padding: 0;
     color: #333333;
     width: 25px;
+	height: 25px;
 }
 .exit1 {
     max-width: 25px;
@@ -63,8 +64,9 @@ h2{
 	padding: 0;
 	color: #333333;
 	width: 25px;
+	height: 25px;
 }
-#testreg {
+#testreg, .testreg {
 	display: none;
 	position: fixed;
 	width: 100%;

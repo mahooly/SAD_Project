@@ -274,3 +274,10 @@ def comment(request, username):
 
 def thanks(request):
     return render(request, 'thanks.html')
+
+
+def project(request, username, pId):
+    user = get_object_or_404(CustomUser, username=username)
+    organization = Organizer.objects.get(user=user)
+    proj = get_object_or_404(Project, id=pId)
+    return render(request, 'project.html', {'user': user, 'org': organization, 'project': proj})
