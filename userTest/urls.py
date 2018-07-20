@@ -23,6 +23,7 @@ from users import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^$', views.index, name='index'),
+    url(r'^index/', views.index, name='index'),#man
     url(r'^register_benefactor/', views.benefactor_registration, name='register'),
     url(r'^register_organization/', views.organization_registration, name='registerOrg'),
     url(r'^create_project/', views.project_creation, name='createProject'),

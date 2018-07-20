@@ -1,4 +1,5 @@
 ﻿<!DOCTYPE html>
+{% load staticfiles %}
 <html lang="fa" dir="rtl">
 <head>
 	<title>حساب کاربری موسسه</title>
@@ -101,35 +102,79 @@
 				
 			</div>
 			<div class="container">
-				<div class="photo"><div id="photo"></div></div>
+				<div class="photo"><div id="photo"><img src="{{ user.image }}"></div></div>
 				<div class="personal">
 					<h2> مشخصات </h2>
-					<div id="personal"></div>
+					<div id="personal">
+                        <h3>نام موسسه: {{ org.name }}</h3>
+                        <h3>سال ثبت: {{ org.year }}</h3>
+                        <h3>پروانه فعالیت: {{ org.license }}</h3>
+                        <h3>شهر: {{ org.city }}</h3>
+                        <h3>آدرس: {{ org.address }}</h3>
+                        <h3>وبسایت: {{ org.website }}</h3>
+                        <h3>تلفن: {{ org.phone }}</h3>
+                    </div>
 				</div>
 				<div class="chartContainer">
-					<div id="chart"></div>
+					<div id="chart">
+                        <div>
+                            <table>
+                                <tbody>
+                                <tr class="bars">
+                                    <td>
+                                        <div class="one" style="height: 70%; position: absolute; width: 100%; bottom: 0px;">70%</div>
+                                    </td>
+                                    <td>
+                                        <div class="two" style="height: 70%; position: absolute; width: 100%; bottom: 0px;">70%</div>
+                                    </td>
+                                    <td>
+                                        <div class="three" style="height: 70%; position: absolute; width: 100%; bottom: 0px;">70%</div>
+                                    </td>
+                                    <td>
+                                        <div class="four" style="height: 70%; position: absolute; width: 100%; bottom: 0px;">70%</div>
+                                    </td>
+                                    <td>
+                                        <div class="five" style="height: 70%; position: absolute; width: 100%; bottom: 0px;">70%</div>
+                                    </td>
+                                    <td class="legend">
+                                            <span class="legbox">
+                                                <span class="one xaxisname"></span><span>صداقت</span>
+                                            </span>
+                                        <span class="legbox">
+                                                <span class="two xaxisname"></span><span>تعهد</span>
+                                            </span>
+                                        <span class="legbox">
+                                                <span class="three xaxisname"></span><span>مسئولیت‌پذیری</span>
+                                            </span>
+                                        <span class="legbox">
+                                                <span class="four xaxisname"></span><span>وقت‌شناسی</span>
+                                            </span>
+                                        <span class="legbox">
+                                                <span class="five xaxisname"></span><span>علاقه به کار</span>
+                                            </span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
 				</div>
-				
-				<div id="more">
-					<h2>توضیحات بیشتر</h2>
-				</div>
+
 				<div id="projectscurrent">
 					<h2>پروژه های در دست انجام: </h2>
+                    {% for project in projects %}
+                        <a style="display: inline-block; padding: 2px 10px; font-size: 17px;  text-decoration: none; color: #fdfdfd; height: 30px; background: #009eff; border-radius: 5px; margin-top: 20px;" href="">{{ project.name }}</a><br>
+                    {% endfor %}
 				</div>
 				<div id="projects">
 					<h2>نیکوکارانی که تا کنون با این موسسه همکاری داشته اند:</h2>
 				</div>
 				<div id="abilities">
 					<h2>نیازمند همکاری در زمینه های: </h2>
+                    {% for req in requirements %}
+                        <a style="display: inline-block; padding: 2px 10px; font-size: 17px;  text-decoration: none; color: #fdfdfd; height: 30px; background: #009eff; border-radius: 5px; margin-top: 20px;" href="">{{ req.name }}</a><br>
+                    {% endfor %}
 				</div>
-				<div id="weeklyfreetime">
-					<h2>زمانبندی هفتگی</h2>
-				</div>
-				<h2>توضیحات بیشتر</h2>
-				<div class="controls">
-					<textarea id="cm" class="floatlabel" placeholder="توضیحات بیشتر"></textarea>
-				</div>
-				<button class="subreq"> ارسال پیشنهاد همکاری</button>
 			</div>
 		</div>
 

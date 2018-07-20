@@ -110,13 +110,16 @@
 					<div class="controls">
 						<input type="text" id="budget" class="floatlabel" placeholder="مبلغ مورد نیاز جهت تکمیل پروژه (تومان)" name="budget">
 					</div>
-	
+
+
 
 					<div class="controls">
 						<i class="ion-navicon"></i>
 						<select id="city" class="floatlabel" name="city">
 							<option value="blank">شهر</option>
-							
+							{% for city in cities %}
+                                <option value="{{ city.name }}">{{ city.name }}</option>
+                            {% endfor %}
 						</select>
 					</div>
 
@@ -142,9 +145,19 @@
 						<input type="number" id="accNum" class="floatlabel" placeholder="شماره حساب بانکی" style="display: none" name="accno">
 					</div>
 
-					<div class="controls">
-						<input type="checkbox" id="checkbox" class="checkbox" name="terms">
-						<label for="checkbox"><span></span>قوانین را قبول دارم</label>
+                    <h2>زمینه کار پروژه</h2>
+					<div class="controlsAbility">
+						<select id="candidate" class="floatlabel">
+							<option value="blank"></option>
+                            {% for cat in categories %}
+                                <option value="{{ cat.id }}">{{ cat.name }}</option>
+                            {% endfor %}
+						</select>
+	    				<button id="add" onclick="addItem()"><h3>+</h3></button>
+                        {% for cat in categories %}
+                            <input type="checkbox" name="{{ cat.id }}" id="a{{ cat.name }}">
+                        {% endfor %}
+                        <ul id="dynamiclist"></ul>
 					</div>
 					
 					<button>ثبت</button>

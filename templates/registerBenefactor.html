@@ -70,7 +70,7 @@
 			<div class="wrapper"></div>
 			<div class="nav" id="nav"></div>
 			<div class="formm" style="z-index:9">
-				<form method="post" enctype="multipart/form-data">
+				<form method="post" enctype="multipart/form-data" action={% url 'thanks' %}>
 					{% csrf_token %}
 					<h2>مشخصات</h2>
 					<div class="controls">

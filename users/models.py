@@ -119,23 +119,40 @@ class UserAbilities(models.Model):
     username = models.ForeignKey(CustomUser, to_field='username', on_delete=models.CASCADE, related_name='benefactorusername')
 
 
-# class Requirement(models.Model):
-#     class Meta:
-#         unique_together = ('id', 'wId')
-#
-#     id = models.AutoField()
-#     city = models.CharField(max_length=20)
-#     address = models.CharField(max_length=100)
-#     gender = models.CharField(max_length=10)
-#     wId = models.ForeignKey(WeeklySchedule, on_delete=models.CASCADE, related_name='week')
+class City(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=20)
 
 
-# class RequirementAbilities(models.Model):
-#     class Meta:
-#         unique_together = ('abilityId', 'reqId')
-#
-#     reqId = models.ForeignKey(Requirement, on_delete=models.CASCADE, related_name='req')
-#     abilityId = models.ForeignKey(Ability, on_delete=models.CASCADE, related_name='ab')
+class Category(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=20)
+
+
+class CategoryProject(models.Model):
+    class Meta:
+        unique_together = ('categoryId', 'projectId')
+
+    categoryId = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='category')
+    projectId = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='project')
+
+
+class Requirement(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='owner', default=None)
+    name = models.CharField(max_length=50, default="")
+    city = models.CharField(max_length=20)
+    address = models.CharField(max_length=100)
+    gender = models.CharField(max_length=10)
+    wId = models.ForeignKey(WeeklySchedule, on_delete=models.CASCADE, related_name='week')
+
+
+class RequirementAbilities(models.Model):
+    class Meta:
+        unique_together = ('abilityId', 'reqId')
+
+    reqId = models.ForeignKey(Requirement, on_delete=models.CASCADE, related_name='req')
+    abilityId = models.ForeignKey(Ability, on_delete=models.CASCADE, related_name='ab')
 
 
 class Report(models.Model):

@@ -89,7 +89,9 @@ def project_creation(request):
 
     else:
         form = ProjectRegistration()
-    return render(request, 'submitProject.html', {'form': form})
+    categories = Category.objects.all()
+    cities = City.objects.all()
+    return render(request, 'submitProject.html', {'form': form, 'categories': categories, 'cities': cities})
 
 
 def mylogin(request):
@@ -193,7 +195,10 @@ def update_organization_profile(request):
         user_form = UserForm()
         form = EditBenefactorProfile()
 
-    return render(request, 'editProfileOrganization.html', {'user_form': user_form, 'form': form})
+    user = CustomUser.objects.get(username=request.user.username)
+    organization = user.organizer
+
+    return render(request, 'editProfileOrganization.html', {'user_form': user_form, 'form': form, 'user': user, 'org': organization})
 
 
 def rate(request):
@@ -240,7 +245,9 @@ def user_profile_benefactor(request, username):
 def user_profile_organization(request, username):
     user = get_object_or_404(CustomUser, username=username)
     organization = Organizer.objects.get(user=user)
-    return render(request, 'personalProfileOrganization.html', {'user': user, 'organization': organization})
+    projects = Project.objects.filter(user=user)
+    requirements = Requirement.objects.filter(user=user)
+    return render(request, 'organizationProfileView.html', {'user': user, 'org': organization, 'projects': projects, 'requirements': requirements})
 
 
 def user_profile(request, username):

@@ -13,7 +13,7 @@ function addItem(){
             var div = this.parentElement;
             div.style.display = "none";
             document.getElementById(this.id).checked = false;
-        }
+        };
     span.appendChild(txt);
     li2.appendChild(span);
     //li.setAttribute('id',candidate1);

@@ -106,50 +106,64 @@
 					<h2>مشخصات</h2>
 					{% csrf_token %}
 					<div class="controls">
-						<input type="text" id="name" class="floatlabel" placeholder="نام موسسه" name="name">
+						<input type="text" id="name" class="floatlabel" placeholder="{{ org.name }}" name="name">
+                        <label>نام موسسه</label>
 					</div>
 
 					<div class="controls">
-						<input type="text" id="username" class="floatlabel" placeholder="نام کاربری" name="username">
+						<input type="text" id="username" class="floatlabel" placeholder="{{ user.username }}" name="username">
+                        <label>نام کاربری</label>
 					</div>
 					<div class="controls">
-						<input type="password" id="pass1" class="floatlabel" placeholder="کلمه عبور" name="password">
+						<input type="password" id="pass1" class="floatlabel" placeholder="" name="password">
+                        <label>کلمه عبور</label>
 					</div>
 					<div class="controls">
-						<input type="password" id="pass2" class="floatlabel" placeholder="تکرار کلمه عبور" name="password2">
+						<input type="password" id="pass2" class="floatlabel" placeholder="" name="password2">
+                        <label>تکرار کلمه عبور</label>
 					</div>
 
                     <div class="controls">
 						<h3>تاریخ ثبت</h3>
-						<input type="number" id="date" class="birthday" placeholder="روز" name="day">
-						<input type="number" id="month" class="birthday" placeholder="ماه" name="month">
-						<input type="number" id="year" class="birthday" placeholder="سال" name="year">
+						<input type="number" id="date" class="birthday" placeholder="{{ org.day }}" name="day">
+						<input type="number" id="month" class="birthday" placeholder="{{ org.month }}" name="month">
+						<input type="number" id="year" class="birthday" placeholder="{{ org.year }}" name="year">
 					</div>
 
                     <div class="controls">
 						<i class="ion-navicon"></i>
 						<select id="city" class="floatlabel" name="city">
-							<option value="blank">شهر محل سکونت</option>
+							{% if org.city == "blank" %}
+                                <option value="blank">-</option>
+                            {% endif %}
+                            {% if not org.city == "blank" %}
+							    <option value="blank">{{ person.city }}</option>
+                            {% endif %}
 						</select>
 					</div>
 
 					<div class="controls">
-						<input type="text" id="addr" class="floatlabel" placeholder="آدرس" name="address">
+						<input type="text" id="addr" class="floatlabel" placeholder="{{ org.address }}" name="address">
+                        <label>آدرس</label>
 					</div>
 
 					<div class="controls">
-						<input type="email" id="email" class="floatlabel" placeholder="ایمیل" name="email">
+						<input type="email" id="email" class="floatlabel" placeholder="{{ user.email }}" name="email">
+                        <label>ایمیل</label>
 					</div>
 
 					<div class="controls">
-						<input type="tel" id="tel" class="floatlabel" placeholder="تلفن" name="phone">
+						<input type="tel" id="tel" class="floatlabel" placeholder="{{ org.phone }}" name="phone">
+                        <label>تلفن</label>
 					</div>
 					<div class="controls">
-						<input type="web" id="web" class="floatlabel" placeholder="وب سایت" name="website">
+						<input type="web" id="web" class="floatlabel" placeholder="{{ org.website }}" name="website">
+                        <label>سایت</label>
 					</div>
 
 					<div class="controls">
-						<input type="text" id="parvaneh" class="floatlabel" placeholder="پروانه فعالیت" name="license">
+						<input type="text" id="parvaneh" class="floatlabel" placeholder="org.license" name="license">
+                        <label>پروانه فعالیت</label>
 					</div>
 
 					<div class="controls">
