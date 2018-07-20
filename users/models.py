@@ -176,3 +176,5 @@ class TotalRate(models.Model):
     f3 = models.FloatField()
     f4 = models.FloatField()
     f5 = models.FloatField()
+
+#TODO add table for requests

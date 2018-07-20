@@ -6,6 +6,7 @@ from django.shortcuts import render, get_object_or_404
 from .forms import *
 
 
+#TODO fix display ben, org
 def index(request):
     orgs = Organizer.objects.all()[:4]
     bens = Benefactor.objects.all()[:4]
@@ -52,11 +53,9 @@ def benefactor_registration(request):
     return render(request, 'registerBenefactor.html',
                   {'user_form': user_form, 'form': form, 'week_form': week_form, 'abilities': abilities,
                    'rangee': range(28), 'cities': cities})
-    # return render(request, 'submitRequirement.html',
-    #               {'user_form': user_form, 'form': form, 'week_form': week_form, 'abilities': abilities,
-    #                'rangee': range(28), 'cities': cities})
 
 
+#TODO add missing fields, front
 def organization_registration(request):
     if request.method == 'POST':
         user_form = UserForm(request.POST)
@@ -110,6 +109,7 @@ def project_creation(request):
     return render(request, 'submitProject.html', {'form': form, 'categories': categories, 'cities': cities})
 
 
+#TODO add invalid
 def mylogin(request):
     if request.method == 'POST':
         user = authenticate(username=request.POST['username'], password=request.POST['password'])
@@ -130,6 +130,7 @@ def mylogin(request):
         return render(request, 'login.html')
 
 
+#TODO add report object
 @login_required
 def update_benefactor_profile(request):
     abilities = Ability.objects.all()
@@ -186,6 +187,7 @@ def update_benefactor_profile(request):
                    'person': benefactor, 'week': week, 'user_abilities': user_abilities, 'rangee': range(28)})
 
 
+#TODO add missing fields, report object
 @login_required
 def update_organization_profile(request):
     if request.method == 'POST':
@@ -217,6 +219,7 @@ def update_organization_profile(request):
     return render(request, 'editProfileOrganization.html', {'user_form': user_form, 'form': form, 'user': user, 'org': organization})
 
 
+#TODO filter and front
 def list_projects(request):
     if request.method == 'POST':
         name = request.POST['org']
@@ -250,6 +253,7 @@ def user_profile_organization(request, username):
     return render(request, 'organizationProfileView.html', {'user': user, 'org': organization, 'projects': projects, 'requirements': requirements})
 
 
+#TODO add links
 def user_profile(request, username):
     user = get_object_or_404(CustomUser, username=username)
     if user.isBen:
@@ -262,6 +266,7 @@ def user_profile(request, username):
         return render(request, 'personalProfileOrganization.html', {'user': user, 'organization': organization})
 
 
+#TODO add links, report object
 def comment(request, username):
     user = get_object_or_404(CustomUser, username=username)
     if user.isBen:
@@ -279,6 +284,7 @@ def project(request, username, pId):
     return render(request, 'project.html', {'user': user, 'org': organization, 'project': proj})
 
 
+#TODO add report object
 @login_required
 def submit_requirement(request):
     abilities = Ability.objects.all()
@@ -306,3 +312,6 @@ def submit_requirement(request):
         week_form = WeekForm()
 
     return render(request, 'submitRequirement.html', {'form': form, 'week_form': week_form, 'abilities': abilities, 'rangee': range(28), 'cities': cities})
+
+
+#TODO add search requirements, abilities, report, waiting requests, registers, forget password
