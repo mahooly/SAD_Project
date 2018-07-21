@@ -23,4 +23,7 @@ admin.site.register(Category)
 admin.site.register(CategoryProject)
 admin.site.register(Requirement)
 admin.site.register(RequirementAbilities)
+admin.site.register(Report)
+admin.site.register(BenefactorUpdatedFields)
+
 

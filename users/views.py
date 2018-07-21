@@ -128,7 +128,6 @@ def mylogin(request):
         return render(request, 'login.html')
 
 
-#TODO add report object
 @login_required
 def update_benefactor_profile(request):
     abilities = Ability.objects.all()
@@ -141,16 +140,19 @@ def update_benefactor_profile(request):
         form = EditBenefactorProfile(request.POST)
         week_form = WeekForm(request.POST)
         if user_form.is_valid() and form.is_valid() and week_form.is_valid():
+            update = BenefactorUpdatedFields.objects.create(benefactor=user)
             for attr in user_form.data:
-                if attr in user_form.fields and user_form.data[attr] is not '':
+                if attr in user_form.fields and user_form.data[attr] != '':
                     if attr != 'password2':
                         if getattr(user, attr) is not user_form.data[attr]:
                             setattr(user, attr, user_form.data[attr])
+                            setattr(update, attr, True)
             user.save()
             benefactor = Benefactor.objects.get(user=user)
             for attr in form.data:
-                if attr in form.fields and form.data[attr] is not '' and form.data[attr] != 'blank':
+                if attr in form.fields and form.data[attr] != '' and form.data[attr] != 'blank':
                     setattr(benefactor, attr, form.data[attr])
+                    setattr(update, attr, True)
             benefactor.save()
 
             for a in abilities:
@@ -160,17 +162,24 @@ def update_benefactor_profile(request):
                         UserAbilities.objects.get(abilityId=a, username=user)
                     except ObjectDoesNotExist:
                         UserAbilities.objects.create(abilityId=a, username=user)
+                        update.ability = True
                 else:
                     try:
                         usab = UserAbilities.objects.get(abilityId=a, username=user)
                         usab.delete()
+                        update.ability = True
                     except ObjectDoesNotExist:
                         pass
 
             for attr in week_form.data:
-                if attr in week_form.fields and getattr(week, attr) is not week_form.data[attr]:
+                if attr in week_form.fields and getattr(week, attr) != week_form.data[attr]:
                     setattr(week, attr, week_form.data[attr])
+                    update.week = True
             week.save()
+
+            update.save()
+
+            Report.objects.create(benefactor=user, type='4', operator='3', update=update, date=datetime.datetime.today(), time=datetime.datetime.now())
 
         else:
             print(user_form.errors, form.errors)
@@ -264,7 +273,7 @@ def user_profile(request, username):
         return render(request, 'personalProfileOrganization.html', {'user': user, 'organization': organization})
 
 
-#TODO add links, report object
+#TODO report object
 def comment(request, username):
     user = get_object_or_404(CustomUser, username=username)
     if user.isBen:
@@ -282,7 +291,6 @@ def project(request, username, pId):
     return render(request, 'project.html', {'user': user, 'org': organization, 'project': proj})
 
 
-#TODO add report object
 @login_required
 def submit_requirement(request):
     abilities = Ability.objects.all()

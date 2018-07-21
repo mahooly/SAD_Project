@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from .choices import *
@@ -63,6 +65,31 @@ class Benefactor(models.Model):
     phone = models.CharField(max_length=12)
     typeOfCooperation = models.CharField(max_length=15, choices=COOP_CHOICES, default='inOffice10')
     wId = models.ForeignKey(WeeklySchedule, on_delete=models.DO_NOTHING, related_name='userWeek')
+
+
+class BenefactorUpdatedFields(models.Model):
+    id = models.AutoField(primary_key=True)
+    benefactor = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='updatedbenefactor')
+    username = models.BooleanField(default=False)
+    password = models.BooleanField(default=False)
+    email = models.BooleanField(default=False)
+    image = models.BooleanField(default=False)
+    name = models.BooleanField(default=False)
+    surname = models.BooleanField(default=False)
+    nickname = models.BooleanField(default=False)
+    gender = models.BooleanField(default=False)
+    day = models.BooleanField(default=False)
+    month = models.BooleanField(default=False)
+    year = models.BooleanField(default=False)
+    education = models.BooleanField(default=False)
+    major = models.BooleanField(default=False)
+    nationalId = models.BooleanField(default=False)
+    city = models.BooleanField(default=False)
+    address = models.BooleanField(default=False)
+    phone = models.BooleanField(default=False)
+    typeOfCooperation = models.BooleanField(default=False)
+    week = models.BooleanField(default=False)
+    ability = models.BooleanField(default=False)
 
 
 class Organizer(models.Model):
@@ -158,14 +185,17 @@ class RequirementAbilities(models.Model):
 
 class Report(models.Model):
     id = models.AutoField(primary_key=True)
-    benefactor = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING, related_name='ben')
-    organization = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING, related_name='org')
+    benefactor = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING, related_name='ben', default=None, null=True)
+    organization = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING, related_name='org', default=None, null=True)
     type = models.CharField(max_length=1)
     description = models.TextField(max_length=100, blank=True)
     operator = models.CharField(max_length=1)
-    rateId = models.ForeignKey(Rate, on_delete=models.DO_NOTHING, related_name='rate')
-    wId = models.ForeignKey(WeeklySchedule, on_delete=models.DO_NOTHING, related_name='weekly')
-    payment = models.CharField(max_length=10)
+    date = models.DateField(default=datetime.datetime.today())
+    time = models.TimeField(default=datetime.datetime.now())
+    rateId = models.ForeignKey(Rate, on_delete=models.DO_NOTHING, related_name='rate', default=None, null=True)
+    wId = models.ForeignKey(WeeklySchedule, on_delete=models.DO_NOTHING, related_name='weekly', default=None, null=True)
+    payment = models.CharField(max_length=10, blank=True)
+    update = models.ForeignKey(BenefactorUpdatedFields, on_delete=models.DO_NOTHING, related_name='updatedfields', default=None, null=True)
 
 
 class TotalRate(models.Model):
@@ -177,4 +207,19 @@ class TotalRate(models.Model):
     f4 = models.FloatField()
     f5 = models.FloatField()
 
-#TODO add table for requests
+
+class Request(models.Model):
+    id = models.AutoField(primary_key=True)
+    benefactorId = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='reqben')
+    organizationId = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='reqorg')
+    wId = models.ForeignKey(WeeklySchedule, on_delete=models.CASCADE, related_name='reqweek')
+    state = models.BooleanField(default=False)
+    whoSubmit = models.CharField(max_length=1, default='1')
+    city = models.CharField(max_length=20)
+
+
+class RequestAbilities(models.Model):
+    reqId = models.ForeignKey(Request, on_delete=models.CASCADE, related_name='request')
+    abilityId = models.ForeignKey(Ability, on_delete=models.CASCADE, related_name='requestAbility')
+
+
