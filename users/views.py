@@ -99,8 +99,6 @@ def project_creation(request):
                 if request.POST.get(name) is not None:
                     CategoryProject.objects.create(categoryId=c, projectId=project)
 
-            return render(request, 'thanks.html')
-
         else:
             print(form.errors)
 

@@ -140,11 +140,11 @@ class CategoryProject(models.Model):
 class Requirement(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='owner')
-    name = models.CharField(max_length=50, default="")
+    name = models.CharField(max_length=50)
     city = models.CharField(max_length=20)
     address = models.CharField(max_length=100)
     wId = models.ForeignKey(WeeklySchedule, on_delete=models.CASCADE, related_name='week')
-    description = models.TextField(max_length=200, default="")
+    description = models.TextField(max_length=200)
     typeOfCooperation = models.CharField(max_length=15, choices=COOP_CHOICES, default='inOffice10')
 
 
