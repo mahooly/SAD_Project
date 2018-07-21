@@ -48,6 +48,13 @@ if (mm === "2") {
 	a1.innerText = "ثبت پروژه جدید";
 	li1.appendChild(a1);
 	ul1.appendChild(li1);
+
+	var li1 = document.createElement('li');
+	var a1 = document.createElement('a');
+	a1.setAttribute('href', "submit_requirement");
+	a1.innerText = "ثبت نیازمندی جدید";
+	li1.appendChild(a1);
+	ul1.appendChild(li1);
 	
 	var li2 = document.createElement('li'); 
 	var ol1 = document.createElement('ol');

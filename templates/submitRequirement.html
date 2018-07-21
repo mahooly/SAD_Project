@@ -121,6 +121,10 @@
 						<input type="text" id="address" class="floatlabel" placeholder="آدرس">
 					</div>
 
+                    <div class="controls">
+						<textarea id="cm" class="floatlabel" placeholder="توضیحات مربوط به نیازمندی"></textarea>
+					</div>
+
                     <h2> توانایی‌ها </h2>
 					<div class="controlsAbility">
 						<select id="candidate" class="floatlabel" name="ability">
@@ -147,6 +151,7 @@
 							<option value="atHome" name="atHome">دورکاری</option>
 						</select>
 					</div>
+
                     <table id="tab">
 						<tbody>
                             <tr>
@@ -207,14 +212,13 @@
 							</tr>
 						</tbody>
                         <h5 id="tab2" style="display: none">لطفا زمان‌های غیرفعال خود را علامت بزنید</h5>
+
 					</table>
+                    <div>
                     {% for i in rangee %}
                          <input type="checkbox" name="a{{ i }}" id="a{{ i }}" style="display: none">
                     {% endfor %}
-		
-					<div class="controls">
-						<textarea id="cm" class="floatlabel" placeholder="توضیحات مربوط به نیازمندی"></textarea>
-					</div>
+                    </div>
 					
 					<button>ثبت</button>
 				</form>

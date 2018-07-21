@@ -25,8 +25,10 @@ function participation() {
     var edu = document.getElementById("typeOfParticipation");
     if (edu.value === "atHome" || edu.value === "blank") {
         document.getElementById("tab").style.display = "none";
+        document.getElementById("tab2").style.display = "none";
     } else {
         document.getElementById("tab").style.display = "block";
+        document.getElementById("tab2").style.display = "block";
     }
 }
 

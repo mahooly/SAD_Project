@@ -144,7 +144,7 @@ class Requirement(models.Model):
     city = models.CharField(max_length=20)
     address = models.CharField(max_length=100)
     wId = models.ForeignKey(WeeklySchedule, on_delete=models.CASCADE, related_name='week')
-    description = models.TextField(max_length=200)
+    description = models.TextField(max_length=200, default="")
     typeOfCooperation = models.CharField(max_length=15, choices=COOP_CHOICES, default='inOffice10')
 
 
