@@ -9,7 +9,7 @@ class CustomUser(AbstractUser):
     state = models.NullBooleanField(default=None)
     isBen = models.BooleanField(default=False)
     isOrg = models.BooleanField(default=False)
-    image = models.ImageField(upload_to='profile_pics/', default='../media/profile_pics/no-picture.png')
+    image = models.ImageField(upload_to='../media/profile_pics/', default='../media/profile_pics/no-picture.png')
 
     def __str__(self):
         return self.username
@@ -47,6 +47,7 @@ class WeeklySchedule(models.Model):
     a27 = models.CharField(max_length=5, default='off', blank=True)
 
 
+#TODO add total rate
 class Benefactor(models.Model):
 
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='benefactor')
@@ -69,7 +70,7 @@ class Benefactor(models.Model):
 
 class BenefactorUpdatedFields(models.Model):
     id = models.AutoField(primary_key=True)
-    benefactor = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='updatedbenefactor')
+    benefactor = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING, related_name='updatedbenefactor')
     username = models.BooleanField(default=False)
     password = models.BooleanField(default=False)
     email = models.BooleanField(default=False)
@@ -142,8 +143,8 @@ class UserAbilities(models.Model):
     class Meta:
         unique_together = ('abilityId', 'username')
 
-    abilityId = models.ForeignKey(Ability, on_delete=models.CASCADE, related_name='ability')
-    username = models.ForeignKey(CustomUser, to_field='username', on_delete=models.CASCADE, related_name='benefactorusername')
+    abilityId = models.ForeignKey(Ability, on_delete=models.DO_NOTHING, related_name='ability')
+    username = models.ForeignKey(CustomUser, to_field='username', on_delete=models.DO_NOTHING, related_name='benefactorusername')
 
 
 class City(models.Model):

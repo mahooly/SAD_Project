@@ -17,6 +17,7 @@ def terms(request):
     return render(request, 'terms.html')
 
 
+#TODO add total rate
 def benefactor_registration(request):
     abilities = Ability.objects.all()
     if request.method == 'POST':
@@ -136,17 +137,23 @@ def update_benefactor_profile(request):
     week = WeeklySchedule.objects.get(id=benefactor.wId.id)
     user_abilities = UserAbilities.objects.filter(username=user.username)
     if request.method == 'POST':
-        user_form = EditUser(request.POST)
+        user_form = EditUser(request.POST, request.FILES)
         form = EditBenefactorProfile(request.POST)
         week_form = WeekForm(request.POST)
         if user_form.is_valid() and form.is_valid() and week_form.is_valid():
             update = BenefactorUpdatedFields.objects.create(benefactor=user)
+
             for attr in user_form.data:
                 if attr in user_form.fields and user_form.data[attr] != '':
                     if attr != 'password2':
                         if getattr(user, attr) is not user_form.data[attr]:
                             setattr(user, attr, user_form.data[attr])
                             setattr(update, attr, True)
+
+            if 'image' in request.FILES:
+                user.image = request.FILES['image']
+                update.image = True
+
             user.save()
             benefactor = Benefactor.objects.get(user=user)
             for attr in form.data:
@@ -182,7 +189,7 @@ def update_benefactor_profile(request):
             Report.objects.create(benefactor=user, type='4', operator='3', update=update, date=datetime.datetime.today(), time=datetime.datetime.now())
 
         else:
-            print(user_form.errors, form.errors)
+            print(user_form.errors, form.errors, week_form.errors)
 
     else:
         user_form = UserForm()
@@ -273,15 +280,19 @@ def user_profile(request, username):
         return render(request, 'personalProfileOrganization.html', {'user': user, 'organization': organization})
 
 
-#TODO report object
+#TODO report object, submit
 def comment(request, username):
     user = get_object_or_404(CustomUser, username=username)
-    if user.isBen:
-        benefactor = Benefactor.objects.get(user=user)
-        return render(request, 'comment.html', {'user': user, 'benefactor': benefactor})
+    if request.method == 'POST':
+        print(request.data)
+
     else:
-        organization = Organizer.objects.get(user=user)
-        return render(request, 'comment.html', {'user': user, 'organization': organization})
+        if user.isBen:
+            benefactor = Benefactor.objects.get(user=user)
+            return render(request, 'comment.html', {'user': user, 'benefactor': benefactor})
+        else:
+            organization = Organizer.objects.get(user=user)
+            return render(request, 'comment.html', {'user': user, 'organization': organization})
 
 
 def project(request, username, pId):
