@@ -6,11 +6,10 @@ from django.shortcuts import render, get_object_or_404
 from .forms import *
 
 
-#TODO fix display ben, org
 def index(request):
     orgs = Organizer.objects.all()[:4]
     bens = Benefactor.objects.all()[:4]
-    #orgRequirements = []
+    orgRequirements = []
     orgProjects = []
     benAbilities = []
     ratingOrg = []
@@ -20,8 +19,9 @@ def index(request):
         benAbilities.append(UserAbilities.objects.filter(username=bens[i].user))
         ratingOrg.append(TotalRate.objects.get(id=orgs[i].rate.id))
         ratingBens.append(TotalRate.objects.get(id=bens[i].rate.id))
+        orgRequirements.append(Requirement.objects.filter(user=orgs[i].user))
     print(ratingBens)
-    return render(request, 'index.html', {'bens': bens, 'orgs': orgs, 'orgProjects': orgProjects, 'benAbilities': benAbilities, 'ratingOrg': ratingOrg, 'ratingBens': ratingBens})
+    return render(request, 'index.html', {'bens': bens, 'orgs': orgs, 'orgProjects': orgProjects, 'benAbilities': benAbilities, 'ratingOrg': ratingOrg, 'ratingBens': ratingBens, 'orgRequirements': orgRequirements})
 
 
 def terms(request):
