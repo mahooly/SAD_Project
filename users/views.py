@@ -248,12 +248,23 @@ def update_organization_profile(request):
 
 #TODO filter and front
 def list_projects(request):
+    categories = Category.objects.all()
     if request.method == 'POST':
         name = request.POST['org']
-        projects = Project.objects.filter(user__organizer__name=name)
-        return render(request, 'searchProject.html', {'projects': projects})
+        sortType = request.POST['sortType']
+        projects = Project.objects.filter(user__organizer__name__icontains=name)
+        if sortType == "alreadyD":
+            projects = projects.order_by('-alreadyPaid')
+        if sortType == "alreadyA":
+            projects = projects.order_by('alreadyPaid')
+        if sortType == "budgetD":
+            projects = projects.order_by('-budget')
+        if sortType == "budgetA":
+            projects = projects.order_by('budget')
+        return render(request, 'searchProject.html', {'projects': projects, 'categories': categories})
     else:
-        return render(request, 'searchProject.html')
+        projects = Project.objects.all()
+        return render(request, 'searchProject.html',{'projects': projects, 'categories': categories})
 
 
 @login_required
