@@ -47,7 +47,16 @@ class WeeklySchedule(models.Model):
     a27 = models.CharField(max_length=5, default='off', blank=True)
 
 
-#TODO add total rate
+class TotalRate(models.Model):
+    id = models.AutoField(primary_key=True)
+    totalRate = models.FloatField(default=0)
+    f1 = models.FloatField(default=0)
+    f2 = models.FloatField(default=0)
+    f3 = models.FloatField(default=0)
+    f4 = models.FloatField(default=0)
+    f5 = models.FloatField(default=0)
+
+
 class Benefactor(models.Model):
 
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='benefactor')
@@ -65,7 +74,8 @@ class Benefactor(models.Model):
     address = models.CharField(max_length=100, default='st')
     phone = models.CharField(max_length=12)
     typeOfCooperation = models.CharField(max_length=15, choices=COOP_CHOICES, default='inOffice10')
-    wId = models.ForeignKey(WeeklySchedule, on_delete=models.DO_NOTHING, related_name='userWeek')
+    wId = models.ForeignKey(WeeklySchedule, on_delete=models.CASCADE, related_name='userWeek')
+    rate = models.ForeignKey(TotalRate, on_delete=models.CASCADE, related_name='rate')
 
 
 class BenefactorUpdatedFields(models.Model):
@@ -105,6 +115,7 @@ class Organizer(models.Model):
     phone = models.CharField(max_length=15)
     website = models.URLField()
     license = models.CharField(max_length=20)
+    rate = models.ForeignKey(TotalRate, on_delete=models.CASCADE, related_name='orgRate')
 
 
 class Project(models.Model):
@@ -112,7 +123,7 @@ class Project(models.Model):
     id = models.AutoField(primary_key=True)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='creator')
     name = models.CharField(max_length=50)
-    budget = models.CharField(max_length=10)
+    budget = models.IntegerField(default=0)
     city = models.CharField(max_length=15, default='blank')
     description = models.TextField(max_length=300)
     paymethod = models.CharField(max_length=10, choices=BANK_CHOICES)
@@ -131,7 +142,7 @@ class Rate(models.Model):
     f3 = models.IntegerField()
     f4 = models.IntegerField()
     f5 = models.IntegerField()
-    description = models.TextField(max_length=300)
+    description = models.TextField(max_length=300, blank=True)
 
 
 class Ability(models.Model):
@@ -197,16 +208,6 @@ class Report(models.Model):
     wId = models.ForeignKey(WeeklySchedule, on_delete=models.DO_NOTHING, related_name='weekly', default=None, null=True)
     payment = models.CharField(max_length=10, blank=True)
     update = models.ForeignKey(BenefactorUpdatedFields, on_delete=models.DO_NOTHING, related_name='updatedfields', default=None, null=True)
-
-
-class TotalRate(models.Model):
-    id = models.AutoField(primary_key=True)
-    totalRate = models.FloatField()
-    f1 = models.FloatField()
-    f2 = models.FloatField()
-    f3 = models.FloatField()
-    f4 = models.FloatField()
-    f5 = models.FloatField()
 
 
 class Request(models.Model):

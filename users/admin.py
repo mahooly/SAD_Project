@@ -8,7 +8,7 @@ class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
     model = CustomUser
-    list_display = ['username', 'email', 'isBen', 'isOrg', 'image']
+    list_display = ['username', 'email', 'isBen', 'isOrg', 'image', 'state']
 
 
 admin.site.register(CustomUser, CustomUserAdmin)
@@ -25,5 +25,7 @@ admin.site.register(Requirement)
 admin.site.register(RequirementAbilities)
 admin.site.register(Report)
 admin.site.register(BenefactorUpdatedFields)
+admin.site.register(Rate)
+admin.site.register(TotalRate)
 
 
