@@ -27,4 +27,10 @@ function changed() {
     document.getElementById("box").value = document.getElementById("textbox").value;
 }
 
+document.getElementById("button11").style.backgroundColor = "#12beff";
+document.getElementById("button21").style.backgroundColor = "#12beff";
+document.getElementById("button31").style.backgroundColor = "#12beff";
+document.getElementById("button41").style.backgroundColor = "#12beff";
+document.getElementById("button51").style.backgroundColor = "#12beff";
+
 

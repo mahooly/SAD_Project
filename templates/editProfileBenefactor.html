@@ -207,6 +207,9 @@
                             {% if not person.city == "blank" %}
 							<option value="blank">{{ person.city }}</option>
                             {% endif %}
+                            {% for city in cities %}
+                            <option value="{{city.name}}">{{city.name}}</option>
+                           {% endfor %}
 						</select>
                         <label>شهر</label>
 					</div>

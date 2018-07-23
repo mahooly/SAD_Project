@@ -157,7 +157,16 @@
 				<p>*لطفا نظر خود را به زبان فارسی بیان کنید.</p>
 				</div>
 				<br><br>
-				<button class="mybutton" onclick="show()">نظر دهید</button>
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="number" name="f1" id="f1" value="1" style="display: none;">
+                    <input type="number" name="f2" id="f2" value="1" style="display: none;">
+                    <input type="number" name="f3" id="f3" value="1" style="display: none;">
+                    <input type="number" name="f4" id="f4" value="1" style="display: none;">
+                    <input type="number" name="f5" id="f5" value="1" style="display: none;">
+                    <input type="text" name="box"  id="box" value="" style="display: none;">
+                    <input type="submit" class="mybutton" onclick="show()" value="نظر دهید">
+                </form>
 			</div>
 				<div id="profile">
                     <img src="{{ user.image }}">
@@ -171,14 +180,6 @@
 				
 				
 			</div>
-            <form method="post" enctype="multipart/form-data">
-                <input type="number" name="f1" id="f1" value="1" style="display: none;">
-                <input type="number" name="f2" id="f2" value="1" style="display: none;">
-                <input type="number" name="f3" id="f3" value="1" style="display: none;">
-                <input type="number" name="f4" id="f4" value="1" style="display: none;">
-                <input type="number" name="f5" id="f5" value="1" style="display: none;">
-                <input type="text" name="box"  id="box" value="" style="display: none;">
-            </form>
 		</div>
 
 		<div class="footer">

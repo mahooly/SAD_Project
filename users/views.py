@@ -58,6 +58,7 @@ def benefactor_registration(request):
 
 #TODO add missing fields, front
 def organization_registration(request):
+    cities = City.objects.all()
     if request.method == 'POST':
         user_form = UserForm(request.POST)
         form = OrganizationRegistration(request.POST, request.FILES)
@@ -79,7 +80,7 @@ def organization_registration(request):
     else:
         user_form = UserForm()
         form = BenefactorRegistraton()
-    cities = City.objects.all()
+
     return render(request, 'registerOrganization.html', {'user_form': user_form, 'form': form, 'cities': cities})
 
 
@@ -134,6 +135,7 @@ def update_benefactor_profile(request):
     abilities = Ability.objects.all()
     user = CustomUser.objects.get(username=request.user.username)
     benefactor = user.benefactor
+    cities = City.objects.all()
     week = WeeklySchedule.objects.get(id=benefactor.wId.id)
     user_abilities = UserAbilities.objects.filter(username=user.username)
     if request.method == 'POST':
@@ -198,12 +200,14 @@ def update_benefactor_profile(request):
 
     return render(request, 'editProfileBenefactor.html',
                   {'user_form': user_form, 'form': form, 'week_form': week_form, 'abilities': abilities, 'user': user,
-                   'person': benefactor, 'week': week, 'user_abilities': user_abilities, 'rangee': range(28)})
+                   'person': benefactor, 'week': week, 'user_abilities': user_abilities, 'rangee': range(28),
+                   'cities': cities})
 
 
 #TODO add missing fields, report object
 @login_required
 def update_organization_profile(request):
+    cities = City.objects.all()
     if request.method == 'POST':
         user_form = EditUser(request.POST)
         form = EditOrganizationProfile(request.POST)
@@ -214,12 +218,20 @@ def update_organization_profile(request):
                     if attr != 'password2':
                         if getattr(user, attr) is not user_form.data[attr]:
                             setattr(user, attr, user_form.data[attr])
+
+            if 'image' in request.FILES:
+                user.image = request.FILES['image']
+                update.image = True
+
             user.save()
             organization = Organizer.objects.get(user=user)
             for attr in form.data:
                 if attr in form.fields and form.data[attr] is not '' and form.data[attr] is not 'blank':
                     setattr(organization, attr, form.data[attr])
                 organization.save()
+
+            Report.objects.create(organization=user, type='4', operator='4', update=update,
+                                  date=datetime.datetime.today(), time=datetime.datetime.now())
         else:
             print(user_form.errors, form.errors)
 
@@ -230,7 +242,8 @@ def update_organization_profile(request):
     user = CustomUser.objects.get(username=request.user.username)
     organization = user.organizer
 
-    return render(request, 'editProfileOrganization.html', {'user_form': user_form, 'form': form, 'user': user, 'org': organization})
+    return render(request, 'editProfileOrganization.html', {'user_form': user_form, 'form': form, 'user': user,
+                                                            'org': organization, 'cities': cities})
 
 
 #TODO filter and front

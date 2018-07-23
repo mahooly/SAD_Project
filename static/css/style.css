@@ -6,13 +6,13 @@
 
 @font-face{
 	font-family: 'vazir';
-	src:url("../../fonts/Vazir-FD.woff")format("woff"),
-	url("../../fonts/Vazir-FD.eot")format("eot"),
-	url("../../fonts/Vazir-FD.ttf")format("truetype")
+	src:url("../fonts/Vazir-FD.woff")format("woff"),
+	url("../fonts/Vazir-FD.eot")format("eot"),
+	url("../fonts/Vazir-FD.ttf")format("truetype")
 }
 
 body {
-	font-family: 'vazir';
+	font-family: 'vazir', serif;
 }
 
 h2{
@@ -37,7 +37,7 @@ h2{
     margin-right: -30px;
     border-radius: 50%;
     font-size: 14px;
-    font-family: 'vazir';
+	font-family: 'vazir', serif;
     border: none;
     background: #fdfdfd;
     text-align: center;
@@ -54,7 +54,7 @@ h2{
     margin-right: -30px;
     border-radius: 50%;
     font-size: 14px;
-    font-family: 'vazir';
+	font-family: 'vazir', serif;
     border: none;
     background: #fdfdfd;
     text-align: center;
@@ -190,7 +190,7 @@ h2{
 .login p {
 	margin-top: 20px;
 	display: inline;
-	font-family: 'vazir';
+	font-family: 'vazir', serif;
 	font-size: 13px;
 }
 
@@ -273,7 +273,7 @@ h2{
 }	
 
 .header .topmenu .container .topmenuelements a {
-	font-family: 'vazir';
+	font-family: 'vazir', serif;
 	float: right;
 	width: auto;
 	min-width: 8%;
@@ -292,7 +292,7 @@ h2{
 
 .header .topmenu .container .topmenudate a, .header .topmenu .container .topmenudate button
 , .header .topmenu .container .topmenudate h3 {
-	font-family: 'vazir';
+	font-family: 'vazir', serif;
 	float: right;
 	width: auto;
 	min-width: 8%;
@@ -312,7 +312,7 @@ h2{
 }
 
 .header .topmenu .container .topmenudate {
-	font-family: 'vazir';
+	font-family: 'vazir', serif;
 	float: right;
 	margin-top: 15px;
 	margin-right: 10px;
@@ -388,7 +388,7 @@ h2{
 	z-index: 60;
 	position: fixed;
 	width: 100%;
-	margin: 0px 0;
+	margin: 0 0;
 	display: block;
 	background: #1E90FF;
 	opacity: 0.8;
@@ -408,7 +408,6 @@ h2{
 	height: 35px;
 	margin: 0 0;
 	width: 150px;
-	text-align: center;
 	float: none;
 	position: relative;
 	padding: 0;

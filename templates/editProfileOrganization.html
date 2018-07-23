@@ -137,8 +137,11 @@
                                 <option value="blank">-</option>
                             {% endif %}
                             {% if not org.city == "blank" %}
-							    <option value="blank">{{ person.city }}</option>
+							    <option value="blank">{{ org.city }}</option>
                             {% endif %}
+                            {% for city in cities %}
+                                <option value="{{city.name}}">{{city.name}}</option>
+                            {% endfor %}
 						</select>
 					</div>
 
@@ -162,7 +165,7 @@
 					</div>
 
 					<div class="controls">
-						<input type="text" id="parvaneh" class="floatlabel" placeholder="org.license" name="license">
+						<input type="text" id="parvaneh" class="floatlabel" placeholder="{{ org.license }}" name="license">
                         <label>پروانه فعالیت</label>
 					</div>
 
@@ -187,7 +190,7 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript" src={% static "js/editProfileOrganization.js" %}></script>
+{#	<script type="text/javascript" src={% static "js/editProfileOrganization.js" %}></script>#}
 	<script type="text/javascript" src={% static "js/main.js" %}></script>
 	<script src={% static "js/jquery.min.js" %}></script>
 </body>
