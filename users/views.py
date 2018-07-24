@@ -331,11 +331,11 @@ def rate_user(request, username):
             Report.objects.create(benefactor=request.user, organization=user, type='1', operator='1', rateId=rate, date=datetime.datetime.today(), time=datetime.datetime.now())
 
         count = Rate.objects.filter(ratedUser=user).count()
-        totalRate.f1 = ((totalRate.f1 * (count-1)) + (rate.f1 * 100))/count
-        totalRate.f2 = ((totalRate.f2 * (count-1)) + (rate.f2 * 100))/count
-        totalRate.f3 = ((totalRate.f3 * (count-1)) + (rate.f3 * 100))/count
-        totalRate.f4 = ((totalRate.f4 * (count-1)) + (rate.f4 * 100))/count
-        totalRate.f5 = ((totalRate.f5 * (count-1)) + (rate.f5 * 100))/count
+        totalRate.f1 = ((totalRate.f1 * (count-1)) + ((rate.f1-1)/4 * 100))/count
+        totalRate.f2 = ((totalRate.f2 * (count-1)) + ((rate.f2-1)/4 * 100))/count
+        totalRate.f3 = ((totalRate.f3 * (count-1)) + ((rate.f3-1)/4 * 100))/count
+        totalRate.f4 = ((totalRate.f4 * (count-1)) + ((rate.f4-1)/4 * 100))/count
+        totalRate.f5 = ((totalRate.f5 * (count-1)) + ((rate.f5-1)/4 * 100))/count
         totalRate.save()
         return render(request, 'thanks.html')
 

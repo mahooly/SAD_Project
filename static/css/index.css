@@ -768,3 +768,8 @@ table {
 	color: #eeeeee;
 	text-align: center;
 }
+
+h3 a {
+	text-decoration: none;
+	color: #bebebe;
+}

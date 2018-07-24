@@ -121,25 +121,65 @@
 					<div id="p22" class="enter"><a href="{% url 'registerOrg' %}">ثبت نام موسسات</a></div>
 				</div>
 				<div class="section3" id="c3">
-                     <div class="organization">
-                      <h3>{{ orgs.1.name }}</h3>
+                    <div class="organization">
+                      <h3><a style="text-decoration: none; color: #eeeeee;" href={% url 'profile_org' orgs.0.user.username %}> {{ orgs.0.name }}</a></h3>
                       <div>
                        <table>
                         <tr class="bars">
                          <td>
-                          <div class="one" style="height: {{ ratingOrg.1.f1 }};position: absolute;bottom: 0px;width:100%"></div>
+                          <div class="one" style="height: {{ ratingOrg.0.f1 }}%;position: absolute;bottom: 0px;width:100%"></div>
                          </td>
                          <td>
-                          <div class="tow" style="height: {{ ratingOrg.1.f2 }};position: absolute;bottom: 0px;width:100%"></div>
+                          <div class="two" style="height: {{ ratingOrg.0.f2 }}%;position: absolute;bottom: 0px;width:100%"></div>
                          </td>
                          <td>
-                          <div class="three" style="height: {{ ratingOrg.1.f3 }};position: absolute;bottom: 0px;width:100%"></div>
+                          <div class="three" style="height: {{ ratingOrg.0.f3 }}%;position: absolute;bottom: 0px;width:100%"></div>
                          </td>
                          <td>
-                          <div class="four" style="height: {{ ratingOrg.1.f4 }};position: absolute;bottom: 0px;width:100%"></div>
+                          <div class="four" style="height: {{ ratingOrg.0.f4 }}%;position: absolute;bottom: 0px;width:100%"></div>
                          </td>
                          <td>
-                          <div class="five" style="height: {{ ratingOrg.1.f5 }};position: absolute;bottom: 0px;width:100%"></div>
+                          <div class="five" style="height: {{ ratingOrg.0.f5 }}%;position: absolute;bottom: 0px;width:100%"></div>
+                         </td>
+                        </tr>
+                       </table>
+                      </div>
+                         <div class="projects">
+                             <h5>نیازمندی‌ها</h5>
+                             <ul>
+                                 {% for req in orgRequirements.0 %}
+                                     <li>{{ req.name }}</li>
+                                 {% endfor %}
+                             </ul>
+                         </div>
+                         <div class="projects">
+                             <h5>پروژه‌ها</h5>
+                             <ul>
+                                 {% for project in orgProjects.0 %}
+                                     <li>{{ project.name }}</li>
+                                 {% endfor %}
+                             </ul>
+                         </div>
+                     </div>
+                     <div class="organization">
+                      <h3><a style="text-decoration: none; color: #eeeeee;" href={% url 'profile_org' orgs.1.user.username %}> {{ orgs.1.name }}</a></h3>
+                      <div>
+                       <table>
+                        <tr class="bars">
+                         <td>
+                          <div class="one" style="height: {{ ratingOrg.1.f1 }}%;position: absolute;bottom: 0;width:100%"></div>
+                         </td>
+                         <td>
+                          <div class="two" style="height: {{ ratingOrg.1.f2 }}%;position: absolute;bottom: 0px;width:100%"></div>
+                         </td>
+                         <td>
+                          <div class="three" style="height: {{ ratingOrg.1.f3 }}%;position: absolute;bottom: 0px;width:100%"></div>
+                         </td>
+                         <td>
+                          <div class="four" style="height: {{ ratingOrg.1.f4 }}%;position: absolute;bottom: 0px;width:100%"></div>
+                         </td>
+                         <td>
+                          <div class="five" style="height: {{ ratingOrg.1.f5 }}%;position: absolute;bottom: 0px;width:100%"></div>
                          </td>
                         </tr>
                        </table>
@@ -162,24 +202,24 @@
                          </div>
                      </div>
                      <div class="organization">
-                      <h3>{{ orgs.2.name }}</h3>
+                      <h3><a style="text-decoration: none; color: #eeeeee;" href={% url 'profile_org' orgs.2.user.username %}> {{ orgs.2.name }}</a></h3>
                       <div>
                        <table>
                         <tr class="bars">
                          <td>
-                          <div class="one" style="height: {{ ratingOrg.2.f1 }};position: absolute;bottom: 0px;width:100%"></div>
+                          <div class="one" style="height: {{ ratingOrg.2.f1 }}%;position: absolute;bottom: 0px;width:100%"></div>
                          </td>
                          <td>
-                          <div class="tow" style="height: {{ ratingOrg.2.f2 }};position: absolute;bottom: 0px;width:100%"></div>
+                          <div class="two" style="height: {{ ratingOrg.2.f2 }}%;position: absolute;bottom: 0px;width:100%"></div>
                          </td>
                          <td>
-                          <div class="three" style="height: {{ ratingOrg.2.f3 }};position: absolute;bottom: 0px;width:100%"></div>
+                          <div class="three" style="height: {{ ratingOrg.2.f3 }}%;position: absolute;bottom: 0px;width:100%"></div>
                          </td>
                          <td>
-                          <div class="four" style="height: {{ ratingOrg.2.f4 }};position: absolute;bottom: 0px;width:100%"></div>
+                          <div class="four" style="height: {{ ratingOrg.2.f4 }}%;position: absolute;bottom: 0px;width:100%"></div>
                          </td>
                          <td>
-                          <div class="five" style="height: {{ ratingOrg.2.f5 }};position: absolute;bottom: 0px;width:100%"></div>
+                          <div class="five" style="height: {{ ratingOrg.2.f5 }}%;position: absolute;bottom: 0px;width:100%"></div>
                          </td>
                         </tr>
                        </table>
@@ -202,24 +242,24 @@
                          </div>
                      </div>
                      <div class="organization">
-                      <h3>{{ orgs.3.name }}</h3>
+                      <h3><a style="text-decoration: none; color: #eeeeee;" href={% url 'profile_org' orgs.3.user.username %}> {{ orgs.3.name }}</a></h3>
                       <div>
                        <table>
                         <tr class="bars">
                          <td>
-                          <div class="one" style="height: {{ ratingOrg.3.f1 }};position: absolute;bottom: 0px;width:100%"></div>
+                          <div class="one" style="height: {{ ratingOrg.3.f1 }}%;position: absolute;bottom: 0px;width:100%"></div>
                          </td>
                          <td>
-                          <div class="tow" style="height: {{ ratingOrg.3.f2 }};position: absolute;bottom: 0px;width:100%"></div>
+                          <div class="two" style="height: {{ ratingOrg.3.f2 }}%;position: absolute;bottom: 0px;width:100%"></div>
                          </td>
                          <td>
-                          <div class="three" style="height: {{ ratingOrg.3.f3 }};position: absolute;bottom: 0px;width:100%"></div>
+                          <div class="three" style="height: {{ ratingOrg.3.f3 }}%;position: absolute;bottom: 0px;width:100%"></div>
                          </td>
                          <td>
-                          <div class="four" style="height: {{ ratingOrg.3.f4 }};position: absolute;bottom: 0px;width:100%"></div>
+                          <div class="four" style="height: {{ ratingOrg.3.f4 }}%;position: absolute;bottom: 0px;width:100%"></div>
                          </td>
                          <td>
-                          <div class="five" style="height: {{ ratingOrg.3.f5 }};position: absolute;bottom: 0px;width:100%"></div>
+                          <div class="five" style="height: {{ ratingOrg.3.f5 }}%;position: absolute;bottom: 0px;width:100%"></div>
                          </td>
                         </tr>
                        </table>
@@ -241,46 +281,7 @@
                              </ul>
                          </div>
                      </div>
-                     <div class="organization">
-                      <h3>{{ orgs.4.name }}</h3>
-                      <div>
-                       <table>
-                        <tr class="bars">
-                         <td>
-                          <div class="one" style="height: {{ ratingOrg.4.f1 }};position: absolute;bottom: 0px;width:100%"></div>
-                         </td>
-                         <td>
-                          <div class="tow" style="height: {{ ratingOrg.4.f2 }};position: absolute;bottom: 0px;width:100%"></div>
-                         </td>
-                         <td>
-                          <div class="three" style="height: {{ ratingOrg.4.f3 }};position: absolute;bottom: 0px;width:100%"></div>
-                         </td>
-                         <td>
-                          <div class="four" style="height: {{ ratingOrg.4.f4 }};position: absolute;bottom: 0px;width:100%"></div>
-                         </td>
-                         <td>
-                          <div class="five" style="height: {{ ratingOrg.4.f5 }};position: absolute;bottom: 0px;width:100%"></div>
-                         </td>
-                        </tr>
-                       </table>
-                      </div>
-                         <div class="projects">
-                             <h5>نیازمندی‌ها</h5>
-                             <ul>
-                                 {% for req in orgRequirements.4 %}
-                                     <li>{{ req.name }}</li>
-                                 {% endfor %}
-                             </ul>
-                         </div>
-                         <div class="projects">
-                             <h5>پروژه‌ها</h5>
-                             <ul>
-                                 {% for project in orgProjects.4 %}
-                                     <li>{{ project.name }}</li>
-                                 {% endfor %}
-                             </ul>
-                         </div>
-                     </div>
+
 				</div>
 				<div class="section4" id="c4">
 					<div id="p4">
@@ -292,25 +293,57 @@
 					<div id="p42" class="enter"><a href="{% url 'register' %}">ثبت نام نیکوکاران</a></div>
 				</div>
 				<div class="section5" id="c5">
-                     <div class="organization">
-                      <h3>{{ bens.1.nickname }}</h3>
+                    <div class="organization">
+                        <h3><a style="text-decoration: none; color: #eeeeee;" href={% url 'profile_ben' bens.0.user.username %}> {{ bens.0.nickname }} </a></h3>
                       <div>
                        <table>
                         <tr class="bars">
                          <td>
-                          <div class="one" style="height: {{ ratingBens.1.f1 }};position: absolute;bottom: 0px;width:100%"></div>
+                          <div class="one" style="height: {{ ratingBens.0.f1 }}%;position: absolute;bottom: 0px;width:100%"></div>
                          </td>
                          <td>
-                          <div class="tow" style="height: {{ ratingBens.1.f2 }};position: absolute;bottom: 0px;width:100%"></div>
+                          <div class="two" style="height: {{ ratingBens.0.f2 }}%;position: absolute;bottom: 0px;width:100%"></div>
                          </td>
                          <td>
-                          <div class="three" style="height: {{ ratingBens.1.f3 }};position: absolute;bottom: 0px;width:100%"></div>
+                          <div class="three" style="height: {{ ratingBens.0.f3 }}%;position: absolute;bottom: 0px;width:100%"></div>
                          </td>
                          <td>
-                          <div class="four" style="height: {{ ratingBens.1.f4 }};position: absolute;bottom: 0px;width:100%"></div>
+                          <div class="four" style="height: {{ ratingBens.0.f4 }}%;position: absolute;bottom: 0px;width:100%"></div>
                          </td>
                          <td>
-                          <div class="five" style="height: {{ ratingBens.1.f5 }};position: absolute;bottom: 0px;width:100%"></div>
+                          <div class="five" style="height: {{ ratingBens.0.f5 }}%;position: absolute;bottom: 0px;width:100%"></div>
+                         </td>
+                        </tr>
+                       </table>
+                      </div>
+                         <div class="projects">
+                             <h5>توانایی‌ها</h5>
+                             <ul>
+                                 {% for ability in benAbilities.0 %}
+                                     <li>{{ ability.abilityId.name }}</li>
+                                 {% endfor %}
+                             </ul>
+                         </div>
+                     </div>
+                     <div class="organization">
+                      <h3><a style="text-decoration: none; color: #eeeeee;" href={% url 'profile_ben' bens.1.user.username %}> {{ bens.1.nickname }}</a></h3>
+                      <div>
+                       <table>
+                        <tr class="bars">
+                         <td>
+                          <div class="one" style="height: {{ ratingBens.1.f1 }}%;position: absolute;bottom: 0px;width:100%"></div>
+                         </td>
+                         <td>
+                          <div class="two" style="height: {{ ratingBens.1.f2 }}%;position: absolute;bottom: 0px;width:100%"></div>
+                         </td>
+                         <td>
+                          <div class="three" style="height: {{ ratingBens.1.f3 }}%;position: absolute;bottom: 0px;width:100%"></div>
+                         </td>
+                         <td>
+                          <div class="four" style="height: {{ ratingBens.1.f4 }}%;position: absolute;bottom: 0px;width:100%"></div>
+                         </td>
+                         <td>
+                          <div class="five" style="height: {{ ratingBens.1.f5 }}%;position: absolute;bottom: 0px;width:100%"></div>
                          </td>
                         </tr>
                        </table>
@@ -325,24 +358,24 @@
                          </div>
                      </div>
                     <div class="organization">
-                      <h3>{{ bens.2.nickname }}</h3>
+                      <h3><a style="text-decoration: none; color: #eeeeee;" href={% url 'profile_ben' bens.2.user.username %}> {{ bens.2.nickname }}</a></h3>
                       <div>
                        <table>
                         <tr class="bars">
                          <td>
-                          <div class="one" style="height: {{ ratingBens.2.f1 }};position: absolute;bottom: 0px;width:100%"></div>
+                          <div class="one" style="height: {{ ratingBens.2.f1 }}%;position: absolute;bottom: 0px;width:100%"></div>
                          </td>
                          <td>
-                          <div class="tow" style="height: {{ ratingBens.2.f2 }};position: absolute;bottom: 0px;width:100%"></div>
+                          <div class="two" style="height: {{ ratingBens.2.f2 }}%;position: absolute;bottom: 0px;width:100%"></div>
                          </td>
                          <td>
-                          <div class="three" style="height: {{ ratingBens.2.f3 }};position: absolute;bottom: 0px;width:100%"></div>
+                          <div class="three" style="height: {{ ratingBens.2.f3 }}%;position: absolute;bottom: 0px;width:100%"></div>
                          </td>
                          <td>
-                          <div class="four" style="height: {{ ratingBens.2.f4 }};position: absolute;bottom: 0px;width:100%"></div>
+                          <div class="four" style="height: {{ ratingBens.2.f4 }}%;position: absolute;bottom: 0px;width:100%"></div>
                          </td>
                          <td>
-                          <div class="five" style="height: {{ ratingBens.2.f5 }};position: absolute;bottom: 0px;width:100%"></div>
+                          <div class="five" style="height: {{ ratingBens.2.f5 }}%;position: absolute;bottom: 0px;width:100%"></div>
                          </td>
                         </tr>
                        </table>
@@ -357,24 +390,24 @@
                          </div>
                      </div>
                     <div class="organization">
-                      <h3>{{ bens.3.nickname }}</h3>
+                      <h3><a style="text-decoration: none; color: #eeeeee;" href={% url 'profile_ben' bens.3.user.username %}> {{ bens.3.nickname }}</a></h3>
                       <div>
                        <table>
                         <tr class="bars">
                          <td>
-                          <div class="one" style="height: {{ ratingBens.3.f1 }};position: absolute;bottom: 0px;width:100%"></div>
+                          <div class="one" style="height: {{ ratingBens.3.f1 }}%;position: absolute;bottom: 0px;width:100%"></div>
                          </td>
                          <td>
-                          <div class="tow" style="height: {{ ratingBens.3.f2 }};position: absolute;bottom: 0px;width:100%"></div>
+                          <div class="two" style="height: {{ ratingBens.3.f2 }}%;position: absolute;bottom: 0px;width:100%"></div>
                          </td>
                          <td>
-                          <div class="three" style="height: {{ ratingBens.3.f3 }};position: absolute;bottom: 0px;width:100%"></div>
+                          <div class="three" style="height: {{ ratingBens.3.f3 }}%;position: absolute;bottom: 0px;width:100%"></div>
                          </td>
                          <td>
-                          <div class="four" style="height: {{ ratingBens.3.f4 }};position: absolute;bottom: 0px;width:100%"></div>
+                          <div class="four" style="height: {{ ratingBens.3.f4 }}%;position: absolute;bottom: 0px;width:100%"></div>
                          </td>
                          <td>
-                          <div class="five" style="height: {{ ratingBens.3.f5 }};position: absolute;bottom: 0px;width:100%"></div>
+                          <div class="five" style="height: {{ ratingBens.3.f5 }}%;position: absolute;bottom: 0px;width:100%"></div>
                          </td>
                         </tr>
                        </table>
@@ -388,39 +421,7 @@
                              </ul>
                          </div>
                      </div>
-                    <div class="organization">
-                      <h3>{{ bens.4.nickname }}</h3>
-                      <div>
-                       <table>
-                        <tr class="bars">
-                         <td>
-                          <div class="one" style="height: {{ ratingBens.4.f1 }};position: absolute;bottom: 0px;width:100%"></div>
-                         </td>
-                         <td>
-                          <div class="tow" style="height: {{ ratingBens.4.f2 }};position: absolute;bottom: 0px;width:100%"></div>
-                         </td>
-                         <td>
-                          <div class="three" style="height: {{ ratingBens.4.f3 }};position: absolute;bottom: 0px;width:100%"></div>
-                         </td>
-                         <td>
-                          <div class="four" style="height: {{ ratingBens.4.f4 }};position: absolute;bottom: 0px;width:100%"></div>
-                         </td>
-                         <td>
-                          <div class="five" style="height: {{ ratingBens.4.f5 }};position: absolute;bottom: 0px;width:100%"></div>
-                         </td>
-                        </tr>
-                       </table>
-                      </div>
-                         <div class="projects">
-                             <h5>توانایی‌ها</h5>
-                             <ul>
-                                 {% for ability in benAbilities.4 %}
-                                     <li>{{ ability.abilityId.name }}</li>
-                                 {% endfor %}
-                             </ul>
-                         </div>
-                     </div>
-				</div>
+                </div>
 			</div>
 		</div>
 		<div class="footer">
