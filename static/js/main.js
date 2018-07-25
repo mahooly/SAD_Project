@@ -121,7 +121,7 @@ else if (mm === "3") {
 	ol1.appendChild(li1);
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "searchRequirement.html");
+	a1.setAttribute('href', "/search_requirements");
 	a1.innerText = "جستجوی نیازمندی";
 	li1.appendChild(a1);
 	ol1.appendChild(li1);
@@ -186,7 +186,7 @@ else if (mm === "4") {
 	ol1.appendChild(li1);
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "searchRequirement.html");
+	a1.setAttribute('href', "/search_requirements");
 	a1.innerText = "جستجوی نیازمندی";
 	li1.appendChild(a1);
 	ol1.appendChild(li1);

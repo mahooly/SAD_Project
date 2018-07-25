@@ -19,9 +19,7 @@ def index(request):
         benAbilities.append(UserAbilities.objects.filter(username=bens[i].user))
         ratingOrg.append(TotalRate.objects.get(id=orgs[i].rate.id))
         ratingBens.append(TotalRate.objects.get(id=bens[i].rate.id))
-        # orgRequirements.append(Requirement.objects.filter(user=orgs[i].user))
-    for r in ratingBens:
-        print(r.totalRate)
+        orgRequirements.append(Requirement.objects.filter(user=orgs[i].user))
     return render(request, 'index.html',
                   {'bens': bens, 'orgs': orgs, 'orgProjects': orgProjects, 'benAbilities': benAbilities,
                    'ratingOrg': ratingOrg, 'ratingBens': ratingBens, 'orgRequirements': orgRequirements})
@@ -85,7 +83,7 @@ def organization_registration(request):
             user.save()
             organizer = form.save(commit=False)
             organizer.user = user
-            organizer.rate= TotalRate.objects.create()
+            organizer.rate = TotalRate.objects.create()
             organizer.save()
 
             return render(request, 'thanks.html')
@@ -284,8 +282,8 @@ def list_projects(request):
 
 
 def list_requirement(request):
-    name= request.POST.get('org','')
-    all_req =Requirement.objects.filter(user__organizer__name__icontains=name)
+    name = request.POST.get('org', '')
+    all_req = Requirement.objects.filter(user__organizer__name__icontains=name)
     all_ab = Ability.objects.all()
     req_ab = []
 
@@ -293,9 +291,9 @@ def list_requirement(request):
         sort_type = request.POST['sortType']
 
         if sort_type == "rateD":
-            all_req=all_req.order_by('user__organizer__rate__totalRate')
+            all_req = all_req.order_by('user__organizer__rate__totalRate')
 
-        if sort_type=="rateA":
+        if sort_type == "rateA":
             all_req = all_req.order_by('-user__organizer__rate__totalRate')
 
         if sort_type == "participantsA":
@@ -303,8 +301,6 @@ def list_requirement(request):
 
         if sort_type == "participantsD":
             all_req = all_req.order_by('NOP')
-
-
 
         try:
             all_req = all_req.filter(NOP__gte=int(request.POST.get('minimumNOP')))
@@ -323,16 +319,14 @@ def list_requirement(request):
                 if len(RequirementAbilities.objects.filter(reqId=req.id,abilityId=ability)):
                     temp_reqs.append(req)
 
-            all_req=temp_reqs
+            all_req = temp_reqs
 
     for req in all_req:
         result = RequirementAbilities.objects.filter(reqId=req.id)
-        if len(result) !=0:
+        if len(result) != 0:
             req_ab.append(result)
 
-
     return render(request, 'searchRequirement.html', {'abilities': all_ab, 'reqAbilities': req_ab})
-
 
 
 @login_required
@@ -399,7 +393,7 @@ def rate_user(request, username):
         totalRate.f5 = ((totalRate.f5 * (count - 1)) + ((rate.f5 - 1) / 4 * 100)) / count
         totalRate.totalRate = round((totalRate.totalRate * (count - 1) + (
                 (rate.f1 - 1) / 4 + (rate.f2 - 1) / 4 + (rate.f3 - 1) / 4 + (rate.f4 - 1) / 4 + (
-                rate.f5 - 1) / 4) / 5 * 100) / count, 1)
+                 rate.f5 - 1) / 4) / 5 * 100) / count, 1)
         totalRate.save()
         return render(request, 'thanks.html')
 
@@ -433,7 +427,6 @@ def submit_requirement(request):
             requirement = form.save(commit=False)
             requirement.user = request.user
             requirement.wId = week
-            requirement.NOP = 0
             requirement.save()
 
             for a in abilities:
