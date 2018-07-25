@@ -185,7 +185,7 @@ class Requirement(models.Model):
     wId = models.ForeignKey(WeeklySchedule, on_delete=models.CASCADE, related_name='week')
     description = models.TextField(max_length=200)
     typeOfCooperation = models.CharField(max_length=15, choices=COOP_CHOICES, default='inOffice10')
-    NOP = models.IntegerField(default=0, blank=True)
+    NOP = models.IntegerField(default=1,blank=True)
 
 
 class RequirementAbilities(models.Model):
