@@ -10,9 +10,59 @@
 </head>
 <body>
 	<div class="main">
+		{% if not request.user.is_authenticated %}
+           <div id="checkspann" class="1"></div>
+          {% endif %}
+          {% if request.user.is_authenticated %}
+           {% if request.user.isOrg %}
+            <div id="checkspann" class="2"></div>
+           {% endif %}
+           {% if request.user.isBen %}
+            <div id="checkspann" class="3"></div>
+            {% endif %}
+           {% if not request.user.isOrg and not request.user.isBen %}
+            <div id="checkspann" class="4"></div>
+           {% endif %}
+        {% endif %}
 		<div class="header">
 			<div class="topmenu" id="topmenu">
-				
+                {% if request.user.is_authenticated %}
+				<div class="container">
+					<div class="topPhoto">
+						<img src="{{ request.user.image }}">
+					</div>
+					<div class="topmenuelements">
+						{% if request.user.isOrg %}
+						<a href={% url 'profile' request.user.username %}>{{request.user.organizer.name}}</a>
+						{% endif %}
+						{% if request.user.isBen %}
+						<a href={% url 'profile' request.user.username %}>{{request.user.benefactor.name}}  {{request.user.benefactor.surname}}</a>
+						{% endif %}
+					</div>
+					<div class="topmenudate">
+						<a href="{% url 'logout' %}">خروج</a>
+					</div>
+					<div class="logo">
+						<img src="../static/images/logo.png">
+					</div>
+				</div>
+				{% endif %}
+                {% if not request.user.is_authenticated %}
+                     <div class="container">
+                        <div class="topmenudate">
+                            <h3>شما هنوز وارد نشده‌اید،</h3>
+                         </div>
+                         <div class="topmenudate">
+                            <button onclick="popup()">ورود</button>
+                         </div>
+                         <div class="topmenudate">
+                            <button onclick="popupregister()">ثبت نام</button>
+                         </div>
+                         <div class="logo">
+                            <img src="../static/images/logo.png">
+                        </div>
+                    </div>
+                {% endif %}
 			</div>
 		</div>
 		<div class="mainPage">
@@ -50,17 +100,24 @@
 			</div>
 			<div class="nav" id="nav"></div>
 			<div class="container">
+                <form method="post">
+                {% csrf_token %}
 				<div class="filter">
 					<p>جستجوی نیازمندی‌های غیرنقدی موسسات</p>
 					<div class="controlsSelect">
 						<i class="ion-navicon"></i>
-						<select id="field" onchange="show()"></select>
+						<select id="field" onchange="this.form.submit()">
+                            <option value="blank">انتخاب توانایی</option>
+                            {% for ab in abilities %}
+                                <option value="{{ ab.name }}">{{ ab.name }}</option>
+                            {% endfor %}
+                        </select>
 					</div>
 					<div class="controls">
-						<input id="minimumNOP"  onchange="show()" type="number" placeholder="حداقل تعداد اعضا">
+						<input id="minimumNOP"  onchange="this.form.submit()" type="number" placeholder="حداقل تعداد اعضا">
 					</div>
 					<div class="controls">
-						<input id="minimumtotalrating"  onchange="show()" type="number" step="0.01" placeholder="حداقل امتیاز موسسه (۵-۱)">
+						<input id="minimumtotalrating"  onchange="this.form.submit()" type="number" step="0.01" placeholder="حداقل امتیاز موسسه (۵-۱)">
 					</div>
 {#					<div class="rating">#}
 {#					<table id="ratingTable">#}
@@ -105,7 +162,7 @@
 {#							<td><button id="button55" onclick="rate(5,5)"></button></td>#}
 {#						</tr>#}
 {#					</table>#}
-					<button class="mybutton" onclick="show()">اعمال تغییرات</button>
+					<button class="mybutton" onclick="this.form.submit()">اعمال تغییرات</button>
 {#				</div>#}
 				</div>
 				<div class="searchBar">
@@ -113,7 +170,7 @@
 					<div class="container">
 						<div class="controlsname">
 							<input id="orgName" type="text" placeholder="نام موسسه"  onchange="show()">
-							<img src="images/search.png" onclick="show()">
+							<img src="images/search.png" onclick="this.form.submit()">
 						</div>
 						<h4> مرتب‌سازی بر اساس </h4>
 						<select id="sortType">
@@ -124,25 +181,26 @@
 						</select>
 					</div>
 				</div>
+                </form>
 				<div id="result">
                     {% for req in reqAbilities %}
 					<div class="project">
 						<div class="specifications">
-							<a href={% url 'profile_org' req.0.req.user.username %}>{{ req.0.req.name }}</a>
-                            <p>موسسه مربوطه: {{ req.0.req.user.organizer.name }}</p>
+							<a href={% url 'profile_org' req.0.reqId.user.username %}>{{ req.0.reqId.name }}</a>
+                            <p>موسسه مربوطه: {{ req.0.reqId.user.organizer.name }}</p>
 							<ul>
 								{% for ability in req %}
-                                    <li>{{ ability.name }}</li>
+                                    <li>{{ ability.abilityId.name }}</li>
                                 {% endfor %}
 							</ul>
 						</div>
 						<div class="cost">
 							<h3>تعداد اعضا</h3>
-							<span class="budget"> {{ req.0.req.NOP }} </span>
+							<span class="budget"> {{ req.0.reqId.NOP }} </span>
 						</div>
 						<div class="cost">
 							<h3>میانگین امتیاز موسسه</h3>
-							<span class="budget">{{ req.0.req.user.organizer.rate.totalRate }}</span>
+							<span class="budget">{{ req.0.reqId.user.organizer.rate.totalRate }}</span>
 						</div>
 					</div>
                     {% endfor %}

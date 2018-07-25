@@ -286,10 +286,12 @@ def list_requirement(request):
     all_req = Requirement.objects.all()
     all_ab = Ability.objects.all()
     req_ab = []
+    print(all_req)
 
     for req in all_req:
-        result = RequestAbilities.objects.filter(reqId=req.id)
+        result = RequirementAbilities.objects.filter(reqId=req.id)
         req_ab.append(result)
+        print(result)
 
     return render(request, 'searchRequirement.html', {'abilities': all_ab, 'reqAbilities': req_ab})
 
@@ -393,6 +395,7 @@ def submit_requirement(request):
             requirement = form.save(commit=False)
             requirement.user = request.user
             requirement.wId = week
+            requirement.NOP = 0
             requirement.save()
 
             for a in abilities:
