@@ -106,10 +106,10 @@
 					<p>جستجوی نیازمندی‌های غیرنقدی موسسات</p>
 					<div class="controlsSelect">
 						<i class="ion-navicon"></i>
-						<select id="field">
+						<select name="field">
                             <option value="blank">انتخاب توانایی</option>
                             {% for ab in abilities %}
-                                <option value="{{ ab.name }}">{{ ab.name }}</option>
+                                <option value="{{ ab.id }}">{{ ab.name }}</option>
                             {% endfor %}
                         </select>
 					</div>

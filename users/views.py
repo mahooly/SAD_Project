@@ -305,6 +305,7 @@ def list_requirement(request):
             all_req = all_req.order_by('NOP')
 
 
+
         try:
             all_req = all_req.filter(NOP__gte=int(request.POST.get('minimumNOP')))
         except ValueError:
@@ -314,6 +315,15 @@ def list_requirement(request):
             all_req = all_req.filter(user__organizer__rate__totalRate__gte=int(request.POST.get('minimumtotalrating',0)))
         except ValueError:
             all_req = all_req.filter(user__organizer__rate__totalRate__gte=0)
+
+        ability = request.POST['field']
+        if ability != "blank":
+            temp_reqs = []
+            for req in all_req:
+                if len(RequirementAbilities.objects.filter(reqId=req.id,abilityId=ability)):
+                    temp_reqs.append(req)
+
+            all_req=temp_reqs
 
     for req in all_req:
         result = RequirementAbilities.objects.filter(reqId=req.id)
