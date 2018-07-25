@@ -188,6 +188,7 @@
 				</div>
 				<div id="abilities">
 					<h2>نیازمند همکاری در زمینه های: </h2>
+                    <ul style="display: none" id="reqIds">{% for req in requirements %}<li value="{{ req.id }}">{{ req.id }}</li>{% endfor %}</ul>
                     {% for req in requirements %}
                         <button style="display: inline-block; padding: 2px 10px; font-size: 17px;  text-decoration: none; color: #fdfdfd; height: 30px; background: #009eff; border-radius: 5px; margin-top: 20px;" onclick=popupProject("r{{ req.id }}")>{{ req.name }}</button><br>
                         <div class="testreg" id="r{{ req.id }}" style="display: none; position: fixed;width: 100%;height: 1200px;top: 0;right: 0;background: rgba(0,0,0,0.6);z-index: 30;">
@@ -199,7 +200,7 @@
                                     <h3 style="margin-top: 3px; font-size: 12px;">آدرس: {{ req.address }}</h3>
                                     <h3 style="margin-top: 3px; font-size: 12px;">توضیحات بیشتر: {{ req.description }}</h3>
                                     <h3 style="margin-top: 3px; font-size: 12px;">تعداد مشارکت‌کنندگان: {{ req.NOP }}</h3>
-                                    {% if benefactor.typeOfCooperation == "inOffice10" or benefactor.typeOfCooperation == "inOffice20" or benefactor.typeOfCooperation == "inOffice30" or benefactor.typeOfCooperation == "inOfficemore" %}
+                                    {% if req.typeOfCooperation == "inOffice10" or req.typeOfCooperation == "inOffice20" or req.typeOfCooperation == "inOffice30" or req.typeOfCooperation == "inOfficemore" %}
                                         <h3 style="margin: 10px 0; font-size: 10px;">در صورت تمایل به همکاری با این موسسه در این نیازمندی، لطفا زمان‌هایی که می‌خواهید در آن‌ها به کار مشغول شوید را مشخص کنید</h3>
                                         <table id="tab">
                                             <tbody>
@@ -212,114 +213,114 @@
                                                 </tr>
                                                 <tr>
                                                     <td>شنبه</td>
-                                                    <td> <span id="11" onclick="week({{ req.id }},11,0)" value="1"></span> </td>
-                                                    <td> <span id="12" onclick="week({{ req.id }},12,1)" value="1"></span> </td>
-                                                    <td> <span id="13" onclick="week({{ req.id }},13,2)" value="1"></span> </td>
-                                                    <td> <span id="14" onclick="week({{ req.id }},14,3)" value="1"></span> </td>
+                                                    <td> <span id="a{{ req.id }}a11" onclick="week({{ req.id }},11,0)" value="1"></span> </td>
+                                                    <td> <span id="a{{ req.id }}a12" onclick="week({{ req.id }},12,1)" value="1"></span> </td>
+                                                    <td> <span id="a{{ req.id }}a13" onclick="week({{ req.id }},13,2)" value="1"></span> </td>
+                                                    <td> <span id="a{{ req.id }}a14" onclick="week({{ req.id }},14,3)" value="1"></span> </td>
                                                 </tr>
                                                 <tr>
                                                     <td>یکشنبه</td>
-                                                    <td> <span id="21" onclick="week({{ req.id }},21,4)" value="1"></span> </td>
-                                                    <td> <span id="22" onclick="week({{ req.id }},22,5)" value="1"></span> </td>
-                                                    <td> <span id="23" onclick="week({{ req.id }},23,6)" value="1"></span> </td>
-                                                    <td> <span id="24" onclick="week({{ req.id }},24,7)" value="1"></span> </td>
+                                                    <td> <span id="a{{ req.id }}a21" onclick="week({{ req.id }},21,4)" value="1"></span> </td>
+                                                    <td> <span id="a{{ req.id }}a22" onclick="week({{ req.id }},22,5)" value="1"></span> </td>
+                                                    <td> <span id="a{{ req.id }}a23" onclick="week({{ req.id }},23,6)" value="1"></span> </td>
+                                                    <td> <span id="a{{ req.id }}a24" onclick="week({{ req.id }},24,7)" value="1"></span> </td>
                                                 </tr>
                                                 <tr>
                                                     <td>دوشنبه</td>
-                                                    <td> <span id="31" onclick="week({{ req.id }},31,8)" value="1"></span> </td>
-                                                    <td> <span id="32" onclick="week({{ req.id }},32,9)" value="1"></span> </td>
-                                                    <td> <span id="33" onclick="week({{ req.id }},33,10)" value="1"></span> </td>
-                                                    <td> <span id="34" onclick="week({{ req.id }},34,11)" value="1"></span> </td>
+                                                    <td> <span id="a{{ req.id }}a31" onclick="week({{ req.id }},31,8)" value="1"></span> </td>
+                                                    <td> <span id="a{{ req.id }}a32" onclick="week({{ req.id }},32,9)" value="1"></span> </td>
+                                                    <td> <span id="a{{ req.id }}a33" onclick="week({{ req.id }},33,10)" value="1"></span> </td>
+                                                    <td> <span id="a{{ req.id }}a34" onclick="week({{ req.id }},34,11)" value="1"></span> </td>
                                                 </tr>
                                                 <tr>
                                                     <td>سه‌شنبه</td>
-                                                    <td> <span id="41" onclick="week({{ req.id }},41,12)" value="1"></span> </td>
-                                                    <td> <span id="42" onclick="week({{ req.id }},42,13)" value="1"></span> </td>
-                                                    <td> <span id="43" onclick="week({{ req.id }},43,14)" value="1"></span> </td>
-                                                    <td> <span id="44" onclick="week({{ req.id }},44,15)" value="1"></span> </td>
+                                                    <td> <span id="a{{ req.id }}a41" onclick="week({{ req.id }},41,12)" value="1"></span> </td>
+                                                    <td> <span id="a{{ req.id }}a42" onclick="week({{ req.id }},42,13)" value="1"></span> </td>
+                                                    <td> <span id="a{{ req.id }}a43" onclick="week({{ req.id }},43,14)" value="1"></span> </td>
+                                                    <td> <span id="a{{ req.id }}a44" onclick="week({{ req.id }},44,15)" value="1"></span> </td>
                                                 </tr>
                                                 <tr>
                                                     <td>چهارشنبه</td>
-                                                    <td> <span id="51" onclick="week({{ req.id }},51,16)" value="1"></span> </td>
-                                                    <td> <span id="52" onclick="week({{ req.id }},52,17)" value="1"></span> </td>
-                                                    <td> <span id="53" onclick="week({{ req.id }},53,18)" value="1"></span> </td>
-                                                    <td> <span id="54" onclick="week({{ req.id }},54,19)" value="1"></span> </td>
+                                                    <td> <span id="a{{ req.id }}a51" onclick="week({{ req.id }},51,16)" value="1"></span> </td>
+                                                    <td> <span id="a{{ req.id }}a52" onclick="week({{ req.id }},52,17)" value="1"></span> </td>
+                                                    <td> <span id="a{{ req.id }}a53" onclick="week({{ req.id }},53,18)" value="1"></span> </td>
+                                                    <td> <span id="a{{ req.id }}a54" onclick="week({{ req.id }},54,19)" value="1"></span> </td>
                                                 </tr>
                                                 <tr>
                                                     <td>پنجشنبه</td>
-                                                    <td> <span id="61" onclick="week({{ req.id }},61,20)" value="1"></span> </td>
-                                                    <td> <span id="62" onclick="week({{ req.id }},62,21)" value="1"></span> </td>
-                                                    <td> <span id="63" onclick="week({{ req.id }},63,22)" value="1"></span> </td>
-                                                    <td> <span id="64" onclick="week({{ req.id }},64,23)" value="1"></span> </td>
+                                                    <td> <span id="a{{ req.id }}a61" onclick="week({{ req.id }},61,20)" value="1"></span> </td>
+                                                    <td> <span id="a{{ req.id }}a62" onclick="week({{ req.id }},62,21)" value="1"></span> </td>
+                                                    <td> <span id="a{{ req.id }}a63" onclick="week({{ req.id }},63,22)" value="1"></span> </td>
+                                                    <td> <span id="a{{ req.id }}a64" onclick="week({{ req.id }},64,23)" value="1"></span> </td>
                                                 </tr>
                                                 <tr>
                                                     <td> جمعه </td>
-                                                    <td> <span id="71" onclick="week({{ req.id }},71,24)" value="1"></span> </td>
-                                                    <td> <span id="72" onclick="week({{ req.id }},72,25)" value="1"></span> </td>
-                                                    <td> <span id="73" onclick="week({{ req.id }},73,26)" value="1"></span> </td>
-                                                    <td> <span id="74" onclick="week({{ req.id }},74,27)" value="1"></span> </td>
+                                                    <td> <span id="a{{ req.id }}a71" onclick="week({{ req.id }},71,24)" value="1"></span> </td>
+                                                    <td> <span id="a{{ req.id }}a72" onclick="week({{ req.id }},72,25)" value="1"></span> </td>
+                                                    <td> <span id="a{{ req.id }}a73" onclick="week({{ req.id }},73,26)" value="1"></span> </td>
+                                                    <td> <span id="a{{ req.id }}a74" onclick="week({{ req.id }},74,27)" value="1"></span> </td>
                                                 </tr>
                                             </tbody>
                                             <h5 id="tab2" style="display: none">لطفا زمان‌های غیرفعال خود را علامت بزنید</h5>
                                         </table>
-                                        {% if week.a0 == "on" %}<input type="checkbox" name="a{{ req.id }}b0" id="a0" style="display: none" checked>{% endif %}
-                                        {% if week.a0 == "off" %}<input type="checkbox" name="a{{ req.id }}b0" id="a0" style="display: none" >{% endif %}
-                                        {% if week.a1 == "on" %}<input type="checkbox" name="a{{ req.id }}b1" id="a1" style="display: none" checked>{% endif %}
-                                        {% if week.a1 == "off" %}<input type="checkbox" name="a{{ req.id }}b1" id="a1" style="display: none" >{% endif %}
-                                        {% if week.a2 == "on" %}<input type="checkbox" name="a{{ req.id }}b2" id="a2" style="display: none" checked>{% endif %}
-                                        {% if week.a2 == "off" %}<input type="checkbox" name="a{{ req.id }}b2" id="a2" style="display: none" >{% endif %}
-                                        {% if week.a3 == "on" %}<input type="checkbox" name="a{{ req.id }}b3" id="a3" style="display: none" checked>{% endif %}
-                                        {% if week.a3 == "off" %}<input type="checkbox" name="a{{ req.id }}b3" id="a3" style="display: none" >{% endif %}
-                                        {% if week.a4 == "on" %}<input type="checkbox" name="a{{ req.id }}b4" id="a4" style="display: none" checked>{% endif %}
-                                        {% if week.a4 == "off" %}<input type="checkbox" name="a{{ req.id }}b4" id="a4" style="display: none" >{% endif %}
-                                        {% if week.a5 == "on" %}<input type="checkbox" name="a{{ req.id }}b5" id="a5" style="display: none" checked>{% endif %}
-                                        {% if week.a5 == "off" %}<input type="checkbox" name="a{{ req.id }}b5" id="a5" style="display: none" >{% endif %}
-                                        {% if week.a6 == "on" %}<input type="checkbox" name="a{{ req.id }}b6" id="a6" style="display: none" checked>{% endif %}
-                                        {% if week.a6 == "off" %}<input type="checkbox" name="a{{ req.id }}b6" id="a6" style="display: none" >{% endif %}
-                                        {% if week.a7 == "on" %}<input type="checkbox" name="a{{ req.id }}b7" id="a7" style="display: none" checked>{% endif %}
-                                        {% if week.a7 == "off" %}<input type="checkbox" name="a{{ req.id }}b7" id="a7" style="display: none" >{% endif %}
-                                        {% if week.a8 == "on" %}<input type="checkbox" name="a{{ req.id }}b8" id="a8" style="display: none" checked>{% endif %}
-                                        {% if week.a8 == "off" %}<input type="checkbox" name="a{{ req.id }}b8" id="a8" style="display: none" >{% endif %}
-                                        {% if week.a9 == "on" %}<input type="checkbox" name="a{{ req.id }}b9" id="a9" style="display: none" checked>{% endif %}
-                                        {% if week.a9 == "off" %}<input type="checkbox" name="a{{ req.id }}b9" id="a9" style="display: none" >{% endif %}
-                                        {% if week.a10 == "on" %}<input type="checkbox" name="a{{ req.id }}b10" id="a10" style="display: none" checked>{% endif %}
-                                        {% if week.a10 == "off" %}<input type="checkbox" name="a{{ req.id }}b10" id="a10" style="display: none" >{% endif %}
-                                        {% if week.a11 == "on" %}<input type="checkbox" name="a{{ req.id }}b11" id="a11" style="display: none" checked>{% endif %}
-                                        {% if week.a11 == "off" %}<input type="checkbox" name="a{{ req.id }}b11" id="a11" style="display: none" >{% endif %}
-                                        {% if week.a12 == "on" %}<input type="checkbox" name="a{{ req.id }}b12" id="a12" style="display: none" checked>{% endif %}
-                                        {% if week.a12 == "off" %}<input type="checkbox" name="a{{ req.id }}b12" id="a12" style="display: none" >{% endif %}
-                                        {% if week.a13 == "on" %}<input type="checkbox" name="a{{ req.id }}b13" id="a13" style="display: none" checked>{% endif %}
-                                        {% if week.a13 == "off" %}<input type="checkbox" name="a{{ req.id }}b13" id="a13" style="display: none" >{% endif %}
-                                        {% if week.a14 == "on" %}<input type="checkbox" name="a{{ req.id }}b14" id="a14" style="display: none" checked>{% endif %}
-                                        {% if week.a14 == "off" %}<input type="checkbox" name="a{{ req.id }}b14" id="a14" style="display: none" >{% endif %}
-                                        {% if week.a15 == "on" %}<input type="checkbox" name="a{{ req.id }}b15" id="a15" style="display: none" checked>{% endif %}
-                                        {% if week.a15 == "off" %}<input type="checkbox" name="a{{ req.id }}b15" id="a15" style="display: none" >{% endif %}
-                                        {% if week.a16 == "on" %}<input type="checkbox" name="a{{ req.id }}b16" id="a16" style="display: none" checked>{% endif %}
-                                        {% if week.a16 == "off" %}<input type="checkbox" name="a{{ req.id }}b16" id="a16" style="display: none" >{% endif %}
-                                        {% if week.a17 == "on" %}<input type="checkbox" name="a{{ req.id }}b17" id="a17" style="display: none" checked>{% endif %}
-                                        {% if week.a17 == "off" %}<input type="checkbox" name="a{{ req.id }}b17" id="a17" style="display: none" >{% endif %}
-                                        {% if week.a18 == "on" %}<input type="checkbox" name="a{{ req.id }}b18" id="a18" style="display: none" checked>{% endif %}
-                                        {% if week.a18 == "off" %}<input type="checkbox" name="a{{ req.id }}b18" id="a18" style="display: none" >{% endif %}
-                                        {% if week.a19 == "on" %}<input type="checkbox" name="a{{ req.id }}b19" id="a19" style="display: none" checked>{% endif %}
-                                        {% if week.a19 == "off" %}<input type="checkbox" name="a{{ req.id }}b19" id="a19" style="display: none" >{% endif %}
-                                        {% if week.a20 == "on" %}<input type="checkbox" name="a{{ req.id }}b20" id="a20" style="display: none" checked>{% endif %}
-                                        {% if week.a20 == "off" %}<input type="checkbox" name="a{{ req.id }}b20" id="a20" style="display: none" >{% endif %}
-                                        {% if week.a21 == "on" %}<input type="checkbox" name="a{{ req.id }}b21" id="a21" style="display: none" checked>{% endif %}
-                                        {% if week.a21 == "off" %}<input type="checkbox" name="a{{ req.id }}b21" id="a21" style="display: none" >{% endif %}
-                                        {% if week.a22 == "on" %}<input type="checkbox" name="a{{ req.id }}b22" id="a22" style="display: none" checked>{% endif %}
-                                        {% if week.a22 == "off" %}<input type="checkbox" name="a{{ req.id }}b22" id="a22" style="display: none" >{% endif %}
-                                        {% if week.a23 == "on" %}<input type="checkbox" name="a{{ req.id }}b23" id="a23" style="display: none" checked>{% endif %}
-                                        {% if week.a23 == "off" %}<input type="checkbox" name="a{{ req.id }}b23" id="a23" style="display: none" >{% endif %}
-                                        {% if week.a24 == "on" %}<input type="checkbox" name="a{{ req.id }}b24" id="a24" style="display: none" checked>{% endif %}
-                                        {% if week.a24 == "off" %}<input type="checkbox" name="a{{ req.id }}b24" id="a24" style="display: none" >{% endif %}
-                                        {% if week.a25 == "on" %}<input type="checkbox" name="a{{ req.id }}b25" id="a25" style="display: none" checked>{% endif %}
-                                        {% if week.a25 == "off" %}<input type="checkbox" name="a{{ req.id }}b25" id="a25" style="display: none" >{% endif %}
-                                        {% if week.a26 == "on" %}<input type="checkbox" name="a{{ req.id }}b26" id="a26" style="display: none" checked>{% endif %}
-                                        {% if week.a26 == "off" %}<input type="checkbox" name="a{{ req.id }}b26" id="a26" style="display: none" >{% endif %}
-                                        {% if week.a27 == "on" %}<input type="checkbox" name="a{{ req.id }}b27" id="a27" style="display: none" checked>{% endif %}
-                                        {% if week.a27 == "off" %}<input type="checkbox" name="a{{ req.id }}b27" id="a27" style="display: none" >{% endif %}
+                                        {% if req.wId.a0 == "on" %}<input type="checkbox" name="a{{ req.id }}b0" id="a{{ req.id }}b0" style="display: none" checked>{% endif %}
+                                        {% if req.wId.a0 == "off" %}<input type="checkbox" name="a{{ req.id }}b0" id="a{{ req.id }}b0" style="display: none" >{% endif %}
+                                        {% if req.wId.a1 == "on" %}<input type="checkbox" name="a{{ req.id }}b1" id="a{{ req.id }}b1" style="display: none" checked>{% endif %}
+                                        {% if req.wId.a1 == "off" %}<input type="checkbox" name="a{{ req.id }}b1" id="a{{ req.id }}b1" style="display: none" >{% endif %}
+                                        {% if req.wId.a2 == "on" %}<input type="checkbox" name="a{{ req.id }}b2" id="a{{ req.id }}b2" style="display: none" checked>{% endif %}
+                                        {% if req.wId.a2 == "off" %}<input type="checkbox" name="a{{ req.id }}b2" id="a{{ req.id }}b2" style="display: none" >{% endif %}
+                                        {% if req.wId.a3 == "on" %}<input type="checkbox" name="a{{ req.id }}b3" id="a{{ req.id }}b3" style="display: none" checked>{% endif %}
+                                        {% if req.wId.a3 == "off" %}<input type="checkbox" name="a{{ req.id }}b3" id="a{{ req.id }}b3" style="display: none" >{% endif %}
+                                        {% if req.wId.a4 == "on" %}<input type="checkbox" name="a{{ req.id }}b4" id="a{{ req.id }}b4" style="display: none" checked>{% endif %}
+                                        {% if req.wId.a4 == "off" %}<input type="checkbox" name="a{{ req.id }}b4" id="a{{ req.id }}b4" style="display: none" >{% endif %}
+                                        {% if req.wId.a5 == "on" %}<input type="checkbox" name="a{{ req.id }}b5" id="a{{ req.id }}b5" style="display: none" checked>{% endif %}
+                                        {% if req.wId.a5 == "off" %}<input type="checkbox" name="a{{ req.id }}b5" id="a{{ req.id }}b5" style="display: none" >{% endif %}
+                                        {% if req.wId.a6 == "on" %}<input type="checkbox" name="a{{ req.id }}b6" id="a{{ req.id }}b6" style="display: none" checked>{% endif %}
+                                        {% if req.wId.a6 == "off" %}<input type="checkbox" name="a{{ req.id }}b6" id="a{{ req.id }}b6" style="display: none" >{% endif %}
+                                        {% if req.wId.a7 == "on" %}<input type="checkbox" name="a{{ req.id }}b7" id="a{{ req.id }}b7" style="display: none" checked>{% endif %}
+                                        {% if req.wId.a7 == "off" %}<input type="checkbox" name="a{{ req.id }}b7" id="a{{ req.id }}b7" style="display: none" >{% endif %}
+                                        {% if req.wId.a8 == "on" %}<input type="checkbox" name="a{{ req.id }}b8" id="a{{ req.id }}b8" style="display: none" checked>{% endif %}
+                                        {% if req.wId.a8 == "off" %}<input type="checkbox" name="a{{ req.id }}b8" id="a{{ req.id }}b8" style="display: none" >{% endif %}
+                                        {% if req.wId.a9 == "on" %}<input type="checkbox" name="a{{ req.id }}b9" id="a{{ req.id }}b9" style="display: none" checked>{% endif %}
+                                        {% if req.wId.a9 == "off" %}<input type="checkbox" name="a{{ req.id }}b9" id="a{{ req.id }}b9" style="display: none" >{% endif %}
+                                        {% if req.wId.a10 == "on" %}<input type="checkbox" name="a{{ req.id }}b10" id="a{{ req.id }}b10" style="display: none" checked>{% endif %}
+                                        {% if req.wId.a10 == "off" %}<input type="checkbox" name="a{{ req.id }}b10" id="a{{ req.id }}b10" style="display: none" >{% endif %}
+                                        {% if req.wId.a11 == "on" %}<input type="checkbox" name="a{{ req.id }}b11" id="a{{ req.id }}b11" style="display: none" checked>{% endif %}
+                                        {% if req.wId.a11 == "off" %}<input type="checkbox" name="a{{ req.id }}b11" id="a{{ req.id }}b11" style="display: none" >{% endif %}
+                                        {% if req.wId.a12 == "on" %}<input type="checkbox" name="a{{ req.id }}b12" id="a{{ req.id }}b12" style="display: none" checked>{% endif %}
+                                        {% if req.wId.a12 == "off" %}<input type="checkbox" name="a{{ req.id }}b12" id="a{{ req.id }}b12" style="display: none" >{% endif %}
+                                        {% if req.wId.a13 == "on" %}<input type="checkbox" name="a{{ req.id }}b13" id="a{{ req.id }}b13" style="display: none" checked>{% endif %}
+                                        {% if req.wId.a13 == "off" %}<input type="checkbox" name="a{{ req.id }}b13" id="a{{ req.id }}b13" style="display: none" >{% endif %}
+                                        {% if req.wId.a14 == "on" %}<input type="checkbox" name="a{{ req.id }}b14" id="a{{ req.id }}b14" style="display: none" checked>{% endif %}
+                                        {% if req.wId.a14 == "off" %}<input type="checkbox" name="a{{ req.id }}b14" id="a{{ req.id }}b14" style="display: none" >{% endif %}
+                                        {% if req.wId.a15 == "on" %}<input type="checkbox" name="a{{ req.id }}b15" id="a{{ req.id }}b15" style="display: none" checked>{% endif %}
+                                        {% if req.wId.a15 == "off" %}<input type="checkbox" name="a{{ req.id }}b15" id="a{{ req.id }}b15" style="display: none" >{% endif %}
+                                        {% if req.wId.a16 == "on" %}<input type="checkbox" name="a{{ req.id }}b16" id="a{{ req.id }}b16" style="display: none" checked>{% endif %}
+                                        {% if req.wId.a16 == "off" %}<input type="checkbox" name="a{{ req.id }}b16" id="a{{ req.id }}b16" style="display: none" >{% endif %}
+                                        {% if req.wId.a17 == "on" %}<input type="checkbox" name="a{{ req.id }}b17" id="a{{ req.id }}b17" style="display: none" checked>{% endif %}
+                                        {% if req.wId.a17 == "off" %}<input type="checkbox" name="a{{ req.id }}b17" id="a{{ req.id }}b17" style="display: none" >{% endif %}
+                                        {% if req.wId.a18 == "on" %}<input type="checkbox" name="a{{ req.id }}b18" id="a{{ req.id }}b18" style="display: none" checked>{% endif %}
+                                        {% if req.wId.a18 == "off" %}<input type="checkbox" name="a{{ req.id }}b18" id="a{{ req.id }}b18" style="display: none" >{% endif %}
+                                        {% if req.wId.a19 == "on" %}<input type="checkbox" name="a{{ req.id }}b19" id="a{{ req.id }}b19" style="display: none" checked>{% endif %}
+                                        {% if req.wId.a19 == "off" %}<input type="checkbox" name="a{{ req.id }}b19" id="a{{ req.id }}b19" style="display: none" >{% endif %}
+                                        {% if req.wId.a20 == "on" %}<input type="checkbox" name="a{{ req.id }}b20" id="a{{ req.id }}b20" style="display: none" checked>{% endif %}
+                                        {% if req.wId.a20 == "off" %}<input type="checkbox" name="a{{ req.id }}b20" id="a{{ req.id }}b20" style="display: none" >{% endif %}
+                                        {% if req.wId.a21 == "on" %}<input type="checkbox" name="a{{ req.id }}b21" id="a{{ req.id }}b21" style="display: none" checked>{% endif %}
+                                        {% if req.wId.a21 == "off" %}<input type="checkbox" name="a{{ req.id }}b21" id="a{{ req.id }}b21" style="display: none" >{% endif %}
+                                        {% if req.wId.a22 == "on" %}<input type="checkbox" name="a{{ req.id }}b22" id="a{{ req.id }}b22" style="display: none" checked>{% endif %}
+                                        {% if req.wId.a22 == "off" %}<input type="checkbox" name="a{{ req.id }}b22" id="a{{ req.id }}b22" style="display: none" >{% endif %}
+                                        {% if req.wId.a23 == "on" %}<input type="checkbox" name="a{{ req.id }}b23" id="a{{ req.id }}b23" style="display: none" checked>{% endif %}
+                                        {% if req.wId.a23 == "off" %}<input type="checkbox" name="a{{ req.id }}b23" id="a{{ req.id }}b23" style="display: none" >{% endif %}
+                                        {% if req.wId.a24 == "on" %}<input type="checkbox" name="a{{ req.id }}b24" id="a{{ req.id }}b24" style="display: none" checked>{% endif %}
+                                        {% if req.wId.a24 == "off" %}<input type="checkbox" name="a{{ req.id }}b24" id="a{{ req.id }}b24" style="display: none" >{% endif %}
+                                        {% if req.wId.a25 == "on" %}<input type="checkbox" name="a{{ req.id }}b25" id="a{{ req.id }}b25" style="display: none" checked>{% endif %}
+                                        {% if req.wId.a25 == "off" %}<input type="checkbox" name="a{{ req.id }}b25" id="a{{ req.id }}b25" style="display: none" >{% endif %}
+                                        {% if req.wId.a26 == "on" %}<input type="checkbox" name="a{{ req.id }}b26" id="a{{ req.id }}b26" style="display: none" checked>{% endif %}
+                                        {% if req.wId.a26 == "off" %}<input type="checkbox" name="a{{ req.id }}b26" id="a{{ req.id }}b26" style="display: none" >{% endif %}
+                                        {% if req.wId.a27 == "on" %}<input type="checkbox" name="a{{ req.id }}b27" id="a{{ req.id }}b27" style="display: none" checked>{% endif %}
+                                        {% if req.wId.a27 == "off" %}<input type="checkbox" name="a{{ req.id }}b27" id="a{{ req.id }}b27" style="display: none" >{% endif %}
                     
-                                        {% for i in rangee %}<input type="checkbox" id="c{{ i }}" name="c{{ i }}" style="display: none">{% endfor %}
+                                        {% for i in rangee %}<input type="checkbox" id="a{{ req.id }}c{{ i }}" name="c{{ i }}" style="display: block">{% endfor %}
                                     {% endif %}
                                 </form>
                             </div>
