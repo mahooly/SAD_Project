@@ -74,33 +74,8 @@ class Benefactor(models.Model):
     address = models.CharField(max_length=100, default='st')
     phone = models.CharField(max_length=12)
     typeOfCooperation = models.CharField(max_length=15, choices=COOP_CHOICES, default='inOffice10')
-    wId = models.ForeignKey(WeeklySchedule, on_delete=models.CASCADE, related_name='userWeek')
+    wId = models.ForeignKey(WeeklySchedule, on_delete=models.CASCADE, related_name='userWeek', null=True)
     rate = models.ForeignKey(TotalRate, on_delete=models.CASCADE, related_name='rate')
-
-
-class BenefactorUpdatedFields(models.Model):
-    id = models.AutoField(primary_key=True)
-    benefactor = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING, related_name='updatedbenefactor')
-    username = models.BooleanField(default=False)
-    password = models.BooleanField(default=False)
-    email = models.BooleanField(default=False)
-    image = models.BooleanField(default=False)
-    name = models.BooleanField(default=False)
-    surname = models.BooleanField(default=False)
-    nickname = models.BooleanField(default=False)
-    gender = models.BooleanField(default=False)
-    day = models.BooleanField(default=False)
-    month = models.BooleanField(default=False)
-    year = models.BooleanField(default=False)
-    education = models.BooleanField(default=False)
-    major = models.BooleanField(default=False)
-    nationalId = models.BooleanField(default=False)
-    city = models.BooleanField(default=False)
-    address = models.BooleanField(default=False)
-    phone = models.BooleanField(default=False)
-    typeOfCooperation = models.BooleanField(default=False)
-    week = models.BooleanField(default=False)
-    ability = models.BooleanField(default=False)
 
 
 class Organizer(models.Model):
@@ -207,8 +182,6 @@ class Report(models.Model):
     time = models.TimeField()
     rateId = models.ForeignKey(Rate, on_delete=models.DO_NOTHING, related_name='rate', default=None, null=True)
     wId = models.ForeignKey(WeeklySchedule, on_delete=models.DO_NOTHING, related_name='weekly', default=None, null=True)
-    payment = models.CharField(max_length=10, blank=True)
-    update = models.ForeignKey(BenefactorUpdatedFields, on_delete=models.DO_NOTHING, related_name='updatedfields', default=None, null=True)
 
 
 class Request(models.Model):

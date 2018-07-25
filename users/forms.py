@@ -63,6 +63,13 @@ class EditUser(forms.ModelForm):
         model = CustomUser
         fields = ('username', 'password', 'email', 'password2', 'image')
 
+    def clean(self):
+        cleaned_data = super(EditUser, self).clean()
+        confirm_password = cleaned_data.get('password2')
+        password = cleaned_data.get('password')
+        if not password == confirm_password and password != '':
+            raise forms.ValidationError('Password does not match.')
+
 
 class EditBenefactorProfile(forms.ModelForm):
 

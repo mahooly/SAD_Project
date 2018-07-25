@@ -156,25 +156,23 @@ def update_benefactor_profile(request):
         form = EditBenefactorProfile(request.POST)
         week_form = WeekForm(request.POST)
         if user_form.is_valid() and form.is_valid() and week_form.is_valid():
-            update = BenefactorUpdatedFields.objects.create(benefactor=user)
-
             for attr in user_form.data:
                 if attr in user_form.fields and user_form.data[attr] != '':
                     if attr != 'password2':
                         if getattr(user, attr) is not user_form.data[attr]:
-                            setattr(user, attr, user_form.data[attr])
-                            setattr(update, attr, True)
+                            if attr == 'password':
+                                user.set_password(user_form.data[attr])
+                            else:
+                                setattr(user, attr, user_form.data[attr])
 
             if 'image' in request.FILES:
                 user.image = request.FILES['image']
-                update.image = True
 
             user.save()
             benefactor = Benefactor.objects.get(user=user)
             for attr in form.data:
                 if attr in form.fields and form.data[attr] != '' and form.data[attr] != 'blank':
                     setattr(benefactor, attr, form.data[attr])
-                    setattr(update, attr, True)
             benefactor.save()
 
             for a in abilities:
@@ -184,25 +182,19 @@ def update_benefactor_profile(request):
                         UserAbilities.objects.get(abilityId=a, username=user)
                     except ObjectDoesNotExist:
                         UserAbilities.objects.create(abilityId=a, username=user)
-                        update.ability = True
                 else:
                     try:
                         usab = UserAbilities.objects.get(abilityId=a, username=user)
                         usab.delete()
-                        update.ability = True
                     except ObjectDoesNotExist:
                         pass
 
             for attr in week_form.data:
                 if attr in week_form.fields and getattr(week, attr) != week_form.data[attr]:
                     setattr(week, attr, week_form.data[attr])
-                    update.week = True
             week.save()
 
-            update.save()
-
-            Report.objects.create(benefactor=user, type='4', operator='3', update=update,
-                                  date=datetime.datetime.today(), time=datetime.datetime.now())
+            Report.objects.create(benefactor=user, type='4', operator='3', date=datetime.datetime.today(), time=datetime.datetime.now())
 
         else:
             print(user_form.errors, form.errors, week_form.errors)
@@ -218,7 +210,7 @@ def update_benefactor_profile(request):
                    'cities': cities})
 
 
-# TODO add missing fields, report object
+# TODO add missing fields
 @login_required
 def update_organization_profile(request):
     cities = City.objects.all()
@@ -231,11 +223,13 @@ def update_organization_profile(request):
                 if attr in user_form.fields and user_form.data[attr] is not '':
                     if attr != 'password2':
                         if getattr(user, attr) is not user_form.data[attr]:
-                            setattr(user, attr, user_form.data[attr])
+                            if attr == 'password':
+                                user.set_password(user_form.data[attr])
+                            else:
+                                setattr(user, attr, user_form.data[attr])
 
             if 'image' in request.FILES:
                 user.image = request.FILES['image']
-                # update.image = True
 
             user.save()
             organization = Organizer.objects.get(user=user)
@@ -244,8 +238,7 @@ def update_organization_profile(request):
                     setattr(organization, attr, form.data[attr])
                 organization.save()
 
-                # Report.objects.create(organization=user, type='4', operator='4', update=update,
-                # date=datetime.datetime.today(), time=datetime.datetime.now())
+            Report.objects.create(organization=user, type='4', operator='4', date=datetime.datetime.today(), time=datetime.datetime.now())
         else:
             print(user_form.errors, form.errors)
 
@@ -308,7 +301,8 @@ def list_requirement(request):
             all_req = all_req.filter(NOP__gte=0)
 
         try:
-            all_req = all_req.filter(user__organizer__rate__totalRate__gte=int(request.POST.get('minimumtotalrating',0)))
+            all_req = all_req.filter(
+                user__organizer__rate__totalRate__gte=int(request.POST.get('minimumtotalrating', 0)))
         except ValueError:
             all_req = all_req.filter(user__organizer__rate__totalRate__gte=0)
 
@@ -316,7 +310,7 @@ def list_requirement(request):
         if ability != "blank":
             temp_reqs = []
             for req in all_req:
-                if len(RequirementAbilities.objects.filter(reqId=req.id,abilityId=ability)):
+                if len(RequirementAbilities.objects.filter(reqId=req.id, abilityId=ability)):
                     temp_reqs.append(req)
 
             all_req = temp_reqs
@@ -335,37 +329,37 @@ def user_logout(request):
     return HttpResponseRedirect('/')
 
 
-def user_profile_benefactor(request, username):
-    user = get_object_or_404(CustomUser, username=username)
-    benefactor = Benefactor.objects.get(user=user)
-    week = WeeklySchedule.objects.get(id=benefactor.wId.id)
-    user_abilities = UserAbilities.objects.filter(username=user.username)
-    return render(request, 'benefactorsProfileView.html',
-                  {'user': user, 'benefactor': benefactor, 'week': week, 'user_abilities': user_abilities,
-                   'rangee': range(28)})
-
-
-def user_profile_organization(request, username):
-    user = get_object_or_404(CustomUser, username=username)
-    organization = Organizer.objects.get(user=user)
-    projects = Project.objects.filter(user=user)
-    requirements = Requirement.objects.filter(user=user)
-    return render(request, 'organizationProfileView.html',
-                  {'user': user, 'org': organization, 'projects': projects, 'requirements': requirements, 'rangee': range(28)})
-
-
-# TODO add links
 def user_profile(request, username):
     user = get_object_or_404(CustomUser, username=username)
     if user.isBen:
-        benefactor = Benefactor.objects.get(user=user)
-        week = WeeklySchedule.objects.get(id=benefactor.wId.id)
-        user_abilities = UserAbilities.objects.filter(username=user.username)
-        return render(request, 'personalProfileBenefactor.html',
-                      {'user': user, 'benefactor': benefactor, 'week': week, 'user_abilities': user_abilities})
+        if request.user.username == username:
+            benefactor = Benefactor.objects.get(user=user)
+            week = WeeklySchedule.objects.get(id=benefactor.wId.id)
+            user_abilities = UserAbilities.objects.filter(username=user.username)
+            return render(request, 'personalProfileBenefactor.html',
+                          {'user': user, 'benefactor': benefactor, 'week': week, 'user_abilities': user_abilities})
+        else:
+            benefactor = Benefactor.objects.get(user=user)
+            week = WeeklySchedule.objects.get(id=benefactor.wId.id)
+            user_abilities = UserAbilities.objects.filter(username=user.username)
+            return render(request, 'benefactorsProfileView.html',
+                          {'user': user, 'benefactor': benefactor, 'week': week, 'user_abilities': user_abilities,
+                           'rangee': range(28)})
     elif user.isOrg:
-        organization = Organizer.objects.get(user=user)
-        return render(request, 'personalProfileOrganization.html', {'user': user, 'organization': organization})
+        if request.user.username == username:
+            organization = Organizer.objects.get(user=user)
+            return render(request, 'personalProfileOrganization.html', {'user': user, 'organization': organization})
+        else:
+            user = get_object_or_404(CustomUser, username=username)
+            organization = Organizer.objects.get(user=user)
+            projects = Project.objects.filter(user=user)
+            requirements = Requirement.objects.filter(user=user)
+            reqability = []
+            for req in requirements:
+                reqability.append(RequirementAbilities.objects.filter(reqId=req))
+            return render(request, 'organizationProfileView.html',
+                          {'user': user, 'org': organization, 'projects': projects, 'requirements': requirements,
+                           'reqability': reqability, 'rangee': range(28)})
 
 
 def rate_user(request, username):
@@ -392,8 +386,8 @@ def rate_user(request, username):
         totalRate.f4 = ((totalRate.f4 * (count - 1)) + ((rate.f4 - 1) / 4 * 100)) / count
         totalRate.f5 = ((totalRate.f5 * (count - 1)) + ((rate.f5 - 1) / 4 * 100)) / count
         totalRate.totalRate = round((totalRate.totalRate * (count - 1) + (
-                (rate.f1 - 1) / 4 + (rate.f2 - 1) / 4 + (rate.f3 - 1) / 4 + (rate.f4 - 1) / 4 + (
-                 rate.f5 - 1) / 4) / 5 * 100) / count, 1)
+            (rate.f1 - 1) / 4 + (rate.f2 - 1) / 4 + (rate.f3 - 1) / 4 + (rate.f4 - 1) / 4 + (
+                rate.f5 - 1) / 4) / 5 * 100) / count, 1)
         totalRate.save()
         return render(request, 'thanks.html')
 
@@ -443,4 +437,4 @@ def submit_requirement(request):
     return render(request, 'submitRequirement.html',
                   {'form': form, 'week_form': week_form, 'abilities': abilities, 'rangee': range(28), 'cities': cities})
 
-    # TODO add search requirements, abilities, report, waiting requests, registers, forget password
+# TODO add search abilities, report, waiting requests, registers, forget password
