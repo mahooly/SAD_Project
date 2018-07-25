@@ -292,7 +292,7 @@ def list_requirement(request):
     if request.method == 'POST':
         sort_type = request.POST['sortType']
 
-        if sort_type=="rateD":
+        if sort_type == "rateD":
             all_req=all_req.order_by('user__organizer__rate__totalRate')
 
         if sort_type=="rateA":
@@ -305,6 +305,15 @@ def list_requirement(request):
             all_req = all_req.order_by('NOP')
 
 
+        try:
+            all_req = all_req.filter(NOP__gte=int(request.POST.get('minimumNOP')))
+        except ValueError:
+            all_req = all_req.filter(NOP__gte=0)
+
+        try:
+            all_req = all_req.filter(user__organizer__rate__totalRate__gte=int(request.POST.get('minimumtotalrating',0)))
+        except ValueError:
+            all_req = all_req.filter(user__organizer__rate__totalRate__gte=0)
 
     for req in all_req:
         result = RequirementAbilities.objects.filter(reqId=req.id)
