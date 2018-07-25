@@ -357,7 +357,7 @@ def user_profile_organization(request, username):
     projects = Project.objects.filter(user=user)
     requirements = Requirement.objects.filter(user=user)
     return render(request, 'organizationProfileView.html',
-                  {'user': user, 'org': organization, 'projects': projects, 'requirements': requirements})
+                  {'user': user, 'org': organization, 'projects': projects, 'requirements': requirements, 'rangee': range(28)})
 
 
 # TODO add links
