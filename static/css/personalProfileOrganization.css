@@ -21,6 +21,30 @@ h2{
 	width:600px;
 }
 
+input[type=text],
+input[type=email],
+input[type=tel],
+input[type=number],
+input[type=web],
+select,textarea, form button{
+	padding: 18px;
+	border: 1px solid #c6c6c6;
+	width: 100%;
+	color: #888;
+	border-radius: 3px;
+	text-align: right;
+}
+
+.mybutton {
+	width: 70%;
+	height: 30px;
+	margin: 10px 15%;
+	background: #357EC7;
+	color: #fdfdfd;
+	border-radius: 5px;
+	margin-bottom: 20px;
+}
+
 .mainPage .container {
 	width: 80%;
 	z-index: 3;
@@ -156,7 +180,10 @@ table {
 
 #abilities span, #projectscurrent span, #projects span{
 	text-align: right;
-border-radius: 10px;
+    border-radius: 10px;
+    width: 100%;
+    display: inline-block;
+    height: 20px;
 }
 
 	
