@@ -46,7 +46,6 @@ class OrganizationRegistration(forms.ModelForm):
 
 
 class ProjectRegistration(forms.ModelForm):
-    terms = forms.BooleanField(required=True)
     class Meta:
         model = Project
         fields = ('name', 'budget', 'city', 'description', 'paymethod', 'cardno', 'accno')

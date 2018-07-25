@@ -176,6 +176,10 @@
                         <input type="checkbox" style="display: none;" name="{{ ability.abilityId.name }}" id="d{{ ability.abilityId.name }}">
                     {% endfor %}
 				</div>
+                <div id="projects">
+					<h2>نیکوکارانی که تا کنون با این موسسه همکاری داشته اید:</h2>
+                    <ul>{% for org in organizations %} <li>{{ org.name }}</li> {% endfor %}</ul>
+				</div>
 				<div id="weeklyfreetime">
 					<h2>زمانبندی هفتگی</h2>
                     {% if benefactor.typeOfCooperation == "inOffice10" or benefactor.typeOfCooperation == "inOffice20" or benefactor.typeOfCooperation == "inOffice30" or benefactor.typeOfCooperation == "inOfficemore" %}

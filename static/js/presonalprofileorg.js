@@ -47,3 +47,10 @@ function week(a,e,t) {
         document.getElementById('a'+a+'b'+t).checked = true;
     }
 }
+
+buttons = document.getElementsByTagName('button');
+for (i = 0 ;i < buttons.length; i ++) {
+    buttons[i].addEventListener("click", function(event){
+		event.preventDefault()
+	});
+}

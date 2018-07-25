@@ -348,7 +348,14 @@ def user_profile(request, username):
     elif user.isOrg:
         if request.user.username == username:
             organization = Organizer.objects.get(user=user)
-            return render(request, 'personalProfileOrganization.html', {'user': user, 'organization': organization})
+            projects = Project.objects.filter(user=user)
+            requirements = Requirement.objects.filter(user=user)
+            reqability = []
+            for req in requirements:
+                reqability.append(RequirementAbilities.objects.filter(reqId=req))
+            return render(request, 'personalProfileOrganization.html',
+                          {'user': user, 'org': organization, 'projects': projects, 'requirements': requirements,
+                           'reqability': reqability, 'rangee': range(28)})
         else:
             user = get_object_or_404(CustomUser, username=username)
             organization = Organizer.objects.get(user=user)
@@ -373,11 +380,11 @@ def rate_user(request, username):
         if user.isBen:
             totalRate = TotalRate.objects.get(id=user.benefactor.rate.id)
             Report.objects.create(benefactor=user, organization=request.user, type='1', operator='2', rateId=rate,
-                                  date=datetime.datetime.today(), time=datetime.datetime.now())
+                                  date=datetime.datetime.today(), time=datetime.datetime.now(), payment=0)
         else:
             totalRate = TotalRate.objects.get(id=user.organizer.rate.id)
             Report.objects.create(benefactor=request.user, organization=user, type='1', operator='1', rateId=rate,
-                                  date=datetime.datetime.today(), time=datetime.datetime.now())
+                                  date=datetime.datetime.today(), time=datetime.datetime.now(), payment=0)
 
         count = Rate.objects.filter(ratedUser=user).count()
         totalRate.f1 = ((totalRate.f1 * (count - 1)) + ((rate.f1 - 1) / 4 * 100)) / count

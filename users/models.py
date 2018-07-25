@@ -182,6 +182,7 @@ class Report(models.Model):
     time = models.TimeField()
     rateId = models.ForeignKey(Rate, on_delete=models.DO_NOTHING, related_name='rate', default=None, null=True)
     wId = models.ForeignKey(WeeklySchedule, on_delete=models.DO_NOTHING, related_name='weekly', default=None, null=True)
+    payment = models.IntegerField(max_length=10, blank=True)
 
 
 class Request(models.Model):

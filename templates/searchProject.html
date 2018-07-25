@@ -106,7 +106,7 @@
 					<p>جستجوی پروژه‌های نقدی	</p>
 					<div class="controlsSelect">
 						<i class="ion-navicon"></i>
-						<select id="field" onchange="this.form.submit()">
+						<select id="field">
                             <option value="blank">زمینه فعالیت</option>
                             {% for cat in categories %}
                                 <option value="{{ cat.name }}">{{ cat.name }}</option>
@@ -114,16 +114,16 @@
                         </select>
 					</div>
 					<div class="controls">
-						<input id="minimumbudget"  onchange="this.form.submit()" type="number" placeholder="حداقل بودجه مورد نیاز (تومان)">
+						<input id="minimumbudget" type="number" placeholder="حداقل بودجه مورد نیاز (تومان)">
 					</div>
 					<div class="controls">
-						<input id="minimumtotalrating"  onchange="this.form.submit()" type="number" placeholder="حداقل امتیاز مجری پروژه (۵-۱)">
+						<input id="minimumtotalrating" type="number" placeholder="حداقل امتیاز مجری پروژه (۵-۱)">
 					</div>
 					<div class="rating">
 					<input type="submit" class="mybutton" value="اعمال تغییرات">
 				</div>
 				</div>
-            </form>
+
 				<div class="searchBar">
 					<div class="container">
                         <form method="post">
@@ -133,7 +133,7 @@
                                     <img src="../static/images/search.png" onclick="show()">
                             </div>
                             <h4> مرتب‌سازی بر اساس </h4>
-                            <select id="sortType" name="sortType" onchange="this.form.submit()">
+                            <select id="sortType" name="sortType">
                                 <option value="budgetD">بودجه، نزولی</option>
                                 <option value="budgetA">بودجه، صعودی</option>
                                 <option value="alreadyD">میزان پرداخت شده، نزولی</option>
@@ -142,11 +142,12 @@
                         </form>
 					</div>
 				</div>
+            </form>
 				<div id="result">
                     {% for project in projects %}
                         <div class="project">
                             <div class="specifications">
-                                <a href={% url 'profile_org' project.user.username %}>{{ project.name }}</a>
+                                <a href={% url 'profile' project.user.username %}>{{ project.name }}</a>
                                 <h3>مجری پروژه: {{ project.user.organizer.name }}</h3>
 
                             </div>
