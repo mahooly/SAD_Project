@@ -20,8 +20,11 @@ def index(request):
         ratingOrg.append(TotalRate.objects.get(id=orgs[i].rate.id))
         ratingBens.append(TotalRate.objects.get(id=bens[i].rate.id))
         orgRequirements.append(Requirement.objects.filter(user=orgs[i].user))
-    print(ratingBens)
-    return render(request, 'index.html', {'bens': bens, 'orgs': orgs, 'orgProjects': orgProjects, 'benAbilities': benAbilities, 'ratingOrg': ratingOrg, 'ratingBens': ratingBens, 'orgRequirements': orgRequirements})
+    for r in ratingBens:
+        print(r.totalRate)
+    return render(request, 'index.html',
+                  {'bens': bens, 'orgs': orgs, 'orgProjects': orgProjects, 'benAbilities': benAbilities,
+                   'ratingOrg': ratingOrg, 'ratingBens': ratingBens, 'orgRequirements': orgRequirements})
 
 
 def terms(request):
@@ -68,7 +71,7 @@ def benefactor_registration(request):
                    'rangee': range(28), 'cities': cities})
 
 
-#TODO add missing fields, front
+# TODO add missing fields, front
 def organization_registration(request):
     cities = City.objects.all()
     if request.method == 'POST':
@@ -120,7 +123,7 @@ def project_creation(request):
     return render(request, 'submitProject.html', {'form': form, 'categories': categories, 'cities': cities})
 
 
-#TODO add invalid
+# TODO add invalid
 def mylogin(request):
     if request.method == 'POST':
         user = authenticate(username=request.POST['username'], password=request.POST['password'])
@@ -199,7 +202,8 @@ def update_benefactor_profile(request):
 
             update.save()
 
-            Report.objects.create(benefactor=user, type='4', operator='3', update=update, date=datetime.datetime.today(), time=datetime.datetime.now())
+            Report.objects.create(benefactor=user, type='4', operator='3', update=update,
+                                  date=datetime.datetime.today(), time=datetime.datetime.now())
 
         else:
             print(user_form.errors, form.errors, week_form.errors)
@@ -215,7 +219,7 @@ def update_benefactor_profile(request):
                    'cities': cities})
 
 
-#TODO add missing fields, report object
+# TODO add missing fields, report object
 @login_required
 def update_organization_profile(request):
     cities = City.objects.all()
@@ -232,7 +236,7 @@ def update_organization_profile(request):
 
             if 'image' in request.FILES:
                 user.image = request.FILES['image']
-                #update.image = True
+                # update.image = True
 
             user.save()
             organization = Organizer.objects.get(user=user)
@@ -241,8 +245,8 @@ def update_organization_profile(request):
                     setattr(organization, attr, form.data[attr])
                 organization.save()
 
-            #Report.objects.create(organization=user, type='4', operator='4', update=update,
-                                  #date=datetime.datetime.today(), time=datetime.datetime.now())
+                # Report.objects.create(organization=user, type='4', operator='4', update=update,
+                # date=datetime.datetime.today(), time=datetime.datetime.now())
         else:
             print(user_form.errors, form.errors)
 
@@ -257,7 +261,7 @@ def update_organization_profile(request):
                                                             'org': organization, 'cities': cities})
 
 
-#TODO filter
+# TODO filter
 def list_projects(request):
     categories = Category.objects.all()
     if request.method == 'POST':
@@ -299,17 +303,19 @@ def user_profile_organization(request, username):
     organization = Organizer.objects.get(user=user)
     projects = Project.objects.filter(user=user)
     requirements = Requirement.objects.filter(user=user)
-    return render(request, 'organizationProfileView.html', {'user': user, 'org': organization, 'projects': projects, 'requirements': requirements})
+    return render(request, 'organizationProfileView.html',
+                  {'user': user, 'org': organization, 'projects': projects, 'requirements': requirements})
 
 
-#TODO add links
+# TODO add links
 def user_profile(request, username):
     user = get_object_or_404(CustomUser, username=username)
     if user.isBen:
         benefactor = Benefactor.objects.get(user=user)
         week = WeeklySchedule.objects.get(id=benefactor.wId.id)
         user_abilities = UserAbilities.objects.filter(username=user.username)
-        return render(request, 'personalProfileBenefactor.html', {'user': user, 'benefactor': benefactor, 'week': week, 'user_abilities': user_abilities})
+        return render(request, 'personalProfileBenefactor.html',
+                      {'user': user, 'benefactor': benefactor, 'week': week, 'user_abilities': user_abilities})
     elif user.isOrg:
         organization = Organizer.objects.get(user=user)
         return render(request, 'personalProfileOrganization.html', {'user': user, 'organization': organization})
@@ -325,17 +331,22 @@ def rate_user(request, username):
         rate.save()
         if user.isBen:
             totalRate = TotalRate.objects.get(id=user.benefactor.rate.id)
-            Report.objects.create(benefactor=user, organization=request.user, type='1', operator='2', rateId=rate, date=datetime.datetime.today(), time=datetime.datetime.now())
+            Report.objects.create(benefactor=user, organization=request.user, type='1', operator='2', rateId=rate,
+                                  date=datetime.datetime.today(), time=datetime.datetime.now())
         else:
             totalRate = TotalRate.objects.get(id=user.organizer.rate.id)
-            Report.objects.create(benefactor=request.user, organization=user, type='1', operator='1', rateId=rate, date=datetime.datetime.today(), time=datetime.datetime.now())
+            Report.objects.create(benefactor=request.user, organization=user, type='1', operator='1', rateId=rate,
+                                  date=datetime.datetime.today(), time=datetime.datetime.now())
 
         count = Rate.objects.filter(ratedUser=user).count()
-        totalRate.f1 = ((totalRate.f1 * (count-1)) + ((rate.f1-1)/4 * 100))/count
-        totalRate.f2 = ((totalRate.f2 * (count-1)) + ((rate.f2-1)/4 * 100))/count
-        totalRate.f3 = ((totalRate.f3 * (count-1)) + ((rate.f3-1)/4 * 100))/count
-        totalRate.f4 = ((totalRate.f4 * (count-1)) + ((rate.f4-1)/4 * 100))/count
-        totalRate.f5 = ((totalRate.f5 * (count-1)) + ((rate.f5-1)/4 * 100))/count
+        totalRate.f1 = ((totalRate.f1 * (count - 1)) + ((rate.f1 - 1) / 4 * 100)) / count
+        totalRate.f2 = ((totalRate.f2 * (count - 1)) + ((rate.f2 - 1) / 4 * 100)) / count
+        totalRate.f3 = ((totalRate.f3 * (count - 1)) + ((rate.f3 - 1) / 4 * 100)) / count
+        totalRate.f4 = ((totalRate.f4 * (count - 1)) + ((rate.f4 - 1) / 4 * 100)) / count
+        totalRate.f5 = ((totalRate.f5 * (count - 1)) + ((rate.f5 - 1) / 4 * 100)) / count
+        totalRate.totalRate = round((totalRate.totalRate * (count - 1) + (
+            (rate.f1 - 1) / 4 + (rate.f2 - 1) / 4 + (rate.f3 - 1) / 4 + (rate.f4 - 1) / 4 + (
+                rate.f5 - 1) / 4) / 5 * 100) / count, 1)
         totalRate.save()
         return render(request, 'thanks.html')
 
@@ -382,7 +393,8 @@ def submit_requirement(request):
         form = RequirementForm()
         week_form = WeekForm()
 
-    return render(request, 'submitRequirement.html', {'form': form, 'week_form': week_form, 'abilities': abilities, 'rangee': range(28), 'cities': cities})
+    return render(request, 'submitRequirement.html',
+                  {'form': form, 'week_form': week_form, 'abilities': abilities, 'rangee': range(28), 'cities': cities})
 
 
-#TODO add search requirements, abilities, report, waiting requests, registers, forget password
+    # TODO add search requirements, abilities, report, waiting requests, registers, forget password

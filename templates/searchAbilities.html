@@ -2,7 +2,7 @@
 {% load staticfiles %}
 <html lang="fa" dir="rtl">
 <head>
-	<title>جستجو نیازمندی‌ها</title>
+	<title>جستجوی نیکوکاران</title>
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href={% static "css/style.css" %}>
 	<link rel="stylesheet" type="text/css" href={% static "css/search.css" %}>
@@ -50,17 +50,24 @@
 			</div>
 			<div class="nav" id="nav"></div>
 			<div class="container">
+                <form method="post">
+                {% csrf_token %}
 				<div class="filter">
-					<p>جستجوی نیازمندی‌های غیرنقدی موسسات</p>
+					<p>جستجوی توانایی نیکوکاران</p>
 					<div class="controlsSelect">
 						<i class="ion-navicon"></i>
-						<select id="field" onchange="show()"></select>
+						<select id="field" onchange="this.form.submit()">
+                            <option value="blank">انتخاب توانایی</option>
+                            {% for ability in abilities %}
+                                <option value="{{ ability.name }}">{{ ability.name }}</option>
+                            {% endfor %}
+                        </select>
 					</div>
 					<div class="controls">
-						<input id="minimumNOP"  onchange="show()" type="number" placeholder="حداقل تعداد اعضا">
+						<input id="minimumage"  onchange="this.form.submit()" type="number" placeholder="حداقل سن">
 					</div>
 					<div class="controls">
-						<input id="minimumtotalrating"  onchange="show()" type="number" step="0.01" placeholder="حداقل امتیاز موسسه (۵-۱)">
+						<input id="minimumtotalrating"  onchange="this.form.submit()" type="number" step="0.01" placeholder="حداقل امتیاز (۵-۱)">
 					</div>
 {#					<div class="rating">#}
 {#					<table id="ratingTable">#}
@@ -105,7 +112,7 @@
 {#							<td><button id="button55" onclick="rate(5,5)"></button></td>#}
 {#						</tr>#}
 {#					</table>#}
-					<button class="mybutton" onclick="show()">اعمال تغییرات</button>
+					<button class="mybutton" onclick="this.form.submit()">اعمال تغییرات</button>
 {#				</div>#}
 				</div>
 				<div class="searchBar">
@@ -113,35 +120,36 @@
 					<div class="container">
 						<div class="controlsname">
 							<input id="orgName" type="text" placeholder="نام موسسه"  onchange="show()">
-							<img src="images/search.png" onclick="show()">
+							<img src="../static/images/search.png" onclick="this.form.submit()">
 						</div>
 						<h4> مرتب‌سازی بر اساس </h4>
-						<select id="sortType">
+						<select id="sortType" onchange="this.form.submit()">
 							<option value="rateD">امتیاز، نزولی</option>
 							<option value="rateA">امتیاز، صعودی</option>
-							<option value="participantsD">تعداد اعضا، نزولی</option>
-							<option value="participantsA">تعداد اعضا، صعودی</option>
+							<option value="ageD">سن، نزولی</option>
+							<option value="ageA">سن، صعودی</option>
 						</select>
 					</div>
 				</div>
+                </form>
 				<div id="result">
-                    {% for req in reqAbilities %}
+                    {% for ability in userAbilities %}
 					<div class="project">
 						<div class="specifications">
-							<a href={% url 'profile_org' req.0.req.user.username %}>{{ req.0.req.name }}</a>
+							<a href={% url 'profile_org' ability.0.benefactorusername.username %}>{{ ability.0.benefactorusername.benefactor.nickname }}</a>
 							<ul>
-								{% for ability in req %}
-                                    <li>{{ ability.name }}</li>
+								{% for ab in ability %}
+                                    <li>{{ ab }}</li>
                                 {% endfor %}
 							</ul>
 						</div>
 						<div class="cost">
-							<h3>تعداد اعضا</h3>
-							<span class="budget"> {{ req.0.req.NOP }} </span>
+							<h3>سال تولد</h3>
+							<span class="budget">{{ ability.0.benefactorusername.benefactor.age }}</span>
 						</div>
 						<div class="cost">
-							<h3>میانگین امتیاز موسسه</h3>
-							<span class="budget">{{ req.0.req.user.organizer.rate.totalRate }}</span>
+							<h3>میانگین امتیاز</h3>
+							<span class="budget">{{ ability.0.benefactorusername.benefactor.rate.totalRate }}</span>
 						</div>
 					</div>
                     {% endfor %}
@@ -161,7 +169,7 @@
 			</div>
 		</div>
 	</div>
-    <script type="text/javascript" src={% static "js/main.js" %}></script>
+	<script type="text/javascript" src={% static "js/main.js" %}></script>
 	<script src={% static "js/jquery.min.js" %}></script>
 </body>
 </html>
