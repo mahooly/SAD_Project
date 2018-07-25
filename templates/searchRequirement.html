@@ -106,7 +106,7 @@
 					<p>جستجوی نیازمندی‌های غیرنقدی موسسات</p>
 					<div class="controlsSelect">
 						<i class="ion-navicon"></i>
-						<select id="field" onchange="this.form.submit()">
+						<select id="field">
                             <option value="blank">انتخاب توانایی</option>
                             {% for ab in abilities %}
                                 <option value="{{ ab.name }}">{{ ab.name }}</option>
@@ -114,10 +114,10 @@
                         </select>
 					</div>
 					<div class="controls">
-						<input id="minimumNOP"  onchange="this.form.submit()" type="number" placeholder="حداقل تعداد اعضا">
+						<input name="minimumNOP" type="number" placeholder="حداقل تعداد اعضا">
 					</div>
 					<div class="controls">
-						<input id="minimumtotalrating"  onchange="this.form.submit()" type="number" step="0.01" placeholder="حداقل امتیاز موسسه (۵-۱)">
+						<input name="minimumtotalrating"  type="number" step="0.01" placeholder="حداقل امتیاز موسسه (۵-۱)">
 					</div>
 {#					<div class="rating">#}
 {#					<table id="ratingTable">#}
@@ -166,14 +166,15 @@
 {#				</div>#}
 				</div>
 				<div class="searchBar">
-					
+
 					<div class="container">
 						<div class="controlsname">
-							<input id="orgName" type="text" placeholder="نام موسسه"  onchange="show()">
-							<img src="images/search.png" onclick="this.form.submit()">
+							<input name="org" type="text" placeholder="نام موسسه">
+							<img src="../static/images/search.png">
 						</div>
 						<h4> مرتب‌سازی بر اساس </h4>
-						<select id="sortType">
+						<select name="sortType">
+                            <option value="blank">نحوه مرتب سازی</option>
 							<option value="rateD">امتیاز، نزولی</option>
 							<option value="rateA">امتیاز، صعودی</option>
 							<option value="participantsD">تعداد اعضا، نزولی</option>

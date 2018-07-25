@@ -85,6 +85,7 @@ def organization_registration(request):
             user.save()
             organizer = form.save(commit=False)
             organizer.user = user
+            organizer.rate= TotalRate.objects.create()
             organizer.save()
 
             return render(request, 'thanks.html')
@@ -283,15 +284,33 @@ def list_projects(request):
 
 
 def list_requirement(request):
-    all_req = Requirement.objects.all()
+    name= request.POST.get('org','')
+    all_req =Requirement.objects.filter(user__organizer__name__icontains=name)
     all_ab = Ability.objects.all()
     req_ab = []
-    print(all_req)
+
+    if request.method == 'POST':
+        sort_type = request.POST['sortType']
+
+        if sort_type=="rateD":
+            all_req=all_req.order_by('user__organizer__rate__totalRate')
+
+        if sort_type=="rateA":
+            all_req = all_req.order_by('-user__organizer__rate__totalRate')
+
+        if sort_type == "participantsA":
+            all_req = all_req.order_by('-NOP')
+
+        if sort_type == "participantsD":
+            all_req = all_req.order_by('NOP')
+
+
 
     for req in all_req:
         result = RequirementAbilities.objects.filter(reqId=req.id)
-        req_ab.append(result)
-        print(result)
+        if len(result) !=0:
+            req_ab.append(result)
+
 
     return render(request, 'searchRequirement.html', {'abilities': all_ab, 'reqAbilities': req_ab})
 
