@@ -19,7 +19,7 @@ def index(request):
         benAbilities.append(UserAbilities.objects.filter(username=bens[i].user))
         ratingOrg.append(TotalRate.objects.get(id=orgs[i].rate.id))
         ratingBens.append(TotalRate.objects.get(id=bens[i].rate.id))
-        orgRequirements.append(Requirement.objects.filter(user=orgs[i].user))
+        # orgRequirements.append(Requirement.objects.filter(user=orgs[i].user))
     for r in ratingBens:
         print(r.totalRate)
     return render(request, 'index.html',
@@ -282,6 +282,19 @@ def list_projects(request):
         return render(request, 'searchProject.html', {'projects': projects, 'categories': categories})
 
 
+def list_requirement(request):
+    all_req = Requirement.objects.all()
+    all_ab = Ability.objects.all()
+    req_ab = []
+
+    for req in all_req:
+        result = RequestAbilities.objects.filter(reqId=req.id)
+        req_ab.append(result)
+
+    return render(request, 'searchRequirement.html', {'abilities': all_ab, 'reqAbilities': req_ab})
+
+
+
 @login_required
 def user_logout(request):
     logout(request)
@@ -345,7 +358,7 @@ def rate_user(request, username):
         totalRate.f4 = ((totalRate.f4 * (count - 1)) + ((rate.f4 - 1) / 4 * 100)) / count
         totalRate.f5 = ((totalRate.f5 * (count - 1)) + ((rate.f5 - 1) / 4 * 100)) / count
         totalRate.totalRate = round((totalRate.totalRate * (count - 1) + (
-            (rate.f1 - 1) / 4 + (rate.f2 - 1) / 4 + (rate.f3 - 1) / 4 + (rate.f4 - 1) / 4 + (
+                (rate.f1 - 1) / 4 + (rate.f2 - 1) / 4 + (rate.f3 - 1) / 4 + (rate.f4 - 1) / 4 + (
                 rate.f5 - 1) / 4) / 5 * 100) / count, 1)
         totalRate.save()
         return render(request, 'thanks.html')
@@ -395,6 +408,5 @@ def submit_requirement(request):
 
     return render(request, 'submitRequirement.html',
                   {'form': form, 'week_form': week_form, 'abilities': abilities, 'rangee': range(28), 'cities': cities})
-
 
     # TODO add search requirements, abilities, report, waiting requests, registers, forget password
