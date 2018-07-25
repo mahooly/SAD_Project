@@ -191,8 +191,11 @@ class Request(models.Model):
     organizationId = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='reqorg')
     wId = models.ForeignKey(WeeklySchedule, on_delete=models.CASCADE, related_name='reqweek')
     state = models.BooleanField(default=False)
+    isAccepted = models.BooleanField(default=False)
+    isAtHome = models.BooleanField(default=False)
     whoSubmit = models.CharField(max_length=1, default='1')
     city = models.CharField(max_length=20)
+    description = models.CharField(max_length=200, default="")
 
 
 class RequestAbilities(models.Model):
