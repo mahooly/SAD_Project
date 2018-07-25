@@ -129,6 +129,7 @@
 					<div class="project">
 						<div class="specifications">
 							<a href={% url 'profile_org' req.0.req.user.username %}>{{ req.0.req.name }}</a>
+                            <p>موسسه مربوطه: {{ req.0.req.user.organizer.name }}</p>
 							<ul>
 								{% for ability in req %}
                                     <li>{{ ability.name }}</li>
