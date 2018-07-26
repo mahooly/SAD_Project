@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from .forms import *
@@ -69,7 +70,6 @@ def benefactor_registration(request):
                    'rangee': range(28), 'cities': cities})
 
 
-# TODO add missing fields, front
 def organization_registration(request):
     cities = City.objects.all()
     if request.method == 'POST':
@@ -127,12 +127,9 @@ def mylogin(request):
     if request.method == 'POST':
         user = authenticate(username=request.POST['username'], password=request.POST['password'])
         if user is not None:
-            if user.is_active:
+            if user.state == 1:
                 login(request, user)
-                if user.isBen:
-                    return HttpResponseRedirect('/')
-                elif user.isOrg:
-                    return HttpResponseRedirect('/')
+                return HttpResponseRedirect('/')
             else:
                 # disabled account
                 return
@@ -143,6 +140,7 @@ def mylogin(request):
         return render(request, 'login.html')
 
 
+#permission
 @login_required
 def update_benefactor_profile(request):
     abilities = Ability.objects.all()
@@ -210,7 +208,7 @@ def update_benefactor_profile(request):
                    'cities': cities})
 
 
-# TODO add missing fields
+#permission
 @login_required
 def update_organization_profile(request):
     cities = City.objects.all()
@@ -254,6 +252,7 @@ def update_organization_profile(request):
 
 
 # TODO filter
+#permission
 def list_projects(request):
     categories = Category.objects.all()
     if request.method == 'POST':
@@ -330,7 +329,7 @@ def user_logout(request):
 
 
 def user_profile(request, username):
-    user = get_object_or_404(CustomUser, username=username)
+    user = get_object_or_404(CustomUser, username=username, state=True)
     if user.isBen:
         if request.user.username == username:
             benefactor = Benefactor.objects.get(user=user)
@@ -369,6 +368,7 @@ def user_profile(request, username):
                            'reqability': reqability, 'rangee': range(28)})
 
 
+@login_required
 def rate_user(request, username):
     user = get_object_or_404(CustomUser, username=username)
     if request.method == 'POST':
@@ -415,6 +415,7 @@ def project(request, username, pId):
     return render(request, 'project.html', {'user': user, 'org': organization, 'project': proj})
 
 
+#permission
 @login_required
 def submit_requirement(request):
     abilities = Ability.objects.all()
@@ -444,4 +445,20 @@ def submit_requirement(request):
     return render(request, 'submitRequirement.html',
                   {'form': form, 'week_form': week_form, 'abilities': abilities, 'rangee': range(28), 'cities': cities})
 
-# TODO add search abilities, report, waiting requests, registers, forget password
+
+#permission
+@login_required
+def waiting_registers(request):
+    if request.method == 'POST':
+        split = request.POST['req'].split('-')
+        user = CustomUser.objects.get(id=split[0])
+        if split[1] == '1':
+            user.state = True
+            send_mail('تایید حساب کاربری', 'حساب کاربری شما تایید شده است!', 'sender@mehraneh.com', [user.email])
+        else:
+            user.state = False
+        user.save()
+    users = CustomUser.objects.filter(state=None)
+    return render(request, 'waitingRegisters.html', {'users': users})
+
+# TODO add search abilities, report, waiting requests, forget password

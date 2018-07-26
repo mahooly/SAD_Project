@@ -182,7 +182,7 @@ class Report(models.Model):
     time = models.TimeField()
     rateId = models.ForeignKey(Rate, on_delete=models.DO_NOTHING, related_name='rate', default=None, null=True)
     wId = models.ForeignKey(WeeklySchedule, on_delete=models.DO_NOTHING, related_name='weekly', default=None, null=True)
-    payment = models.IntegerField(max_length=10, blank=True)
+    payment = models.IntegerField(blank=True)
 
 
 class Request(models.Model):
@@ -195,7 +195,7 @@ class Request(models.Model):
     isAtHome = models.BooleanField(default=False)
     whoSubmit = models.CharField(max_length=1, default='1')
     city = models.CharField(max_length=20)
-    description = models.CharField(max_length=200, default="")
+    description = models.TextField(blank=True)
 
 
 class RequestAbilities(models.Model):

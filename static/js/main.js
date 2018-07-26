@@ -224,7 +224,7 @@ else if (mm === "4") {
 
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "reportsForAdmin.html");
+	a1.setAttribute('href', "/waiting_registers");
 	a1.innerText = "لیست کاربران در انتظار تایید ";
 	li1.appendChild(a1);
 	ul1.appendChild(li1);
