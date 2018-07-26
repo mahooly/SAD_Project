@@ -176,13 +176,13 @@ class Report(models.Model):
     benefactor = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING, related_name='ben', default=None, null=True)
     organization = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING, related_name='org', default=None, null=True)
     type = models.CharField(max_length=1)
-    description = models.TextField(max_length=100, blank=True)
+    description = models.TextField(max_length=100, default=None, null=True)
     operator = models.CharField(max_length=1)
     date = models.DateField()
     time = models.TimeField()
     rateId = models.ForeignKey(Rate, on_delete=models.DO_NOTHING, related_name='rate', default=None, null=True)
     wId = models.ForeignKey(WeeklySchedule, on_delete=models.DO_NOTHING, related_name='weekly', default=None, null=True)
-    payment = models.IntegerField(blank=True)
+    payment = models.IntegerField(default=None, null=True)
 
 
 class Request(models.Model):
