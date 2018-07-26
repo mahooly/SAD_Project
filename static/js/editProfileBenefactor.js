@@ -1,10 +1,10 @@
-var templist = document.getElementById("templist");
-while (templist.hasChildNodes()) {
-    add(templist.childNodes[0].id);
-    templist.removeChild(templist.childNodes[0]);
+var templistt = document.getElementById("templist");
+while (templistt.hasChildNodes()) {
+    addd(templistt.childNodes[0].id);
+    templistt.removeChild(templistt.childNodes[0]);
 }
 
-function add(candidate1) {
+function addd(candidate1) {
     var ul = document.getElementById("dynamiclist");
     document.getElementById('b'+candidate1).checked = true;
     var li2 = document.createElement("li");
@@ -90,6 +90,11 @@ function f() {
     });
 } 
 f();
+
+document.getElementById("add").addEventListener("click", function(event){
+        event.preventDefault()
+    });
+
 var cities = ["تهران","مشهد","اصفهان","شیراز"];
 var sel = document.getElementById('city');
 for (var i=0;i<cities.length;i++) {
