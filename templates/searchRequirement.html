@@ -192,7 +192,7 @@
                 {% for req in reqAbilities %}
                     <div class="project">
                         <div class="specifications">
-                            <a href={% url 'profile_org' req.0.reqId.user.username %}>{{ req.0.reqId.name }}</a>
+                            <a href={% url 'profile' req.0.reqId.user.username %}>{{ req.0.reqId.name }}</a>
                             <p>موسسه مربوطه: {{ req.0.reqId.user.organizer.name }}</p>
                             <ul>
                                 {% for ability in req %}

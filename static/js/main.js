@@ -76,7 +76,7 @@ if (mm === "2") {
 	ol1.appendChild(li1);
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "#");
+	a1.setAttribute('href', "/waiting_requests");
 	a1.innerText = "پیشنهادهای دریافت شده";
 	li1.appendChild(a1);
 	ol1.appendChild(li1);
@@ -85,7 +85,7 @@ if (mm === "2") {
 	
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "searchAbilities.html");
+	a1.setAttribute('href', "/search_abilities");
 	a1.innerText = "جستجوی نیکوکاران";
 	li1.appendChild(a1);
 	ul1.appendChild(li1);
@@ -142,7 +142,7 @@ else if (mm === "3") {
 	ol1.appendChild(li1);
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "#");
+	a1.setAttribute('href', "/waiting_requests");
 	a1.innerText = "پیشنهادهای دریافت شده";
 	li1.appendChild(a1);
 	ol1.appendChild(li1);
@@ -180,7 +180,7 @@ else if (mm === "4") {
 	ol1.appendChild(li1);
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "searchAbilities.html");
+	a1.setAttribute('href', "/search_abilities");
 	a1.innerText = "جستجوی نیکوکاران";
 	li1.appendChild(a1);
 	ol1.appendChild(li1);

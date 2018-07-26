@@ -35,7 +35,7 @@ class BenefactorRegistraton(forms.ModelForm):
     terms = forms.BooleanField(required=True)
     class Meta:
         model = Benefactor
-        fields = ('name', 'surname', 'nickname', 'gender', 'day', 'month', 'year', 'education', 'major', 'nationalId', 'city', 'address', 'phone')
+        fields = ('name', 'surname', 'nickname', 'gender', 'day', 'month', 'year', 'education', 'major', 'nationalId', 'city', 'address', 'phone', 'typeOfCooperation')
 
 
 class OrganizationRegistration(forms.ModelForm):

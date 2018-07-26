@@ -41,11 +41,14 @@ def benefactor_registration(request):
             user.set_password(user.password)
             user.isBen = True
             user.save()
-            week = week_form.save()
-            week.save()
             rate = TotalRate.objects.create()
             benefactor = form.save(commit=False)
             benefactor.user = user
+            if benefactor.typeOfCooperation != 'atHome':
+                week = week_form.save()
+                week.save()
+            else:
+                week = None
             benefactor.wId = week
             benefactor.rate = rate
             benefactor.save()
@@ -336,7 +339,7 @@ def list_abilities(request):
     user_abilities = []
 
     if request.method == 'POST':
-
+        all_abilities = Ability.objects.filter(name__icontains=name)
         for us in all_useres:
             result = all_user_abilities.filter(abilityId=us.id)
             if len(result) != 0:
@@ -504,13 +507,15 @@ def send_request_organization(request, username, reqId):
             week.save()
             Request.objects.create(benefactorId=request.user, organizationId=user, wId=week, city=requirement.city,
                                    description=desc)
+            Report.objects.create(benefactor=request.user, organization=user, type='2', description=desc, operator='1',
+                                  date=datetime.datetime.today(), time=datetime.datetime.now(), wId=week)
         else:
             Request.objects.create(benefactorId=request.user, organizationId=user, isAtHome=True, city=requirement.city,
                                    description=desc)
+            Report.objects.create(benefactor=request.user, organization=user, type='2', description=desc, operator='1',
+                                  date=datetime.datetime.today(), time=datetime.datetime.now())
 
         send_mail('پیشنهاد جدید', 'شما یک پیشنهاد جدید از طرف فلانی دارید', 'sender@mehraneh.com', [user.email])
-        Report.objects.create(benefactor=request.user, organization=user, type='2', description=desc, operator='1',
-                              date=datetime.datetime.today(), time=datetime.datetime.now())
         return render(request, 'thanks.html')
 
 
@@ -530,16 +535,28 @@ def send_request_benefactor(request, username):
             week = weekForm.save()
             week.save()
             req = Request.objects.create(benefactorId=user, organizationId=request.user, wId=week, whoSubmit='2', city=user.benefactor.city, description=desc)
+            Report.objects.create(benefactor=request.user, organization=user, type='2', description=desc, operator='2',
+                                  date=datetime.datetime.today(), time=datetime.datetime.now(), wId=week)
         else:
             req = Request.objects.create(benefactorId=user, organizationId=request.user, isAtHome=True, whoSubmit='2',
                                    city=user.benefactor.city, description=desc)
+            Report.objects.create(benefactor=request.user, organization=user, type='2', description=desc, operator='2',
+                                  date=datetime.datetime.today(), time=datetime.datetime.now())
+
         for a in abilities:
             name = a.name
             if request.POST.get(name) is not None:
                RequestAbilities.objects.create(reqId=req, abilityId=a)
         send_mail('پیشنهاد جدید', 'شما یک پیشنهاد جدید از طرف فلانی دارید', 'sender@mehraneh.com', [user.email])
-        Report.objects.create(benefactor=request.user, organization=user, type='2', description=desc, operator='2',
-                              date=datetime.datetime.today(), time=datetime.datetime.now())
         return render(request, 'thanks.html')
 
 
+def waiting_requests(request):
+    if request.user.isBen:
+        requests = Request.objects.filter(benefactorId=request.user, whoSubmit='2', state=False)
+        requestsAbilities = []
+        for req in requests:
+            requestsAbilities.append(RequestAbilities.objects.filter(reqId=req))
+    else:
+        requests = Request.objects.filter(organizationId=request.user, whoSubmit='1', state=False)
+    return render(request, 'waitingRequests.html', {'requestsAbilities': requestsAbilities})
