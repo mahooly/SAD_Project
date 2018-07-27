@@ -43,6 +43,7 @@ urlpatterns = [
     url('^reports/', views.report_admin, name='report'),
     url('^password_reset_complete', password_reset_complete),
     url('^password_reset', password_reset),
-    url('^password_reset_done', password_reset_done, name='password_reset_done')
+    url('^password_reset_done', password_reset_done, name='password_reset_done'),
+    url('^search_abilities',views.list_abilities,name='search_abilities')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
