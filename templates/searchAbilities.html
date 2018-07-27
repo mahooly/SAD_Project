@@ -187,23 +187,23 @@
                 </div>
             </form>
             <div id="result">
-                {% for ability in userAbilities %}
+                {% for abb in userAbilities %}
                     <div class="project">
                         <div class="specifications">
-                            <a href={% url 'profile_org' ability.0.benefactorusername.username %}>{{ ability.0.benefactorusername.benefactor.nickname }}</a>
+                            <a href={% url 'profile' abb.0.username.username %}>{{ abb.0.username.benefactor.nickname }}</a>
                             <ul>
-                                {% for ab in ability %}
-                                    <li>{{ ab }}</li>
+                                {% for ab in abb %}
+                                    <li>{{ ab.abilityId.name }}</li>
                                 {% endfor %}
                             </ul>
                         </div>
                         <div class="cost">
                             <h3>سال تولد</h3>
-                            <span class="budget">{{ ability.0.benefactorusername.benefactor.age }}</span>
+                            <span class="budget">{{ abb.0.username.benefactor.year }}</span>
                         </div>
                         <div class="cost">
                             <h3>میانگین امتیاز</h3>
-                            <span class="budget">{{ ability.0.benefactorusername.benefactor.rate.totalRate }}</span>
+                            <span class="budget">{{ abb.0.username.benefactor.rate.totalRate }}</span>
                         </div>
                     </div>
                 {% endfor %}

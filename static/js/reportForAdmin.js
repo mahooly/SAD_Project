@@ -23,20 +23,38 @@ function rate (e1,e2) {
   }
 }
 
-for (i = 1; i <=7; i ++) {
-    var j;
-    for (j = 1; j <= 4; j ++ ) {
-        if (document.getElementById('a' + ((i-1)*4+j-1)).checked === true) {
-            document.getElementById(i + "" + j).style.backgroundColor = "rgb(150,150,150)";
-            document.getElementById(i + "" + j).style.display = "inline-block";
-            document.getElementById(i + "" + j).style.width = "100%";
-            document.getElementById(i + "" + j).style.heigth = "30px";
-        } else {
-            document.getElementById(i + "" + j).style.backgroundColor = "rgb(211,233,158)";
-            document.getElementById(i + "" + j).style.display = "inline-block";
-            document.getElementById(i + "" + j).style.width = "100%";
-            document.getElementById(i + "" + j).style.height = "30px";
+var reqs = document.getElementById("tempUl");
+var reqs1 = document.getElementById("tempUl1");
+var req = [];
+var req1 = [];
+for (i = 0 ; i < reqs.childNodes.length; i ++ ) {
+    req.unshift(reqs.childNodes[i].value);
+}
+for (i = 0 ; i < reqs1.childNodes.length; i ++ ) {
+    req1.unshift(reqs1.childNodes[i].value);
+}
+for (i = 0 ; i < req1.length; i ++) {
+    document.getElementById("not"+req1[i]).addEventListener("click", function(event){
+		event.preventDefault()
+	});
+}
 
+for (var k = 0; k < req.length; k ++) {
+    for (i = 1; i <= 7; i++) {
+        var j;
+        for (j = 1; j <= 4; j++) {
+            if (document.getElementById('a' + req[k] + 'b' + ((i - 1) * 4 + j - 1)).checked === true) {
+                document.getElementById('a' + req[k] + 'a' + i + "" + j).style.backgroundColor = "rgb(150,150,150)";
+                document.getElementById('a' + req[k] + 'a' + i + "" + j).style.display = "inline-block";
+                document.getElementById('a' + req[k] + 'a' + i + "" + j).style.width = "100%";
+                document.getElementById('a' + req[k] + 'a' + i + "" + j).style.heigth = "10px";
+            } else {
+                document.getElementById('a' + req[k] + 'a' + i + "" + j).style.backgroundColor = "rgb(211,233,158)";
+                document.getElementById('a' + req[k] + 'a' + i + "" + j).style.display = "inline-block";
+                document.getElementById('a' + req[k] + 'a' + i + "" + j).style.width = "100%";
+                document.getElementById('a' + req[k] + 'a' + i + "" + j).style.height = "10px";
+
+            }
         }
     }
 }
@@ -44,9 +62,8 @@ for (i = 1; i <=7; i ++) {
 function popdownregisters(id) {
 	document.getElementById("testreg"+id).style.display = "none";
 }
-function removeFromList(id) {
-	document.getElementById(id).style.display = "none";
-	document.getElementById("testreg").style.display = "none";
+function showRemove(id) {
+	document.getElementById("testreg"+id).style.display = "block";
 }
 function f(id) {
     document.getElementById(id).addEventListener("click", function(event){

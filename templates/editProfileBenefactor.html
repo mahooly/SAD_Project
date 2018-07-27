@@ -249,12 +249,9 @@
                             <option value="{{ ability.name }}">{{ ability.name }}</option>
                         {% endfor %}
                     </select>
-                    {% for ability in abilities %}
-                        <input type="checkbox" name="{{ ability.name }}" id="b{{ ability.name }}" style="display: none">
-                    {% endfor %}
+                    {% for ability in abilities %}<input type="checkbox" name="{{ ability.name }}" id="b{{ ability.name }}" style="display: none">{% endfor %}
                     <button id="add" onclick="addItem()"><h3>+</h3></button>
-                    <ul id="templist">{% for ability in user_abilities %}
-                        <li id="{{ ability.abilityId.name }}"></li>{% endfor %}</ul>
+                    <ul id="templist">{% for ability in user_abilities %}<li id="{{ ability.abilityId.name }}"></li>{% endfor %}</ul>
                     <ul id="dynamiclist">
                     </ul>
                 </div>
