@@ -38,6 +38,7 @@ urlpatterns = [
     url(r'^submit_requirement/', views.submit_requirement, name='submit_requirement'),
     url(r'^search_requirements/', views.list_requirement, name='search_requirements'),
     url(r'^waiting_registers', views.waiting_registers, name='waiting_registers'),
-    url('^send_request_org/(?P<username>[a-zA-Z0-9]+)/(?P<reqId>[a-zA-Z0-9]+)/', views.send_request_organization, name='send_request_org')
+    url('^send_request_org/(?P<username>[a-zA-Z0-9]+)/(?P<reqId>[a-zA-Z0-9]+)/', views.send_request_organization, name='send_request_org'),
+    url('^reports/', views.report_admin, name='report')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

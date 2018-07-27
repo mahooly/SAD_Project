@@ -481,3 +481,8 @@ def send_request_organization(request, username, reqId):
         send_mail('پیشنهاد جدید', 'شما یک پیشنهاد جدید از طرف فلانی دارید', 'sender@mehraneh.com', [user.email])
         Report.objects.create(benefactor=request.user, organization=user, type='2', description=desc, operator='1', date=datetime.datetime.today(), time=datetime.datetime.now())
         return render(request, 'thanks.html')
+
+
+def report_admin(request):
+    reports = Report.objects.all()
+    return render(request, 'reportForAdmin.html', {'reports': reports})
