@@ -140,8 +140,8 @@ def mylogin(request):
         return render(request, 'login.html')
 
 
-#updated fields
-#permission
+# updated fields
+# permission
 @login_required
 def update_benefactor_profile(request):
     abilities = Ability.objects.all()
@@ -193,7 +193,8 @@ def update_benefactor_profile(request):
                     setattr(week, attr, week_form.data[attr])
             week.save()
 
-            Report.objects.create(benefactor=user, type='4', operator='3', date=datetime.datetime.today(), time=datetime.datetime.now())
+            Report.objects.create(benefactor=user, type='4', operator='3', date=datetime.datetime.today(),
+                                  time=datetime.datetime.now())
 
         else:
             print(user_form.errors, form.errors, week_form.errors)
@@ -209,7 +210,7 @@ def update_benefactor_profile(request):
                    'cities': cities})
 
 
-#permission
+# permission
 @login_required
 def update_organization_profile(request):
     cities = City.objects.all()
@@ -237,7 +238,8 @@ def update_organization_profile(request):
                     setattr(organization, attr, form.data[attr])
                 organization.save()
 
-            Report.objects.create(organization=user, type='4', operator='4', date=datetime.datetime.today(), time=datetime.datetime.now())
+            Report.objects.create(organization=user, type='4', operator='4', date=datetime.datetime.today(),
+                                  time=datetime.datetime.now())
         else:
             print(user_form.errors, form.errors)
 
@@ -253,7 +255,7 @@ def update_organization_profile(request):
 
 
 # TODO filter
-#permission
+# permission
 def list_projects(request):
     categories = Category.objects.all()
     if request.method == 'POST':
@@ -321,6 +323,31 @@ def list_requirement(request):
             req_ab.append(result)
 
     return render(request, 'searchRequirement.html', {'abilities': all_ab, 'reqAbilities': req_ab})
+
+
+def list_abilities(request):
+    name = request.POST.get('field', '')
+    if name == 'blank':
+        name = ''
+
+    all_abilities = Ability.objects.filter(name__icontains=name)
+    all_useres = CustomUser.objects.all()
+    all_user_abilities = UserAbilities.objects.all()
+    user_abilities = []
+
+    if request.method == 'POST':
+
+        for us in all_useres:
+            result = all_user_abilities.filter(abilityId=us.id)
+            if len(result) != 0:
+                user_abilities.append(result)
+
+    # print("allAb")
+    # print(all_abilities)
+    # print("userAb")
+    # print(user_abilities)
+
+    return render(request, 'searchAbilities.html', {'abilities': all_abilities, 'userAbilities:': user_abilities})
 
 
 @login_required
@@ -394,7 +421,7 @@ def rate_user(request, username):
         totalRate.f4 = ((totalRate.f4 * (count - 1)) + ((rate.f4 - 1) / 4 * 100)) / count
         totalRate.f5 = ((totalRate.f5 * (count - 1)) + ((rate.f5 - 1) / 4 * 100)) / count
         totalRate.totalRate = round((totalRate.totalRate * (count - 1) + (
-            (rate.f1 - 1) / 4 + (rate.f2 - 1) / 4 + (rate.f3 - 1) / 4 + (rate.f4 - 1) / 4 + (
+                (rate.f1 - 1) / 4 + (rate.f2 - 1) / 4 + (rate.f3 - 1) / 4 + (rate.f4 - 1) / 4 + (
                 rate.f5 - 1) / 4) / 5 * 100) / count, 1)
         totalRate.save()
         return render(request, 'thanks.html')
@@ -416,7 +443,7 @@ def project(request, username, pId):
     return render(request, 'project.html', {'user': user, 'org': organization, 'project': proj})
 
 
-#permission
+# permission
 @login_required
 def submit_requirement(request):
     abilities = Ability.objects.all()
@@ -447,7 +474,7 @@ def submit_requirement(request):
                   {'form': form, 'week_form': week_form, 'abilities': abilities, 'rangee': range(28), 'cities': cities})
 
 
-#permission
+# permission
 @login_required
 def waiting_registers(request):
     if request.method == 'POST':
@@ -462,6 +489,7 @@ def waiting_registers(request):
     users = CustomUser.objects.filter(state=None)
     return render(request, 'waitingRegisters.html', {'users': users})
 
+
 # TODO add search abilities, report, waiting requests, forget password
 
 
@@ -474,12 +502,15 @@ def send_request_organization(request, username, reqId):
             weekForm = WeekForm(request.POST)
             week = weekForm.save()
             week.save()
-            Request.objects.create(benefactorId=request.user, organizationId=user, wId=week, city=requirement.city, description=desc)
+            Request.objects.create(benefactorId=request.user, organizationId=user, wId=week, city=requirement.city,
+                                   description=desc)
         else:
-            Request.objects.create(benefactorId=request.user, organizationId=user, isAtHome=True, city=requirement.city, description=desc)
+            Request.objects.create(benefactorId=request.user, organizationId=user, isAtHome=True, city=requirement.city,
+                                   description=desc)
 
         send_mail('پیشنهاد جدید', 'شما یک پیشنهاد جدید از طرف فلانی دارید', 'sender@mehraneh.com', [user.email])
-        Report.objects.create(benefactor=request.user, organization=user, type='2', description=desc, operator='1', date=datetime.datetime.today(), time=datetime.datetime.now())
+        Report.objects.create(benefactor=request.user, organization=user, type='2', description=desc, operator='1',
+                              date=datetime.datetime.today(), time=datetime.datetime.now())
         return render(request, 'thanks.html')
 
 
