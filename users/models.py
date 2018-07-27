@@ -183,6 +183,7 @@ class Report(models.Model):
     rateId = models.ForeignKey(Rate, on_delete=models.DO_NOTHING, related_name='rate', default=None, null=True)
     wId = models.ForeignKey(WeeklySchedule, on_delete=models.DO_NOTHING, related_name='weekly', default=None, null=True)
     payment = models.IntegerField(default=None, null=True)
+    isAtHome = models.BooleanField(default=False)
 
 
 class Request(models.Model):
@@ -204,5 +205,3 @@ class RequestAbilities(models.Model):
 
     reqId = models.ForeignKey(Request, on_delete=models.CASCADE, related_name='request')
     abilityId = models.ForeignKey(Ability, on_delete=models.CASCADE, related_name='requestAbility')
-
-

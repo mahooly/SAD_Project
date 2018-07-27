@@ -264,7 +264,6 @@ button {
 }
 
 .rating {
-	width: 35%;
 	height: 100%;
 	float: right;
 	background: rgba(255,255,255,0.5);
@@ -318,13 +317,9 @@ button {
 
 .remove {
 	position: relative;
-	bottom: -10px;
-	left: 10px;
 	background: #E41B17;
 	border: none;
 	color: #fdfdfd;
-	width: 10%;
-	float: left;
 	height: 20px;
 	border-radius: 5px;
 	margin-top: 20px;
@@ -464,11 +459,17 @@ th {
 }
 
 .people .benefactor {
+	width:70%;
+	margin: auto;
 	background: rgba(255,160,122,0.8);
 }
 .people .organization {
+	width:70%;
+	margin: auto;
 	background: rgba(240,128,128,0.8);
 }
 .people .type {
+	width:70%;
+	margin: auto;
 	background: rgba(240,230,140,0.8);
 }

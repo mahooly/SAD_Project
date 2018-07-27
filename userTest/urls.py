@@ -50,5 +50,8 @@ urlpatterns = [
     url('^waiting_requests/', views.waiting_requests, name='waiting_requests'),
     url('^reportCash/', views.reportCash, name='reportCash'),
     url('^reportProject/(?P<pId>[a-zA-Z0-9]+)$', views.report_project, name='reportProject'),
+    url('^changeCities/', views.changeCities, name='changeCities'),
+    url('^changeCategories/', views.changeCategories, name='changeCategories'),
+    url('^changeAbilities/', views.changeAbilities, name='changeAbilities'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

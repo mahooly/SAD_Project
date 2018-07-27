@@ -64,7 +64,7 @@ if (mm === "2") {
 	li2.appendChild(a1);
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "#");
+	a1.setAttribute('href', "/reportCash");
 	a1.innerText = "وضعیت تامین مالی پروژه‌ها";
 	li1.appendChild(a1);
 	ol1.appendChild(li1);
@@ -229,4 +229,31 @@ else if (mm === "4") {
 	li1.appendChild(a1);
 	ul1.appendChild(li1);
 	div1.appendChild(ul1);
+
+	var li2 = document.createElement('li');
+	var a1 = document.createElement('a');
+	a1.innerText = "ویرایش لیست‌ها";
+	li2.appendChild(a1);
+	var ol1 = document.createElement('ol');
+	ol1.setAttribute('class', "innermenu1");
+	var li1 = document.createElement('li');
+	var a1 = document.createElement('a');
+	a1.setAttribute('href', "/changeAbilities");
+	a1.innerText = "توانایی‌ها";
+	li1.appendChild(a1);
+	ol1.appendChild(li1);
+	var li1 = document.createElement('li');
+	var a1 = document.createElement('a');
+	a1.setAttribute('href', "/changeCities");
+	a1.innerText = "شهرها";
+	li1.appendChild(a1);
+	ol1.appendChild(li1);
+	var li1 = document.createElement('li');
+	var a1 = document.createElement('a');
+	a1.setAttribute('href', "/changeCategories");
+	a1.innerText = "زمینه‌‌های فعالیت پروژه‌";
+	li1.appendChild(a1);
+	ol1.appendChild(li1);
+	li2.appendChild(ol1);
+	ul1.appendChild(li2);
 }

@@ -54,3 +54,19 @@ function week(a,e,t) {
         document.getElementById('a'+a+'c'+t).checked = true;
     }
 }
+
+var uls = document.getElementById("ull");
+for (i = 0 ; i < uls.childNodes.length; i++) {
+    uls.childNodes[i].onclick = function() {
+        if (this.value === 1) {
+            this.style.backgroundColor = "rgba(0,0,0,0.4)";
+            this.value = 2;
+            document.getElementById('d'+this.id).checked = false;
+        }
+        else {
+            this.style.backgroundColor = "rgb(4,80,255)";
+            this.value = 1;
+            document.getElementById('d'+this.id).checked = true;
+        }
+    };
+}

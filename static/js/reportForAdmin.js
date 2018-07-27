@@ -8,7 +8,7 @@ opt.innerText = "زمینه فعالیت";
 sel.appendChild(opt);
 for (var i = 0; i < fields.data.length; i++) {
   opt = document.createElement('option');
-  opt.setAttribute('value',fields.data[i]);
+  opt.setAttribute('value',i);
   opt.innerText = fields.data[i];
   sel.appendChild(opt);
 }
@@ -32,6 +32,7 @@ for (i = 0 ; i < reqs.childNodes.length; i ++ ) {
 }
 for (i = 0 ; i < reqs1.childNodes.length; i ++ ) {
     req1.unshift(reqs1.childNodes[i].value);
+
 }
 for (i = 0 ; i < req1.length; i ++) {
     document.getElementById("not"+req1[i]).addEventListener("click", function(event){
@@ -40,21 +41,22 @@ for (i = 0 ; i < req1.length; i ++) {
 }
 
 for (var k = 0; k < req.length; k ++) {
+    console.log(req[k]);
     for (i = 1; i <= 7; i++) {
         var j;
         for (j = 1; j <= 4; j++) {
             if (document.getElementById('a' + req[k] + 'b' + ((i - 1) * 4 + j - 1)).checked === true) {
-                document.getElementById('a' + req[k] + 'a' + i + "" + j).style.backgroundColor = "rgb(150,150,150)";
-                document.getElementById('a' + req[k] + 'a' + i + "" + j).style.display = "inline-block";
-                document.getElementById('a' + req[k] + 'a' + i + "" + j).style.width = "100%";
-                document.getElementById('a' + req[k] + 'a' + i + "" + j).style.heigth = "10px";
+                document.getElementById('a' + req[k] + 'a' + i + "" + j).style.backgroundColor = "rgb(120,120,120)";
+
             } else {
                 document.getElementById('a' + req[k] + 'a' + i + "" + j).style.backgroundColor = "rgb(211,233,158)";
-                document.getElementById('a' + req[k] + 'a' + i + "" + j).style.display = "inline-block";
-                document.getElementById('a' + req[k] + 'a' + i + "" + j).style.width = "100%";
-                document.getElementById('a' + req[k] + 'a' + i + "" + j).style.height = "10px";
+
 
             }
+            document.getElementById('a' + req[k] + 'a' + i + "" + j).style.display = "inline-block";
+            document.getElementById('a' + req[k] + 'a' + i + "" + j).style.width = "100%";
+            document.getElementById('a' + req[k] + 'a' + i + "" + j).style.height = "10px";
+            document.getElementById('a' + req[k] + 'a' + i + "" + j).style.borderRadius = "5px";
         }
     }
 }

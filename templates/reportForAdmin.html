@@ -105,35 +105,38 @@
         </div>
         <div class="container">
             <div class="filter">
+                <form method="post">
+                    {% csrf_token %}
                 <p>گزارش فعالیت کاربران</p>
                 <div class="controlsSelect">
                     <i class="ion-navicon"></i>
-                    <select id="field" onchange="show()"></select>
+                    <select id="field" name="field"></select>
                 </div>
                 <div class="controls">
-                    <input id="orgName" type="text" placeholder="نام موسسه">
+                    <input name="orgName" type="text" placeholder="نام موسسه">
                 </div>
                 <div class="controls">
-                    <input id="beneName" type="text" placeholder="نام نیکوکار">
+                    <input name="beneName" type="text" placeholder="نام نیکوکار">
                 </div>
-                <button class="mybutton" onclick="show()">اعمال تغییرات</button>
+                <button class="mybutton" onclick="this.form.submit()">اعمال تغییرات</button>
+                </form>
             </div>
             <div id="result">
-                <ul id="tempUl" style="display: none">{% for report in reports %}{% if report.type == "2" %}<li value="{{ report.id }}"></li>{% endif %}{% endfor %}</ul>
+                <ul id="tempUl" style="display: none">{% for report in reports %}{% if report.type == "2" and not report.isAtHome %}<li value="{{ report.id }}"></li>{% endif %}{% endfor %}</ul>
                 <ul id="tempUl1" style="display: none">{% for report in reports %}{% if report.type == "1" %}<li value="{{ report.id }}"></li>{% endif %}{% endfor %}</ul>
                 {% for report in reports %}
-                    <div class="report">
-                        <div class="people">
+                    <div class="report" style="display: flex;">
+                        <div style="width: 25%" class="people">
                             {% if report.operator == "1" %}
-                                <span class="benefactor">{{ report.benefactor.benefactor.name }}: نیکوکار</span>
+                                <span class="benefactor">{{ report.benefactor.benefactor.nickname }}: نیکوکار</span>
                                 <span class="organization">{{ report.organization.organizer.name }} : موسسه</span>
                             {% endif %}
                             {% if report.operator == "2" %}
                                 <span class="organization">{{ report.organization.organizer.name }}: موسسه</span>
-                                <span class="benefactor">{{ report.benefactor.benefactor.name }}: نیکوکار</span>
+                                <span class="benefactor">{{ report.benefactor.benefactor.nickname }}: نیکوکار</span>
                             {% endif %}
                             {% if report.operator == "3" %}
-                                <span class="benefactor">{{ report.benefactor.benefactor.name }}: نیکوکار</span>
+                                <span class="benefactor">{{ report.benefactor.benefactor.nickname }}: نیکوکار</span>
                             {% endif %}
                             {% if report.operator == "4" %}
                                 <span class="organization">{{ report.organization.organizer.name }}: موسسه</span>
@@ -152,8 +155,9 @@
                             {% endif %}
                             <span class="type">{{ report.date }}-{{ report.time }}</span>
                         </div>
+                        <div class="mid" style="width: 45%">
                         {% if report.type == "1" %}
-                            <div class="rating">
+                            <div style="width: 100%" class="rating">
                                 <table id="ratingTable">
                                     <tr id="tr1">
                                         <td class="firstTd">فعالیت اعضا</td>
@@ -179,7 +183,11 @@
                             </div>
                         {% endif %}
                         {% if report.type == "2" %}
-                            <table id="tab">
+                            {% if report.isAtHome %}
+                                <h4 style="text-align: center; display: block">دورکاری</h4>
+                            {% endif %}
+                            {% if not report.isAtHome %}
+                            <table id="tab" style="font-size: 10px">
                                 <tbody>
                                 <tr>
                                     <td></td>
@@ -436,6 +444,7 @@
                             {% if report.wId.a27 == "off" %}
                                 <input type="checkbox" name="a{{ report.id }}b27" id="a{{ report.id }}b27"
                                        style="display: none">{% endif %}
+                            {% endif %}
 
                         {% endif %}
                         {% if report.type == "3" %}
@@ -443,28 +452,33 @@
                                 <h3>مبلغ: {{ report.payment }}</h3>
                             </div>
                         {% endif %}
-
-                        <div class="more">
-                            <h3>{{ report.description }}</h3>
                         </div>
-                        {% if report.type == "1" %}
-                            <button class="remove" onclick="showRemove({{ report.id }})">حذف</button>
-                            <div id="testreg{{ report.id }}" style="display: none">
-                                <div class="wrappers">
-                                    <form class="register" id="formRemove{{ report.id }}">
-                                        <button class="exit" onclick="popdownregisters({{ report.id }})">x</button>
-                                        <input type="text" value="{{ report.id }}" style="display: none;">
-                                        <p class="title">امتیاز داده شده از لیست امتیازات حذف شود؟</p>
-                                        <div class="enter">
-                                            <button class="yes" onclick="this.form.submit()">بله</button>
-                                        </div>
-                                        <div class="enter">
-                                            <button id="not{{ report.id }}" onclick="popdownregisters({{ report.id }})">خیر</button>
-                                        </div>
-                                    </form>
+
+                        <div class="more" style="width: 25%">
+                            {% if report.description != None %}
+                            <h3>{{ report.description }}</h3>
+                            {% endif %}
+                            {% if report.type == "1" or report.type == "2" %}
+                                <button class="remove" onclick="showRemove({{ report.id }})">حذف</button>
+                                <div id="testreg{{ report.id }}" style="display: none">
+                                    <div class="wrappers">
+                                        <form class="register" id="formRemove{{ report.id }}">
+                                            <button class="exit" onclick="popdownregisters({{ report.id }})">x</button>
+                                            <input type="text" value="{{ report.id }}" style="display: none;">
+                                            <p class="title">امتیاز داده شده از لیست امتیازات حذف شود؟</p>
+                                            <div class="enter">
+                                                <button class="yes" onclick="this.form.submit()">بله</button>
+                                            </div>
+                                            <div class="enter">
+                                                <button id="not{{ report.id }}"
+                                                        onclick="popdownregisters({{ report.id }})">خیر
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
-                            </div>
-                        {% endif %}
+                            {% endif %}
+                        </div>
                     </div>
                 {% endfor %}
             </div>

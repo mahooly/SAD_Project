@@ -1,12 +1,12 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 {% load staticfiles %}
 <html lang="fa" dir="rtl">
 <head>
-    <title>گزارش تامین مالی پروژه</title>
+    <title>زمینه‌های فعالیت پروژه‌ها</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href= {% static "css/reportCash.css" %}>
-    <link rel="stylesheet" type="text/css" href= {% static "css/style.css" %}>
-    <link rel="stylesheet" href= {% static "css/ionicons.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "css/editProfileBenefactor.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "css/style.css" %}>
+    <link rel="stylesheet" href={% static "css/ionicons.min.css" %}>
 </head>
 <body>
 <div class="main">
@@ -70,7 +70,7 @@
         <div id="test">
             <div class="wrappers">
 
-                <form class="login">
+                <form class="login" method="post" action="{% url 'login' %}">
                     <button id="button2" class="exit1" onclick="popdown()">x</button>
                     <p class="title">ورود</p>
                     <p>
@@ -86,7 +86,7 @@
                     </div>
                     <button class="forget">فراموشی رمز عبور</button>
 
-                    <p id="p2"> اگر هنوز حساب کاربری برای خود ایجاد نکرده‌اید، </p>
+                    <p> اگر هنوز حساب کاربری برای خود ایجاد نکرده‌اید، </p>
                     <button class="reg" id="buttonreg" onclick="popupregister()">ثبت نام</button>
                     <p>کنید</p>
                 </form>
@@ -97,30 +97,28 @@
                 <form class="register">
                     <button id="buttonreg2" class="exit" onclick="popdownregister()">x</button>
                     <p class="title">ثبت نام</p>
-                    <div class="enter"><a href="registerBenefactor.html">نیکوکار</a></div>
-                    <div class="enter"><a href="registerOrganization.html">موسسه</a></div>
+                    <div class="enter"><a href="{% url 'register' %}">نیکوکار</a></div>
+                    <div class="enter"><a href="{% url 'registerOrg' %}">موسسه</a></div>
                 </form>
             </div>
         </div>
         <div class="nav" id="nav"></div>
-        <div class="container" style="width: 70%;">
-            <div class="mainheader">
-                <h1>گزارش تامین مالی پروژه ها</h1>
-                <br><br>
-            </div>
-            <div id="result">
-                {% for project in projects %}
-                    <div class="report">
-                        <a style="text-decoration: none; background: rgba(0,158,255,0.7); border-radius: 5px; width: 250px; text-align: center; display: inline-block; color: #202020;" href={% url 'reportProject' project.id %}>{{ project.name }}</a>
-                        <div class="project" style="display: inline-block; float: left">
-                            <h3>مبلغ پرداخت شده تا کنون: {{ project.alreadyPaid }}</h3>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
+        <div class="formm" style="width: 60%;">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="controls">
+                    <h2>پنل تغییر لیست زمینه‌های فعالیت پروژه‌ها</h2>
+                    <input type="text" id="username" class="floatlabel" placeholder="زمینه فعالیت پروژه" name="city">
+                    <input type="text" id="type" style="display: none;" name="type" value="1">
+                    <button onclick="this.form.submit()" style="margin-top: 20px;">افزودن</button>
+                    <ul id="templist">{% for city in categories %}<li id="{{ city.name }}"></li>{% endfor %}</ul>
+                    <ul id="dynamiclist" style="margin-top: 30px;list-style: none;">
+                    </ul>
+                </div>
+            </form>
+
         </div>
     </div>
-
     <div class="footer">
         <div class="container">
             <div class="addr">
@@ -133,6 +131,7 @@
         </div>
     </div>
 </div>
+<script type="text/javascript" src={% static "js/changeCities.js" %}></script>
 <script type="text/javascript" src={% static "js/main.js" %}></script>
 <script src={% static "js/jquery.min.js" %}></script>
 </body>

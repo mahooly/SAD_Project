@@ -548,7 +548,7 @@ def send_request_organization(request, username, reqId):
             Request.objects.create(benefactorId=request.user, organizationId=user, isAtHome=True, city=requirement.city,
                                    description=desc)
             Report.objects.create(benefactor=request.user, organization=user, type='2', description=desc, operator='1',
-                                  date=datetime.datetime.today(), time=datetime.datetime.now())
+                                  date=datetime.datetime.today(), time=datetime.datetime.now(), isAtHome=True)
 
         send_mail('پیشنهاد جدید', 'شما یک پیشنهاد جدید از طرف فلانی دارید', 'sender@mehraneh.com', [user.email])
         return render(request, 'thanks.html')
@@ -556,6 +556,23 @@ def send_request_organization(request, username, reqId):
 
 def report_admin(request):
     reports = Report.objects.all()
+    if request.method == 'POST':
+        reports = Report.objects.all()
+        try:
+            reports = reports.filter(
+                benefactor__benefactor__nickname__icontains=request.POST['beneName'])
+        except ValueError:
+            reports = reports
+
+        try:
+            reports = reports.filter(
+                organization__organizer__name__icontains=request.POST['orgName'])
+        except ValueError:
+            reports = reports
+
+        field = request.POST['field']
+        if field != "blank":
+            reports = reports.filter(type=field)
     return render(request, 'reportForAdmin.html', {'reports': reports})
 
 
@@ -576,7 +593,7 @@ def send_request_benefactor(request, username):
             req = Request.objects.create(benefactorId=user, organizationId=request.user, isAtHome=True, whoSubmit='2',
                                          city=user.benefactor.city, description=desc)
             Report.objects.create(benefactor=request.user, organization=user, type='2', description=desc, operator='2',
-                                  date=datetime.datetime.today(), time=datetime.datetime.now())
+                                  date=datetime.datetime.today(), time=datetime.datetime.now(), isAtHome=True)
 
         for a in abilities:
             name = a.name
@@ -602,9 +619,76 @@ def reportCash(request):
     return render(request, 'reportCash.html', {'projects': projects})
 
 
-def report_project (request, pId):
+def report_project(request, pId):
     project = get_object_or_404(Project, id=pId)
     reports = []
     if project.user == request.user:
         reports.append(Report.objects.filter(description=project.id, organization=project.user, type=3))
     return render(request, 'reportProject.html', {'project': project, 'reports': reports})
+
+
+def changeCities(request):
+    cities = City.objects.all()
+    if request.method == 'POST':
+        if request.POST['type'] == "1":
+            c = City.objects.create(name=request.POST['city'])
+            c.save()
+        else:
+            c = City.objects.get(name=request.POST['city'])
+            users = Benefactor.objects.filter(city=c.name)
+            for user in users:
+                user.city = "سایر"
+                user.save()
+            users = Organizer.objects.filter(city=c.name)
+            for user in users:
+                user.city = "سایر"
+                user.save()
+            users = Project.objects.filter(city=c.name)
+            for user in users:
+                user.city = "سایر"
+                user.save()
+            users = Requirement.objects.filter(city=c.name)
+            for user in users:
+                user.city = "سایر"
+                user.save()
+            c.delete()
+        cities = City.objects.all()
+        return render(request, 'changeCities.html', {'cities': cities})
+    return render(request, 'changeCities.html', {'cities': cities})
+
+
+def changeCategories(request):
+    categories = Category.objects.all()
+    if request.method == 'POST':
+        if request.POST['type'] == "1":
+            c = Category.objects.create(name=request.POST['city'])
+            c.save()
+        else:
+            c = Category.objects.get(name=request.POST['city'])
+            c.delete()
+        categories = Category.objects.all()
+        return render(request, 'changeCategories.html', {'categories': categories})
+    return render(request, 'changeCategories.html', {'categories': categories})
+
+
+def changeAbilities(request):
+    abilities = Ability.objects.all()
+    if request.method == 'POST':
+        if request.POST['type'] == "1":
+            c = Ability.objects.create(name=request.POST['city'])
+            c.save()
+        else:
+            c = Ability.objects.get(name=request.POST['city'])
+            ua = UserAbilities.objects.filter(abilityId=c.id)
+            for u in ua:
+                u.delete()
+            ra = RequirementAbilities.objects.filter(abilityId=c.id)
+            for r in ra:
+                r.delete()
+            ra = RequestAbilities.objects.filter(abilityId=c.id)
+            for r in ra:
+                r.delete()
+            c.delete()
+        abilities = Ability.objects.all()
+        return render(request, 'changeAbilities.html', {'abilities': abilities})
+    return render(request, 'changeAbilities.html', {'abilities': abilities})
