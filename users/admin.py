@@ -27,5 +27,6 @@ admin.site.register(Report)
 admin.site.register(Rate)
 admin.site.register(TotalRate)
 admin.site.register(Request)
+admin.site.register(RequestAbilities)
 
 

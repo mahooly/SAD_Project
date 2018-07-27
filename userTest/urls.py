@@ -43,6 +43,7 @@ urlpatterns = [
     url('^reports/', views.report_admin, name='report'),
     url('^password_reset_complete', password_reset_complete),
     url('^password_reset', password_reset),
-    url('^password_reset_done', password_reset_done, name='password_reset_done')
+    url('^password_reset_done', password_reset_done, name='password_reset_done'),
+    url('^send_request_benefactor/(?P<username>[a-zA-Z0-9]+)$', views.send_request_benefactor, name='send_request_ben')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

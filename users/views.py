@@ -488,4 +488,27 @@ def report_admin(request):
     return render(request, 'reportForAdmin.html', {'reports': reports})
 
 
-#def send_request_benefactor(request, username)
+def send_request_benefactor(request, username):
+    if request.method == 'POST':
+        print(request.POST)
+        user = CustomUser.objects.get(username=username)
+        abilities = Ability.objects.all()
+        desc = request.POST['description']
+        if user.benefactor.typeOfCooperation != 'atHome':
+            weekForm = WeekForm(request.POST)
+            week = weekForm.save()
+            week.save()
+            req = Request.objects.create(benefactorId=user, organizationId=request.user, wId=week, whoSubmit='2', city=user.benefactor.city, description=desc)
+        else:
+            req = Request.objects.create(benefactorId=user, organizationId=request.user, isAtHome=True, whoSubmit='2',
+                                   city=user.benefactor.city, description=desc)
+        for a in abilities:
+            name = a.name
+            if request.POST.get(name) is not None:
+               RequestAbilities.objects.create(reqId=req, abilityId=a)
+        send_mail('پیشنهاد جدید', 'شما یک پیشنهاد جدید از طرف فلانی دارید', 'sender@mehraneh.com', [user.email])
+        Report.objects.create(benefactor=request.user, organization=user, type='2', description=desc, operator='2',
+                              date=datetime.datetime.today(), time=datetime.datetime.now())
+        return render(request, 'thanks.html')
+
+

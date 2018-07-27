@@ -187,7 +187,8 @@
             </div>
             <a style="display: inline-block; padding: 2px 10px; font-size: 14px;  text-decoration: none; color: #fdfdfd; height: 30px; background: #1E90FF; border-radius: 15px;"
                href={% url 'comment' user.username %}>امتیازدهی به نیکوکار</a>
-            <form>
+            <form method="post" action="{% url 'send_request_ben' user.username %}">
+                {% csrf_token %}
                 <div id="abilities">
                     <h2>توانایی‌ها </h2>
                     <div id="abilities1">{% for ability in user_abilities %}
@@ -376,7 +377,7 @@
                 </div>
                 <h2>توضیحات بیشتر</h2>
                 <div class="controls">
-                    <textarea id="cm" class="floatlabel" placeholder="توضیحات بیشتر"></textarea>
+                    <textarea id="cm" class="floatlabel" placeholder="توضیحات بیشتر" name="description"></textarea>
                 </div>
                 <button class="subreq"> ارسال پیشنهاد همکاری</button>
             </form>

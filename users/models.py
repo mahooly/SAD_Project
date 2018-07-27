@@ -160,7 +160,7 @@ class Requirement(models.Model):
     wId = models.ForeignKey(WeeklySchedule, on_delete=models.CASCADE, related_name='week')
     description = models.TextField(max_length=200)
     typeOfCooperation = models.CharField(max_length=15, choices=COOP_CHOICES, default='inOffice10')
-    NOP = models.IntegerField(default=0)
+    NOPs = models.IntegerField(default=0)
 
 
 class RequirementAbilities(models.Model):
@@ -199,6 +199,9 @@ class Request(models.Model):
 
 
 class RequestAbilities(models.Model):
+    class Meta:
+        unique_together = ('reqId', 'abilityId')
+
     reqId = models.ForeignKey(Request, on_delete=models.CASCADE, related_name='request')
     abilityId = models.ForeignKey(Ability, on_delete=models.CASCADE, related_name='requestAbility')
 
