@@ -117,6 +117,8 @@ def project_creation(request):
                 if request.POST.get(name) is not None:
                     CategoryProject.objects.create(categoryId=c, projectId=project)
 
+            return render(request, 'thanksSubmitProject.html')
+
         else:
             print(form.errors)
 
@@ -295,15 +297,15 @@ def list_requirement(request):
             all_req = all_req.order_by('-user__organizer__rate__totalRate')
 
         if sort_type == "participantsA":
-            all_req = all_req.order_by('-NOP')
+            all_req = all_req.order_by('-NOPs')
 
         if sort_type == "participantsD":
-            all_req = all_req.order_by('NOP')
+            all_req = all_req.order_by('NOPs')
 
         try:
-            all_req = all_req.filter(NOP__gte=int(request.POST.get('minimumNOP')))
+            all_req = all_req.filter(NOPs__gte=int(request.POST.get('minimumNOP')))
         except ValueError:
-            all_req = all_req.filter(NOP__gte=0)
+            all_req = all_req.filter(NOPs__gte=0)
 
         try:
             all_req = all_req.filter(
@@ -329,28 +331,59 @@ def list_requirement(request):
 
 
 def list_abilities(request):
-    name = request.POST.get('field', '')
-    if name == 'blank':
-        name = ''
-
-    all_abilities = Ability.objects.filter(name__icontains=name)
-    all_useres = CustomUser.objects.all()
-    all_user_abilities = UserAbilities.objects.all()
+    name = request.POST.get('orgName', '')
+    all_user_abilities = UserAbilities.objects.filter(username__benefactor__nickname__icontains=name)
+    all_abilities = Ability.objects.all()
     user_abilities = []
 
     if request.method == 'POST':
-        all_abilities = Ability.objects.filter(name__icontains=name)
-        for us in all_useres:
-            result = all_user_abilities.filter(abilityId=us.id)
+        sort_type = request.POST['sortType']
+
+        if sort_type == "rateD":
+            all_user_abilities = all_user_abilities.order_by('-username__benefactor__rate__totalRate')
+
+        if sort_type == "rateA":
+            all_user_abilities = all_user_abilities.order_by('username__benefactor__rate__totalRate')
+
+        if sort_type == "ageA":
+            all_user_abilities = all_user_abilities.order_by('-username__benefactor__year')
+
+        if sort_type == "ageD":
+            all_user_abilities = all_user_abilities.order_by('username__benefactor__year')
+
+        try:
+            all_user_abilities = all_user_abilities.filter(
+                username__benefactor__year__gte=int(request.POST.get('minimumAge', 0)))
+        except ValueError:
+            all_user_abilities = all_user_abilities.filter(username__benefactor__year__gte=0)
+
+        try:
+            all_user_abilities = all_user_abilities.filter(
+                username__benefactor__rate__totalRate__gte=int(request.POST.get('minimumtotalrating', 0)))
+        except ValueError:
+            all_user_abilities = all_user_abilities.filter(username__benefactor__rate__totalRate__gte=0)
+
+        ability = request.POST['field']
+        if ability != "blank":
+            temp_reqs = []
+            for ua in all_user_abilities:
+                if len(UserAbilities.objects.filter(username=ua.username, abilityId=ability)):
+                    temp_reqs.append(ua)
+
+            all_user_abilities = temp_reqs
+
+    list = []
+
+    for ua in all_user_abilities:
+        if ua.username.username not in list:
+            result = UserAbilities.objects.filter(username=ua.username.username)
             if len(result) != 0:
                 user_abilities.append(result)
+            list.append(ua.username.username)
 
-    # print("allAb")
-    # print(all_abilities)
-    # print("userAb")
-    # print(user_abilities)
+    print(user_abilities)
 
-    return render(request, 'searchAbilities.html', {'abilities': all_abilities, 'userAbilities:': user_abilities})
+    return render(request, 'searchAbilities.html', {'abilities': all_abilities, 'userAbilities': user_abilities})
 
 
 @login_required
@@ -424,7 +457,7 @@ def rate_user(request, username):
         totalRate.f4 = ((totalRate.f4 * (count - 1)) + ((rate.f4 - 1) / 4 * 100)) / count
         totalRate.f5 = ((totalRate.f5 * (count - 1)) + ((rate.f5 - 1) / 4 * 100)) / count
         totalRate.totalRate = round((totalRate.totalRate * (count - 1) + (
-                (rate.f1 - 1) / 4 + (rate.f2 - 1) / 4 + (rate.f3 - 1) / 4 + (rate.f4 - 1) / 4 + (
+            (rate.f1 - 1) / 4 + (rate.f2 - 1) / 4 + (rate.f3 - 1) / 4 + (rate.f4 - 1) / 4 + (
                 rate.f5 - 1) / 4) / 5 * 100) / count, 1)
         totalRate.save()
         return render(request, 'thanks.html')
@@ -466,6 +499,8 @@ def submit_requirement(request):
                 name = a.name
                 if request.POST.get(name) is not None:
                     RequirementAbilities.objects.create(abilityId=a, reqId=requirement)
+
+            return render(request, 'thanksSubmitRequirement.html')
 
         else:
             print(form.errors, week_form.errors)
@@ -533,19 +568,20 @@ def send_request_benefactor(request, username):
             weekForm = WeekForm(request.POST)
             week = weekForm.save()
             week.save()
-            req = Request.objects.create(benefactorId=user, organizationId=request.user, wId=week, whoSubmit='2', city=user.benefactor.city, description=desc)
+            req = Request.objects.create(benefactorId=user, organizationId=request.user, wId=week, whoSubmit='2',
+                                         city=user.benefactor.city, description=desc)
             Report.objects.create(benefactor=request.user, organization=user, type='2', description=desc, operator='2',
                                   date=datetime.datetime.today(), time=datetime.datetime.now(), wId=week)
         else:
             req = Request.objects.create(benefactorId=user, organizationId=request.user, isAtHome=True, whoSubmit='2',
-                                   city=user.benefactor.city, description=desc)
+                                         city=user.benefactor.city, description=desc)
             Report.objects.create(benefactor=request.user, organization=user, type='2', description=desc, operator='2',
                                   date=datetime.datetime.today(), time=datetime.datetime.now())
 
         for a in abilities:
             name = a.name
             if request.POST.get(name) is not None:
-               RequestAbilities.objects.create(reqId=req, abilityId=a)
+                RequestAbilities.objects.create(reqId=req, abilityId=a)
         send_mail('پیشنهاد جدید', 'شما یک پیشنهاد جدید از طرف فلانی دارید', 'sender@mehraneh.com', [user.email])
         return render(request, 'thanks.html')
 
