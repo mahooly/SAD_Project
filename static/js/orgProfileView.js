@@ -70,3 +70,15 @@ for (i = 0 ; i < uls.childNodes.length; i++) {
         }
     };
 }
+
+function popupDelete() {
+    document.getElementById("delete").style.display="block";
+}
+
+function popdownDelete() {
+    document.getElementById("delete").style.display="none";
+}
+
+document.getElementById("not").addEventListener("click", function (e) {
+    e.preventDefault()
+});

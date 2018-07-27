@@ -69,16 +69,16 @@
         <div class="wrapper"></div>
         <div id="test">
             <div class="wrappers">
-
-                <form class="login">
+                <form class="login" method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
                     <button id="button2" class="exit1" onclick="popdown()">x</button>
                     <p class="title">ورود</p>
                     <p>
-                        <input type="text" placeholder="نام کاربری" class="login-text">
+                        <input type="text" placeholder="نام کاربری" class="login-text" name="username">
                         <i class="ion-person"></i>
                     </p>
                     <p>
-                        <input type="password" placeholder="رمز عبور" class="login-text">
+                        <input type="password" placeholder="رمز عبور" class="login-text" name="password">
                         <i class="ion-ios-locked"></i>
                     </p>
                     <div class="enter">
@@ -92,13 +92,14 @@
                 </form>
             </div>
         </div>
+
         <div id="testreg">
             <div class="wrappers">
                 <form class="register">
                     <button id="buttonreg2" class="exit" onclick="popdownregister()">x</button>
                     <p class="title">ثبت نام</p>
-                    <div class="enter"><a href="registerBenefactor.html">نیکوکار</a></div>
-                    <div class="enter"><a href="registerOrganization.html">موسسه</a></div>
+                    <div class="enter"><a href="{% url 'register' %}">نیکوکار</a></div>
+                    <div class="enter"><a href="{% url 'registerOrg' %}">موسسه</a></div>
                 </form>
             </div>
         </div>
@@ -363,6 +364,23 @@
                         <input type="checkbox" name="a27" id="a27" style="display: none" checked>{% endif %}
                     {% if week.a27 == "off" %}
                         <input type="checkbox" name="a27" id="a27" style="display: none">{% endif %}
+                </div>
+                <button class="subreq" style="background-color: #f72c2c; z-index:4" onclick="popupDelete()">حذف کاربر</button>
+            </div>
+            <div id="delete" style="display: none">
+                <div class="wrappers" style="width: 100%; min-height: 1200px; position: fixed; background: rgba(50,50,50,0.8);top: 0px;z-index: 3;">
+                    <form class="register" id="formRemove">
+                        <input type="text" name="user" value="{{ benefactor.user.id }}" style="display: none;">
+                        <p class="title">کاربر از لیست کاربران سامانه حذف شود؟</p>
+                        <div class="enter">
+                            <button class="yes" style="background-color: #f72c2c" onclick="this.form.submit()">بله</button>
+                        </div>
+                        <div class="enter">
+                            <button id="not"
+                                    onclick="popdownDelete()">خیر
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         {% endif %}

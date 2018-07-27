@@ -69,16 +69,16 @@
         <div class="wrapper"></div>
         <div id="test">
             <div class="wrappers">
-
-                <form class="login">
+                <form class="login" method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
                     <button id="button2" class="exit1" onclick="popdown()">x</button>
                     <p class="title">ورود</p>
                     <p>
-                        <input type="text" placeholder="نام کاربری" class="login-text">
+                        <input type="text" placeholder="نام کاربری" class="login-text" name="username">
                         <i class="ion-person"></i>
                     </p>
                     <p>
-                        <input type="password" placeholder="رمز عبور" class="login-text">
+                        <input type="password" placeholder="رمز عبور" class="login-text" name="password">
                         <i class="ion-ios-locked"></i>
                     </p>
                     <div class="enter">
@@ -86,19 +86,20 @@
                     </div>
                     <button class="forget">فراموشی رمز عبور</button>
 
-                    <p id="p2"> اگر هنوز حساب کاربری برای خود ایجاد نکرده‌اید، </p>
+                    <p> اگر هنوز حساب کاربری برای خود ایجاد نکرده‌اید، </p>
                     <button class="reg" id="buttonreg" onclick="popupregister()">ثبت نام</button>
                     <p>کنید</p>
                 </form>
             </div>
         </div>
+
         <div id="testreg">
             <div class="wrappers">
                 <form class="register">
                     <button id="buttonreg2" class="exit" onclick="popdownregister()">x</button>
                     <p class="title">ثبت نام</p>
-                    <div class="enter"><a href="registerBenefactor.html">نیکوکار</a></div>
-                    <div class="enter"><a href="registerOrganization.html">موسسه</a></div>
+                    <div class="enter"><a href="{% url 'register' %}">نیکوکار</a></div>
+                    <div class="enter"><a href="{% url 'registerOrg' %}">موسسه</a></div>
                 </form>
             </div>
         </div>

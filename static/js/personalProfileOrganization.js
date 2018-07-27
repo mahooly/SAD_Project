@@ -13,3 +13,15 @@ function popupProject(e) {
 function popdownProject(e) {
     document.getElementById(e).style.display = "none";
 }
+
+function popupDelete() {
+    document.getElementById("delete").style.display="block";
+}
+
+function popdownDelete() {
+    document.getElementById("delete").style.display="none";
+}
+
+document.getElementById("not").addEventListener("click", function (e) {
+    e.preventDefault()
+});

@@ -69,16 +69,16 @@
         <div class="wrapper"></div>
         <div id="test">
             <div class="wrappers">
-
-                <form class="login">
+                <form class="login" method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
                     <button id="button2" class="exit1" onclick="popdown()">x</button>
                     <p class="title">ورود</p>
                     <p>
-                        <input type="text" placeholder="نام کاربری" class="login-text">
+                        <input type="text" placeholder="نام کاربری" class="login-text" name="username">
                         <i class="ion-person"></i>
                     </p>
                     <p>
-                        <input type="password" placeholder="رمز عبور" class="login-text">
+                        <input type="password" placeholder="رمز عبور" class="login-text" name="password">
                         <i class="ion-ios-locked"></i>
                     </p>
                     <div class="enter">
@@ -92,6 +92,7 @@
                 </form>
             </div>
         </div>
+
         <div id="testreg">
             <div class="wrappers">
                 <form class="register">
@@ -212,8 +213,7 @@
             </div>
             <div id="abilities">
                 <h2>نیازمند همکاری در زمینه های: </h2>
-                <ul style="display: none" id="reqIds">{% for req in requirements %}
-                    <li value="{{ req.id }}">{{ req.id }}</li>{% endfor %}</ul>
+                <ul style="display: none" id="reqIds">{% for req in requirements %}<li value="{{ req.id }}">{{ req.id }}</li>{% endfor %}</ul>
                 {% for req in reqability %}
                     <button style="display: inline-block; padding: 2px 10px; font-size: 17px;  text-decoration: none; color: #fdfdfd; height: 30px; background: #009eff; border-radius: 5px; margin-top: 20px;"
                             onclick=popupProject("r{{ req.0.reqId.id }}")>{{ req.0.reqId.name }}</button><br>
@@ -513,7 +513,24 @@
                     </div>
                 {% endfor %}
             </div>
+        <button class="subreq" style="background-color: #f72c2c; z-index:4" onclick="popupDelete()">حذف کاربر</button>
+    </div>
+    <div id="delete" style="display: none">
+        <div class="wrappers" style="width: 100%; min-height: 1200px; position: fixed; background: rgba(50,50,50,0.8);top: 0px;z-index: 3;">
+            <form class="register" id="formRemove">
+                <input type="text" name="user" value="{{ benefactor.user.id }}" style="display: none;">
+                <p class="title">کاربر از لیست کاربران سامانه حذف شود؟</p>
+                <div class="enter">
+                    <button class="yes" style="background-color: #f72c2c" onclick="this.form.submit()">بله</button>
+                </div>
+                <div class="enter">
+                    <button id="not"
+                            onclick="popdownDelete()">خیر
+                    </button>
+                </div>
+            </form>
         </div>
+    </div>
     </div>
 
     <div class="footer">

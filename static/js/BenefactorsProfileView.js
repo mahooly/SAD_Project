@@ -38,3 +38,15 @@ for (i = 1; i <=7; i ++) {
         }
     }
 }
+
+function popupDelete() {
+    document.getElementById("delete").style.display="block";
+}
+
+function popdownDelete() {
+    document.getElementById("delete").style.display="none";
+}
+
+document.getElementById("not").addEventListener("click", function (e) {
+    e.preventDefault()
+});

@@ -54,3 +54,15 @@ for (i = 0 ;i < buttons.length; i ++) {
 		event.preventDefault()
 	});
 }
+
+function popupDelete() {
+    document.getElementById("delete").style.display="block";
+}
+
+function popdownDelete() {
+    document.getElementById("delete").style.display="none";
+}
+
+document.getElementById("not").addEventListener("click", function (e) {
+    e.preventDefault()
+});
