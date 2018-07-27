@@ -1,12 +1,11 @@
 ﻿<!DOCTYPE html>
-{% load staticfiles %}
 <html lang="fa" dir="rtl">
 <head>
-    <title>جستجوی نیکوکاران</title>
+    <title>گزارش تامین مالی پروژه</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href= {% static "css/waitingRegisters.css" %}>
-    <link rel="stylesheet" type="text/css" href= {% static "css/style.css" %}>
-    <link rel="stylesheet" href= {% static "css/ionicons.min.css" %}>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/reportCash.css">
+    <link rel="stylesheet" href="css/ionicons.min.css">
 </head>
 <body>
 <div class="main">
@@ -86,7 +85,7 @@
                     </div>
                     <button class="forget">فراموشی رمز عبور</button>
 
-                    <p> اگر هنوز حساب کاربری برای خود ایجاد نکرده‌اید، </p>
+                    <p id="p2"> اگر هنوز حساب کاربری برای خود ایجاد نکرده‌اید، </p>
                     <button class="reg" id="buttonreg" onclick="popupregister()">ثبت نام</button>
                     <p>کنید</p>
                 </form>
@@ -97,39 +96,23 @@
                 <form class="register">
                     <button id="buttonreg2" class="exit" onclick="popdownregister()">x</button>
                     <p class="title">ثبت نام</p>
-                    <div class="enter"><a href="{% url 'register' %}">نیکوکار</a></div>
-                    <div class="enter"><a href="{% url 'registerOrg' %}">موسسه</a></div>
+                    <div class="enter"><a href="registerBenefactor.html">نیکوکار</a></div>
+                    <div class="enter"><a href="registerOrganization.html">موسسه</a></div>
                 </form>
             </div>
         </div>
         <div class="nav" id="nav"></div>
         <div class="container">
-            {% for user in users %}
-                <div id="result">
-                    <div class="project">
-                        <div class="specifications">
-                            {% if user.isBen %}
-                                <a href={% url 'profile' user.username %}>{{ user.benefactor.name }} {{ user.benefactor.surname }}
-                                    ( {{ user.benefactor.nickname }} ) : نیکوکار</a>
-                            {% endif %}
-                            {% if user.isOrg %}
-                                <a href={% url 'profile' user.username %}>{{ user.organizer.name }} : موسسه</a>
-                            {% endif %}
-                        </div>
-                        <div class="cost">
-                            <button onclick=clicked({{ user.id }},1); style="background: rgb(61, 177, 58)">تایید
-                            </button>
-                        </div>
-                        <div class="cost">
-                            <button onclick=clicked({{ user.id }},2); style="background: rgb(188, 0, 58)">رد</button>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-            <form method="post" id="form1" style="display: none;">
-                {% csrf_token %}
-                <input type="text" name="req" id="a1">
-            </form>
+            <div class="mainheader">
+                <h1>گزارش تامین مالی پروژه ها</h1>
+                <br><br>
+
+            </div>
+
+            <div id="result">
+
+
+            </div>
         </div>
     </div>
 
@@ -145,8 +128,8 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src={% static "js/waitingRegisters.js" %}></script>
-<script type="text/javascript" src={% static "js/main.js" %}></script>
-<script src={% static "js/jquery.min.js" %}></script>
+<script type="text/javascript" src="js/reportCash.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+<script src="js/jquery.min.js"></script>
 </body>
 </html>

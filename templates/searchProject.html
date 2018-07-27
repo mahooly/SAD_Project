@@ -2,135 +2,139 @@
 {% load staticfiles %}
 <html lang="fa" dir="rtl">
 <head>
-	<title>جستجوی پروژه</title>
-	<meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" href={% static "css/style.css" %}>
-	<link rel="stylesheet" type="text/css" href={% static "css/search.css" %}>
-	<link rel="stylesheet" href={% static "css/ionicons.min.css" %}>
+    <title>جستجوی پروژه</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href={% static "css/style.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "css/search.css" %}>
+    <link rel="stylesheet" href={% static "css/ionicons.min.css" %}>
 </head>
 <body>
-	<div class="main">
-		{% if not request.user.is_authenticated %}
-           <div id="checkspann" class="1"></div>
-          {% endif %}
-          {% if request.user.is_authenticated %}
-           {% if request.user.isOrg %}
+<div class="main">
+    {% if not request.user.is_authenticated %}
+        <div id="checkspann" class="1"></div>
+    {% endif %}
+    {% if request.user.is_authenticated %}
+        {% if request.user.isOrg %}
             <div id="checkspann" class="2"></div>
-           {% endif %}
-           {% if request.user.isBen %}
-            <div id="checkspann" class="3"></div>
-            {% endif %}
-           {% if not request.user.isOrg and not request.user.isBen %}
-            <div id="checkspann" class="4"></div>
-           {% endif %}
         {% endif %}
-		<div class="header">
-			<div class="topmenu" id="topmenu">
-                {% if request.user.is_authenticated %}
-				<div class="container">
-					<div class="topPhoto">
-						<img src="{{ request.user.image }}">
-					</div>
-					<div class="topmenuelements">
-						{% if request.user.isOrg %}
-						<a href={% url 'profile' request.user.username %}>{{request.user.organizer.name}}</a>
-						{% endif %}
-						{% if request.user.isBen %}
-						<a href={% url 'profile' request.user.username %}>{{request.user.benefactor.name}}  {{request.user.benefactor.surname}}</a>
-						{% endif %}
-					</div>
-					<div class="topmenudate">
-						<a href="{% url 'logout' %}">خروج</a>
-					</div>
-					<div class="logo">
-						<img src="../static/images/logo.png">
-					</div>
-				</div>
-				{% endif %}
-                {% if not request.user.is_authenticated %}
-                     <div class="container">
-                        <div class="topmenudate">
-                            <h3>شما هنوز وارد نشده‌اید،</h3>
-                         </div>
-                         <div class="topmenudate">
-                            <button onclick="popup()">ورود</button>
-                         </div>
-                         <div class="topmenudate">
-                            <button onclick="popupregister()">ثبت نام</button>
-                         </div>
-                         <div class="logo">
-                            <img src="../static/images/logo.png">
-                        </div>
+        {% if request.user.isBen %}
+            <div id="checkspann" class="3"></div>
+        {% endif %}
+        {% if not request.user.isOrg and not request.user.isBen %}
+            <div id="checkspann" class="4"></div>
+        {% endif %}
+    {% endif %}
+    <div class="header">
+        <div class="topmenu" id="topmenu">
+            {% if request.user.is_authenticated %}
+                <div class="container">
+                    <div class="topPhoto">
+                        <img src="{{ request.user.image }}">
                     </div>
-                {% endif %}
-			</div>
-		</div>
-		<div class="mainPage">
-			<div class="wrapper"></div>
-			<div id="test">
-				<div class="wrappers">
-					<form class="login" method="post" action="{% url 'login' %}">
-                        {% csrf_token %}
-						<button id="button2" class="exit1" onclick="popdown()">x</button>
-						<p class="title">ورود</p>
-						<p>
-							<input type="text" placeholder="نام کاربری" class="login-text" name="username">
-							<i class="ion-person"></i>
-						</p>
-						<p>
-							<input type="password" placeholder="رمز عبور" class="login-text" name="password">
-							<i class="ion-ios-locked"></i>
-						</p>
-						<div class="enter"><button>ورود</button></div>
-						<button class="forget">فراموشی رمز عبور</button>
+                    <div class="topmenuelements">
+                        {% if request.user.isOrg %}
+                            <a href={% url 'profile' request.user.username %}>{{ request.user.organizer.name }}</a>
+                        {% endif %}
+                        {% if request.user.isBen %}
+                            <a href={% url 'profile' request.user.username %}>{{ request.user.benefactor.name }} {{ request.user.benefactor.surname }}</a>
+                        {% endif %}
+                    </div>
+                    <div class="topmenudate">
+                        <a href="{% url 'logout' %}">خروج</a>
+                    </div>
+                    <div class="logo">
+                        <img src="../static/images/logo.png">
+                    </div>
+                </div>
+            {% endif %}
+            {% if not request.user.is_authenticated %}
+                <div class="container">
+                    <div class="topmenudate">
+                        <h3>شما هنوز وارد نشده‌اید،</h3>
+                    </div>
+                    <div class="topmenudate">
+                        <button onclick="popup()">ورود</button>
+                    </div>
+                    <div class="topmenudate">
+                        <button onclick="popupregister()">ثبت نام</button>
+                    </div>
+                    <div class="logo">
+                        <img src="../static/images/logo.png">
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="mainPage">
+        <div class="wrapper"></div>
+        <div id="test">
+            <div class="wrappers">
+                <form class="login" method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    <button id="button2" class="exit1" onclick="popdown()">x</button>
+                    <p class="title">ورود</p>
+                    <p>
+                        <input type="text" placeholder="نام کاربری" class="login-text" name="username">
+                        <i class="ion-person"></i>
+                    </p>
+                    <p>
+                        <input type="password" placeholder="رمز عبور" class="login-text" name="password">
+                        <i class="ion-ios-locked"></i>
+                    </p>
+                    <div class="enter">
+                        <button>ورود</button>
+                    </div>
+                    <button class="forget">فراموشی رمز عبور</button>
 
-						<p> اگر هنوز حساب کاربری برای خود ایجاد نکرده‌اید، </p> <button class="reg" id="buttonreg" onclick="popupregister()">ثبت نام</button> <p>کنید</p>
-					</form>
-				</div>
-			</div>
-			<div id="testreg">
-				<div class="wrappers">
-					<form class="register">
-						<button id="buttonreg2" class="exit" onclick="popdownregister()">x</button>
-						<p class="title">ثبت نام</p>
-						<div class="enter"><a href="{% url 'register' %}">نیکوکار</a></div>
-						<div class="enter"><a href="{% url 'registerOrg' %}">موسسه</a></div>
-					</form>
-				</div>
-			</div>
-			<div class="nav" id="nav"></div>
-			<div class="container">
+                    <p> اگر هنوز حساب کاربری برای خود ایجاد نکرده‌اید، </p>
+                    <button class="reg" id="buttonreg" onclick="popupregister()">ثبت نام</button>
+                    <p>کنید</p>
+                </form>
+            </div>
+        </div>
+        <div id="testreg">
+            <div class="wrappers">
+                <form class="register">
+                    <button id="buttonreg2" class="exit" onclick="popdownregister()">x</button>
+                    <p class="title">ثبت نام</p>
+                    <div class="enter"><a href="{% url 'register' %}">نیکوکار</a></div>
+                    <div class="enter"><a href="{% url 'registerOrg' %}">موسسه</a></div>
+                </form>
+            </div>
+        </div>
+        <div class="nav" id="nav"></div>
+        <div class="container">
             <form method="post">
                 {% csrf_token %}
-				<div class="filter">
-					<p>جستجوی پروژه‌های نقدی	</p>
-					<div class="controlsSelect">
-						<i class="ion-navicon"></i>
-						<select id="field">
+                <div class="filter">
+                    <p>جستجوی پروژه‌های نقدی </p>
+                    <div class="controlsSelect">
+                        <i class="ion-navicon"></i>
+                        <select id="field">
                             <option value="blank">زمینه فعالیت</option>
                             {% for cat in categories %}
                                 <option value="{{ cat.name }}">{{ cat.name }}</option>
                             {% endfor %}
                         </select>
-					</div>
-					<div class="controls">
-						<input id="minimumbudget" type="number" placeholder="حداقل بودجه مورد نیاز (تومان)">
-					</div>
-					<div class="controls">
-						<input id="minimumtotalrating" type="number" placeholder="حداقل امتیاز مجری پروژه (۵-۱)">
-					</div>
-					<div class="rating">
-					<input type="submit" class="mybutton" value="اعمال تغییرات">
-				</div>
-				</div>
+                    </div>
+                    <div class="controls">
+                        <input id="minimumbudget" type="number" placeholder="حداقل بودجه مورد نیاز (تومان)">
+                    </div>
+                    <div class="controls">
+                        <input id="minimumtotalrating" type="number" placeholder="حداقل امتیاز مجری پروژه (۵-۱)">
+                    </div>
+                    <div class="rating">
+                        <input type="submit" class="mybutton" value="اعمال تغییرات">
+                    </div>
+                </div>
 
-				<div class="searchBar">
-					<div class="container">
+                <div class="searchBar">
+                    <div class="container">
                         <form method="post">
-                        {% csrf_token %}
+                            {% csrf_token %}
                             <div class="controlsname">
-                                    <input id="orgName" type="text" placeholder="نام موسسه"  onchange="show()" name="org">
-                                    <img src="../static/images/search.png" onclick="show()">
+                                <input id="orgName" type="text" placeholder="نام موسسه" onchange="show()" name="org">
+                                <img src="../static/images/search.png" onclick="show()">
                             </div>
                             <h4> مرتب‌سازی بر اساس </h4>
                             <select id="sortType" name="sortType">
@@ -140,49 +144,50 @@
                                 <option value="alreadyA">میزان پرداخت شده، صعودی</option>
                             </select>
                         </form>
-					</div>
-				</div>
+                    </div>
+                </div>
             </form>
-				<div id="result">
-                    {% for project in projects %}
-                        <div class="project">
-                            <div class="specifications">
-                                <a href={% url 'profile' project.user.username %}>{{ project.name }}</a>
-                                <h3>مجری پروژه: {{ project.user.organizer.name }}</h3>
+            <div id="result">
+                {% for project in projects %}
+                    <div class="project">
+                        <div class="specifications">
+                            <a href={% url 'profile' project.user.username %}>{{ project.name }}</a>
+                            <h3>مجری پروژه: {{ project.user.organizer.name }}</h3>
 
-                            </div>
-                            <div class="cost">
-                                <input id="value{{ project.id }}" placeholder="مبلغ مورد نظر" type="number">
-                                <a style="text-decoration: none;background-color: rgb(61,177,58);display:inline-block; color: rgb(238,238,238); border-radius: 5px;" href="#">پرداخت</a>
-                            </div>
-                            <div class="cost">
-                                <h3>مبلغ مورد نیاز</h3>
-                                <span class="budget">{{ project.budget }} تومان</span>
-                            </div>
-                            <div class="cost">
-                                <h3>مبلغ پرداخت شده تا کنون</h3>
-                                <span class="budget">{{ project.alreadyPaid }} تومان</span>
-                            </div>
                         </div>
-                    {% endfor %}
-				</div>
-			</div>
-		</div>
+                        <div class="cost">
+                            <input id="value{{ project.id }}" placeholder="مبلغ مورد نظر" type="number">
+                            <a style="text-decoration: none;background-color: rgb(61,177,58);display:inline-block; color: rgb(238,238,238); border-radius: 5px;"
+                               href="#">پرداخت</a>
+                        </div>
+                        <div class="cost">
+                            <h3>مبلغ مورد نیاز</h3>
+                            <span class="budget">{{ project.budget }} تومان</span>
+                        </div>
+                        <div class="cost">
+                            <h3>مبلغ پرداخت شده تا کنون</h3>
+                            <span class="budget">{{ project.alreadyPaid }} تومان</span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 
-		<div class="footer">
-			<div class="container">
-				<div class="addr">
-					<h4> خیابان آزادی، بلوار اکبری، خیابان قاسمی، پلاک ۳۶، واحد ۲ </h4>
-					<h4>تلفن: ۰۲۱۸۸۳۴۲۸۹۱</h4>
-				</div>
-			</div>
-			<div class="copy">
-				<h4>کپی‌رایت رعایت شود.</h4>
-			</div>
-		</div>
-	</div>
+    <div class="footer">
+        <div class="container">
+            <div class="addr">
+                <h4> خیابان آزادی، بلوار اکبری، خیابان قاسمی، پلاک ۳۶، واحد ۲ </h4>
+                <h4>تلفن: ۰۲۱۸۸۳۴۲۸۹۱</h4>
+            </div>
+        </div>
+        <div class="copy">
+            <h4>کپی‌رایت رعایت شود.</h4>
+        </div>
+    </div>
+</div>
 {#	<script type="text/javascript" src={% static "js/searchProject.js" %}></script>#}
-	<script type="text/javascript" src={% static "js/main.js" %}></script>
-	<script src={% static "js/jquery.min.js" %}></script>
+<script type="text/javascript" src={% static "js/main.js" %}></script>
+<script src={% static "js/jquery.min.js" %}></script>
 </body>
 </html>

@@ -2,227 +2,231 @@
 {% load staticfiles %}
 <html lang="fa" dir="rtl">
 <head>
-	<title>جستجو نیازمندی‌ها</title>
-	<meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" href={% static "css/style.css" %}>
-	<link rel="stylesheet" type="text/css" href={% static "css/search.css" %}>
-	<link rel="stylesheet" href={% static "css/ionicons.min.css" %}>
+    <title>جستجو نیازمندی‌ها</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href={% static "css/style.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "css/search.css" %}>
+    <link rel="stylesheet" href={% static "css/ionicons.min.css" %}>
 </head>
 <body>
-	<div class="main">
-		{% if not request.user.is_authenticated %}
-           <div id="checkspann" class="1"></div>
-          {% endif %}
-          {% if request.user.is_authenticated %}
-           {% if request.user.isOrg %}
+<div class="main">
+    {% if not request.user.is_authenticated %}
+        <div id="checkspann" class="1"></div>
+    {% endif %}
+    {% if request.user.is_authenticated %}
+        {% if request.user.isOrg %}
             <div id="checkspann" class="2"></div>
-           {% endif %}
-           {% if request.user.isBen %}
-            <div id="checkspann" class="3"></div>
-            {% endif %}
-           {% if not request.user.isOrg and not request.user.isBen %}
-            <div id="checkspann" class="4"></div>
-           {% endif %}
         {% endif %}
-		<div class="header">
-			<div class="topmenu" id="topmenu">
-                {% if request.user.is_authenticated %}
-				<div class="container">
-					<div class="topPhoto">
-						<img src="{{ request.user.image }}">
-					</div>
-					<div class="topmenuelements">
-						{% if request.user.isOrg %}
-						<a href={% url 'profile' request.user.username %}>{{request.user.organizer.name}}</a>
-						{% endif %}
-						{% if request.user.isBen %}
-						<a href={% url 'profile' request.user.username %}>{{request.user.benefactor.name}}  {{request.user.benefactor.surname}}</a>
-						{% endif %}
-					</div>
-					<div class="topmenudate">
-						<a href="{% url 'logout' %}">خروج</a>
-					</div>
-					<div class="logo">
-						<img src="../static/images/logo.png">
-					</div>
-				</div>
-				{% endif %}
-                {% if not request.user.is_authenticated %}
-                     <div class="container">
-                        <div class="topmenudate">
-                            <h3>شما هنوز وارد نشده‌اید،</h3>
-                         </div>
-                         <div class="topmenudate">
-                            <button onclick="popup()">ورود</button>
-                         </div>
-                         <div class="topmenudate">
-                            <button onclick="popupregister()">ثبت نام</button>
-                         </div>
-                         <div class="logo">
-                            <img src="../static/images/logo.png">
-                        </div>
+        {% if request.user.isBen %}
+            <div id="checkspann" class="3"></div>
+        {% endif %}
+        {% if not request.user.isOrg and not request.user.isBen %}
+            <div id="checkspann" class="4"></div>
+        {% endif %}
+    {% endif %}
+    <div class="header">
+        <div class="topmenu" id="topmenu">
+            {% if request.user.is_authenticated %}
+                <div class="container">
+                    <div class="topPhoto">
+                        <img src="{{ request.user.image }}">
                     </div>
-                {% endif %}
-			</div>
-		</div>
-		<div class="mainPage">
-			<div class="wrapper"></div>
-			<div id="test">
-				<div class="wrappers">
-			
-					<form class="login">
-						<button id="button2" class="exit1" onclick="popdown()">x</button>
-						<p class="title">ورود</p>
-						<p>
-							<input type="text" placeholder="نام کاربری" class="login-text">
-							<i class="ion-person"></i>
-						</p>
-						<p>
-							<input type="password" placeholder="رمز عبور" class="login-text">
-							<i class="ion-ios-locked"></i>
-						</p>
-						<div class="enter"><button>ورود</button></div>
-						<button class="forget">فراموشی رمز عبور</button>
-						
-						<p> اگر هنوز حساب کاربری برای خود ایجاد نکرده‌اید، </p> <button class="reg" id="buttonreg" onclick="popupregister()">ثبت نام</button> <p>کنید</p>
-					</form>
-				</div>
-			</div>
-			<div id="testreg">
-				<div class="wrappers">
-					<form class="register">
-						<button id="buttonreg2" class="exit" onclick="popdownregister()">x</button>
-						<p class="title">ثبت نام</p>
-						<div class="enter"><a href="registerBenefactor.html">نیکوکار</a></div>
-						<div class="enter"><a href="registerOrganization.html">موسسه</a></div>
-					</form>
-				</div>
-			</div>
-			<div class="nav" id="nav"></div>
-			<div class="container">
-                <form method="post">
+                    <div class="topmenuelements">
+                        {% if request.user.isOrg %}
+                            <a href={% url 'profile' request.user.username %}>{{ request.user.organizer.name }}</a>
+                        {% endif %}
+                        {% if request.user.isBen %}
+                            <a href={% url 'profile' request.user.username %}>{{ request.user.benefactor.name }} {{ request.user.benefactor.surname }}</a>
+                        {% endif %}
+                    </div>
+                    <div class="topmenudate">
+                        <a href="{% url 'logout' %}">خروج</a>
+                    </div>
+                    <div class="logo">
+                        <img src="../static/images/logo.png">
+                    </div>
+                </div>
+            {% endif %}
+            {% if not request.user.is_authenticated %}
+                <div class="container">
+                    <div class="topmenudate">
+                        <h3>شما هنوز وارد نشده‌اید،</h3>
+                    </div>
+                    <div class="topmenudate">
+                        <button onclick="popup()">ورود</button>
+                    </div>
+                    <div class="topmenudate">
+                        <button onclick="popupregister()">ثبت نام</button>
+                    </div>
+                    <div class="logo">
+                        <img src="../static/images/logo.png">
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="mainPage">
+        <div class="wrapper"></div>
+        <div id="test">
+            <div class="wrappers">
+
+                <form class="login">
+                    <button id="button2" class="exit1" onclick="popdown()">x</button>
+                    <p class="title">ورود</p>
+                    <p>
+                        <input type="text" placeholder="نام کاربری" class="login-text">
+                        <i class="ion-person"></i>
+                    </p>
+                    <p>
+                        <input type="password" placeholder="رمز عبور" class="login-text">
+                        <i class="ion-ios-locked"></i>
+                    </p>
+                    <div class="enter">
+                        <button>ورود</button>
+                    </div>
+                    <button class="forget">فراموشی رمز عبور</button>
+
+                    <p> اگر هنوز حساب کاربری برای خود ایجاد نکرده‌اید، </p>
+                    <button class="reg" id="buttonreg" onclick="popupregister()">ثبت نام</button>
+                    <p>کنید</p>
+                </form>
+            </div>
+        </div>
+        <div id="testreg">
+            <div class="wrappers">
+                <form class="register">
+                    <button id="buttonreg2" class="exit" onclick="popdownregister()">x</button>
+                    <p class="title">ثبت نام</p>
+                    <div class="enter"><a href="registerBenefactor.html">نیکوکار</a></div>
+                    <div class="enter"><a href="registerOrganization.html">موسسه</a></div>
+                </form>
+            </div>
+        </div>
+        <div class="nav" id="nav"></div>
+        <div class="container">
+            <form method="post">
                 {% csrf_token %}
-				<div class="filter">
-					<p>جستجوی نیازمندی‌های غیرنقدی موسسات</p>
-					<div class="controlsSelect">
-						<i class="ion-navicon"></i>
-						<select name="field">
+                <div class="filter">
+                    <p>جستجوی نیازمندی‌های غیرنقدی موسسات</p>
+                    <div class="controlsSelect">
+                        <i class="ion-navicon"></i>
+                        <select name="field">
                             <option value="blank">انتخاب توانایی</option>
                             {% for ab in abilities %}
                                 <option value="{{ ab.id }}">{{ ab.name }}</option>
                             {% endfor %}
                         </select>
-					</div>
-					<div class="controls">
-						<input name="minimumNOP" type="text"  placeholder="حداقل تعداد اعضا">
+                    </div>
+                    <div class="controls">
+                        <input name="minimumNOP" type="text" placeholder="حداقل تعداد اعضا">
 
-					</div>
-					<div class="controls">
-						<input name="minimumtotalrating"  type="text"  placeholder="حداقل امتیاز موسسه (۵-۱)">
-					</div>
-{#					<div class="rating">#}
-{#					<table id="ratingTable">#}
-{#						<tr id="tr1">#}
-{#							<td id="firstTd">فعالیت اعضا</td>#}
-{#							<td><button id="button11" onclick="rate(1,1)"></button></td>#}
-{#							<td><button id="button12" onclick="rate(1,2)"></button></td>#}
-{#							<td><button id="button13" onclick="rate(1,3)"></button></td>#}
-{#							<td><button id="button14" onclick="rate(1,4)"></button></td>#}
-{#							<td><button id="button15" onclick="rate(1,5)"></button></td>#}
-{#						</tr>#}
-{#						<tr id="tr2">#}
-{#							<td id="firstTd">مسيولیت پذیری</td>#}
-{#							<td><button id="button21" onclick="rate(2,1)"></button></td>#}
-{#							<td><button id="button22" onclick="rate(2,2)"></button></td>#}
-{#							<td><button id="button23" onclick="rate(2,3)"></button></td>#}
-{#							<td><button id="button24" onclick="rate(2,4)"></button></td>#}
-{#							<td><button id="button25" onclick="rate(2,5)"></button></td>#}
-{#						</tr>#}
-{#						<tr id="tr3">#}
-{#							<td id="firstTd">صداقت</td>#}
-{#							<td><button id="button31" onclick="rate(3,1)"></button></td>#}
-{#							<td><button id="button32" onclick="rate(3,2)"></button></td>#}
-{#							<td><button id="button33" onclick="rate(3,3)"></button></td>#}
-{#							<td><button id="button34" onclick="rate(3,4)"></button></td>#}
-{#							<td><button id="button35" onclick="rate(3,5)"></button></td>#}
-{#						</tr>#}
-{#						<tr id="tr4">#}
-{#							<td id="firstTd">تعهد</td>#}
-{#							<td><button id="button41" onclick="rate(4,1)"></button></td>#}
-{#							<td><button id="button42" onclick="rate(4,2)"></button></td>#}
-{#							<td><button id="button43" onclick="rate(4,3)"></button></td>#}
-{#							<td><button id="button44" onclick="rate(4,4)"></button></td>#}
-{#							<td><button id="button45" onclick="rate(4,5)"></button></td>#}
-{#						</tr>#}
-{#						<tr id="tr5">#}
-{#							<td id="firstTd">جو</td>#}
-{#							<td><button id="button51" onclick="rate(5,1)"></button></td>#}
-{#							<td><button id="button52" onclick="rate(5,2)"></button></td>#}
-{#							<td><button id="button53" onclick="rate(5,3)"></button></td>#}
-{#							<td><button id="button54" onclick="rate(5,4)"></button></td>#}
-{#							<td><button id="button55" onclick="rate(5,5)"></button></td>#}
-{#						</tr>#}
-{#					</table>#}
-					<button class="mybutton" onclick="this.form.submit()">اعمال تغییرات</button>
-{#				</div>#}
-				</div>
-				<div class="searchBar">
+                    </div>
+                    <div class="controls">
+                        <input name="minimumtotalrating" type="text" placeholder="حداقل امتیاز موسسه (۵-۱)">
+                    </div>
+                    {#					<div class="rating">#}
+                    {#					<table id="ratingTable">#}
+                    {#						<tr id="tr1">#}
+                    {#							<td id="firstTd">فعالیت اعضا</td>#}
+                    {#							<td><button id="button11" onclick="rate(1,1)"></button></td>#}
+                    {#							<td><button id="button12" onclick="rate(1,2)"></button></td>#}
+                    {#							<td><button id="button13" onclick="rate(1,3)"></button></td>#}
+                    {#							<td><button id="button14" onclick="rate(1,4)"></button></td>#}
+                    {#							<td><button id="button15" onclick="rate(1,5)"></button></td>#}
+                    {#						</tr>#}
+                    {#						<tr id="tr2">#}
+                    {#							<td id="firstTd">مسيولیت پذیری</td>#}
+                    {#							<td><button id="button21" onclick="rate(2,1)"></button></td>#}
+                    {#							<td><button id="button22" onclick="rate(2,2)"></button></td>#}
+                    {#							<td><button id="button23" onclick="rate(2,3)"></button></td>#}
+                    {#							<td><button id="button24" onclick="rate(2,4)"></button></td>#}
+                    {#							<td><button id="button25" onclick="rate(2,5)"></button></td>#}
+                    {#						</tr>#}
+                    {#						<tr id="tr3">#}
+                    {#							<td id="firstTd">صداقت</td>#}
+                    {#							<td><button id="button31" onclick="rate(3,1)"></button></td>#}
+                    {#							<td><button id="button32" onclick="rate(3,2)"></button></td>#}
+                    {#							<td><button id="button33" onclick="rate(3,3)"></button></td>#}
+                    {#							<td><button id="button34" onclick="rate(3,4)"></button></td>#}
+                    {#							<td><button id="button35" onclick="rate(3,5)"></button></td>#}
+                    {#						</tr>#}
+                    {#						<tr id="tr4">#}
+                    {#							<td id="firstTd">تعهد</td>#}
+                    {#							<td><button id="button41" onclick="rate(4,1)"></button></td>#}
+                    {#							<td><button id="button42" onclick="rate(4,2)"></button></td>#}
+                    {#							<td><button id="button43" onclick="rate(4,3)"></button></td>#}
+                    {#							<td><button id="button44" onclick="rate(4,4)"></button></td>#}
+                    {#							<td><button id="button45" onclick="rate(4,5)"></button></td>#}
+                    {#						</tr>#}
+                    {#						<tr id="tr5">#}
+                    {#							<td id="firstTd">جو</td>#}
+                    {#							<td><button id="button51" onclick="rate(5,1)"></button></td>#}
+                    {#							<td><button id="button52" onclick="rate(5,2)"></button></td>#}
+                    {#							<td><button id="button53" onclick="rate(5,3)"></button></td>#}
+                    {#							<td><button id="button54" onclick="rate(5,4)"></button></td>#}
+                    {#							<td><button id="button55" onclick="rate(5,5)"></button></td>#}
+                    {#						</tr>#}
+                    {#					</table>#}
+                    <button class="mybutton" onclick="this.form.submit()">اعمال تغییرات</button>
+                    {#				</div>#}
+                </div>
+                <div class="searchBar">
 
-					<div class="container">
-						<div class="controlsname">
-							<input name="org" type="text" placeholder="نام موسسه">
-							<img src="../static/images/search.png">
-						</div>
-						<h4> مرتب‌سازی بر اساس </h4>
-						<select name="sortType">
+                    <div class="container">
+                        <div class="controlsname">
+                            <input name="org" type="text" placeholder="نام موسسه">
+                            <img src="../static/images/search.png">
+                        </div>
+                        <h4> مرتب‌سازی بر اساس </h4>
+                        <select name="sortType">
                             <option value="blank">نحوه مرتب سازی</option>
-							<option value="rateD">امتیاز، نزولی</option>
-							<option value="rateA">امتیاز، صعودی</option>
-							<option value="participantsD">تعداد اعضا، نزولی</option>
-							<option value="participantsA">تعداد اعضا، صعودی</option>
-						</select>
-					</div>
-				</div>
-                </form>
-				<div id="result">
-                    {% for req in reqAbilities %}
-					<div class="project">
-						<div class="specifications">
-							<a href={% url 'profile_org' req.0.reqId.user.username %}>{{ req.0.reqId.name }}</a>
+                            <option value="rateD">امتیاز، نزولی</option>
+                            <option value="rateA">امتیاز، صعودی</option>
+                            <option value="participantsD">تعداد اعضا، نزولی</option>
+                            <option value="participantsA">تعداد اعضا، صعودی</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+            <div id="result">
+                {% for req in reqAbilities %}
+                    <div class="project">
+                        <div class="specifications">
+                            <a href={% url 'profile_org' req.0.reqId.user.username %}>{{ req.0.reqId.name }}</a>
                             <p>موسسه مربوطه: {{ req.0.reqId.user.organizer.name }}</p>
-							<ul>
-								{% for ability in req %}
+                            <ul>
+                                {% for ability in req %}
                                     <li>{{ ability.abilityId.name }}</li>
                                 {% endfor %}
-							</ul>
-						</div>
-						<div class="cost">
-							<h3>تعداد اعضا</h3>
-							<span class="budget"> {{ req.0.reqId.NOP }} </span>
-						</div>
-						<div class="cost">
-							<h3>میانگین امتیاز موسسه</h3>
-							<span class="budget">{{ req.0.reqId.user.organizer.rate.totalRate }}</span>
-						</div>
-					</div>
-                    {% endfor %}
-				</div>
-			</div>
-		</div>
+                            </ul>
+                        </div>
+                        <div class="cost">
+                            <h3>تعداد اعضا</h3>
+                            <span class="budget"> {{ req.0.reqId.NOP }} </span>
+                        </div>
+                        <div class="cost">
+                            <h3>میانگین امتیاز موسسه</h3>
+                            <span class="budget">{{ req.0.reqId.user.organizer.rate.totalRate }}</span>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 
-		<div class="footer">
-			<div class="container">
-				<div class="addr">
-					<h4> خیابان آزادی، بلوار اکبری، خیابان قاسمی، پلاک ۳۶، واحد ۲ </h4>
-					<h4>تلفن: ۰۲۱۸۸۳۴۲۸۹۱</h4>
-				</div>
-			</div>
-			<div class="copy">
-				<h4>کپی‌رایت رعایت شود.</h4>
-			</div>
-		</div>
-	</div>
-    <script type="text/javascript" src={% static "js/main.js" %}></script>
-	<script src={% static "js/jquery.min.js" %}></script>
+    <div class="footer">
+        <div class="container">
+            <div class="addr">
+                <h4> خیابان آزادی، بلوار اکبری، خیابان قاسمی، پلاک ۳۶، واحد ۲ </h4>
+                <h4>تلفن: ۰۲۱۸۸۳۴۲۸۹۱</h4>
+            </div>
+        </div>
+        <div class="copy">
+            <h4>کپی‌رایت رعایت شود.</h4>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src={% static "js/main.js" %}></script>
+<script src={% static "js/jquery.min.js" %}></script>
 </body>
 </html>

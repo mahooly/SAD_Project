@@ -2,417 +2,454 @@
 {% load staticfiles %}
 <html lang="fa" dir="rtl">
 <head>
-	<title>ویرایش پروفایل</title>
-	<meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" href={% static "css/editProfileBenefactor.css" %}>
-	<link rel="stylesheet" type="text/css" href={% static "css/style.css" %}>
-	<link rel="stylesheet" href={% static "css/ionicons.min.css" %}>
+    <title>ویرایش پروفایل</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href={% static "css/editProfileBenefactor.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "css/style.css" %}>
+    <link rel="stylesheet" href={% static "css/ionicons.min.css" %}>
 </head>
 <body>
-	<div class="main">
-		{% if not request.user.is_authenticated %}
-           <div id="checkspann" class="1"></div>
-          {% endif %}
-          {% if request.user.is_authenticated %}
-           {% if request.user.isOrg %}
+<div class="main">
+    {% if not request.user.is_authenticated %}
+        <div id="checkspann" class="1"></div>
+    {% endif %}
+    {% if request.user.is_authenticated %}
+        {% if request.user.isOrg %}
             <div id="checkspann" class="2"></div>
-           {% endif %}
-           {% if request.user.isBen %}
-            <div id="checkspann" class="3"></div>
-            {% endif %}
-           {% if not request.user.isOrg and not request.user.isBen %}
-            <div id="checkspann" class="4"></div>
-           {% endif %}
         {% endif %}
-		<div class="header">
-			<div class="topmenu" id="topmenu">
-                {% if request.user.is_authenticated %}
-				<div class="container">
-					<div class="topPhoto">
-						<img src="{{ request.user.image }}">
-					</div>
-					<div class="topmenuelements">
-						{% if request.user.isOrg %}
-						<a href={% url 'profile' request.user.username %}>{{request.user.organizer.name}}</a>
-						{% endif %}
-						{% if request.user.isBen %}
-						<a href={% url 'profile' request.user.username %}>{{request.user.benefactor.name}}  {{request.user.benefactor.surname}}</a>
-						{% endif %}
-					</div>
-					<div class="topmenudate">
-						<a href="{% url 'logout' %}">خروج</a>
-					</div>
-					<div class="logo">
-						<img src="../static/images/logo.png">
-					</div>
-				</div>
-				{% endif %}
-                {% if not request.user.is_authenticated %}
-                     <div class="container">
-                        <div class="topmenudate">
-                            <h3>شما هنوز وارد نشده‌اید،</h3>
-                         </div>
-                         <div class="topmenudate">
-                            <button onclick="popup()">ورود</button>
-                         </div>
-                         <div class="topmenudate">
-                            <button onclick="popupregister()">ثبت نام</button>
-                         </div>
-                         <div class="logo">
-                            <img src="../static/images/logo.png">
-                        </div>
+        {% if request.user.isBen %}
+            <div id="checkspann" class="3"></div>
+        {% endif %}
+        {% if not request.user.isOrg and not request.user.isBen %}
+            <div id="checkspann" class="4"></div>
+        {% endif %}
+    {% endif %}
+    <div class="header">
+        <div class="topmenu" id="topmenu">
+            {% if request.user.is_authenticated %}
+                <div class="container">
+                    <div class="topPhoto">
+                        <img src="{{ request.user.image }}">
+                    </div>
+                    <div class="topmenuelements">
+                        {% if request.user.isOrg %}
+                            <a href={% url 'profile' request.user.username %}>{{ request.user.organizer.name }}</a>
+                        {% endif %}
+                        {% if request.user.isBen %}
+                            <a href={% url 'profile' request.user.username %}>{{ request.user.benefactor.name }} {{ request.user.benefactor.surname }}</a>
+                        {% endif %}
+                    </div>
+                    <div class="topmenudate">
+                        <a href="{% url 'logout' %}">خروج</a>
+                    </div>
+                    <div class="logo">
+                        <img src="../static/images/logo.png">
+                    </div>
+                </div>
+            {% endif %}
+            {% if not request.user.is_authenticated %}
+                <div class="container">
+                    <div class="topmenudate">
+                        <h3>شما هنوز وارد نشده‌اید،</h3>
+                    </div>
+                    <div class="topmenudate">
+                        <button onclick="popup()">ورود</button>
+                    </div>
+                    <div class="topmenudate">
+                        <button onclick="popupregister()">ثبت نام</button>
+                    </div>
+                    <div class="logo">
+                        <img src="../static/images/logo.png">
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="mainPage">
+        <div class="wrapper"></div>
+        <div id="test">
+            <div class="wrappers">
+
+                <form class="login" method="post" action="{% url 'login' %}">
+                    <button id="button2" class="exit1" onclick="popdown()">x</button>
+                    <p class="title">ورود</p>
+                    <p>
+                        <input type="text" placeholder="نام کاربری" class="login-text">
+                        <i class="ion-person"></i>
+                    </p>
+                    <p>
+                        <input type="password" placeholder="رمز عبور" class="login-text">
+                        <i class="ion-ios-locked"></i>
+                    </p>
+                    <div class="enter">
+                        <button>ورود</button>
+                    </div>
+                    <button class="forget">فراموشی رمز عبور</button>
+
+                    <p> اگر هنوز حساب کاربری برای خود ایجاد نکرده‌اید، </p>
+                    <button class="reg" id="buttonreg" onclick="popupregister()">ثبت نام</button>
+                    <p>کنید</p>
+                </form>
+            </div>
+        </div>
+        <div id="testreg">
+            <div class="wrappers">
+                <form class="register">
+                    <button id="buttonreg2" class="exit" onclick="popdownregister()">x</button>
+                    <p class="title">ثبت نام</p>
+                    <div class="enter"><a href="{% url 'register' %}">نیکوکار</a></div>
+                    <div class="enter"><a href="{% url 'registerOrg' %}">موسسه</a></div>
+                </form>
+            </div>
+        </div>
+        <div class="nav" id="nav"></div>
+        <div class="formm">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="controls">
+                    <input type="text" id="name" class="floatlabel" placeholder="{{ person.name }}" name="name">
+                    <label>نام</label>
+                </div>
+
+                <div class="controls">
+                    <input type="text" id="lastname" class="floatlabel" placeholder="{{ person.surname }}"
+                           name="surname">
+                    <label>نام خانوادگی</label>
+                </div>
+
+                <div class="controls">
+                    <input type="text" id="nickname" class="floatlabel" placeholder="{{ person.nickname }}"
+                           name="nickname">
+                    <label>نام مستعار</label>
+                </div>
+
+                <div class="controls">
+                    <input type="text" id="username" class="floatlabel" placeholder="{{ person.user }}" name="username">
+                    <label>نام کاربری</label>
+                </div>
+
+                <div class="controls">
+                    <input type="password" id="pass1" class="floatlabel" placeholder="" name="password">
+                    <label>کلمه عبور</label>
+                </div>
+                <div class="controls">
+                    <input type="password" id="pass2" class="floatlabel" placeholder="" name="password2">
+                    <label>تکرار کلمه عبور</label>
+                </div>
+
+                {{ user_form.errors }}
+
+                <div class="controls">
+                    <i class="ion-navicon"></i>
+                    <select id="sex" class="floatlabel" name="gender">
+                        {% if person.gender == "male" %}
+                            <option value="blank" selected>مرد</option>
+                        {% endif %}
+                        {% if person.gender == "female" %}
+                            <option value="blank" selected>زن</option>
+                        {% endif %}
+                        {% if person.gender == "other" %}
+                            <option value="blank" selected>سایر</option>
+                        {% endif %}
+                        <option value="male">مرد</option>
+                        <option value="female">زن</option>
+                        <option value="other">سایر</option>
+                    </select>
+                    <label>جنسیت</label>
+                </div>
+
+                <div class="controls">
+                    <h3>تاریخ تولد</h3>
+                    <input type="number" id="date" class="birthday" placeholder="{{ person.day }}" name="day">
+                    <input type="number" id="month" class="birthday" placeholder="{{ person.month }}" name="month">
+                    <input type="number" id="year" class="birthday" placeholder="{{ person.year }}" name="year">
+                </div>
+
+                <div class="controls">
+                    <i class="ion-navicon"></i>
+                    <select id="education" class="floatlabel" onchange="eduChanged()" name="education">
+                        {% if person.education == "nothing" %}
+                            <option value="blank" selected>-</option>
+                        {% endif %}
+                        {% if person.education == "diploma" %}
+                            <option value="blank" selected>دیپلم و فوق دیپلم</option>
+                        {% endif %}
+                        {% if person.education == "bachelor" %}
+                            <option value="blank" selected>لیسانس</option>
+                        {% endif %}
+                        {% if person.education == "master" %}
+                            <option value="blank" selected>فوق لیسانس</option>
+                        {% endif %}
+                        {% if person.education == "phd" %}
+                            <option value="blank" selected>دکتری و بالاتر</option>
+                        {% endif %}
+                        <option value="nothing">-</option>
+                        <option value="diploma">دیپلم و فوق دیپلم</option>
+                        <option value="bachelor">لیسانس</option>
+                        <option value="master">فوق لیسانس</option>
+                        <option value="phd">دکتری و بالاتر</option>
+                    </select>
+                    <label>میزان تحصیلات</label>
+                </div>
+
+                {% if person.major != "phd" or person.education == "master" or person.education == "bachelor" or person.education == "diploma" %}
+                    <div class="educontrols">
+                        <input type="text" id="fieldOfEducation" class="floatlabel" placeholder="{{ person.major }}"
+                               name="major">
+                        <label>رشته تحصیلی</label>
                     </div>
                 {% endif %}
-			</div>
-		</div>
-		<div class="mainPage">
-			<div class="wrapper"></div>
-			<div id="test">
-				<div class="wrappers">
-			
-					<form class="login" method="post" action="{% url 'login' %}">
-						<button id="button2" class="exit1" onclick="popdown()">x</button>
-						<p class="title">ورود</p>
-						<p>
-							<input type="text" placeholder="نام کاربری" class="login-text">
-							<i class="ion-person"></i>
-						</p>
-						<p>
-							<input type="password" placeholder="رمز عبور" class="login-text">
-							<i class="ion-ios-locked"></i>
-						</p>
-						<div class="enter"><button>ورود</button></div>
-						<button class="forget">فراموشی رمز عبور</button>
-						
-						<p> اگر هنوز حساب کاربری برای خود ایجاد نکرده‌اید، </p> <button class="reg" id="buttonreg" onclick="popupregister()">ثبت نام</button> <p>کنید</p>
-					</form>
-				</div>
-			</div>
-			<div id="testreg">
-				<div class="wrappers">
-					<form class="register">
-						<button id="buttonreg2" class="exit" onclick="popdownregister()">x</button>
-						<p class="title">ثبت نام</p>
-						<div class="enter"><a href="{% url 'register' %}">نیکوکار</a></div>
-						<div class="enter"><a href="{% url 'registerOrg' %}">موسسه</a></div>
-					</form>
-				</div>
-			</div>
-			<div class="nav" id="nav"></div>
-			<div class="formm">
-				<form method="post" enctype="multipart/form-data">
-					{% csrf_token %}
-					<div class="controls">
-						<input type="text" id="name" class="floatlabel" placeholder="{{ person.name }}" name="name">
-					    <label>نام</label>
-                    </div>
 
-					<div class="controls">
-						<input type="text" id="lastname" class="floatlabel" placeholder="{{ person.surname }}" name="surname">
-                        <label>نام خانوادگی</label>
-					</div>
+                <div class="controls">
+                    <input type="number" id="nationalId" class="NID" placeholder="{{ person.nationalId }}"
+                           name="nationalId">
+                    <label>کد ملی</label>
+                </div>
 
-					<div class="controls">
-						<input type="text" id="nickname" class="floatlabel" placeholder="{{ person.nickname }}" name="nickname">
-                        <label>نام مستعار</label>
-					</div>
-
-					<div class="controls">
-						<input type="text" id="username" class="floatlabel" placeholder="{{ person.user }}" name="username">
-                        <label>نام کاربری</label>
-					</div>
-
-					<div class="controls">
-						<input type="password" id="pass1" class="floatlabel" placeholder="" name="password">
-                        <label>کلمه عبور</label>
-					</div>
-					<div class="controls">
-						<input type="password" id="pass2" class="floatlabel" placeholder="" name="password2">
-                        <label>تکرار کلمه عبور</label>
-					</div>
-
-                    {{ user_form.errors }}
-
-					<div class="controls">
-						<i class="ion-navicon"></i>
-                        <select id="sex" class="floatlabel" name="gender">
-                            {% if person.gender == "male" %}
-							    <option value="blank" selected>مرد</option>
-                            {% endif %}
-                            {% if person.gender == "female" %}
-							    <option value="blank" selected>زن</option>
-                            {% endif %}
-                            {% if person.gender == "other" %}
-							    <option value="blank" selected>سایر</option>
-                            {% endif %}
-                            <option value="male">مرد</option>
-							<option value="female">زن</option>
-							<option value="other">سایر</option>
-						</select>
-                        <label>جنسیت</label>
-					</div>
-
-                    <div class="controls">
-						<h3>تاریخ تولد</h3>
-						<input type="number" id="date" class="birthday" placeholder="{{ person.day }}" name="day">
-						<input type="number" id="month" class="birthday" placeholder="{{ person.month }}" name="month">
-						<input type="number" id="year" class="birthday" placeholder="{{ person.year }}" name="year">
-					</div>
-
-					<div class="controls">
-						<i class="ion-navicon"></i>
-						<select id="education" class="floatlabel" onchange="eduChanged()" name="education">
-                            {% if person.education == "nothing" %}
-							    <option value="blank" selected>-</option>
-                            {% endif %}
-                            {% if person.education == "diploma" %}
-							    <option value="blank" selected>دیپلم و فوق دیپلم</option>
-                            {% endif %}
-                            {% if person.education == "bachelor" %}
-							    <option value="blank" selected>لیسانس</option>
-                            {% endif %}
-                            {% if person.education == "master" %}
-							    <option value="blank" selected>فوق لیسانس</option>
-                            {% endif %}
-                            {% if person.education == "phd" %}
-							    <option value="blank" selected>دکتری و بالاتر</option>
-                            {% endif %}
-                            <option value="nothing">-</option>
-                            <option value="diploma">دیپلم و فوق دیپلم</option>
-                            <option value="bachelor">لیسانس</option>
-                            <option value="master">فوق لیسانس</option>
-                            <option value="phd">دکتری و بالاتر</option>
-						</select>
-                        <label>میزان تحصیلات</label>
-					</div>
-
-                    {% if person.major != "phd" or person.education == "master" or person.education == "bachelor" or person.education == "diploma" %}
-					<div class="educontrols">
-						<input type="text" id="fieldOfEducation" class="floatlabel" placeholder="{{ person.major }}" name="major">
-                        <label>رشته تحصیلی</label>
-					</div>
-                    {% endif %}
-
-					<div class="controls">
-						<input type="number" id="nationalId" class="NID" placeholder="{{ person.nationalId }}" name="nationalId">
-                        <label>کد ملی</label>
-					</div>
-
-					<div class="controls">
-						<i class="ion-navicon"></i>
-						<select id="city" class="floatlabel" name="city">
-                            {% if person.city == "blank" %}
-                                <option value="blank">-</option>
-                            {% endif %}
-                            {% if not person.city == "blank" %}
-							<option value="blank">{{ person.city }}</option>
-                            {% endif %}
-                            {% for city in cities %}
-                            <option value="{{city.name}}">{{city.name}}</option>
-                           {% endfor %}
-						</select>
-                        <label>شهر</label>
-					</div>
-
-					<div class="controls">
-						<input type="text" id="addr" class="floatlabel" placeholder="{{ person.address }}" name="address">
-                        <label>آدرس</label>
-					</div>
-
-                    <div class="controls">
-						<input type="email" id="email" class="floatlabel" placeholder="{{ user.email }}" name="email">
-                        <label>ایمیل</label>
-					</div>
-
-					<div class="controls">
-						<input type="tel" id="tel" class="floatlabel" placeholder="{{ person.phone }}" name="phone">
-                        <label>تلفن</label>
-					</div>
-
-                    <div class="controls">
-						<h4 style="display: inline; margin-left: 10px;"> عکس </h4>
-						<input type="file" id="photo" name="image">
-					</div>
-
-                    <h2> توانایی‌ها </h2>
-					<div class="controlsAbility">
-						<select id="candidate" class="floatlabel" name="ability">
-                            {% for ability in abilities %}
-                            <option value="{{ability.name}}">{{ability.name}}</option>
-                           {% endfor %}
-						</select>
-                        {% for ability in abilities %}
-                            <input type="checkbox" name="{{ability.name}}" id="b{{ability.name}}" style="display: none">
+                <div class="controls">
+                    <i class="ion-navicon"></i>
+                    <select id="city" class="floatlabel" name="city">
+                        {% if person.city == "blank" %}
+                            <option value="blank">-</option>
+                        {% endif %}
+                        {% if not person.city == "blank" %}
+                            <option value="blank">{{ person.city }}</option>
+                        {% endif %}
+                        {% for city in cities %}
+                            <option value="{{ city.name }}">{{ city.name }}</option>
                         {% endfor %}
-	    				<button id="add" onclick="addItem()"><h3>+</h3></button>
-                        <ul id="templist">{% for ability in user_abilities %}<li id="{{ ability.abilityId.name }}"></li>{% endfor %}</ul>
-                        <ul id="dynamiclist">
-                        </ul>
-					</div>
+                    </select>
+                    <label>شهر</label>
+                </div>
 
-                    <h2>زمانبندی هفتگی</h2>
-                    <div class="controls">
-						<i class="ion-navicon"></i>
-						<select id="typeOfParticipation" class="floatlabel" onchange="participation()">
-                            {% if person.typeOfCooperation == "inOffice10" %}
-                                <option value="blank">حضوری، کمتر از ۱۰ ساعت در هفته</option>
-                            {% endif %}
-                            {% if person.typeOfCooperation == "inOffice20" %}
-							    <option value="blank">حضوری، بین ۱۰ تا ۲۰ ساعت در هفته</option>
-                            {% endif %}
-                            {% if person.typeOfCooperation == "inOffice30" %}
-							    <option value="blank">حضوری، بین ۲۰ تا ۳۰ ساعت در هفته</option>
-                            {% endif %}
-                            {% if person.typeOfCooperation == "inOfficemore" %}
-							    <option value="blank">حضوری، بیش از ۳۰ ساعت در هفته</option>
-                            {% endif %}
-                            {% if person.typeOfCooperation == "atHome" %}
-							    <option value="blank">دورکاری</option>
-                            {% endif %}
-							<option value="inOffice10">حضوری، کمتر از ۱۰ ساعت در هفته</option>
-							<option value="inOffice20">حضوری، بین ۱۰ تا ۲۰ ساعت در هفته</option>
-							<option value="inOffice30">حضوری، بین ۲۰ تا ۳۰ ساعت در هفته</option>
-							<option value="inOfficemore">حضوری، بیش از ۳۰ ساعت در هفته</option>
-							<option value="atHome">دورکاری</option>
-						</select>
-					</div>
-                    {% if person.typeOfCooperation == "inOffice10" or person.typeOfCooperation == "inOffice20" or person.typeOfCooperation == "inOffice30" or person.typeOfCooperation == "inOfficemore" %}
+                <div class="controls">
+                    <input type="text" id="addr" class="floatlabel" placeholder="{{ person.address }}" name="address">
+                    <label>آدرس</label>
+                </div>
+
+                <div class="controls">
+                    <input type="email" id="email" class="floatlabel" placeholder="{{ user.email }}" name="email">
+                    <label>ایمیل</label>
+                </div>
+
+                <div class="controls">
+                    <input type="tel" id="tel" class="floatlabel" placeholder="{{ person.phone }}" name="phone">
+                    <label>تلفن</label>
+                </div>
+
+                <div class="controls">
+                    <h4 style="display: inline; margin-left: 10px;"> عکس </h4>
+                    <input type="file" id="photo" name="image">
+                </div>
+
+                <h2> توانایی‌ها </h2>
+                <div class="controlsAbility">
+                    <select id="candidate" class="floatlabel" name="ability">
+                        {% for ability in abilities %}
+                            <option value="{{ ability.name }}">{{ ability.name }}</option>
+                        {% endfor %}
+                    </select>
+                    {% for ability in abilities %}
+                        <input type="checkbox" name="{{ ability.name }}" id="b{{ ability.name }}" style="display: none">
+                    {% endfor %}
+                    <button id="add" onclick="addItem()"><h3>+</h3></button>
+                    <ul id="templist">{% for ability in user_abilities %}
+                        <li id="{{ ability.abilityId.name }}"></li>{% endfor %}</ul>
+                    <ul id="dynamiclist">
+                    </ul>
+                </div>
+
+                <h2>زمانبندی هفتگی</h2>
+                <div class="controls">
+                    <i class="ion-navicon"></i>
+                    <select id="typeOfParticipation" class="floatlabel" onchange="participation()">
+                        {% if person.typeOfCooperation == "inOffice10" %}
+                            <option value="blank">حضوری، کمتر از ۱۰ ساعت در هفته</option>
+                        {% endif %}
+                        {% if person.typeOfCooperation == "inOffice20" %}
+                            <option value="blank">حضوری، بین ۱۰ تا ۲۰ ساعت در هفته</option>
+                        {% endif %}
+                        {% if person.typeOfCooperation == "inOffice30" %}
+                            <option value="blank">حضوری، بین ۲۰ تا ۳۰ ساعت در هفته</option>
+                        {% endif %}
+                        {% if person.typeOfCooperation == "inOfficemore" %}
+                            <option value="blank">حضوری، بیش از ۳۰ ساعت در هفته</option>
+                        {% endif %}
+                        {% if person.typeOfCooperation == "atHome" %}
+                            <option value="blank">دورکاری</option>
+                        {% endif %}
+                        <option value="inOffice10">حضوری، کمتر از ۱۰ ساعت در هفته</option>
+                        <option value="inOffice20">حضوری، بین ۱۰ تا ۲۰ ساعت در هفته</option>
+                        <option value="inOffice30">حضوری، بین ۲۰ تا ۳۰ ساعت در هفته</option>
+                        <option value="inOfficemore">حضوری، بیش از ۳۰ ساعت در هفته</option>
+                        <option value="atHome">دورکاری</option>
+                    </select>
+                </div>
+                {% if person.typeOfCooperation == "inOffice10" or person.typeOfCooperation == "inOffice20" or person.typeOfCooperation == "inOffice30" or person.typeOfCooperation == "inOfficemore" %}
                     <table id="tab">
-						<tbody>
-                            <tr>
-                                <td></td>
-                                <td> 8-10 </td>
-                                <td> 10-12 </td>
-                                <td> 12-15 </td>
-                                <td> 15-17 </td>
-                            </tr>
-							<tr>
-								<td>شنبه</td>
-								<td> <span id="11" onclick="week(11,0)"></span> </td>
-								<td> <span id="12" onclick="week(12,1)" value="1"></span> </td>
-								<td> <span id="13" onclick="week(13,2)" value="1"></span> </td>
-								<td> <span id="14" onclick="week(14,3)" value="1"></span> </td>
-							</tr>
-							<tr>
-								<td>یکشنبه</td>
-								<td> <span id="21" onclick="week(21,4)" value="1"></span> </td>
-								<td> <span id="22" onclick="week(22,5)" value="1"></span> </td>
-								<td> <span id="23" onclick="week(23,6)" value="1"></span> </td>
-								<td> <span id="24" onclick="week(24,7)" value="1"></span> </td>
-							</tr>
-							<tr>
-								<td>دوشنبه</td>
-								<td> <span id="31" onclick="week(31,8)" value="1"></span> </td>
-								<td> <span id="32" onclick="week(32,9)" value="1"></span> </td>
-								<td> <span id="33" onclick="week(33,10)" value="1"></span> </td>
-								<td> <span id="34" onclick="week(34,11)" value="1"></span> </td>
-							</tr>
-							<tr>
-								<td>سه‌شنبه</td>
-								<td> <span id="41" onclick="week(41,12)" value="1"></span> </td>
-								<td> <span id="42" onclick="week(42,13)" value="1"></span> </td>
-								<td> <span id="43" onclick="week(43,14)" value="1"></span> </td>
-								<td> <span id="44" onclick="week(44,15)" value="1"></span> </td>
-							</tr>
-							<tr>
-								<td>چهارشنبه</td>
-								<td> <span id="51" onclick="week(51,16)" value="1"></span> </td>
-								<td> <span id="52" onclick="week(52,17)" value="1"></span> </td>
-								<td> <span id="53" onclick="week(53,18)" value="1"></span> </td>
-								<td> <span id="54" onclick="week(54,19)" value="1"></span> </td>
-							</tr>
-							<tr>
-								<td>پنجشنبه</td>
-								<td> <span id="61" onclick="week(61,20)" value="1"></span> </td>
-								<td> <span id="62" onclick="week(62,21)" value="1"></span> </td>
-								<td> <span id="63" onclick="week(63,22)" value="1"></span> </td>
-								<td> <span id="64" onclick="week(64,23)" value="1"></span> </td>
-							</tr>
-							<tr>
-								<td> جمعه </td>
-								<td> <span id="71" onclick="week(71,24)" value="1"></span> </td>
-								<td> <span id="72" onclick="week(72,25)" value="1"></span> </td>
-								<td> <span id="73" onclick="week(73,26)" value="1"></span> </td>
-								<td> <span id="74" onclick="week(74,27)" value="1"></span> </td>
-							</tr>
-						</tbody>
+                        <tbody>
+                        <tr>
+                            <td></td>
+                            <td> 8-10</td>
+                            <td> 10-12</td>
+                            <td> 12-15</td>
+                            <td> 15-17</td>
+                        </tr>
+                        <tr>
+                            <td>شنبه</td>
+                            <td><span id="11" onclick="week(11,0)"></span></td>
+                            <td><span id="12" onclick="week(12,1)" value="1"></span></td>
+                            <td><span id="13" onclick="week(13,2)" value="1"></span></td>
+                            <td><span id="14" onclick="week(14,3)" value="1"></span></td>
+                        </tr>
+                        <tr>
+                            <td>یکشنبه</td>
+                            <td><span id="21" onclick="week(21,4)" value="1"></span></td>
+                            <td><span id="22" onclick="week(22,5)" value="1"></span></td>
+                            <td><span id="23" onclick="week(23,6)" value="1"></span></td>
+                            <td><span id="24" onclick="week(24,7)" value="1"></span></td>
+                        </tr>
+                        <tr>
+                            <td>دوشنبه</td>
+                            <td><span id="31" onclick="week(31,8)" value="1"></span></td>
+                            <td><span id="32" onclick="week(32,9)" value="1"></span></td>
+                            <td><span id="33" onclick="week(33,10)" value="1"></span></td>
+                            <td><span id="34" onclick="week(34,11)" value="1"></span></td>
+                        </tr>
+                        <tr>
+                            <td>سه‌شنبه</td>
+                            <td><span id="41" onclick="week(41,12)" value="1"></span></td>
+                            <td><span id="42" onclick="week(42,13)" value="1"></span></td>
+                            <td><span id="43" onclick="week(43,14)" value="1"></span></td>
+                            <td><span id="44" onclick="week(44,15)" value="1"></span></td>
+                        </tr>
+                        <tr>
+                            <td>چهارشنبه</td>
+                            <td><span id="51" onclick="week(51,16)" value="1"></span></td>
+                            <td><span id="52" onclick="week(52,17)" value="1"></span></td>
+                            <td><span id="53" onclick="week(53,18)" value="1"></span></td>
+                            <td><span id="54" onclick="week(54,19)" value="1"></span></td>
+                        </tr>
+                        <tr>
+                            <td>پنجشنبه</td>
+                            <td><span id="61" onclick="week(61,20)" value="1"></span></td>
+                            <td><span id="62" onclick="week(62,21)" value="1"></span></td>
+                            <td><span id="63" onclick="week(63,22)" value="1"></span></td>
+                            <td><span id="64" onclick="week(64,23)" value="1"></span></td>
+                        </tr>
+                        <tr>
+                            <td> جمعه</td>
+                            <td><span id="71" onclick="week(71,24)" value="1"></span></td>
+                            <td><span id="72" onclick="week(72,25)" value="1"></span></td>
+                            <td><span id="73" onclick="week(73,26)" value="1"></span></td>
+                            <td><span id="74" onclick="week(74,27)" value="1"></span></td>
+                        </tr>
+                        </tbody>
                         <h5 id="tab2" style="display: none">لطفا زمان‌های غیرفعال خود را علامت بزنید</h5>
-					</table>
-                    {% endif %}
-                    {% if week.a0 == "on" %}<input type="checkbox" name="a0" id="a0" style="display: none" checked>{% endif %}
-                    {% if week.a0 == "off" %}<input type="checkbox" name="a0" id="a0" style="display: none" >{% endif %}
-                    {% if week.a1 == "on" %}<input type="checkbox" name="a1" id="a1" style="display: none" checked>{% endif %}
-                    {% if week.a1 == "off" %}<input type="checkbox" name="a1" id="a1" style="display: none" >{% endif %}
-                    {% if week.a2 == "on" %}<input type="checkbox" name="a2" id="a2" style="display: none" checked>{% endif %}
-                    {% if week.a2 == "off" %}<input type="checkbox" name="a2" id="a2" style="display: none" >{% endif %}
-                    {% if week.a3 == "on" %}<input type="checkbox" name="a3" id="a3" style="display: none" checked>{% endif %}
-                    {% if week.a3 == "off" %}<input type="checkbox" name="a3" id="a3" style="display: none" >{% endif %}
-                    {% if week.a4 == "on" %}<input type="checkbox" name="a4" id="a4" style="display: none" checked>{% endif %}
-                    {% if week.a4 == "off" %}<input type="checkbox" name="a4" id="a4" style="display: none" >{% endif %}
-                    {% if week.a5 == "on" %}<input type="checkbox" name="a5" id="a5" style="display: none" checked>{% endif %}
-                    {% if week.a5 == "off" %}<input type="checkbox" name="a5" id="a5" style="display: none" >{% endif %}
-                    {% if week.a6 == "on" %}<input type="checkbox" name="a6" id="a6" style="display: none" checked>{% endif %}
-                    {% if week.a6 == "off" %}<input type="checkbox" name="a6" id="a6" style="display: none" >{% endif %}
-                    {% if week.a7 == "on" %}<input type="checkbox" name="a7" id="a7" style="display: none" checked>{% endif %}
-                    {% if week.a7 == "off" %}<input type="checkbox" name="a7" id="a7" style="display: none" >{% endif %}
-                    {% if week.a8 == "on" %}<input type="checkbox" name="a8" id="a8" style="display: none" checked>{% endif %}
-                    {% if week.a8 == "off" %}<input type="checkbox" name="a8" id="a8" style="display: none" >{% endif %}
-                    {% if week.a9 == "on" %}<input type="checkbox" name="a9" id="a9" style="display: none" checked>{% endif %}
-                    {% if week.a9 == "off" %}<input type="checkbox" name="a9" id="a9" style="display: none" >{% endif %}
-                    {% if week.a10 == "on" %}<input type="checkbox" name="a10" id="a10" style="display: none" checked>{% endif %}
-                    {% if week.a10 == "off" %}<input type="checkbox" name="a10" id="a10" style="display: none" >{% endif %}
-                    {% if week.a11 == "on" %}<input type="checkbox" name="a11" id="a11" style="display: none" checked>{% endif %}
-                    {% if week.a11 == "off" %}<input type="checkbox" name="a11" id="a11" style="display: none" >{% endif %}
-                    {% if week.a12 == "on" %}<input type="checkbox" name="a12" id="a12" style="display: none" checked>{% endif %}
-                    {% if week.a12 == "off" %}<input type="checkbox" name="a12" id="a12" style="display: none" >{% endif %}
-                    {% if week.a13 == "on" %}<input type="checkbox" name="a13" id="a13" style="display: none" checked>{% endif %}
-                    {% if week.a13 == "off" %}<input type="checkbox" name="a13" id="a13" style="display: none" >{% endif %}
-                    {% if week.a14 == "on" %}<input type="checkbox" name="a14" id="a14" style="display: none" checked>{% endif %}
-                    {% if week.a14 == "off" %}<input type="checkbox" name="a14" id="a14" style="display: none" >{% endif %}
-                    {% if week.a15 == "on" %}<input type="checkbox" name="a15" id="a15" style="display: none" checked>{% endif %}
-                    {% if week.a15 == "off" %}<input type="checkbox" name="a15" id="a15" style="display: none" >{% endif %}
-                    {% if week.a16 == "on" %}<input type="checkbox" name="a16" id="a16" style="display: none" checked>{% endif %}
-                    {% if week.a16 == "off" %}<input type="checkbox" name="16" id="a16" style="display: none" >{% endif %}
-                    {% if week.a17 == "on" %}<input type="checkbox" name="a17" id="a17" style="display: none" checked>{% endif %}
-                    {% if week.a17 == "off" %}<input type="checkbox" name="a17" id="a17" style="display: none" >{% endif %}
-                    {% if week.a18 == "on" %}<input type="checkbox" name="a18" id="a18" style="display: none" checked>{% endif %}
-                    {% if week.a18 == "off" %}<input type="checkbox" name="a18" id="a18" style="display: none" >{% endif %}
-                    {% if week.a19 == "on" %}<input type="checkbox" name="a19" id="a19" style="display: none" checked>{% endif %}
-                    {% if week.a19 == "off" %}<input type="checkbox" name="a19" id="a19" style="display: none" >{% endif %}
-                    {% if week.a20 == "on" %}<input type="checkbox" name="a20" id="a20" style="display: none" checked>{% endif %}
-                    {% if week.a20 == "off" %}<input type="checkbox" name="a20" id="a20" style="display: none" >{% endif %}
-                    {% if week.a21 == "on" %}<input type="checkbox" name="a21" id="a21" style="display: none" checked>{% endif %}
-                    {% if week.a21 == "off" %}<input type="checkbox" name="a21" id="a21" style="display: none" >{% endif %}
-                    {% if week.a22 == "on" %}<input type="checkbox" name="a22" id="a22" style="display: none" checked>{% endif %}
-                    {% if week.a22 == "off" %}<input type="checkbox" name="a22" id="a22" style="display: none" >{% endif %}
-                    {% if week.a23 == "on" %}<input type="checkbox" name="a23" id="a23" style="display: none" checked>{% endif %}
-                    {% if week.a23 == "off" %}<input type="checkbox" name="a23" id="a23" style="display: none" >{% endif %}
-                    {% if week.a24 == "on" %}<input type="checkbox" name="a24" id="a24" style="display: none" checked>{% endif %}
-                    {% if week.a24 == "off" %}<input type="checkbox" name="a24" id="a24" style="display: none" >{% endif %}
-                    {% if week.a25 == "on" %}<input type="checkbox" name="a25" id="a25" style="display: none" checked>{% endif %}
-                    {% if week.a25 == "off" %}<input type="checkbox" name="a25" id="a25" style="display: none" >{% endif %}
-                    {% if week.a26 == "on" %}<input type="checkbox" name="a26" id="a26" style="display: none" checked>{% endif %}
-                    {% if week.a26 == "off" %}<input type="checkbox" name="a26" id="a26" style="display: none" >{% endif %}
-                    {% if week.a27 == "on" %}<input type="checkbox" name="a27" id="a27" style="display: none" checked>{% endif %}
-                    {% if week.a27 == "off" %}<input type="checkbox" name="a27" id="a27" style="display: none" >{% endif %}
-					<button>ثبت تغییرات</button>
-				</form>
-			</div>
-		</div>
-		<div class="footer">
-			<div class="container">
-				<div class="addr">
-					<h4> خیابان آزادی، بلوار اکبری، خیابان قاسمی، پلاک ۳۶، واحد ۲ </h4>
-					<h4>تلفن: ۰۲۱۸۸۳۴۲۸۹۱</h4>
-				</div>
-			</div>
-			<div class="copy">
-				<h4>کپی‌رایت رعایت شود.</h4>
-			</div>
-		</div>
-	</div>
-	<script type="text/javascript" src={% static "js/editProfileBenefactor.js" %}></script>
-	<script type="text/javascript" src={% static "js/main.js" %}></script>
-	<script src={% static "js/jquery.min.js" %}></script>
+                    </table>
+                {% endif %}
+                {% if week.a0 == "on" %}
+                    <input type="checkbox" name="a0" id="a0" style="display: none" checked>{% endif %}
+                {% if week.a0 == "off" %}<input type="checkbox" name="a0" id="a0" style="display: none">{% endif %}
+                {% if week.a1 == "on" %}
+                    <input type="checkbox" name="a1" id="a1" style="display: none" checked>{% endif %}
+                {% if week.a1 == "off" %}<input type="checkbox" name="a1" id="a1" style="display: none">{% endif %}
+                {% if week.a2 == "on" %}
+                    <input type="checkbox" name="a2" id="a2" style="display: none" checked>{% endif %}
+                {% if week.a2 == "off" %}<input type="checkbox" name="a2" id="a2" style="display: none">{% endif %}
+                {% if week.a3 == "on" %}
+                    <input type="checkbox" name="a3" id="a3" style="display: none" checked>{% endif %}
+                {% if week.a3 == "off" %}<input type="checkbox" name="a3" id="a3" style="display: none">{% endif %}
+                {% if week.a4 == "on" %}
+                    <input type="checkbox" name="a4" id="a4" style="display: none" checked>{% endif %}
+                {% if week.a4 == "off" %}<input type="checkbox" name="a4" id="a4" style="display: none">{% endif %}
+                {% if week.a5 == "on" %}
+                    <input type="checkbox" name="a5" id="a5" style="display: none" checked>{% endif %}
+                {% if week.a5 == "off" %}<input type="checkbox" name="a5" id="a5" style="display: none">{% endif %}
+                {% if week.a6 == "on" %}
+                    <input type="checkbox" name="a6" id="a6" style="display: none" checked>{% endif %}
+                {% if week.a6 == "off" %}<input type="checkbox" name="a6" id="a6" style="display: none">{% endif %}
+                {% if week.a7 == "on" %}
+                    <input type="checkbox" name="a7" id="a7" style="display: none" checked>{% endif %}
+                {% if week.a7 == "off" %}<input type="checkbox" name="a7" id="a7" style="display: none">{% endif %}
+                {% if week.a8 == "on" %}
+                    <input type="checkbox" name="a8" id="a8" style="display: none" checked>{% endif %}
+                {% if week.a8 == "off" %}<input type="checkbox" name="a8" id="a8" style="display: none">{% endif %}
+                {% if week.a9 == "on" %}
+                    <input type="checkbox" name="a9" id="a9" style="display: none" checked>{% endif %}
+                {% if week.a9 == "off" %}<input type="checkbox" name="a9" id="a9" style="display: none">{% endif %}
+                {% if week.a10 == "on" %}
+                    <input type="checkbox" name="a10" id="a10" style="display: none" checked>{% endif %}
+                {% if week.a10 == "off" %}<input type="checkbox" name="a10" id="a10" style="display: none">{% endif %}
+                {% if week.a11 == "on" %}
+                    <input type="checkbox" name="a11" id="a11" style="display: none" checked>{% endif %}
+                {% if week.a11 == "off" %}<input type="checkbox" name="a11" id="a11" style="display: none">{% endif %}
+                {% if week.a12 == "on" %}
+                    <input type="checkbox" name="a12" id="a12" style="display: none" checked>{% endif %}
+                {% if week.a12 == "off" %}<input type="checkbox" name="a12" id="a12" style="display: none">{% endif %}
+                {% if week.a13 == "on" %}
+                    <input type="checkbox" name="a13" id="a13" style="display: none" checked>{% endif %}
+                {% if week.a13 == "off" %}<input type="checkbox" name="a13" id="a13" style="display: none">{% endif %}
+                {% if week.a14 == "on" %}
+                    <input type="checkbox" name="a14" id="a14" style="display: none" checked>{% endif %}
+                {% if week.a14 == "off" %}<input type="checkbox" name="a14" id="a14" style="display: none">{% endif %}
+                {% if week.a15 == "on" %}
+                    <input type="checkbox" name="a15" id="a15" style="display: none" checked>{% endif %}
+                {% if week.a15 == "off" %}<input type="checkbox" name="a15" id="a15" style="display: none">{% endif %}
+                {% if week.a16 == "on" %}
+                    <input type="checkbox" name="a16" id="a16" style="display: none" checked>{% endif %}
+                {% if week.a16 == "off" %}<input type="checkbox" name="16" id="a16" style="display: none">{% endif %}
+                {% if week.a17 == "on" %}
+                    <input type="checkbox" name="a17" id="a17" style="display: none" checked>{% endif %}
+                {% if week.a17 == "off" %}<input type="checkbox" name="a17" id="a17" style="display: none">{% endif %}
+                {% if week.a18 == "on" %}
+                    <input type="checkbox" name="a18" id="a18" style="display: none" checked>{% endif %}
+                {% if week.a18 == "off" %}<input type="checkbox" name="a18" id="a18" style="display: none">{% endif %}
+                {% if week.a19 == "on" %}
+                    <input type="checkbox" name="a19" id="a19" style="display: none" checked>{% endif %}
+                {% if week.a19 == "off" %}<input type="checkbox" name="a19" id="a19" style="display: none">{% endif %}
+                {% if week.a20 == "on" %}
+                    <input type="checkbox" name="a20" id="a20" style="display: none" checked>{% endif %}
+                {% if week.a20 == "off" %}<input type="checkbox" name="a20" id="a20" style="display: none">{% endif %}
+                {% if week.a21 == "on" %}
+                    <input type="checkbox" name="a21" id="a21" style="display: none" checked>{% endif %}
+                {% if week.a21 == "off" %}<input type="checkbox" name="a21" id="a21" style="display: none">{% endif %}
+                {% if week.a22 == "on" %}
+                    <input type="checkbox" name="a22" id="a22" style="display: none" checked>{% endif %}
+                {% if week.a22 == "off" %}<input type="checkbox" name="a22" id="a22" style="display: none">{% endif %}
+                {% if week.a23 == "on" %}
+                    <input type="checkbox" name="a23" id="a23" style="display: none" checked>{% endif %}
+                {% if week.a23 == "off" %}<input type="checkbox" name="a23" id="a23" style="display: none">{% endif %}
+                {% if week.a24 == "on" %}
+                    <input type="checkbox" name="a24" id="a24" style="display: none" checked>{% endif %}
+                {% if week.a24 == "off" %}<input type="checkbox" name="a24" id="a24" style="display: none">{% endif %}
+                {% if week.a25 == "on" %}
+                    <input type="checkbox" name="a25" id="a25" style="display: none" checked>{% endif %}
+                {% if week.a25 == "off" %}<input type="checkbox" name="a25" id="a25" style="display: none">{% endif %}
+                {% if week.a26 == "on" %}
+                    <input type="checkbox" name="a26" id="a26" style="display: none" checked>{% endif %}
+                {% if week.a26 == "off" %}<input type="checkbox" name="a26" id="a26" style="display: none">{% endif %}
+                {% if week.a27 == "on" %}
+                    <input type="checkbox" name="a27" id="a27" style="display: none" checked>{% endif %}
+                {% if week.a27 == "off" %}<input type="checkbox" name="a27" id="a27" style="display: none">{% endif %}
+                <button>ثبت تغییرات</button>
+            </form>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="container">
+            <div class="addr">
+                <h4> خیابان آزادی، بلوار اکبری، خیابان قاسمی، پلاک ۳۶، واحد ۲ </h4>
+                <h4>تلفن: ۰۲۱۸۸۳۴۲۸۹۱</h4>
+            </div>
+        </div>
+        <div class="copy">
+            <h4>کپی‌رایت رعایت شود.</h4>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src={% static "js/editProfileBenefactor.js" %}></script>
+<script type="text/javascript" src={% static "js/main.js" %}></script>
+<script src={% static "js/jquery.min.js" %}></script>
 </body>
 </html>
