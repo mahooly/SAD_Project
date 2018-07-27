@@ -110,7 +110,7 @@
                     <p>جستجوی توانایی نیکوکاران</p>
                     <div class="controlsSelect">
                         <i class="ion-navicon"></i>
-                        <select id="field" onchange="this.form.submit()">
+                        <select name="field" >
                             <option value="blank">انتخاب توانایی</option>
                             {% for ability in abilities %}
                                 <option value="{{ ability.name }}">{{ ability.name }}</option>
@@ -118,10 +118,10 @@
                         </select>
                     </div>
                     <div class="controls">
-                        <input id="minimumage" onchange="this.form.submit()" type="number" placeholder="حداقل سن">
+                        <input name="minimumage"  type="number" placeholder="حداقل سن">
                     </div>
                     <div class="controls">
-                        <input id="minimumtotalrating" onchange="this.form.submit()" type="number" step="0.01"
+                        <input name="minimumtotalrating"  type="number" step="0.01"
                                placeholder="حداقل امتیاز (۵-۱)">
                     </div>
                     {#					<div class="rating">#}
@@ -167,18 +167,17 @@
                     {#							<td><button id="button55" onclick="rate(5,5)"></button></td>#}
                     {#						</tr>#}
                     {#					</table>#}
-                    <button class="mybutton" onclick="this.form.submit()">اعمال تغییرات</button>
+                    <input type="submit" class="mybutton" value="اعمال تغییرات">
                     {#				</div>#}
                 </div>
                 <div class="searchBar">
 
                     <div class="container">
                         <div class="controlsname">
-                            <input id="orgName" type="text" placeholder="نام موسسه" onchange="show()">
-                            <img src="../static/images/search.png" onclick="this.form.submit()">
+                            <input name="orgName" type="text" placeholder="نام موسسه" >
                         </div>
                         <h4> مرتب‌سازی بر اساس </h4>
-                        <select id="sortType" onchange="this.form.submit()">
+                        <select name="sortType">
                             <option value="rateD">امتیاز، نزولی</option>
                             <option value="rateA">امتیاز، صعودی</option>
                             <option value="ageD">سن، نزولی</option>
