@@ -130,7 +130,7 @@ def mylogin(request):
     if request.method == 'POST':
         user = authenticate(username=request.POST['username'], password=request.POST['password'])
         if user is not None:
-            if user.state == 1:
+            if user.state == 1 or (user.isBen is False and user.isOrg is False):
                 login(request, user)
                 return HttpResponseRedirect('/')
             else:
@@ -493,7 +493,7 @@ def waiting_registers(request):
     return render(request, 'waitingRegisters.html', {'users': users})
 
 
-# TODO add search abilities, report, waiting requests, forget password
+# TODO add report, waiting requests, forget password
 
 
 def send_request_organization(request, username, reqId):
@@ -526,7 +526,6 @@ def report_admin(request):
 
 def send_request_benefactor(request, username):
     if request.method == 'POST':
-        print(request.POST)
         user = CustomUser.objects.get(username=username)
         abilities = Ability.objects.all()
         desc = request.POST['description']
@@ -552,9 +551,9 @@ def send_request_benefactor(request, username):
 
 
 def waiting_requests(request):
+    requestsAbilities = []
     if request.user.isBen:
         requests = Request.objects.filter(benefactorId=request.user, whoSubmit='2', state=False)
-        requestsAbilities = []
         for req in requests:
             requestsAbilities.append(RequestAbilities.objects.filter(reqId=req))
     else:
