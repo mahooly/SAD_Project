@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.conf.urls.static import static
+from django.contrib.auth.views import password_reset_complete, password_reset, password_reset_done
 from django.contrib import admin
 from django.urls import path
 from userTest import settings
@@ -39,6 +40,9 @@ urlpatterns = [
     url(r'^search_requirements/', views.list_requirement, name='search_requirements'),
     url(r'^waiting_registers', views.waiting_registers, name='waiting_registers'),
     url('^send_request_org/(?P<username>[a-zA-Z0-9]+)/(?P<reqId>[a-zA-Z0-9]+)/', views.send_request_organization, name='send_request_org'),
-    url('^reports/', views.report_admin, name='report')
+    url('^reports/', views.report_admin, name='report'),
+    url('^password_reset_complete', password_reset_complete),
+    url('^password_reset', password_reset),
+    url('^password_reset_done', password_reset_done, name='password_reset_done')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

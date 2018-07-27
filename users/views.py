@@ -486,3 +486,6 @@ def send_request_organization(request, username, reqId):
 def report_admin(request):
     reports = Report.objects.all()
     return render(request, 'reportForAdmin.html', {'reports': reports})
+
+
+#def send_request_benefactor(request, username)
