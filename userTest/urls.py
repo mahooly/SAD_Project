@@ -47,6 +47,8 @@ urlpatterns = [
     url('^password_reset_confirm', password_reset_confirm, name='password_reset_confirm'),
     url('^search_abilities', views.list_abilities, name='search_abilities'),
     url('^send_request_benefactor/(?P<username>[a-zA-Z0-9]+)$', views.send_request_benefactor, name='send_request_ben'),
-    url('^waiting_requests/', views.waiting_requests, name='waiting_requests')
+    url('^waiting_requests/', views.waiting_requests, name='waiting_requests'),
+    url('^reportCash/', views.reportCash, name='reportCash'),
+    url('^reportProject/(?P<pId>[a-zA-Z0-9]+)$', views.report_project, name='reportProject'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

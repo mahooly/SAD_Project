@@ -108,12 +108,15 @@
                 <h1>گزارش تامین مالی پروژه ها</h1>
                 <br><br>
             </div>
+            <h3>نام پروژه: {{ project.name }}</h3>
+            <h3>مجموع پول پرداخت شده: {{ project.alreadyPaid }}</h3>
+            <h3>میزان بودجه مورد نیاز: {{ project.budget }}</h3>
             <div id="result">
-                {% for project in projects %}
+                {% for report in reports %}
                     <div class="report">
-                        <div class="benefactor"><a href={% url 'reportProject' project.id %} class="benefactor">{{ project.name }}</a></div>
+                        <div class="benefactor"><span class="benefactor">{{ report.benefactor.benefactor.nickname }}</span></div>
                         <div class="project">
-                            <h3>مبلغ پرداخت شده تا کنون: {{ project.alreadyPaid }}</h3>
+                            <h3>مبلغ: {{ report.payement }}</h3>
                         </div>
                     </div>
                 {% endfor %}

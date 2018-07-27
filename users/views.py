@@ -595,3 +595,16 @@ def waiting_requests(request):
     else:
         requests = Request.objects.filter(organizationId=request.user, whoSubmit='1', state=False)
     return render(request, 'waitingRequests.html', {'requestsAbilities': requestsAbilities})
+
+
+def reportCash(request):
+    projects = Project.objects.filter(user=request.user)
+    return render(request, 'reportCash.html', {'projects': projects})
+
+
+def report_project (request, pId):
+    project = get_object_or_404(Project, id=pId)
+    reports = []
+    if project.user == request.user:
+        reports.append(Report.objects.filter(description=project.id, organization=project.user, type=3))
+    return render(request, 'reportProject.html', {'project': project, 'reports': reports})
