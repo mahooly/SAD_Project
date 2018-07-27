@@ -32,11 +32,12 @@ urlpatterns = [
     url(r'^terms/', views.terms, name='terms'),
     url(r'^search_projects', views.list_projects, name='search_projects'),
     url(r'^logout', views.user_logout, name='logout'),
-    url(r'^profile/(?P<username>[a-zA-Z0-9]+)$', views.user_profile, name='profile'),#man
-    url(r'^comment/(?P<username>[a-zA-Z0-9]+)$', views.rate_user, name='comment'),#man
-    url(r'^project/(?P<username>[a-zA-Z0-9]+)/(?P<pId>[a-zA-Z0-9]+)/$', views.project, name='project'),#man
+    url(r'^profile/(?P<username>[a-zA-Z0-9]+)$', views.user_profile, name='profile'),
+    url(r'^comment/(?P<username>[a-zA-Z0-9]+)$', views.rate_user, name='comment'),
+    url(r'^project/(?P<username>[a-zA-Z0-9]+)/(?P<pId>[a-zA-Z0-9]+)/$', views.project, name='project'),
     url(r'^submit_requirement/', views.submit_requirement, name='submit_requirement'),
     url(r'^search_requirements/', views.list_requirement, name='search_requirements'),
-    url(r'^waiting_registers', views.waiting_registers, name='waiting_registers')
+    url(r'^waiting_registers', views.waiting_registers, name='waiting_registers'),
+    url('^send_request_org/(?P<username>[a-zA-Z0-9]+)/(?P<reqId>[a-zA-Z0-9]+)/', views.send_request_organization, name='send_request_org')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

@@ -140,6 +140,7 @@ def mylogin(request):
         return render(request, 'login.html')
 
 
+#updated fields
 #permission
 @login_required
 def update_benefactor_profile(request):
@@ -462,3 +463,21 @@ def waiting_registers(request):
     return render(request, 'waitingRegisters.html', {'users': users})
 
 # TODO add search abilities, report, waiting requests, forget password
+
+
+def send_request_organization(request, username, reqId):
+    if request.method == 'POST':
+        user = CustomUser.objects.get(username=username)
+        requirement = Requirement.objects.get(id=reqId)
+        desc = request.POST['description']
+        if requirement.typeOfCooperation != 'atHome':
+            weekForm = WeekForm(request.POST)
+            week = weekForm.save()
+            week.save()
+            Request.objects.create(benefactorId=request.user, organizationId=user, wId=week, city=requirement.city, description=desc)
+        else:
+            Request.objects.create(benefactorId=request.user, organizationId=user, isAtHome=True, city=requirement.city, description=desc)
+
+        send_mail('پیشنهاد جدید', 'شما یک پیشنهاد جدید از طرف فلانی دارید', 'sender@mehraneh.com', [user.email])
+        Report.objects.create(benefactor=request.user, organization=user, type='2', description=desc, operator='1', date=datetime.datetime.today(), time=datetime.datetime.now())
+        return render(request, 'thanks.html')

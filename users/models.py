@@ -189,7 +189,7 @@ class Request(models.Model):
     id = models.AutoField(primary_key=True)
     benefactorId = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='reqben')
     organizationId = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='reqorg')
-    wId = models.ForeignKey(WeeklySchedule, on_delete=models.CASCADE, related_name='reqweek')
+    wId = models.ForeignKey(WeeklySchedule, on_delete=models.CASCADE, related_name='reqweek', default=None, null=True)
     state = models.BooleanField(default=False)
     isAccepted = models.BooleanField(default=False)
     isAtHome = models.BooleanField(default=False)
