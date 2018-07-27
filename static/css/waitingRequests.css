@@ -50,6 +50,16 @@
 	display: inline-block;
 }
 
+#tab, tbody, tr{
+	width: 100%;
+	display: inline-block;
+}
+
+td {
+	width: 18%;
+	display: inline-block;
+}
+
 .controlsSelect{
 	text-align: center;
 	position: relative;

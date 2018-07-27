@@ -105,14 +105,15 @@
         <div class="nav" id="nav"></div>
         <div class="container">
             <div id="result">
+                <ul id="uls" style="display: none">{% for req in requestsAbilities %}<li value="{{ req.0.reqId.id }}"></li>{% endfor %}</ul>
                 {% for req in requestsAbilities %}
                     <div class="project">
                         <div class="specifications">
                             {% if request.user.isBen %}
-                                <a href={% url 'profile' req.0.reqId.organizationId.username %}> {{ req.0.reqId.organizationId.name }}</a>
+                                <a href={% url 'profile' req.0.reqId.organizationId.username %}> {{ req.0.reqId.organizationId.organizer.name }}</a>
                             {% endif %}
                             {% if request.user.isOrg %}
-                                <a href={% url 'profile' req.0.reqId.benefactorId.username %}> {{ req.0.reqId.benefactorId.name }}</a>
+                                <a href={% url 'profile' req.0.reqId.benefactorId.username %}> {{ req.0.reqId.benefactorId.benefactor.nickname }}</a>
                             {% endif %}
                             <ul>
                                 {% for ability in req %}
@@ -357,10 +358,13 @@
 
                         </div>
                         <div class="cost">
-                            <button onclick=clicked({{ req.0.reqId.id }},1)>تایید</button>
+                            <h3>{{ req.0.reqId.description }}</h3>
                         </div>
                         <div class="cost">
-                            <button onclick=clicked({{ req.0.reqId.id }},2)>رد</button>
+                            <button onclick=clicked({{ req.0.reqId.id }},1); style="background: rgb(61, 177, 58)">تایید</button>
+                        </div>
+                        <div class="cost">
+                            <button onclick=clicked({{ req.0.reqId.id }},2); style="background: rgb(188, 0, 58)">رد</button>
                         </div>
                     </div>
                 {% endfor %}

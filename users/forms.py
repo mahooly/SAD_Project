@@ -108,4 +108,4 @@ class WeekForm(forms.ModelForm):
 class RequirementForm(forms.ModelForm):
     class Meta:
         model = Requirement
-        exclude = ('id', 'user', 'wId', 'NOP',)
+        exclude = ('id', 'user', 'wId', 'NOPs',)
