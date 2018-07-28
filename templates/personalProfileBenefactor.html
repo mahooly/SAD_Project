@@ -369,7 +369,8 @@
             </div>
             <div id="delete" style="display: none">
                 <div class="wrappers" style="width: 100%; min-height: 1200px; position: fixed; background: rgba(50,50,50,0.8);top: 0px;z-index: 3;">
-                    <form class="register" id="formRemove">
+                    <form class="register" method="post" id="formRemove" action="{% url 'delete_user' %}">
+                        {% csrf_token %}
                         <input type="text" name="user" value="{{ benefactor.user.id }}" style="display: none;">
                         <p class="title">کاربر از لیست کاربران سامانه حذف شود؟</p>
                         <div class="enter">

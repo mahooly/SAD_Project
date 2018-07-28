@@ -56,5 +56,6 @@ urlpatterns = [
     url('^sent_requests/', views.sent_requests, name='sent_requests'),
     url('^remove_report/(?P<rId>[a-zA-Z0-9]+)$', views.remove_report, name='remove_report'),
     url('^accept_request/', views.accept_request, name='accept_request'),
+    url('^delete_user/', views.delete_user, name='delete_user'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

@@ -417,41 +417,40 @@ def user_logout(request):
 def user_profile(request, username):
     user = get_object_or_404(CustomUser, username=username, state=True)
     if user.isBen:
+        benefactor = Benefactor.objects.get(user=user)
+        week = WeeklySchedule.objects.get(id=benefactor.wId.id)
+        user_abilities = UserAbilities.objects.filter(username=user.username)
+        orgs = Request.objects.filter(benefactorId=user, isAccepted=True)
+        organizations = []
+        for org in orgs:
+            organizations.append(org.organizationId.organizer)
+
         if request.user.username == username:
-            benefactor = Benefactor.objects.get(user=user)
-            week = WeeklySchedule.objects.get(id=benefactor.wId.id)
-            user_abilities = UserAbilities.objects.filter(username=user.username)
             return render(request, 'personalProfileBenefactor.html',
-                          {'user': user, 'benefactor': benefactor, 'week': week, 'user_abilities': user_abilities})
+                          {'user': user, 'benefactor': benefactor, 'week': week, 'user_abilities': user_abilities, 'organizations': organizations})
         else:
-            benefactor = Benefactor.objects.get(user=user)
-            week = WeeklySchedule.objects.get(id=benefactor.wId.id)
-            user_abilities = UserAbilities.objects.filter(username=user.username)
             return render(request, 'benefactorsProfileView.html',
                           {'user': user, 'benefactor': benefactor, 'week': week, 'user_abilities': user_abilities,
-                           'rangee': range(28)})
+                           'rangee': range(28), 'organizations': organizations})
     elif user.isOrg:
+        organization = Organizer.objects.get(user=user)
+        projects = Project.objects.filter(user=user)
+        requirements = Requirement.objects.filter(user=user)
+        reqability = []
+        bens = Request.objects.filter(organizationId=user, isAccepted=True)
+        benefactors = []
+        for ben in bens:
+            benefactors.append(ben.benefactorId.benefactor)
+        for req in requirements:
+            reqability.append(RequirementAbilities.objects.filter(reqId=req))
         if request.user.username == username:
-            organization = Organizer.objects.get(user=user)
-            projects = Project.objects.filter(user=user)
-            requirements = Requirement.objects.filter(user=user)
-            reqability = []
-            for req in requirements:
-                reqability.append(RequirementAbilities.objects.filter(reqId=req))
             return render(request, 'personalProfileOrganization.html',
                           {'user': user, 'org': organization, 'projects': projects, 'requirements': requirements,
-                           'reqability': reqability, 'rangee': range(28)})
+                           'reqability': reqability, 'rangee': range(28), 'benefactors': benefactors})
         else:
-            user = get_object_or_404(CustomUser, username=username)
-            organization = Organizer.objects.get(user=user)
-            projects = Project.objects.filter(user=user)
-            requirements = Requirement.objects.filter(user=user)
-            reqability = []
-            for req in requirements:
-                reqability.append(RequirementAbilities.objects.filter(reqId=req))
             return render(request, 'organizationProfileView.html',
                           {'user': user, 'org': organization, 'projects': projects, 'requirements': requirements,
-                           'reqability': reqability, 'rangee': range(28)})
+                           'reqability': reqability, 'rangee': range(28), 'benefactors': benefactors})
 
 
 @login_required
@@ -759,7 +758,6 @@ def remove_report(request, rId):
 
     elif report.type == '2':
         req = report.reqId
-        RequestAbilities.objects.filter(reqId=req).delete()
         req.delete()
 
     report.delete()
@@ -778,3 +776,26 @@ def accept_request(request):
         req.state = True
         req.save()
     return HttpResponseRedirect('/waiting_requests')
+
+
+def delete_user(request):
+    if request.method == 'POST':
+        user = CustomUser.objects.get(id=request.POST['user'])
+        if user.isBen:
+            UserAbilities.objects.filter(username=user).delete()
+            Request.objects.filter(benefactorId=user).delete()
+            Report.objects.filter(benefactor=user).delete()
+            Rate.objects.filter(ratedUser=user).delete()
+            user.benefactor.delete()
+        elif user.isOrg:
+            Requirement.objects.filter(user=user).delete()
+            Project.objects.filter(user=user).delete()
+            Request.objects.filter(organizationId=user).delete()
+            Report.objects.filter(organization=user).delete()
+            Rate.objects.filter(ratedUser=user).delete()
+            user.organizer.delete()
+        user.state = False
+        user.save()
+        if request.user.isBen or request.user.isOrg:
+            logout(request)
+    return HttpResponseRedirect('/')
