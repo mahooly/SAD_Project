@@ -70,7 +70,7 @@ if (mm === "2") {
 	ol1.appendChild(li1);
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "#");
+	a1.setAttribute('href', "/sent_requests");
 	a1.innerText = "پیشنهادهای ارسال‌ شده";
 	li1.appendChild(a1);
 	ol1.appendChild(li1);
@@ -136,7 +136,7 @@ else if (mm === "3") {
 	li2.appendChild(a1);
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "#");
+	a1.setAttribute('href', "/sent_requests");
 	a1.innerText = "پیشنهادهای ارسال‌ شده";
 	li1.appendChild(a1);
 	ol1.appendChild(li1);

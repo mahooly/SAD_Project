@@ -171,32 +171,34 @@ class RequirementAbilities(models.Model):
     abilityId = models.ForeignKey(Ability, on_delete=models.CASCADE, related_name='ab')
 
 
-class Report(models.Model):
-    id = models.AutoField(primary_key=True)
-    benefactor = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING, related_name='ben', default=None, null=True)
-    organization = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING, related_name='org', default=None, null=True)
-    type = models.CharField(max_length=1)
-    description = models.TextField(max_length=100, default=None, null=True)
-    operator = models.CharField(max_length=1)
-    date = models.DateField()
-    time = models.TimeField()
-    rateId = models.ForeignKey(Rate, on_delete=models.DO_NOTHING, related_name='rate', default=None, null=True)
-    wId = models.ForeignKey(WeeklySchedule, on_delete=models.DO_NOTHING, related_name='weekly', default=None, null=True)
-    payment = models.IntegerField(default=None, null=True)
-    isAtHome = models.BooleanField(default=False)
-
-
 class Request(models.Model):
     id = models.AutoField(primary_key=True)
     benefactorId = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='reqben')
     organizationId = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='reqorg')
     wId = models.ForeignKey(WeeklySchedule, on_delete=models.CASCADE, related_name='reqweek', default=None, null=True)
+    reqId = models.ForeignKey(Requirement, on_delete=models.CASCADE, related_name='reqreq', default=None, null=True)
     state = models.BooleanField(default=False)
     isAccepted = models.BooleanField(default=False)
     isAtHome = models.BooleanField(default=False)
     whoSubmit = models.CharField(max_length=1, default='1')
     city = models.CharField(max_length=20)
     description = models.TextField(blank=True)
+
+
+class Report(models.Model):
+    id = models.AutoField(primary_key=True)
+    benefactor = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='ben', default=None, null=True)
+    organization = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='org', default=None, null=True)
+    type = models.CharField(max_length=1)
+    description = models.TextField(max_length=100, default=None, null=True)
+    operator = models.CharField(max_length=1)
+    date = models.DateField()
+    time = models.TimeField()
+    rateId = models.ForeignKey(Rate, on_delete=models.CASCADE, related_name='rate', default=None, null=True)
+    wId = models.ForeignKey(WeeklySchedule, on_delete=models.CASCADE, related_name='weekly', default=None, null=True)
+    reqId = models.ForeignKey(Request, on_delete=models.CASCADE, related_name='repreq', default=None, null=True)
+    payment = models.IntegerField(default=None, null=True)
+    isAtHome = models.BooleanField(default=False)
 
 
 class RequestAbilities(models.Model):

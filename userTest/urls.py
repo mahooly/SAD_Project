@@ -48,10 +48,13 @@ urlpatterns = [
     url('^search_abilities', views.list_abilities, name='search_abilities'),
     url('^send_request_benefactor/(?P<username>[a-zA-Z0-9]+)$', views.send_request_benefactor, name='send_request_ben'),
     url('^waiting_requests/', views.waiting_requests, name='waiting_requests'),
-    url('^reportCash/', views.reportCash, name='reportCash'),
+    url('^reportCash/', views.report_cash, name='reportCash'),
     url('^reportProject/(?P<pId>[a-zA-Z0-9]+)$', views.report_project, name='reportProject'),
-    url('^changeCities/', views.changeCities, name='changeCities'),
-    url('^changeCategories/', views.changeCategories, name='changeCategories'),
-    url('^changeAbilities/', views.changeAbilities, name='changeAbilities'),
+    url('^changeCities/', views.change_cities, name='changeCities'),
+    url('^changeCategories/', views.change_categories, name='changeCategories'),
+    url('^changeAbilities/', views.change_abilities, name='changeAbilities'),
+    url('^sent_requests/', views.sent_requests, name='sent_requests'),
+    url('^remove_report/(?P<rId>[a-zA-Z0-9]+)$', views.remove_report, name='remove_report'),
+    url('^accept_request/', views.accept_request, name='accept_request'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

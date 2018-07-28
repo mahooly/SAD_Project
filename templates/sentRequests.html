@@ -110,10 +110,10 @@
                     <div class="project">
                         <div class="specifications">
                             {% if request.user.isBen %}
-                                <a href={% url 'profile' req.0.reqId.user.username %}> {{ req.0.reqId.user.organizer.name }}</a>
+                                <a href={% url 'profile' req.0.reqId.user.username %}> {{ req.0.reqId.user.benefactor.nickname }}</a>
                             {% endif %}
                             {% if request.user.isOrg %}
-                                <a href={% url 'profile' req.0.reqId.user.username %}> {{ req.0.reqId.user.organizer.nickname }}</a>
+                                <a href={% url 'profile' req.0.reqId.user.username %}> {{ req.0.reqId.user.organizer.name }}</a>
                             {% endif %}
                             <ul>
                                 {% for ability in req %}

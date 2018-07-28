@@ -282,7 +282,8 @@ def list_projects(request):
             projects = projects.filter(budget__gte=0)
 
         try:
-            projects = projects.filter(user__organizer__rate__totalRate__gte=int(request.POST.get('minimumtotalrating')))
+            projects = projects.filter(
+                user__organizer__rate__totalRate__gte=int(request.POST.get('minimumtotalrating')))
 
         except ValueError:
             projects = projects.filter(user__organizer__rate__totalRate__gte=0)
@@ -549,27 +550,32 @@ def waiting_registers(request):
     return render(request, 'waitingRegisters.html', {'users': users})
 
 
-# TODO add report, waiting requests, forget password
-
-
 def send_request_organization(request, username, reqId):
     if request.method == 'POST':
         user = CustomUser.objects.get(username=username)
         requirement = Requirement.objects.get(id=reqId)
+        abilities = Ability.objects.all()
         desc = request.POST['description']
         if requirement.typeOfCooperation != 'atHome':
             weekForm = WeekForm(request.POST)
             week = weekForm.save()
             week.save()
-            Request.objects.create(benefactorId=request.user, organizationId=user, wId=week, city=requirement.city,
-                                   description=desc)
+            req = Request.objects.create(benefactorId=request.user, organizationId=user, wId=week,
+                                         city=requirement.city,
+                                         description=desc, reqId=requirement)
             Report.objects.create(benefactor=request.user, organization=user, type='2', description=desc, operator='1',
-                                  date=datetime.datetime.today(), time=datetime.datetime.now(), wId=week)
+                                  date=datetime.datetime.today(), time=datetime.datetime.now(), wId=week, reqId=req)
         else:
-            Request.objects.create(benefactorId=request.user, organizationId=user, isAtHome=True, city=requirement.city,
-                                   description=desc)
+            req = Request.objects.create(benefactorId=request.user, organizationId=user, isAtHome=True,
+                                         city=requirement.city,
+                                         description=desc, reqId=requirement)
             Report.objects.create(benefactor=request.user, organization=user, type='2', description=desc, operator='1',
-                                  date=datetime.datetime.today(), time=datetime.datetime.now(), isAtHome=True)
+                                  date=datetime.datetime.today(), time=datetime.datetime.now(), isAtHome=True,
+                                  reqId=req)
+        for a in abilities:
+            name = a.name
+            if request.POST.get(name) is not None:
+                RequestAbilities.objects.create(reqId=req, abilityId=a)
 
         send_mail('پیشنهاد جدید', 'شما یک پیشنهاد جدید از طرف فلانی دارید', 'sender@mehraneh.com', [user.email])
         return render(request, 'thanks.html')
@@ -609,12 +615,13 @@ def send_request_benefactor(request, username):
             req = Request.objects.create(benefactorId=user, organizationId=request.user, wId=week, whoSubmit='2',
                                          city=user.benefactor.city, description=desc)
             Report.objects.create(benefactor=request.user, organization=user, type='2', description=desc, operator='2',
-                                  date=datetime.datetime.today(), time=datetime.datetime.now(), wId=week)
+                                  date=datetime.datetime.today(), time=datetime.datetime.now(), wId=week, reqId=req)
         else:
             req = Request.objects.create(benefactorId=user, organizationId=request.user, isAtHome=True, whoSubmit='2',
                                          city=user.benefactor.city, description=desc)
             Report.objects.create(benefactor=request.user, organization=user, type='2', description=desc, operator='2',
-                                  date=datetime.datetime.today(), time=datetime.datetime.now(), isAtHome=True)
+                                  date=datetime.datetime.today(), time=datetime.datetime.now(), isAtHome=True,
+                                  reqId=req)
 
         for a in abilities:
             name = a.name
@@ -628,14 +635,15 @@ def waiting_requests(request):
     requestsAbilities = []
     if request.user.isBen:
         requests = Request.objects.filter(benefactorId=request.user, whoSubmit='2', state=False)
-        for req in requests:
-            requestsAbilities.append(RequestAbilities.objects.filter(reqId=req))
     else:
         requests = Request.objects.filter(organizationId=request.user, whoSubmit='1', state=False)
+    for req in requests:
+        requestsAbilities.append(RequestAbilities.objects.filter(reqId=req))
+    print(requestsAbilities)
     return render(request, 'waitingRequests.html', {'requestsAbilities': requestsAbilities})
 
 
-def reportCash(request):
+def report_cash(request):
     projects = Project.objects.filter(user=request.user)
     return render(request, 'reportCash.html', {'projects': projects})
 
@@ -648,7 +656,7 @@ def report_project(request, pId):
     return render(request, 'reportProject.html', {'project': project, 'reports': reports})
 
 
-def changeCities(request):
+def change_cities(request):
     cities = City.objects.all()
     if request.method == 'POST':
         if request.POST['type'] == "1":
@@ -678,7 +686,7 @@ def changeCities(request):
     return render(request, 'changeCities.html', {'cities': cities})
 
 
-def changeCategories(request):
+def change_categories(request):
     categories = Category.objects.all()
     if request.method == 'POST':
         if request.POST['type'] == "1":
@@ -692,7 +700,7 @@ def changeCategories(request):
     return render(request, 'changeCategories.html', {'categories': categories})
 
 
-def changeAbilities(request):
+def change_abilities(request):
     abilities = Ability.objects.all()
     if request.method == 'POST':
         if request.POST['type'] == "1":
@@ -713,3 +721,60 @@ def changeAbilities(request):
         abilities = Ability.objects.all()
         return render(request, 'changeAbilities.html', {'abilities': abilities})
     return render(request, 'changeAbilities.html', {'abilities': abilities})
+
+
+def sent_requests(request):
+    requestsAbilities = []
+    if request.user.isBen:
+        requests = Request.objects.filter(benefactorId=request.user, whoSubmit='1')
+    else:
+        requests = Request.objects.filter(organizationId=request.user, whoSubmit='2')
+    for req in requests:
+        requestsAbilities.append(RequestAbilities.objects.filter(reqId=req))
+    print(requestsAbilities)
+    return render(request, 'sentRequests.html', {'requestsAbilities': requestsAbilities})
+
+
+def remove_report(request, rId):
+    report = Report.objects.get(id=rId)
+    if report.type == '1':
+        rate = report.rateId
+        if report.operator == '1':
+            totalRate = TotalRate.objects.get(id=report.benefactor.benefactor.rate.id)
+            count = Rate.objects.filter(ratedUser=report.benefactor).count()
+        elif report.operator == '2':
+            totalRate = TotalRate.objects.get(id=report.organization.organizer.rate.id)
+            count = Rate.objects.filter(ratedUser=report.organization).count()
+
+        totalRate.f1 = ((totalRate.f1 * count) - ((rate.f1 - 1) / 4 * 100)) / (count - 1)
+        totalRate.f2 = ((totalRate.f2 * count) - ((rate.f2 - 1) / 4 * 100)) / (count - 1)
+        totalRate.f3 = ((totalRate.f3 * count) - ((rate.f3 - 1) / 4 * 100)) / (count - 1)
+        totalRate.f4 = ((totalRate.f4 * count) - ((rate.f4 - 1) / 4 * 100)) / (count - 1)
+        totalRate.f5 = ((totalRate.f5 * count) - ((rate.f5 - 1) / 4 * 100)) / (count - 1)
+        totalRate.totalRate = round((totalRate.totalRate * count - (
+            (rate.f1 - 1) / 4 + (rate.f2 - 1) / 4 + (rate.f3 - 1) / 4 + (rate.f4 - 1) / 4 + (
+            rate.f5 - 1) / 4) / 5 * 100) / (count - 1), 1)
+        totalRate.save()
+        rate.delete()
+
+    elif report.type == '2':
+        req = report.reqId
+        RequestAbilities.objects.filter(reqId=req).delete()
+        req.delete()
+
+    report.delete()
+    return HttpResponseRedirect('/reports')
+
+
+def accept_request(request):
+    if request.method == 'POST':
+        split = request.POST['req'].split('-')
+        req = Request.objects.get(id=split[0])
+        if split[1] == '1':
+            req.isAccepted = True
+            send_mail('تایید پیشنهاد', 'پیشنهاد شما تایید شده است!', 'sender@mehraneh.com', [request.user.email])
+        else:
+            req.isAccepted = False
+        req.state = True
+        req.save()
+    return HttpResponseRedirect('/waiting_requests')

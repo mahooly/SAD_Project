@@ -369,7 +369,7 @@
                         </div>
                     </div>
                 {% endfor %}
-                <form method="post" id="form1" style="display: none;">
+                <form method="post" id="form1" style="display: none;" action="{% url 'accept_request'%}">
                     {% csrf_token %}
                     <input type="text" name="req" id="a1">
                 </form>
