@@ -111,7 +111,7 @@
                     <p>جستجوی پروژه‌های نقدی </p>
                     <div class="controlsSelect">
                         <i class="ion-navicon"></i>
-                        <select id="field">
+                        <select name="field">
                             <option value="blank">زمینه فعالیت</option>
                             {% for cat in categories %}
                                 <option value="{{ cat.name }}">{{ cat.name }}</option>
@@ -119,10 +119,10 @@
                         </select>
                     </div>
                     <div class="controls">
-                        <input id="minimumbudget" type="number" placeholder="حداقل بودجه مورد نیاز (تومان)">
+                        <input name="minimumbudget" type="text" placeholder="حداقل بودجه مورد نیاز (تومان)">
                     </div>
                     <div class="controls">
-                        <input id="minimumtotalrating" type="number" placeholder="حداقل امتیاز مجری پروژه (۵-۱)">
+                        <input name="minimumtotalrating" type="text" placeholder="حداقل امتیاز مجری پروژه (۵-۱)">
                     </div>
                     <div class="rating">
                         <input type="submit" class="mybutton" value="اعمال تغییرات">

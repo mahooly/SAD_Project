@@ -275,6 +275,27 @@ def list_projects(request):
             projects = projects.order_by('-budget')
         if sortType == "budgetA":
             projects = projects.order_by('budget')
+
+        try:
+            projects = projects.filter(budget__gte=int(request.POST.get('minimumbudget')))
+        except ValueError:
+            projects = projects.filter(budget__gte=0)
+
+        try:
+            projects = projects.filter(user__organizer__rate__totalRate__gte=int(request.POST.get('minimumtotalrating')))
+
+        except ValueError:
+            projects = projects.filter(user__organizer__rate__totalRate__gte=0)
+
+        category = request.POST['field']
+        if category != "blank":
+            temp_projs = []
+            for pr in projects:
+                if len(CategoryProject.objects.filter(projectId=pr.id, categoryId=category)):
+                    temp_projs.append(pr)
+
+            projects = temp_projs
+
         return render(request, 'searchProject.html', {'projects': projects, 'categories': categories})
     else:
         projects = Project.objects.all()
