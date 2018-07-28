@@ -25,6 +25,7 @@ var ull = document.getElementById("reqIds");
 var lis = [];
 while (ull.hasChildNodes()) {
 	lis.unshift(ull.childNodes[0].value);
+	console.log(ull.childNodes[0].value);
 	ull.removeChild(ull.childNodes[0]);
 }
 
@@ -55,20 +56,22 @@ function week(a,e,t) {
     }
 }
 
-var uls = document.getElementById("ull");
-for (i = 0 ; i < uls.childNodes.length; i++) {
-    uls.childNodes[i].onclick = function() {
-        if (this.value === 1) {
-            this.style.backgroundColor = "rgba(0,0,0,0.4)";
-            this.value = 2;
-            document.getElementById('d'+this.id).checked = false;
-        }
-        else {
-            this.style.backgroundColor = "rgb(4,80,255)";
-            this.value = 1;
-            document.getElementById('d'+this.id).checked = true;
-        }
-    };
+for (k = 0; k < lis.length; k ++) {
+    var uls = document.getElementById("ull"+lis[k]);
+    for (i = 0; i < uls.childNodes.length; i++) {
+        uls.childNodes[i].onclick = function () {
+            if (this.value === 1) {
+                this.style.backgroundColor = "rgba(0,0,0,0.4)";
+                this.value = 2;
+                document.getElementById('d' + this.id).checked = false;
+            }
+            else {
+                this.style.backgroundColor = "rgb(4,80,255)";
+                this.value = 1;
+                document.getElementById('d' + this.id).checked = true;
+            }
+        };
+    }
 }
 
 function popupDelete() {

@@ -22,6 +22,14 @@ function popdownDelete() {
     document.getElementById("delete").style.display="none";
 }
 
+function deleteReq(e) {
+    document.getElementById("delete"+e).style.display="block";
+}
+
+function popdownDeleteReq(e) {
+    document.getElementById("delete"+e).style.display="none";
+}
+
 document.getElementById("not").addEventListener("click", function (e) {
     e.preventDefault()
 });

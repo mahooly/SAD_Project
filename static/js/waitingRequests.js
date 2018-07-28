@@ -31,3 +31,15 @@ for (var k = 0; k < lis.length; k++) {
         }
     }
 }
+
+function deleteReq(e) {
+    document.getElementById("delete"+e).style.display="block";
+}
+
+function popdownDeleteReq(e) {
+    document.getElementById("delete"+e).style.display="none";
+}
+
+document.getElementById("not").addEventListener('click', function (e) {
+    e.preventDefault()
+});

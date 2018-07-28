@@ -66,3 +66,11 @@ function popdownDelete() {
 document.getElementById("not").addEventListener("click", function (e) {
     e.preventDefault()
 });
+
+function deleteReq(e) {
+    document.getElementById("delete"+e).style.display="block";
+}
+
+function popdownDeleteReq(e) {
+    document.getElementById("delete"+e).style.display="none";
+}

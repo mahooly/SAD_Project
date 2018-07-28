@@ -481,7 +481,7 @@ def rate_user(request, username):
             (rate.f1 - 1) / 4 + (rate.f2 - 1) / 4 + (rate.f3 - 1) / 4 + (rate.f4 - 1) / 4 + (
                 rate.f5 - 1) / 4) / 5 * 100) / count, 1)
         totalRate.save()
-        return render(request, 'thanks.html')
+        return render(request, 'thanksSubmitComment.html', {'user': user})
 
     else:
         form = RateForm()
@@ -559,6 +559,7 @@ def send_request_organization(request, username, reqId):
             weekForm = WeekForm(request.POST)
             week = weekForm.save()
             week.save()
+            print(week)
             req = Request.objects.create(benefactorId=request.user, organizationId=user, wId=week,
                                          city=requirement.city,
                                          description=desc, reqId=requirement)
@@ -577,7 +578,7 @@ def send_request_organization(request, username, reqId):
                 RequestAbilities.objects.create(reqId=req, abilityId=a)
 
         send_mail('پیشنهاد جدید', 'شما یک پیشنهاد جدید از طرف فلانی دارید', 'sender@mehraneh.com', [user.email])
-        return render(request, 'thanks.html')
+        return render(request, 'thanksSubmitRequest.html')
 
 
 def report_admin(request):
@@ -627,7 +628,7 @@ def send_request_benefactor(request, username):
             if request.POST.get(name) is not None:
                 RequestAbilities.objects.create(reqId=req, abilityId=a)
         send_mail('پیشنهاد جدید', 'شما یک پیشنهاد جدید از طرف فلانی دارید', 'sender@mehraneh.com', [user.email])
-        return render(request, 'thanks.html')
+        return render(request, 'thanksSubmitRequest.html')
 
 
 def waiting_requests(request):
@@ -729,9 +730,13 @@ def sent_requests(request):
     else:
         requests = Request.objects.filter(organizationId=request.user, whoSubmit='2')
     for req in requests:
-        requestsAbilities.append(RequestAbilities.objects.filter(reqId=req))
+        print(req)
+        r = RequestAbilities.objects.filter(reqId=req)
+        if len(r) > 0:
+            requestsAbilities.append(r)
     print(requestsAbilities)
-    return render(request, 'sentRequests.html', {'requestsAbilities': requestsAbilities})
+    print(requests)
+    return render(request, 'sentRequests.html', {'requestAbilities': requestsAbilities})
 
 
 def remove_report(request, rId):
@@ -739,20 +744,21 @@ def remove_report(request, rId):
     if report.type == '1':
         rate = report.rateId
         if report.operator == '1':
-            totalRate = TotalRate.objects.get(id=report.benefactor.benefactor.rate.id)
-            count = Rate.objects.filter(ratedUser=report.benefactor).count()
-        elif report.operator == '2':
             totalRate = TotalRate.objects.get(id=report.organization.organizer.rate.id)
             count = Rate.objects.filter(ratedUser=report.organization).count()
+        elif report.operator == '2':
+            totalRate = TotalRate.objects.get(id=report.benefactor.benefactor.rate.id)
+            count = Rate.objects.filter(ratedUser=report.benefactor).count()
+        print(totalRate)
+        print(count)
 
         totalRate.f1 = ((totalRate.f1 * count) - ((rate.f1 - 1) / 4 * 100)) / (count - 1)
+        print(totalRate.f1)
         totalRate.f2 = ((totalRate.f2 * count) - ((rate.f2 - 1) / 4 * 100)) / (count - 1)
         totalRate.f3 = ((totalRate.f3 * count) - ((rate.f3 - 1) / 4 * 100)) / (count - 1)
         totalRate.f4 = ((totalRate.f4 * count) - ((rate.f4 - 1) / 4 * 100)) / (count - 1)
         totalRate.f5 = ((totalRate.f5 * count) - ((rate.f5 - 1) / 4 * 100)) / (count - 1)
-        totalRate.totalRate = round((totalRate.totalRate * count - (
-            (rate.f1 - 1) / 4 + (rate.f2 - 1) / 4 + (rate.f3 - 1) / 4 + (rate.f4 - 1) / 4 + (
-            rate.f5 - 1) / 4) / 5 * 100) / (count - 1), 1)
+        totalRate.totalRate = round((totalRate.f1+totalRate.f2+totalRate.f3+totalRate.f4+totalRate.f5)/5, 1)
         totalRate.save()
         rate.delete()
 
@@ -799,3 +805,29 @@ def delete_user(request):
         if request.user.isBen or request.user.isOrg:
             logout(request)
     return HttpResponseRedirect('/')
+
+
+def delete_requirement(request):
+    if request.method == 'POST':
+        req = Requirement.objects.get(id=request.POST['deletedReq'])
+        RequirementAbilities.objects.filter(reqId=req.id).delete()
+        Request.objects.filter(reqId=req.id).delete()
+        req.delete()
+    return render(request, 'thanksDeleteReq.html')
+
+
+def delete_project(request):
+    if request.method == 'POST':
+        project = Project.objects.get(id=request.POST['deletedProj'])
+        CategoryProject.objects.filter(projectId=project.id).delete()
+        project.delete()
+    return render(request, 'thanksDeleteProj.html')
+
+
+def delete_request(request):
+    if request.method == 'POST':
+        req = Request.objects.get(id=request.POST['deletedReq'])
+        Report.objects.filter(reqId=req.id).delete()
+        RequestAbilities.objects.filter(reqId=req.id).delete()
+        req.delete()
+    return HttpResponseRedirect('/sent_requests')
