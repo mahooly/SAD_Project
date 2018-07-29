@@ -63,6 +63,9 @@ urlpatterns = [
     url('^delete_user/', views.delete_user, name='delete_user'),
     url('^404/', views.handler404, name='404'),
     url('^500/', views.handler500, name='500'),
+    url('^delete_requirement/', views.delete_requirement, name='delete_requirement'),
+    url('^delete_project/', views.delete_project, name='delete_project'),
+    url('^delete_request/', views.delete_request, name='delete_request'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
