@@ -21,13 +21,17 @@ from django.urls import path
 from userTest import settings
 from users import views
 
+
+handler404 = views.handler404
+handler500 = views.handler500
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^$', views.index, name='index'),
     url(r'^register_benefactor/', views.benefactor_registration, name='register'),
     url(r'^register_organization/', views.organization_registration, name='registerOrg'),
     url(r'^create_project/', views.project_creation, name='createProject'),
-    url(r'^login/', views.mylogin, name='login'),
+    url(r'^login/', views.my_login, name='login'),
     url(r'^editprofileben/', views.update_benefactor_profile, name='editprofileben'),
     url(r'^editprofileorg/', views.update_organization_profile, name='editprofileorg'),
     url(r'^terms/', views.terms, name='terms'),
@@ -57,5 +61,9 @@ urlpatterns = [
     url('^remove_report/(?P<rId>[a-zA-Z0-9]+)$', views.remove_report, name='remove_report'),
     url('^accept_request/', views.accept_request, name='accept_request'),
     url('^delete_user/', views.delete_user, name='delete_user'),
+    url('^404/', views.handler404, name='404'),
+    url('^500/', views.handler500, name='500'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
 

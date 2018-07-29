@@ -1,10 +1,38 @@
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from .forms import *
+
+
+def admin_only(login_url='404'):
+    return user_passes_test(lambda u: (not u.isBen and not u.isOrg), login_url=login_url)
+
+
+def benefactor_only(login_url='404'):
+    return user_passes_test(lambda u: u.isBen, login_url=login_url)
+
+
+def organization_only(login_url='404'):
+    return user_passes_test(lambda u: u.isOrg, login_url=login_url)
+
+
+def admin_org(login_url='404'):
+    return user_passes_test(lambda u: (u.isOrg or (not u.isBen and not u.isBen)), login_url=login_url)
+
+
+def admin_ben(login_url='404'):
+    return user_passes_test(lambda u: (u.isBen or (not u.isBen and not u.isBen)), login_url=login_url)
+
+
+def handler404(request):
+    return render(request, '404.html', status=404)
+
+
+def handler500(request):
+    return render(request, '500.html', status=500)
 
 
 def index(request):
@@ -102,6 +130,7 @@ def organization_registration(request):
 
 
 @login_required
+@organization_only
 def project_creation(request):
     categories = Category.objects.all()
     cities = City.objects.all()
@@ -127,27 +156,24 @@ def project_creation(request):
     return render(request, 'submitProject.html', {'form': form, 'categories': categories, 'cities': cities})
 
 
-# TODO add invalid
-def mylogin(request):
+def my_login(request):
     if request.method == 'POST':
         user = authenticate(username=request.POST['username'], password=request.POST['password'])
-        if user is not None:
+        if user is not None and user.state != 0:
             if user.state == 1 or (user.isBen is False and user.isOrg is False):
                 login(request, user)
                 return HttpResponseRedirect('/')
-            else:
-                # disabled account
-                return
+            elif user.state is None:
+                return render(request, 'userUnapproved.html')
         else:
-            # invalid login
-            return
+            error = True
+            return render(request, 'login.html', {'error': error})
     else:
         return render(request, 'login.html')
 
 
-# updated fields
-# permission
 @login_required
+@benefactor_only
 def update_benefactor_profile(request):
     abilities = Ability.objects.all()
     user = CustomUser.objects.get(username=request.user.username)
@@ -215,8 +241,8 @@ def update_benefactor_profile(request):
                    'cities': cities})
 
 
-# permission
 @login_required
+@organization_only
 def update_organization_profile(request):
     cities = City.objects.all()
     if request.method == 'POST':
@@ -259,8 +285,8 @@ def update_organization_profile(request):
                                                             'org': organization, 'cities': cities})
 
 
-# TODO filter
-# permission
+@login_required
+@admin_ben
 def list_projects(request):
     categories = Category.objects.all()
     if request.method == 'POST':
@@ -303,6 +329,8 @@ def list_projects(request):
         return render(request, 'searchProject.html', {'projects': projects, 'categories': categories})
 
 
+@login_required
+@admin_ben
 def list_requirement(request):
     name = request.POST.get('org', '')
     all_req = Requirement.objects.filter(user__organizer__name__icontains=name)
@@ -352,6 +380,8 @@ def list_requirement(request):
     return render(request, 'searchRequirement.html', {'abilities': all_ab, 'reqAbilities': req_ab})
 
 
+@login_required
+@admin_org
 def list_abilities(request):
     name = request.POST.get('orgName', '')
     all_user_abilities = UserAbilities.objects.filter(username__benefactor__nickname__icontains=name)
@@ -493,6 +523,7 @@ def rate_user(request, username):
             return render(request, 'comment.html', {'user': user, 'organization': organization, 'form': form})
 
 
+@login_required
 def project(request, username, pId):
     user = get_object_or_404(CustomUser, username=username)
     organization = Organizer.objects.get(user=user)
@@ -500,8 +531,8 @@ def project(request, username, pId):
     return render(request, 'project.html', {'user': user, 'org': organization, 'project': proj})
 
 
-# permission
 @login_required
+@organization_only
 def submit_requirement(request):
     abilities = Ability.objects.all()
     cities = City.objects.all()
@@ -533,8 +564,8 @@ def submit_requirement(request):
                   {'form': form, 'week_form': week_form, 'abilities': abilities, 'rangee': range(28), 'cities': cities})
 
 
-# permission
 @login_required
+@admin_only
 def waiting_registers(request):
     if request.method == 'POST':
         split = request.POST['req'].split('-')
@@ -549,6 +580,8 @@ def waiting_registers(request):
     return render(request, 'waitingRegisters.html', {'users': users})
 
 
+@login_required
+@benefactor_only
 def send_request_organization(request, username, reqId):
     if request.method == 'POST':
         user = CustomUser.objects.get(username=username)
@@ -580,6 +613,8 @@ def send_request_organization(request, username, reqId):
         return render(request, 'thanks.html')
 
 
+@login_required
+@admin_only
 def report_admin(request):
     reports = Report.objects.all()
     if request.method == 'POST':
@@ -602,6 +637,8 @@ def report_admin(request):
     return render(request, 'reportForAdmin.html', {'reports': reports})
 
 
+@login_required
+@organization_only
 def send_request_benefactor(request, username):
     if request.method == 'POST':
         user = CustomUser.objects.get(username=username)
@@ -630,6 +667,7 @@ def send_request_benefactor(request, username):
         return render(request, 'thanks.html')
 
 
+@login_required
 def waiting_requests(request):
     requestsAbilities = []
     if request.user.isBen:
@@ -642,11 +680,15 @@ def waiting_requests(request):
     return render(request, 'waitingRequests.html', {'requestsAbilities': requestsAbilities})
 
 
+@login_required
+@organization_only
 def report_cash(request):
     projects = Project.objects.filter(user=request.user)
     return render(request, 'reportCash.html', {'projects': projects})
 
 
+@login_required
+@admin_only
 def report_project(request, pId):
     project = get_object_or_404(Project, id=pId)
     reports = []
@@ -655,6 +697,8 @@ def report_project(request, pId):
     return render(request, 'reportProject.html', {'project': project, 'reports': reports})
 
 
+@login_required
+@admin_only
 def change_cities(request):
     cities = City.objects.all()
     if request.method == 'POST':
@@ -685,6 +729,8 @@ def change_cities(request):
     return render(request, 'changeCities.html', {'cities': cities})
 
 
+@login_required
+@admin_only
 def change_categories(request):
     categories = Category.objects.all()
     if request.method == 'POST':
@@ -699,6 +745,8 @@ def change_categories(request):
     return render(request, 'changeCategories.html', {'categories': categories})
 
 
+@login_required
+@admin_only
 def change_abilities(request):
     abilities = Ability.objects.all()
     if request.method == 'POST':
@@ -722,6 +770,7 @@ def change_abilities(request):
     return render(request, 'changeAbilities.html', {'abilities': abilities})
 
 
+@login_required
 def sent_requests(request):
     requestsAbilities = []
     if request.user.isBen:
@@ -734,6 +783,8 @@ def sent_requests(request):
     return render(request, 'sentRequests.html', {'requestsAbilities': requestsAbilities})
 
 
+@login_required
+@admin_only
 def remove_report(request, rId):
     report = Report.objects.get(id=rId)
     if report.type == '1':
@@ -764,6 +815,7 @@ def remove_report(request, rId):
     return HttpResponseRedirect('/reports')
 
 
+@login_required
 def accept_request(request):
     if request.method == 'POST':
         split = request.POST['req'].split('-')
@@ -778,6 +830,7 @@ def accept_request(request):
     return HttpResponseRedirect('/waiting_requests')
 
 
+@login_required
 def delete_user(request):
     if request.method == 'POST':
         user = CustomUser.objects.get(id=request.POST['user'])

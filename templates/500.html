@@ -2,11 +2,9 @@
 {% load staticfiles %}
 <html lang="fa" dir="rtl">
 <head>
-    <title>ویرایش پروفایل</title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href={% static "css/editProfileBenefactor.css" %}>
+    <meta charset="UTF-8">
+    <title>خطا</title>
     <link rel="stylesheet" type="text/css" href={% static "css/style.css" %}>
-    <link rel="stylesheet" href={% static "css/ionicons.min.css" %}>
 </head>
 <body>
 <div class="main">
@@ -66,7 +64,7 @@
         </div>
     </div>
     <div class="mainPage">
-        <div class="wrapper"></div>
+        <div class="wrappera"></div>
         <div id="test">
             <div class="wrappers">
                 <form class="login" method="post" action="{% url 'login' %}">
@@ -103,20 +101,13 @@
                 </form>
             </div>
         </div>
-        <div class="nav" id="nav"></div>
-        <div class="formm">
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="controls">
-                    <input type="text" id="username" class="floatlabel" placeholder="نام کاربری" name="username">
+        <div class="nav" id="nav">
 
-                    <div class="controls">
-                        <input type="email" id="email" class="floatlabel" placeholder="ایمیل" name="email">
-                    </div>
-
-                    <button>جستجو</button>
-                </div>
-            </form>
+        </div>
+        <div style="z-index: 2;">
+            <h4 style="width: 80%; margin: auto; text-align: center; margin-top: 200px; color: #222222;">خطای داخلی سرور</h4>
+            <a style="display: block; width: 80%; margin: auto; text-align: center; margin-top: 20px; text-decoration: none; color: #222222;"
+               href={% url 'index' %}>بازگشت به صفحه اصلی</a>
         </div>
     </div>
     <div class="footer">
@@ -131,8 +122,6 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src={% static "js/editProfileBenefactor.js" %}></script>
 <script type="text/javascript" src={% static "js/main.js" %}></script>
-<script src={% static "js/jquery.min.js" %}></script>
 </body>
 </html>

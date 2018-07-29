@@ -15,7 +15,9 @@
 		<form class="login" method="POST">
 			{% csrf_token %}
 			<p class="title">ورود</p>
-			
+			{% if error %}
+            <p style="color: red;">نام کاربری یا کلمه‌ی عبور نادرست است.</p>
+            {% endif %}
 			<p>
 				<input type="text" placeholder="نام کاربری" class="login-text" name="username">
 				<i class="ion-person"></i>
