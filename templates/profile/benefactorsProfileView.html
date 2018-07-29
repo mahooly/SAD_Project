@@ -2,9 +2,9 @@
 {% load staticfiles %}
 <html lang="fa" dir="rtl">
 <head>
-    <title>پروفایل شخصی نیکوکار</title>
+    <title id="title"> صفحه شخصی {{ benefactor.name }} {{ benefactor.surname }} </title>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href={% static "css/personalProfileBenefactor.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "css/BenefactorsProfileView.css" %}>
     <link rel="stylesheet" type="text/css" href={% static "css/style.css" %}>
     <link rel="stylesheet" href={% static "css/ionicons.min.css" %}>
 </head>
@@ -43,7 +43,7 @@
                         <a href="{% url 'logout' %}">خروج</a>
                     </div>
                     <div class="logo">
-                        <img src="../static/images/logo.png">
+                        <img src="../../static/images/logo.png">
                     </div>
                 </div>
             {% endif %}
@@ -59,7 +59,7 @@
                         <button onclick="popupregister()">ثبت نام</button>
                     </div>
                     <div class="logo">
-                        <img src="../static/images/logo.png">
+                        <img src="../../static/images/logo.png">
                     </div>
                 </div>
             {% endif %}
@@ -103,98 +103,104 @@
                 </form>
             </div>
         </div>
-        <div class="nav" id="nav">
-        </div>
-        {% if request.user.is_authenticated and request.user.username == user.username %}
-            <div class="container">
-                <div class="photo">
-                    <div id="photo"><img src="{{ user.image }}" alt=""></div>
+        <div class="nav" id="nav"></div>
+        <div class="container">
+            <div class="photo">
+                <div id="photo"><img src="{{ user.image }}" alt=""></div>
+            </div>
+            <div class="personal">
+                <h2> مشخصات </h2>
+                <div id="personal">
+                    <h3>نام مستعار: {{ benefactor.nickname }}</h3>
+                    <h3>سال تولد: {{ benefactor.year }}</h3>
+                    {% if benefactor.education == "nothing" %}
+                        <h3>تحصیلات: ندارد</h3>
+                    {% endif %}
+                    {% if benefactor.education == "diploma" %}
+                        <h3>تحصیلات: دیپلم یا فوق‌دیپلم ( {{ benefactor.major }} )</h3>
+                    {% endif %}
+                    {% if benefactor.education == "bachelor" %}
+                        <h3>تحصیلات: لیسانس ( {{ benefactor.major }} )</h3>
+                    {% endif %}
+                    {% if benefactor.education == "master" %}
+                        <h3>تحصیلات: فوق‌لیسانس ( {{ benefactor.major }} )</h3>
+                    {% endif %}
+                    {% if benefactor.education == "phd" %}
+                        <h3>تحصیلات: دکتری یا بالاتر ( {{ benefactor.major }} )</h3>
+                    {% endif %}
+                    <h3>شهر محل سکونت: {{ benefactor.city }}</h3>
                 </div>
-                <div class="personal">
-                    <h2> مشخصات </h2>
-                    <div id="personal">
-                        <h3>نام و نام خانوادگی: {{ benefactor.name }} {{ benefactor.surname }}</h3>
-                        <h3>سال تولد: {{ benefactor.year }}</h3>
-                        {% if benefactor.education == "nothing" %}
-                            <h3>تحصیلات: ندارد</h3>
-                        {% endif %}
-                        {% if benefactor.education == "diploma" %}
-                            <h3>تحصیلات: دیپلم یا فوق‌دیپلم ( {{ benefactor.major }} )</h3>
-                        {% endif %}
-                        {% if benefactor.education == "bachelor" %}
-                            <h3>تحصیلات: لیسانس ( {{ benefactor.major }} )</h3>
-                        {% endif %}
-                        {% if benefactor.education == "master" %}
-                            <h3>تحصیلات: فوق‌لیسانس ( {{ benefactor.major }} )</h3>
-                        {% endif %}
-                        {% if benefactor.education == "phd" %}
-                            <h3>تحصیلات: دکتری یا بالاتر ( {{ benefactor.major }} )</h3>
-                        {% endif %}
-                        <h3>شهر محل سکونت: {{ benefactor.city }}</h3>
-                    </div>
-                </div>
-                <div class="chartContainer">
-                    <div id="chart">
-                        <div>
-                            <table>
-                                <tbody>
-                                <tr class="bars">
-                                    <td>
-                                        <div class="one"
-                                             style="height: {{ benefactor.rate.f1 }}%; position: absolute; width: 100%; bottom: 0px;">{{ benefactor.rate.f1 }}%
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="two"
-                                             style="height: {{ benefactor.rate.f2 }}%; position: absolute; width: 100%; bottom: 0px;">{{ benefactor.rate.f2 }}%
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="three"
-                                             style="height: {{ benefactor.rate.f3 }}%; position: absolute; width: 100%; bottom: 0px;">{{ benefactor.rate.f3 }}%
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="four"
-                                             style="height: {{ benefactor.rate.f4 }}%; position: absolute; width: 100%; bottom: 0px;">{{ benefactor.rate.f4 }}%
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="five"
-                                             style="height: {{ benefactor.rate.f5 }}%; position: absolute; width: 100%; bottom: 0px;">{{ benefactor.rate.f5 }}%
-                                        </div>
-                                    </td>
-                                    <td class="legend">
+            </div>
+            <div class="chartContainer">
+                <div id="chart">
+                    <div>
+                        <table>
+                            <tbody>
+                            <tr class="bars">
+                                <td>
+                                    <div class="one"
+                                         style="height: {{ benefactor.rate.f1 }}%; position: absolute; width: 100%; bottom: 0px;">{{ benefactor.rate.f1 }}%
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="two"
+                                         style="height: {{ benefactor.rate.f2 }}%; position: absolute; width: 100%; bottom: 0px;">{{ benefactor.rate.f2 }}%
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="three"
+                                         style="height: {{ benefactor.rate.f3 }}%; position: absolute; width: 100%; bottom: 0px;">{{ benefactor.rate.f3 }}%
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="four"
+                                         style="height: {{ benefactor.rate.f4 }}%; position: absolute; width: 100%; bottom: 0px;">{{ benefactor.rate.f4 }}%
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="five"
+                                         style="height: {{ benefactor.rate.f5 }}%; position: absolute; width: 100%; bottom: 0px;">{{ benefactor.rate.f5 }}%
+                                    </div>
+                                </td>
+                                <td class="legend">
                                             <span class="legbox">
                                                 <span class="one xaxisname"></span><span>صداقت</span>
                                             </span>
-                                        <span class="legbox">
+                                    <span class="legbox">
                                                 <span class="two xaxisname"></span><span>تعهد</span>
                                             </span>
-                                        <span class="legbox">
+                                    <span class="legbox">
                                                 <span class="three xaxisname"></span><span>مسئولیت‌پذیری</span>
                                             </span>
-                                        <span class="legbox">
+                                    <span class="legbox">
                                                 <span class="four xaxisname"></span><span>وقت‌شناسی</span>
                                             </span>
-                                        <span class="legbox">
+                                    <span class="legbox">
                                                 <span class="five xaxisname"></span><span>علاقه به کار</span>
                                             </span>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
+            </div>
+            <a style="display: inline-block; padding: 2px 10px; font-size: 14px;  text-decoration: none; color: #fdfdfd; height: 30px; background: #1E90FF; border-radius: 15px;"
+               href={% url 'comment' user.username %}>امتیازدهی به نیکوکار</a>
+            <form method="post" action="{% url 'send_request_ben' user.username %}">
+                {% csrf_token %}
                 <div id="abilities">
                     <h2>توانایی‌ها </h2>
-                    <ul>{% for ability in user_abilities %}
-                        <li style="display: block;margin: 2px 20px 2px 0px">{{ ability.abilityId.name }}</li>{% endfor %}
-                    </ul>
+                    <div id="abilities1">{% for ability in user_abilities %}
+                        <span class="abilitySpan" style="display: block;margin: 2px 20px 2px 0px" value="1"
+                              id="{{ ability.abilityId.name }}">{{ ability.abilityId.name }}</span>{% endfor %}</div>
+                    {% for ability in user_abilities %}
+                        <input type="checkbox" style="display: none;" name="{{ ability.abilityId.name }}"
+                               id="d{{ ability.abilityId.name }}">
+                    {% endfor %}
                 </div>
                 <div id="projects">
-                    <h2>موسسه هایی که با آنها همکاری داشته</h2>
+                    <h2>موسساتی که تا کنون با این نیکوکار همکاری داشته اند:</h2>
                     <ul>{% for org in organizations %}
                         <li>{{ org.name }}</li> {% endfor %}</ul>
                 </div>
@@ -212,54 +218,55 @@
                             </tr>
                             <tr>
                                 <td>شنبه</td>
-                                <td><span id="11"></span></td>
-                                <td><span id="12"></span></td>
-                                <td><span id="13"></span></td>
-                                <td><span id="14"></span></td>
+                                <td><span id="11" onclick="week(11,0)" value="1"></span></td>
+                                <td><span id="12" onclick="week(12,1)" value="1"></span></td>
+                                <td><span id="13" onclick="week(13,2)" value="1"></span></td>
+                                <td><span id="14" onclick="week(14,3)" value="1"></span></td>
                             </tr>
                             <tr>
                                 <td>یکشنبه</td>
-                                <td><span id="21"></span></td>
-                                <td><span id="22"></span></td>
-                                <td><span id="23"></span></td>
-                                <td><span id="24"></span></td>
+                                <td><span id="21" onclick="week(21,4)" value="1"></span></td>
+                                <td><span id="22" onclick="week(22,5)" value="1"></span></td>
+                                <td><span id="23" onclick="week(23,6)" value="1"></span></td>
+                                <td><span id="24" onclick="week(24,7)" value="1"></span></td>
                             </tr>
                             <tr>
                                 <td>دوشنبه</td>
-                                <td><span id="31"></span></td>
-                                <td><span id="32"></span></td>
-                                <td><span id="33"></span></td>
-                                <td><span id="34"></span></td>
+                                <td><span id="31" onclick="week(31,8)" value="1"></span></td>
+                                <td><span id="32" onclick="week(32,9)" value="1"></span></td>
+                                <td><span id="33" onclick="week(33,10)" value="1"></span></td>
+                                <td><span id="34" onclick="week(34,11)" value="1"></span></td>
                             </tr>
                             <tr>
                                 <td>سه‌شنبه</td>
-                                <td><span id="41"></span></td>
-                                <td><span id="42"></span></td>
-                                <td><span id="43"></span></td>
-                                <td><span id="44"></span></td>
+                                <td><span id="41" onclick="week(41,12)" value="1"></span></td>
+                                <td><span id="42" onclick="week(42,13)" value="1"></span></td>
+                                <td><span id="43" onclick="week(43,14)" value="1"></span></td>
+                                <td><span id="44" onclick="week(44,15)" value="1"></span></td>
                             </tr>
                             <tr>
                                 <td>چهارشنبه</td>
-                                <td><span id="51"></span></td>
-                                <td><span id="52"></span></td>
-                                <td><span id="53"></span></td>
-                                <td><span id="54"></span></td>
+                                <td><span id="51" onclick="week(51,16)" value="1"></span></td>
+                                <td><span id="52" onclick="week(52,17)" value="1"></span></td>
+                                <td><span id="53" onclick="week(53,18)" value="1"></span></td>
+                                <td><span id="54" onclick="week(54,19)" value="1"></span></td>
                             </tr>
                             <tr>
                                 <td>پنجشنبه</td>
-                                <td><span id="61"></span></td>
-                                <td><span id="62"></span></td>
-                                <td><span id="63"></span></td>
-                                <td><span id="64"></span></td>
+                                <td><span id="61" onclick="week(61,20)" value="1"></span></td>
+                                <td><span id="62" onclick="week(62,21)" value="1"></span></td>
+                                <td><span id="63" onclick="week(63,22)" value="1"></span></td>
+                                <td><span id="64" onclick="week(64,23)" value="1"></span></td>
                             </tr>
                             <tr>
                                 <td> جمعه</td>
-                                <td><span id="71"></span></td>
-                                <td><span id="72"></span></td>
-                                <td><span id="73"></span></td>
-                                <td><span id="74"></span></td>
+                                <td><span id="71" onclick="week(71,24)" value="1"></span></td>
+                                <td><span id="72" onclick="week(72,25)" value="1"></span></td>
+                                <td><span id="73" onclick="week(73,26)" value="1"></span></td>
+                                <td><span id="74" onclick="week(74,27)" value="1"></span></td>
                             </tr>
                             </tbody>
+                            <h5 id="tab2" style="display: none">لطفا زمان‌های غیرفعال خود را علامت بزنید</h5>
                         </table>
                     {% endif %}
                     {% if week.c0 == "on" %}
@@ -319,7 +326,7 @@
                     {% if week.c16 == "on" %}
                         <input type="checkbox" name="a16" id="a16" style="display: none" checked>{% endif %}
                     {% if week.c16 == "off" %}
-                        <input type="checkbox" name="a16" id="a16" style="display: none">{% endif %}
+                        <input type="checkbox" name="16" id="a16" style="display: none">{% endif %}
                     {% if week.c17 == "on" %}
                         <input type="checkbox" name="a17" id="a17" style="display: none" checked>{% endif %}
                     {% if week.c17 == "off" %}
@@ -364,27 +371,38 @@
                         <input type="checkbox" name="a27" id="a27" style="display: none" checked>{% endif %}
                     {% if week.c27 == "off" %}
                         <input type="checkbox" name="a27" id="a27" style="display: none">{% endif %}
+
+                    {% for i in rangee %}
+                        <input type="checkbox" id="c{{ i }}" name="c{{ i }}" style="display: none">{% endfor %}
                 </div>
+                <h2>توضیحات بیشتر</h2>
+                <div class="controls">
+                    <textarea style="width: 80%;" id="cm" class="floatlabel" placeholder="توضیحات بیشتر" name="description"></textarea>
+                </div>
+                <button class="subreq"> ارسال پیشنهاد همکاری</button>
+            </form>
+            {% if request.user.is_authenticated and not request.user.isBen and not request.user.isOrg %}
                 <button class="subreq" style="background-color: #f72c2c; z-index:4" onclick="popupDelete()">حذف کاربر</button>
+
+            {% endif %}
+        </div>
+        <div id="delete" style="display: none">
+            <div class="wrappers" style="width: 100%; min-height: 1200px; position: fixed; background: rgba(50,50,50,0.8);top: 0px;z-index: 3;">
+                <form class="register" id="formRemove" method="post" action="{% url 'delete_user' %}">
+                    {% csrf_token %}
+                    <input type="text" name="user" value="{{ benefactor.user.id }}" style="display: none;">
+                    <p class="title">کاربر از لیست کاربران سامانه حذف شود؟</p>
+                    <div class="enter">
+                        <button class="yes" style="background-color: #f72c2c" onclick="this.form.submit()">بله</button>
+                    </div>
+                    <div class="enter">
+                        <button id="not"
+                                onclick="popdownDelete()">خیر
+                        </button>
+                    </div>
+                </form>
             </div>
-            <div id="delete" style="display: none">
-                <div class="wrappers" style="width: 100%; min-height: 1200px; position: fixed; background: rgba(50,50,50,0.8);top: 0px;z-index: 3;">
-                    <form class="register" method="post" id="formRemove" action="{% url 'delete_user' %}">
-                        {% csrf_token %}
-                        <input type="text" name="user" value="{{ benefactor.user.id }}" style="display: none;">
-                        <p class="title">کاربر از لیست کاربران سامانه حذف شود؟</p>
-                        <div class="enter">
-                            <button class="yes" style="background-color: #f72c2c" onclick="this.form.submit()">بله</button>
-                        </div>
-                        <div class="enter">
-                            <button id="not"
-                                    onclick="popdownDelete()">خیر
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        {% endif %}
+        </div>
     </div>
 
     <div class="footer">
@@ -399,7 +417,7 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src={% static "js/personalProfileBenefactor.js" %}></script>
+<script type="text/javascript" src={% static "js/BenefactorsProfileView.js" %}></script>
 <script type="text/javascript" src={% static "js/main.js" %}></script>
 <script src={% static "js/jquery.min.js" %}></script>
 </body>

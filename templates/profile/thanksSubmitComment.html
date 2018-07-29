@@ -41,7 +41,7 @@
                         <a href="{% url 'logout' %}">خروج</a>
                     </div>
                     <div class="logo">
-                        <img src="../static/images/logo.png">
+                        <img src="../../static/images/logo.png">
                     </div>
                 </div>
             {% endif %}
@@ -57,7 +57,7 @@
                         <button onclick="popupregister()">ثبت نام</button>
                     </div>
                     <div class="logo">
-                        <img src="../static/images/logo.png">
+                        <img src="../../static/images/logo.png">
                     </div>
                 </div>
             {% endif %}
@@ -105,9 +105,20 @@
 
         </div>
         <div style="z-index: 2;">
-            <h4 style="width: 80%; margin: auto; text-align: center; margin-top: 200px; color: #222222;">نیازمندی شما با موفقیت ثبت شد.</h4>
+            {% if user.isBen %}
+                <h4 style="width: 80%; margin: auto; text-align: center; margin-top: 200px; color: #222222;">نظر شما به {{ user.benefactor.nickname }} با موفقیت ثبت شد.</h4>
+            {% endif %}
+            {% if user.isOrg %}
+                <h4 style="width: 80%; margin: auto; text-align: center; margin-top: 200px; color: #222222;">نظر شما به {{ user.organizer.name }} با موفقیت ثبت شد.</h4>
+            {% endif %}
+            {% if user.isBen %}
             <a style="display: block; width: 80%; margin: auto; text-align: center; margin-top: 20px; text-decoration: none; color: #222222;"
-               href={% url 'submit_requirement' %}>بازگشت به صفحه ثبت نیازمندی جدید</a>
+               href={% url 'profile' user.username %}>بازگشت به حساب کاربری {{ user.benefactor.nickname }}</a>
+            {% endif %}
+            {% if user.isOrg %}
+            <a style="display: block; width: 80%; margin: auto; text-align: center; margin-top: 20px; text-decoration: none; color: #222222;"
+               href={% url 'profile' user.username %}>بازگشت به حساب کاربری {{ user.organizer.name }}</a>
+            {% endif %}
             <a style="display: block; width: 80%; margin: auto; text-align: center; margin-top: 20px; text-decoration: none; color: #222222;" href={% url 'index' %}>صفحه اصلی</a>
         </div>
     </div>

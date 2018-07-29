@@ -2,11 +2,9 @@
 {% load staticfiles %}
 <html lang="fa" dir="rtl">
 <head>
-    <title>زمینه‌های فعالیت پروژه‌ها</title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href={% static "css/editProfileBenefactor.css" %}>
+    <meta charset="UTF-8">
+    <title>مهرانه</title>
     <link rel="stylesheet" type="text/css" href={% static "css/style.css" %}>
-    <link rel="stylesheet" href={% static "css/ionicons.min.css" %}>
 </head>
 <body>
 <div class="main">
@@ -43,7 +41,7 @@
                         <a href="{% url 'logout' %}">خروج</a>
                     </div>
                     <div class="logo">
-                        <img src="../static/images/logo.png">
+                        <img src="../../static/images/logo.png">
                     </div>
                 </div>
             {% endif %}
@@ -59,14 +57,14 @@
                         <button onclick="popupregister()">ثبت نام</button>
                     </div>
                     <div class="logo">
-                        <img src="../static/images/logo.png">
+                        <img src="../../static/images/logo.png">
                     </div>
                 </div>
             {% endif %}
         </div>
     </div>
     <div class="mainPage">
-        <div class="wrapper"></div>
+        <div class="wrappera"></div>
         <div id="test">
             <div class="wrappers">
                 <form class="login" method="post" action="{% url 'login' %}">
@@ -103,21 +101,15 @@
                 </form>
             </div>
         </div>
-        <div class="nav" id="nav"></div>
-        <div class="formm" style="width: 60%;">
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="controls">
-                    <h2>پنل تغییر لیست زمینه‌های فعالیت پروژه‌ها</h2>
-                    <input type="text" id="username" class="floatlabel" placeholder="زمینه فعالیت پروژه" name="city">
-                    <input type="text" id="type" style="display: none;" name="type" value="1">
-                    <button onclick="this.form.submit()" style="margin-top: 20px;">افزودن</button>
-                    <ul id="templist">{% for city in categories %}<li id="{{ city.name }}"></li>{% endfor %}</ul>
-                    <ul id="dynamiclist" style="margin-top: 30px;list-style: none;">
-                    </ul>
-                </div>
-            </form>
+        <div class="nav" id="nav">
 
+        </div>
+        <div style="z-index: 2;">
+            <h4 style="width: 80%; margin: auto; text-align: center; margin-top: 200px; color: #222222;">مشخصات شما با
+                موفقیت در سامانه ثبت شد. نتیجه ثبت نام شما حداکثر تا ۲۴ ساعت آینده از طریق پست الکترونیکی به شما ارسال
+                خواهد شد.</h4>
+            <a style="display: block; width: 80%; margin: auto; text-align: center; margin-top: 20px; text-decoration: none; color: #222222;"
+               href={% url 'index' %}>بازگشت به صفحه اصلی</a>
         </div>
     </div>
     <div class="footer">
@@ -132,8 +124,6 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src={% static "js/changeCities.js" %}></script>
 <script type="text/javascript" src={% static "js/main.js" %}></script>
-<script src={% static "js/jquery.min.js" %}></script>
 </body>
 </html>

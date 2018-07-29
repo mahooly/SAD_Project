@@ -41,7 +41,7 @@ class BenefactorRegistraton(forms.ModelForm):
 class OrganizationRegistration(forms.ModelForm):
     terms = forms.BooleanField(required=True)
     class Meta:
-        model = Organizer
+        model = Organization
         fields = ('name', 'address', 'phone', 'license', 'website', 'day', 'month', 'year', 'city')
 
 
@@ -89,7 +89,7 @@ class EditOrganizationProfile(forms.ModelForm):
     website = forms.URLField(required=False)
     license = forms.CharField(max_length=20, required=False)
     class Meta:
-        model = Organizer
+        model = Organization
         fields = ('name', 'address', 'phone', 'license', 'website')
 
 

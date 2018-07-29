@@ -1,12 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 {% load staticfiles %}
 <html lang="fa" dir="rtl">
 <head>
-    <title>ثبت پروژه جدید </title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href= {% static "css/submitProject.css" %}>
-    <link rel="stylesheet" type="text/css" href= {% static "css/style.css" %}>
-    <link rel="stylesheet" href= {% static "css/ionicons.min.css" %}>
+    <meta charset="UTF-8">
+    <title>مهرانه</title>
+    <link rel="stylesheet" type="text/css" href={% static "css/style.css" %}>
 </head>
 <body>
 <div class="main">
@@ -43,7 +41,7 @@
                         <a href="{% url 'logout' %}">خروج</a>
                     </div>
                     <div class="logo">
-                        <img src="../static/images/logo.png">
+                        <img src="../../static/images/logo.png">
                     </div>
                 </div>
             {% endif %}
@@ -59,14 +57,14 @@
                         <button onclick="popupregister()">ثبت نام</button>
                     </div>
                     <div class="logo">
-                        <img src="../static/images/logo.png">
+                        <img src="../../static/images/logo.png">
                     </div>
                 </div>
             {% endif %}
         </div>
     </div>
     <div class="mainPage">
-        <div class="wrapper"></div>
+        <div class="wrappera"></div>
         <div id="test">
             <div class="wrappers">
                 <form class="login" method="post" action="{% url 'login' %}">
@@ -103,73 +101,15 @@
                 </form>
             </div>
         </div>
-        <div class="nav" id="nav"></div>
-        <div class="formm">
-            <form method="post">
-                {% csrf_token %}
-                <h2>مشخصات</h2>
-                <div class="controls">
-                    <input type="text" id="projectname" class="floatlabel" placeholder="نام پروژه" name="name">
-                </div>
+        <div class="nav" id="nav">
 
-                <div class="controls">
-                    <input type="text" id="budget" class="floatlabel"
-                           placeholder="مبلغ مورد نیاز جهت تکمیل پروژه (تومان)" name="budget">
-                </div>
-
-
-                <div class="controls">
-                    <i class="ion-navicon"></i>
-                    <select id="city" class="floatlabel" name="city">
-                        <option value="blank">شهر</option>
-                        {% for city in cities %}
-                            <option value="{{ city.name }}">{{ city.name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-
-                <div class="controls">
-                    <textarea id="cm" class="floatlabel" placeholder="توضیحات مربوط به پروژه"
-                              name="description"></textarea>
-                </div>
-
-                <div class="controls">
-                    <i class="ion-navicon"></i>
-                    <select id="way" class="floatlabel" onchange="changed()" name="paymethod">
-                        <option value="blank">نحوه پرداخت</option>
-                        <option value="card">به شماره کارت بانکی</option>
-                        <option value="account">به شماره حساب</option>
-                    </select>
-                </div>
-
-                <div class="controls">
-                    <input type="number" id="cardNum" class="floatlabel" placeholder="شماره کارت بانکی"
-                           style="display: none" name="cardno">
-                </div>
-
-                <div class="controls">
-                    <input type="number" id="accNum" class="floatlabel" placeholder="شماره حساب بانکی"
-                           style="display: none" name="accno">
-                </div>
-
-                <h2>زمینه کار پروژه</h2>
-                <div class="controlsAbility">
-                    <select id="candidate" class="floatlabel">
-                        <option value="blank"></option>
-                        {% for cat in categories %}
-                            <option value="{{ cat.name }}">{{ cat.name }}</option>
-                        {% endfor %}
-                    </select>
-                    <button id="add" onclick="addItem()"><h3>+</h3></button>
-                    {% for cat in categories %}
-                        <input type="checkbox" name="{{ cat.name }}" id="a{{ cat.name }}" style="display: none">
-                    {% endfor %}
-                    <ul id="dynamiclist"></ul>
-                </div>
-
-                <button>ثبت</button>
-            </form>
+        </div>
+        <div style="z-index: 2;">
+            <h4 style="width: 80%; margin: auto; text-align: center; margin-top: 200px; color: #222222;">پروژه شما با
+                موفقیت ثبت شد.</h4>
+            <a style="display: block; width: 80%; margin: auto; text-align: center; margin-top: 20px; text-decoration: none; color: #222222;"
+               href={% url 'createProject' %}>بازگشت به صفحه ثبت پروژه جدید</a>
+            <a style="display: block; width: 80%; margin: auto; text-align: center; margin-top: 20px; text-decoration: none; color: #222222;" href={% url 'index' %}>صفحه اصلی</a>
         </div>
     </div>
     <div class="footer">
@@ -184,8 +124,6 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src= {% static "js/submitProject.js" %}></script>
-<script type="text/javascript" src= {% static "js/main.js" %}></script>
-<script src= {% static "js/jquery.min.js" %}></script>
+<script type="text/javascript" src={% static "js/main.js" %}></script>
 </body>
 </html>

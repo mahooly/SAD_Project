@@ -2,11 +2,11 @@
 {% load staticfiles %}
 <html lang="fa" dir="rtl">
 <head>
-    <title>ویرایش حساب کاربری</title>
+    <title>ثبت پروژه جدید </title>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href={% static "css/style.css" %}>
-    <link rel="stylesheet" type="text/css" href={% static "css/editProfileBenefactor.css" %}>
-    <link rel="stylesheet" href={% static "css/ionicons.min.css" %}>
+    <link rel="stylesheet" type="text/css" href= {% static "css/submitProject.css" %}>
+    <link rel="stylesheet" type="text/css" href= {% static "css/style.css" %}>
+    <link rel="stylesheet" href= {% static "css/ionicons.min.css" %}>
 </head>
 <body>
 <div class="main">
@@ -43,7 +43,7 @@
                         <a href="{% url 'logout' %}">خروج</a>
                     </div>
                     <div class="logo">
-                        <img src="../static/images/logo.png">
+                        <img src="../../static/images/logo.png">
                     </div>
                 </div>
             {% endif %}
@@ -59,7 +59,7 @@
                         <button onclick="popupregister()">ثبت نام</button>
                     </div>
                     <div class="logo">
-                        <img src="../static/images/logo.png">
+                        <img src="../../static/images/logo.png">
                     </div>
                 </div>
             {% endif %}
@@ -103,84 +103,72 @@
                 </form>
             </div>
         </div>
-        <div class="nav" id="nav">
-
-        </div>
-        <div class="formm" style="z-index: 6">
-            <form method="post" enctype="multipart/form-data">
-                <h2>مشخصات</h2>
+        <div class="nav" id="nav"></div>
+        <div class="formm">
+            <form method="post">
                 {% csrf_token %}
+                <h2>مشخصات</h2>
                 <div class="controls">
-                    <input type="text" id="name" class="floatlabel" placeholder="{{ org.name }}" name="name">
-                    <label>نام موسسه</label>
+                    <input type="text" id="projectname" class="floatlabel" placeholder="نام پروژه" name="name">
                 </div>
 
                 <div class="controls">
-                    <input type="text" id="username" class="floatlabel" placeholder="{{ user.username }}"
-                           name="username">
-                    <label>نام کاربری</label>
-                </div>
-                <div class="controls">
-                    <input type="password" id="pass1" class="floatlabel" placeholder="" name="password">
-                    <label>کلمه عبور</label>
-                </div>
-                <div class="controls">
-                    <input type="password" id="pass2" class="floatlabel" placeholder="" name="password2">
-                    <label>تکرار کلمه عبور</label>
+                    <input type="text" id="budget" class="floatlabel"
+                           placeholder="مبلغ مورد نیاز جهت تکمیل پروژه (تومان)" name="budget">
                 </div>
 
-                <div class="controls">
-                    <h3>تاریخ ثبت</h3>
-                    <input type="number" id="date" class="birthday" placeholder="{{ org.day }}" name="day">
-                    <input type="number" id="month" class="birthday" placeholder="{{ org.month }}" name="month">
-                    <input type="number" id="year" class="birthday" placeholder="{{ org.year }}" name="year">
-                </div>
 
                 <div class="controls">
                     <i class="ion-navicon"></i>
                     <select id="city" class="floatlabel" name="city">
-                        {% if org.city == "blank" %}
-                            <option value="blank">-</option>
-                        {% endif %}
-                        {% if not org.city == "blank" %}
-                            <option value="blank">{{ org.city }}</option>
-                        {% endif %}
+                        <option value="blank">شهر</option>
                         {% for city in cities %}
                             <option value="{{ city.name }}">{{ city.name }}</option>
                         {% endfor %}
                     </select>
                 </div>
 
+
                 <div class="controls">
-                    <input type="text" id="addr" class="floatlabel" placeholder="{{ org.address }}" name="address">
-                    <label>آدرس</label>
+                    <textarea id="cm" class="floatlabel" placeholder="توضیحات مربوط به پروژه"
+                              name="description"></textarea>
                 </div>
 
                 <div class="controls">
-                    <input type="email" id="email" class="floatlabel" placeholder="{{ user.email }}" name="email">
-                    <label>ایمیل</label>
+                    <i class="ion-navicon"></i>
+                    <select id="way" class="floatlabel" onchange="changed()" name="paymethod">
+                        <option value="blank">نحوه پرداخت</option>
+                        <option value="card">به شماره کارت بانکی</option>
+                        <option value="account">به شماره حساب</option>
+                    </select>
                 </div>
 
                 <div class="controls">
-                    <input type="tel" id="tel" class="floatlabel" placeholder="{{ org.phone }}" name="phone">
-                    <label>تلفن</label>
-                </div>
-                <div class="controls">
-                    <input type="web" id="web" class="floatlabel" placeholder="{{ org.website }}" name="website">
-                    <label>سایت</label>
+                    <input type="number" id="cardNum" class="floatlabel" placeholder="شماره کارت بانکی"
+                           style="display: none" name="cardno">
                 </div>
 
                 <div class="controls">
-                    <input type="text" id="parvaneh" class="floatlabel" placeholder="{{ org.license }}" name="license">
-                    <label>پروانه فعالیت</label>
+                    <input type="number" id="accNum" class="floatlabel" placeholder="شماره حساب بانکی"
+                           style="display: none" name="accno">
                 </div>
 
-                <div class="controls">
-                    <h4 style="display: inline; margin-left: 10px;"> لوگو </h4>
-                    <input type="file" id="photo" name="image">
+                <h2>زمینه کار پروژه</h2>
+                <div class="controlsAbility">
+                    <select id="candidate" class="floatlabel">
+                        <option value="blank"></option>
+                        {% for cat in categories %}
+                            <option value="{{ cat.name }}">{{ cat.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <button id="add" onclick="addItem()"><h3>+</h3></button>
+                    {% for cat in categories %}
+                        <input type="checkbox" name="{{ cat.name }}" id="a{{ cat.name }}" style="display: none">
+                    {% endfor %}
+                    <ul id="dynamiclist"></ul>
                 </div>
 
-                <button>ثبت تغییرات</button>
+                <button>ثبت</button>
             </form>
         </div>
     </div>
@@ -196,8 +184,8 @@
         </div>
     </div>
 </div>
-{#	<script type="text/javascript" src={% static "js/editProfileOrganization.js" %}></script>#}
-<script type="text/javascript" src={% static "js/main.js" %}></script>
-<script src={% static "js/jquery.min.js" %}></script>
+<script type="text/javascript" src= {% static "js/submitProject.js" %}></script>
+<script type="text/javascript" src= {% static "js/main.js" %}></script>
+<script src= {% static "js/jquery.min.js" %}></script>
 </body>
 </html>

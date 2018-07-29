@@ -13,7 +13,7 @@ class CustomUserAdmin(UserAdmin):
 
 admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(Benefactor)
-admin.site.register(Organizer)
+admin.site.register(Organization)
 admin.site.register(Project)
 admin.site.register(Ability)
 admin.site.register(UserAbilities)

@@ -1,12 +1,12 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 {% load staticfiles %}
 <html lang="fa" dir="rtl">
 <head>
-    <title>گزارش تامین مالی پروژه</title>
+    <title>زمینه‌های فعالیت پروژه‌ها</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href= {% static "css/reportCash.css" %}>
-    <link rel="stylesheet" type="text/css" href= {% static "css/style.css" %}>
-    <link rel="stylesheet" href= {% static "css/ionicons.min.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "css/editProfileBenefactor.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "css/style.css" %}>
+    <link rel="stylesheet" href={% static "css/ionicons.min.css" %}>
 </head>
 <body>
 <div class="main">
@@ -43,7 +43,7 @@
                         <a href="{% url 'logout' %}">خروج</a>
                     </div>
                     <div class="logo">
-                        <img src="../static/images/logo.png">
+                        <img src="../../static/images/logo.png">
                     </div>
                 </div>
             {% endif %}
@@ -59,7 +59,7 @@
                         <button onclick="popupregister()">ثبت نام</button>
                     </div>
                     <div class="logo">
-                        <img src="../static/images/logo.png">
+                        <img src="../../static/images/logo.png">
                     </div>
                 </div>
             {% endif %}
@@ -104,27 +104,22 @@
             </div>
         </div>
         <div class="nav" id="nav"></div>
-        <div class="container">
-            <div class="mainheader">
-                <h1>گزارش تامین مالی پروژه ها</h1>
-                <br><br>
-            </div>
-            <h3>نام پروژه: {{ project.name }}</h3>
-            <h3>مجموع پول پرداخت شده: {{ project.alreadyPaid }}</h3>
-            <h3>میزان بودجه مورد نیاز: {{ project.budget }}</h3>
-            <div id="result">
-                {% for report in reports %}
-                    <div class="report">
-                        <div class="benefactor"><span class="benefactor">{{ report.benefactor.benefactor.nickname }}</span></div>
-                        <div class="project">
-                            <h3>مبلغ: {{ report.payement }}</h3>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
+        <div class="formm" style="width: 60%;">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="controls">
+                    <h2>پنل تغییر لیست زمینه‌های فعالیت پروژه‌ها</h2>
+                    <input type="text" id="username" class="floatlabel" placeholder="زمینه فعالیت پروژه" name="city">
+                    <input type="text" id="type" style="display: none;" name="type" value="1">
+                    <button onclick="this.form.submit()" style="margin-top: 20px;">افزودن</button>
+                    <ul id="templist">{% for city in categories %}<li id="{{ city.name }}"></li>{% endfor %}</ul>
+                    <ul id="dynamiclist" style="margin-top: 30px;list-style: none;">
+                    </ul>
+                </div>
+            </form>
+
         </div>
     </div>
-
     <div class="footer">
         <div class="container">
             <div class="addr">
@@ -137,6 +132,7 @@
         </div>
     </div>
 </div>
+<script type="text/javascript" src={% static "js/changeCities.js" %}></script>
 <script type="text/javascript" src={% static "js/main.js" %}></script>
 <script src={% static "js/jquery.min.js" %}></script>
 </body>

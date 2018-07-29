@@ -1,12 +1,15 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 {% load staticfiles %}
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <title>مهرانه</title>
+    <title>ثبت نام- موسسات </title>
+    <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href={% static "css/style.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "css/editProfileBenefactor.css" %}>
+    <link rel="stylesheet" href={% static "css/ionicons.min.css" %}>
 </head>
 <body>
+{{ form.errors }}
 <div class="main">
     {% if not request.user.is_authenticated %}
         <div id="checkspann" class="1"></div>
@@ -41,7 +44,7 @@
                         <a href="{% url 'logout' %}">خروج</a>
                     </div>
                     <div class="logo">
-                        <img src="../static/images/logo.png">
+                        <img src="../../static/images/logo.png">
                     </div>
                 </div>
             {% endif %}
@@ -57,14 +60,14 @@
                         <button onclick="popupregister()">ثبت نام</button>
                     </div>
                     <div class="logo">
-                        <img src="../static/images/logo.png">
+                        <img src="../../static/images/logo.png">
                     </div>
                 </div>
             {% endif %}
         </div>
     </div>
     <div class="mainPage">
-        <div class="wrappera"></div>
+        <div class="wrapper"></div>
         <div id="test">
             <div class="wrappers">
                 <form class="login" method="post" action="{% url 'login' %}">
@@ -101,12 +104,74 @@
                 </form>
             </div>
         </div>
-        <div class="nav" id="nav">
+        <div class="nav" id="nav"></div>
+        <div class="formm" style="z-index:9">
+            <form method="post" enctype="multipart/form-data">
+                <h2>مشخصات</h2>
+                {% csrf_token %}
+                <div class="controls">
+                    <input type="text" id="name" class="floatlabel" placeholder="نام موسسه" name="name">
+                </div>
 
-        </div>
-        <div style="z-index: 2;">
-            <h4 style="width: 80%; margin: auto; text-align: center; margin-top: 200px; color: #222222;">پروژه مدنظر شما با موفقیت حذف شد.</h4>
-            <a style="display: block; width: 80%; margin: auto; text-align: center; margin-top: 20px; text-decoration: none; color: #222222;" href={% url 'index' %}>صفحه اصلی</a>
+                <div class="controls">
+                    <input type="text" id="username" class="floatlabel" placeholder="نام کاربری" name="username">
+                </div>
+                <div class="controls">
+                    <input type="password" id="pass1" class="floatlabel" placeholder="کلمه عبور" name="password">
+                </div>
+                <div class="controls">
+                    <input type="password" id="pass2" class="floatlabel" placeholder="تکرار کلمه عبور" name="password2">
+                </div>
+
+                <div class="controls">
+                    <h3>تاریخ ثبت</h3>
+                    <input type="number" id="date" class="birthday" placeholder="روز" name="day">
+                    <input type="number" id="month" class="birthday" placeholder="ماه" name="month">
+                    <input type="number" id="year" class="birthday" placeholder="سال" name="year">
+                </div>
+
+                <div class="controls">
+                    <i class="ion-navicon"></i>
+                    <select id="city" class="floatlabel" name="city">
+                        <option value="blank">شهر</option>
+                        {% for city in cities %}
+                            <option value="{{ city.name }}">{{ city.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="controls">
+                    <input type="text" id="addr" class="floatlabel" placeholder="آدرس" name="address">
+                </div>
+
+                <div class="controls">
+                    <input type="email" id="email" class="floatlabel" placeholder="ایمیل" name="email">
+                </div>
+
+                <div class="controls">
+                    <input type="tel" id="tel" class="floatlabel" placeholder="تلفن" name="phone">
+                </div>
+                <div class="controls">
+                    <input type="web" id="web" class="floatlabel" placeholder="وب سایت" name="website">
+                </div>
+
+                <div class="controls">
+                    <input type="text" id="parvaneh" class="floatlabel" placeholder="پروانه فعالیت" name="license">
+                </div>
+
+                <div class="controls">
+                    <h4 style="display: inline; margin-left: 10px;"> لوگو </h4>
+                    <input type="file" id="photo" name="image">
+                </div>
+
+                <div class="controls">
+                    <input type="checkbox" id="checkbox" class="checkbox" name="terms">
+                    <label class="checkb" style="display: inline;" for="checkbox"><span></span><a
+                            href={% url 'terms' %} style="text-decoration: none; color: #009966">قوانین</a> را قبول دارم</label>
+                </div>
+
+                <button>ثبت</button>
+            </form>
         </div>
     </div>
     <div class="footer">
@@ -121,6 +186,8 @@
         </div>
     </div>
 </div>
+<script type="text/javascript" src={% static "js/registerOrganization.js" %}></script>
 <script type="text/javascript" src={% static "js/main.js" %}></script>
+<script src={% static "js/jquery.min.js" %}></script>
 </body>
 </html>

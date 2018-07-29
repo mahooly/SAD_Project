@@ -44,14 +44,14 @@ if (mm === "2") {
 
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "/create_project");
+	a1.setAttribute('href', "register/project");
 	a1.innerText = "ثبت پروژه جدید";
 	li1.appendChild(a1);
 	ul1.appendChild(li1);
 
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "/submit_requirement");
+	a1.setAttribute('href', "/register/requirement");
 	a1.innerText = "ثبت نیازمندی جدید";
 	li1.appendChild(a1);
 	ul1.appendChild(li1);
@@ -64,19 +64,19 @@ if (mm === "2") {
 	li2.appendChild(a1);
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "/reportCash");
+	a1.setAttribute('href', "/report_cash");
 	a1.innerText = "وضعیت تامین مالی پروژه‌ها";
 	li1.appendChild(a1);
 	ol1.appendChild(li1);
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "/sent_requests");
+	a1.setAttribute('href', "/profile/requests/sent");
 	a1.innerText = "پیشنهادهای ارسال‌ شده";
 	li1.appendChild(a1);
 	ol1.appendChild(li1);
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "/waiting_requests");
+	a1.setAttribute('href', "/profile/requests/pending");
 	a1.innerText = "پیشنهادهای دریافت شده";
 	li1.appendChild(a1);
 	ol1.appendChild(li1);
@@ -85,14 +85,14 @@ if (mm === "2") {
 	
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "/search_abilities");
+	a1.setAttribute('href', "/search/abilities");
 	a1.innerText = "جستجوی نیکوکاران";
 	li1.appendChild(a1);
 	ul1.appendChild(li1);
 	
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "/editprofileorg");
+	a1.setAttribute('href', "/profile/edit_organization");
 	a1.innerText = "ویرایش حساب کاربری";
 	li1.appendChild(a1);
 	ul1.appendChild(li1);
@@ -115,13 +115,13 @@ else if (mm === "3") {
 	ol1.setAttribute('class', "innermenu");
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "/search_projects");
+	a1.setAttribute('href', "/search/projects");
 	a1.innerText = "جستجوی پروژه";
 	li1.appendChild(a1);
 	ol1.appendChild(li1);
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "/search_requirements");
+	a1.setAttribute('href', "/search/requirements");
 	a1.innerText = "جستجوی نیازمندی";
 	li1.appendChild(a1);
 	ol1.appendChild(li1);
@@ -136,13 +136,13 @@ else if (mm === "3") {
 	li2.appendChild(a1);
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "/sent_requests");
+	a1.setAttribute('href', "/profile/requests/sent");
 	a1.innerText = "پیشنهادهای ارسال‌ شده";
 	li1.appendChild(a1);
 	ol1.appendChild(li1);
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "/waiting_requests");
+	a1.setAttribute('href', "/profile/requests/pending");
 	a1.innerText = "پیشنهادهای دریافت شده";
 	li1.appendChild(a1);
 	ol1.appendChild(li1);
@@ -151,7 +151,7 @@ else if (mm === "3") {
 	
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "/editprofileben");
+	a1.setAttribute('href', "/profile/edit_benefactor");
 	a1.innerText = "ویرایش حساب کاربری";
 	li1.appendChild(a1);
 	ul1.appendChild(li1);
@@ -174,19 +174,19 @@ else if (mm === "4") {
 	ol1.setAttribute('class', "innermenu1");
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "/search_projects");
+	a1.setAttribute('href', "/search/projects");
 	a1.innerText = "جستجوی پروژه";
 	li1.appendChild(a1);
 	ol1.appendChild(li1);
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "/search_abilities");
+	a1.setAttribute('href', "/search/abilities");
 	a1.innerText = "جستجوی نیکوکاران";
 	li1.appendChild(a1);
 	ol1.appendChild(li1);
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "/search_requirements");
+	a1.setAttribute('href', "/search/requirements");
 	a1.innerText = "جستجوی نیازمندی";
 	li1.appendChild(a1);
 	ol1.appendChild(li1);
@@ -195,7 +195,7 @@ else if (mm === "4") {
 
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "/reports");
+	a1.setAttribute('href', "/admin/reports");
 	a1.innerText = "گزارش‌ها";
 	li1.appendChild(a1);
 	ul1.appendChild(li1);
@@ -209,13 +209,13 @@ else if (mm === "4") {
 	ol1.setAttribute('class', "innermenu");
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "/register_benefactor");
+	a1.setAttribute('href', "/register/benefactor");
 	a1.innerText = "نیکوکار";
 	li1.appendChild(a1);
 	ol1.appendChild(li1);
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "/register_organization");
+	a1.setAttribute('href', "/register/organization");
 	a1.innerText = "موسسه";
 	li1.appendChild(a1);
 	ol1.appendChild(li1);
@@ -224,7 +224,7 @@ else if (mm === "4") {
 
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "/waiting_registers");
+	a1.setAttribute('href', "/admin/waiting_registers");
 	a1.innerText = "لیست کاربران در انتظار تایید ";
 	li1.appendChild(a1);
 	ul1.appendChild(li1);
@@ -238,19 +238,19 @@ else if (mm === "4") {
 	ol1.setAttribute('class', "innermenu1");
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "/changeAbilities");
+	a1.setAttribute('href', "/admin/change_abilities");
 	a1.innerText = "توانایی‌ها";
 	li1.appendChild(a1);
 	ol1.appendChild(li1);
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "/changeCities");
+	a1.setAttribute('href', "/admin/change_cities");
 	a1.innerText = "شهرها";
 	li1.appendChild(a1);
 	ol1.appendChild(li1);
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "/changeCategories");
+	a1.setAttribute('href', "/admin/change_categories");
 	a1.innerText = "زمینه‌‌های فعالیت پروژه‌";
 	li1.appendChild(a1);
 	ol1.appendChild(li1);

@@ -9,7 +9,7 @@ class CustomUser(AbstractUser):
     state = models.NullBooleanField(default=None)
     isBen = models.BooleanField(default=False)
     isOrg = models.BooleanField(default=False)
-    image = models.ImageField(upload_to='../media/profile_pics/', default='../media/profile_pics/no-picture.png')
+    image = models.ImageField(upload_to='../../media/profile_pics/', default='../../media/profile_pics/no-picture.png')
 
     def __str__(self):
         return self.username
@@ -78,7 +78,7 @@ class Benefactor(models.Model):
     rate = models.ForeignKey(TotalRate, on_delete=models.CASCADE, related_name='rate')
 
 
-class Organizer(models.Model):
+class Organization(models.Model):
 
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='organizer')
     name = models.CharField(max_length=20)

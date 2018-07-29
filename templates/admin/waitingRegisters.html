@@ -1,10 +1,12 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 {% load staticfiles %}
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <title>مهرانه</title>
-    <link rel="stylesheet" type="text/css" href={% static "css/style.css" %}>
+    <title>جستجوی نیکوکاران</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href= {% static "css/waitingRegisters.css" %}>
+    <link rel="stylesheet" type="text/css" href= {% static "css/style.css" %}>
+    <link rel="stylesheet" href= {% static "css/ionicons.min.css" %}>
 </head>
 <body>
 <div class="main">
@@ -41,7 +43,7 @@
                         <a href="{% url 'logout' %}">خروج</a>
                     </div>
                     <div class="logo">
-                        <img src="../static/images/logo.png">
+                        <img src="../../static/images/logo.png">
                     </div>
                 </div>
             {% endif %}
@@ -57,14 +59,14 @@
                         <button onclick="popupregister()">ثبت نام</button>
                     </div>
                     <div class="logo">
-                        <img src="../static/images/logo.png">
+                        <img src="../../static/images/logo.png">
                     </div>
                 </div>
             {% endif %}
         </div>
     </div>
     <div class="mainPage">
-        <div class="wrappera"></div>
+        <div class="wrapper"></div>
         <div id="test">
             <div class="wrappers">
                 <form class="login" method="post" action="{% url 'login' %}">
@@ -101,17 +103,37 @@
                 </form>
             </div>
         </div>
-        <div class="nav" id="nav">
-
-        </div>
-        <div style="z-index: 2;">
-            <h4 style="width: 80%; margin: auto; text-align: center; margin-top: 200px; color: #222222;">پروژه شما با
-                موفقیت ثبت شد.</h4>
-            <a style="display: block; width: 80%; margin: auto; text-align: center; margin-top: 20px; text-decoration: none; color: #222222;"
-               href={% url 'createProject' %}>بازگشت به صفحه ثبت پروژه جدید</a>
-            <a style="display: block; width: 80%; margin: auto; text-align: center; margin-top: 20px; text-decoration: none; color: #222222;" href={% url 'index' %}>صفحه اصلی</a>
+        <div class="nav" id="nav"></div>
+        <div class="container">
+            {% for user in users %}
+                <div id="result">
+                    <div class="project">
+                        <div class="specifications">
+                            {% if user.isBen %}
+                                <a href={% url 'profile' user.username %}>{{ user.benefactor.name }} {{ user.benefactor.surname }}
+                                    ( {{ user.benefactor.nickname }} ) : نیکوکار</a>
+                            {% endif %}
+                            {% if user.isOrg %}
+                                <a href={% url 'profile' user.username %}>{{ user.organizer.name }} : موسسه</a>
+                            {% endif %}
+                        </div>
+                        <div class="cost">
+                            <button onclick=clicked({{ user.id }},1); style="background: rgb(61, 177, 58)">تایید
+                            </button>
+                        </div>
+                        <div class="cost">
+                            <button onclick=clicked({{ user.id }},2); style="background: rgb(188, 0, 58)">رد</button>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <form method="post" id="form1" style="display: none;">
+                {% csrf_token %}
+                <input type="text" name="req" id="a1">
+            </form>
         </div>
     </div>
+
     <div class="footer">
         <div class="container">
             <div class="addr">
@@ -124,6 +146,8 @@
         </div>
     </div>
 </div>
+<script type="text/javascript" src={% static "js/waitingRegisters.js" %}></script>
 <script type="text/javascript" src={% static "js/main.js" %}></script>
+<script src={% static "js/jquery.min.js" %}></script>
 </body>
 </html>
