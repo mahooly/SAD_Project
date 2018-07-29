@@ -130,7 +130,6 @@ def organization_registration(request):
 
 
 @login_required
-@organization_only
 def project_creation(request):
     categories = Category.objects.all()
     cities = City.objects.all()
@@ -173,7 +172,6 @@ def my_login(request):
 
 
 @login_required
-@benefactor_only
 def update_benefactor_profile(request):
     abilities = Ability.objects.all()
     user = CustomUser.objects.get(username=request.user.username)
@@ -242,7 +240,6 @@ def update_benefactor_profile(request):
 
 
 @login_required
-@organization_only
 def update_organization_profile(request):
     cities = City.objects.all()
     if request.method == 'POST':
@@ -286,7 +283,6 @@ def update_organization_profile(request):
 
 
 @login_required
-@admin_ben
 def list_projects(request):
     categories = Category.objects.all()
     if request.method == 'POST':
@@ -330,7 +326,6 @@ def list_projects(request):
 
 
 @login_required
-@admin_ben
 def list_requirement(request):
     name = request.POST.get('org', '')
     all_req = Requirement.objects.filter(user__organizer__name__icontains=name)
@@ -381,7 +376,6 @@ def list_requirement(request):
 
 
 @login_required
-@admin_org
 def list_abilities(request):
     name = request.POST.get('orgName', '')
     all_user_abilities = UserAbilities.objects.filter(username__benefactor__nickname__icontains=name)
@@ -532,7 +526,6 @@ def project(request, username, pId):
 
 
 @login_required
-@organization_only
 def submit_requirement(request):
     abilities = Ability.objects.all()
     cities = City.objects.all()
@@ -565,7 +558,6 @@ def submit_requirement(request):
 
 
 @login_required
-@admin_only
 def waiting_registers(request):
     if request.method == 'POST':
         split = request.POST['req'].split('-')
@@ -581,7 +573,6 @@ def waiting_registers(request):
 
 
 @login_required
-@benefactor_only
 def send_request_organization(request, username, reqId):
     if request.method == 'POST':
         user = CustomUser.objects.get(username=username)
@@ -615,7 +606,6 @@ def send_request_organization(request, username, reqId):
 
 
 @login_required
-@admin_only
 def report_admin(request):
     reports = Report.objects.all()
     if request.method == 'POST':
@@ -639,7 +629,6 @@ def report_admin(request):
 
 
 @login_required
-@organization_only
 def send_request_benefactor(request, username):
     if request.method == 'POST':
         user = CustomUser.objects.get(username=username)
@@ -682,14 +671,12 @@ def waiting_requests(request):
 
 
 @login_required
-@organization_only
 def report_cash(request):
     projects = Project.objects.filter(user=request.user)
     return render(request, 'reportCash.html', {'projects': projects})
 
 
 @login_required
-@admin_only
 def report_project(request, pId):
     project = get_object_or_404(Project, id=pId)
     reports = []
@@ -699,9 +686,7 @@ def report_project(request, pId):
 
 
 @login_required
-@admin_only
 def change_cities(request):
-    cities = City.objects.all()
     if request.method == 'POST':
         if request.POST['type'] == "1":
             c = City.objects.create(name=request.POST['city'])
@@ -725,15 +710,12 @@ def change_cities(request):
                 user.city = "سایر"
                 user.save()
             c.delete()
-        cities = City.objects.all()
-        return render(request, 'changeCities.html', {'cities': cities})
+    cities = City.objects.all()
     return render(request, 'changeCities.html', {'cities': cities})
 
 
 @login_required
-@admin_only
 def change_categories(request):
-    categories = Category.objects.all()
     if request.method == 'POST':
         if request.POST['type'] == "1":
             c = Category.objects.create(name=request.POST['city'])
@@ -741,15 +723,12 @@ def change_categories(request):
         else:
             c = Category.objects.get(name=request.POST['city'])
             c.delete()
-        categories = Category.objects.all()
-        return render(request, 'changeCategories.html', {'categories': categories})
+    categories = Category.objects.all()
     return render(request, 'changeCategories.html', {'categories': categories})
 
 
 @login_required
-@admin_only
 def change_abilities(request):
-    abilities = Ability.objects.all()
     if request.method == 'POST':
         if request.POST['type'] == "1":
             c = Ability.objects.create(name=request.POST['city'])
@@ -766,8 +745,7 @@ def change_abilities(request):
             for r in ra:
                 r.delete()
             c.delete()
-        abilities = Ability.objects.all()
-        return render(request, 'changeAbilities.html', {'abilities': abilities})
+    abilities = Ability.objects.all()
     return render(request, 'changeAbilities.html', {'abilities': abilities})
 
 
@@ -789,7 +767,6 @@ def sent_requests(request):
 
 
 @login_required
-@admin_only
 def remove_report(request, rId):
     report = Report.objects.get(id=rId)
     if report.type == '1':
