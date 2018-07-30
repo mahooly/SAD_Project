@@ -678,6 +678,7 @@ def report_cash(request):
     return render(request, 'main/reportCash.html', {'projects': projects})
 
 
+@admin_only
 def report_project(request, p_id):
     get_project = get_object_or_404(Project, id=p_id)
     print(get_project)

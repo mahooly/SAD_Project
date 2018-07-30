@@ -29,7 +29,7 @@
             {% if request.user.is_authenticated %}
                 <div class="container">
                     <div class="topPhoto">
-                        <img src="{{ request.user.image }}">
+                        <img src="../{{ request.user.image }}">
                     </div>
                     <div class="topmenuelements">
                         {% if request.user.isOrg %}
@@ -135,7 +135,7 @@
                             {% csrf_token %}
                             <div class="controlsname">
                                 <input id="orgName" type="text" placeholder="نام موسسه" onchange="show()" name="org">
-                                <img src="../static/images/search.png" onclick="show()">
+                                <img src="../../static/images/search.png" onclick="show()">
                             </div>
                             <h4> مرتب‌سازی بر اساس </h4>
                             <select id="sortType" name="sortType">
