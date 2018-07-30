@@ -1,7 +1,7 @@
 SEX_CHOICES = (('male', 'Male'), ('female', 'Female'), ('other', 'Other'), ('blank', 'blank'))
 
 EDUCATION_CHOICES = (
-('nothing', 'nothing'), ('diploma', 'دیپلم و فوق دیپلم'), ('bachelor', 'لیسانس'), ('master', 'فوق لیسانس'), ('phd', 'دکترا'))
+('nothing', 'nothing'), ('diploma', 'دیپلم و فوق دیپلم'), ('bachelor', 'لیسانس'), ('master', 'فوق لیسانس'), ('phd', 'دکترا'), ('blank', 'blank'))
 
 BANK_CHOICES = (('card', '1'), ('account', '2'))
 

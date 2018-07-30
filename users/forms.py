@@ -58,6 +58,7 @@ class EditUser(forms.ModelForm):
     password2 = forms.CharField(widget=forms.PasswordInput, required=False)
     email = forms.EmailField(required=False)
     image = forms.ImageField(required=False)
+
     class Meta:
         model = CustomUser
         fields = ('username', 'password', 'email', 'password2', 'image')
@@ -76,9 +77,20 @@ class EditBenefactorProfile(forms.ModelForm):
     surname = forms.CharField(max_length=30, required=False)
     nickname = forms.CharField(max_length=30, required=False)
     gender = forms.ChoiceField(choices=SEX_CHOICES, required=False)
+    day = forms.CharField(max_length=2, required=False)
+    month = forms.CharField(max_length=2, required=False)
+    year = forms.CharField(max_length=4, required=False)
+    education = forms.ChoiceField(choices=EDUCATION_CHOICES, required=False)
+    major = forms.CharField(max_length=20, required=False)
+    nationalId = forms.CharField(max_length=10, required=False)
+    city = forms.CharField(max_length=10, required=False)
+    address = forms.CharField(max_length=100, required=False)
+    phone = forms.CharField(max_length=12, required=False)
+    typeOfCooperation = forms.ChoiceField(choices=COOP_CHOICES, required=False)
+
     class Meta:
         model = Benefactor
-        fields = ('name', 'surname', 'nickname', 'gender')
+        fields = ('name', 'surname', 'nickname', 'gender', 'day', 'month', 'year', 'education', 'major', 'nationalId', 'city', 'address', 'phone', 'typeOfCooperation')
 
 
 class EditOrganizationProfile(forms.ModelForm):
@@ -88,9 +100,14 @@ class EditOrganizationProfile(forms.ModelForm):
     phone = forms.CharField(max_length=15, required=False)
     website = forms.URLField(required=False)
     license = forms.CharField(max_length=20, required=False)
+    day = forms.CharField(max_length=2, required=False)
+    month = forms.CharField(max_length=2, required=False)
+    year = forms.CharField(max_length=4, required=False)
+    city = forms.CharField(max_length=10, required=False)
+
     class Meta:
         model = Organization
-        fields = ('name', 'address', 'phone', 'license', 'website')
+        fields = ('name', 'address', 'phone', 'license', 'website', 'day', 'month', 'year', 'city')
 
 
 class RateForm(forms.ModelForm):

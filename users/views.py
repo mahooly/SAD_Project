@@ -190,6 +190,7 @@ def update_benefactor_profile(request):
         user_form = EditUser(request.POST, request.FILES)
         form = EditBenefactorProfile(request.POST)
         week_form = WeekForm(request.POST)
+        print(form.data)
         if user_form.is_valid() and form.is_valid() and week_form.is_valid():
             for attr in user_form.data:
                 if attr in user_form.fields and user_form.data[attr] != '':
