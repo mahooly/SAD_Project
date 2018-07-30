@@ -69,52 +69,8 @@ def benefactor_registration(request):
             user = user_form.save()
             user.set_password(user.password)
             user.isBen = True
-            if request.user.is_authorized and not request.user.isBen and not request.user.isOrg:
+            if request.user.username != '' and request.user.is_authorized and not request.user.isBen and not request.user.isOrg:
                 user.state = True
-            user.save()
-            rate = TotalRate.objects.create()
-            benefactor = form.save(commit=False)
-            benefactor.user = user
-            if benefactor.typeOfCooperation != 'atHome':
-                week = week_form.save()
-                week.save()
-            else:
-                week = None
-            benefactor.wId = week
-            benefactor.rate = rate
-            benefactor.save()
-
-            for a in abilities:
-                name = a.name
-                if request.POST.get(name) is not None:
-                    UserAbilities.objects.create(abilityId=a, username=user)
-
-            return render(request, 'registration/thanks.html')
-
-        else:
-            print(user_form.errors, form.errors)
-
-    else:
-        user_form = UserForm()
-        form = BenefactorRegistraton()
-        week_form = WeekForm()
-    cities = City.objects.all()
-    return render(request, 'registration/registerBenefactor.html',
-                  {'user_form': user_form, 'form': form, 'week_form': week_form, 'abilities': abilities,
-                   'rangee': range(28), 'cities': cities})
-
-@admin_only
-def benefactor_registration_admin(request):
-    abilities = Ability.objects.all()
-    if request.method == 'POST':
-        user_form = UserForm(request.POST, request.FILES)
-        form = BenefactorRegistraton(request.POST)
-        week_form = WeekForm(request.POST)
-        if form.is_valid() and user_form.is_valid() and week_form.is_valid():
-            user = user_form.save()
-            user.set_password(user.password)
-            user.isBen = True
-            user.state = True
             user.save()
             rate = TotalRate.objects.create()
             benefactor = form.save(commit=False)
@@ -158,36 +114,8 @@ def organization_registration(request):
             user = user_form.save()
             user.set_password(user.password)
             user.isOrg = True
-            user.save()
-            organizer = form.save(commit=False)
-            organizer.user = user
-            organizer.rate = TotalRate.objects.create()
-            organizer.save()
-
-            return render(request, 'registration/thanks.html')
-
-        else:
-            print(user_form.errors, form.errors)
-
-    else:
-        user_form = UserForm()
-        form = BenefactorRegistraton()
-
-    return render(request, 'registration/registerOrganization.html',
-                  {'user_form': user_form, 'form': form, 'cities': cities})
-
-@admin_only
-def organization_registration_admin(request):
-    cities = City.objects.all()
-    if request.method == 'POST':
-        user_form = UserForm(request.POST)
-        form = OrganizationRegistration(request.POST, request.FILES)
-
-        if user_form.is_valid() and form.is_valid():
-            user = user_form.save()
-            user.set_password(user.password)
-            user.isOrg = True
-            user.state = True
+            if request.user.username != '' and request.user.is_authorized and not request.user.isBen and not request.user.isOrg:
+                user.state = True
             user.save()
             organizer = form.save(commit=False)
             organizer.user = user
@@ -957,8 +885,26 @@ def donate(request):
 
 @login_required
 def changeProject(request, pId):
-    project = Project.objects.get(id=pId)
     if request.method == 'POST':
+        project = Project.objects.get(id=pId)
         project.budget = request.POST['budget']
         project.description = request.POST['description']
         project.save()
+    return render(request, 'registration/thanksSubmitProject.html')
+
+
+@login_required
+def changeRequirement(request, reqId):
+    if request.method == 'POST':
+        week_form = WeekForm(request.POST)
+        print('hi')
+        if week_form.is_valid():
+            print("hi2")
+            week = week_form.save()
+            week.save()
+            requirement = Requirement.objects.get(id=reqId)
+            requirement.address = request.POST['address']
+            requirement.description = request.POST['description']
+            requirement.wId = week
+            requirement.save()
+    return render(request, 'registration/thanksSubmitRequirement.html')
