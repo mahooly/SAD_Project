@@ -190,7 +190,6 @@ def update_benefactor_profile(request):
         user_form = EditUser(request.POST, request.FILES)
         form = EditBenefactorProfile(request.POST)
         week_form = WeekForm(request.POST)
-        print(form.data)
         if user_form.is_valid() and form.is_valid() and week_form.is_valid():
             for attr in user_form.data:
                 if attr in user_form.fields and user_form.data[attr] != '':
@@ -682,11 +681,9 @@ def report_cash(request):
 @admin_only
 def report_project(request, p_id):
     get_project = get_object_or_404(Project, id=p_id)
-    print(get_project)
     reports = []
     if get_project.user == request.user:
         reports = Report.objects.filter(description=get_project.id, organization=get_project.user, type=3)
-    print(reports)
     return render(request, 'admin/reportProject.html', {'project': get_project, 'reports': reports})
 
 
@@ -866,45 +863,40 @@ def delete_request(request):
 
 
 def donate(request):
-    print("in")
     if request.method == 'POST':
-        print("in in")
-        id = request.POST['projectId']
+        p_id = request.POST['projectId']
         value = request.POST['value']
-        project = Project.objects.get(id=id)
-        if project is None:
-            return render(request, '404.html', status=404)
+        project_donate = Project.objects.get(id=p_id)
+        if project_donate is None:
+            return render(request, 'main/404.html', status=404)
         else:
-            print(project.alreadyPaid)
-            print(value)
-            project.alreadyPaid = project.alreadyPaid + int(value)
-            project.save()
-            r = Report.objects.create(benefactor=request.user, organization=project.user, type=3, description=project.id,
+            project_donate.alreadyPaid += int(value)
+            project_donate.save()
+            r = Report.objects.create(benefactor=request.user, organization=project_donate.user, type=3, description=project_donate.id,
                                       operator=1,
                                       date=datetime.datetime.today(), time=datetime.datetime.now(), payment=value)
             r.save()
-        return render(request, 'registration/thanksDonateProject.html', {'org': project.user.organizer})
+        return render(request, 'registration/thanksDonateProject.html', {'org': project_donate.user.organizer})
+
 
 @login_required
-def changeProject(request, pId):
+def change_project(request, p_id):
     if request.method == 'POST':
-        project = Project.objects.get(id=pId)
-        project.budget = request.POST['budget']
-        project.description = request.POST['description']
-        project.save()
+        project_change = Project.objects.get(id=p_id)
+        project_change.budget = request.POST['budget']
+        project_change.description = request.POST['description']
+        project_change.save()
     return render(request, 'registration/thanksSubmitProject.html')
 
 
 @login_required
-def changeRequirement(request, reqId):
+def change_requirement(request, req_id):
     if request.method == 'POST':
         week_form = WeekForm(request.POST)
-        print('hi')
         if week_form.is_valid():
-            print("hi2")
             week = week_form.save()
             week.save()
-            requirement = Requirement.objects.get(id=reqId)
+            requirement = Requirement.objects.get(id=req_id)
             requirement.address = request.POST['address']
             requirement.description = request.POST['description']
             requirement.wId = week
