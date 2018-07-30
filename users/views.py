@@ -583,7 +583,6 @@ def send_request_organization(request, username, req_id):
             weekForm = WeekForm(request.POST)
             week = weekForm.save()
             week.save()
-            print(week)
             req = Request.objects.create(benefactorId=request.user, organizationId=user, wId=week,
                                          city=requirement.city,
                                          description=desc, reqId=requirement)
@@ -666,7 +665,6 @@ def waiting_requests(request):
         requests = Request.objects.filter(organizationId=request.user, whoSubmit='1', state=False)
     for req in requests:
         requestsAbilities.append(RequestAbilities.objects.filter(reqId=req))
-    print(requestsAbilities)
     return render(request, 'profile/waitingRequests.html', {'requestsAbilities': requestsAbilities})
 
 
@@ -757,12 +755,9 @@ def sent_requests(request):
     else:
         requests = Request.objects.filter(organizationId=request.user, whoSubmit='2')
     for req in requests:
-        print(req)
         r = RequestAbilities.objects.filter(reqId=req)
         if len(r) > 0:
             requestsAbilities.append(r)
-    print(requestsAbilities)
-    print(requests)
     return render(request, 'profile/sentRequests.html', {'requestAbilities': requestsAbilities})
 
 
@@ -779,7 +774,6 @@ def remove_report(request, r_id):
             count = Rate.objects.filter(ratedUser=report.benefactor).count()
 
         totalRate.f1 = ((totalRate.f1 * count) - ((rate.f1 - 1) / 4 * 100)) / (count - 1)
-        print(totalRate.f1)
         totalRate.f2 = ((totalRate.f2 * count) - ((rate.f2 - 1) / 4 * 100)) / (count - 1)
         totalRate.f3 = ((totalRate.f3 * count) - ((rate.f3 - 1) / 4 * 100)) / (count - 1)
         totalRate.f4 = ((totalRate.f4 * count) - ((rate.f4 - 1) / 4 * 100)) / (count - 1)
