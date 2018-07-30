@@ -74,3 +74,10 @@ function deleteReq(e) {
 function popdownDeleteReq(e) {
     document.getElementById("delete"+e).style.display="none";
 }
+
+buttons = document.getElementsByClassName("exitbutton");
+for (i = 0 ; i < buttons.length; i ++) {
+    buttons[i].addEventListener('click', function (e) {
+        e.preventDefault()
+    });
+}
