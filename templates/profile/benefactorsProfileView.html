@@ -374,6 +374,9 @@
 
                     {% for i in rangee %}
                         <input type="checkbox" id="c{{ i }}" name="c{{ i }}" style="display: none">{% endfor %}
+                    {% if benefactor.typeOfCooperation == "atHome" %}
+                        <h3>دورکاری</h3>
+                    {% endif %}
                 </div>
                 <h2>توضیحات بیشتر</h2>
                 <div class="controls">

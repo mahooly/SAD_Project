@@ -364,6 +364,10 @@
                         <input type="checkbox" name="a27" id="a27" style="display: none" checked>{% endif %}
                     {% if week.c27 == "off" %}
                         <input type="checkbox" name="a27" id="a27" style="display: none">{% endif %}
+
+                    {% if benefactor.typeOfCooperation == "atHome" %}
+                        <h3>دورکاری</h3>
+                    {% endif %}
                 </div>
                 <button class="subreq" style="background-color: #f72c2c; z-index:4" onclick="popupDelete()">حذف کاربر</button>
             </div>

@@ -337,6 +337,9 @@
                                         {% if req.0.reqId.wId.c27 == "off" %}<input type="checkbox" name="a{{ req.0.reqId.id }}b27" id="a{{ req.0.reqId.id }}b27" style="display: none" >{% endif %}
 
                                         {% for i in rangee %}<input type="checkbox" id="a{{ req.0.reqId.id }}c{{ i }}" name="c{{ i }}" style="display: none">{% endfor %}
+                                        {% if req.0.reqId.typeOfCooperation == "atHome" %}
+                                            <h3>دورکاری</h3>
+                                        {% endif %}
                                     {% endif %}
                                     <h2>توضیحات بیشتر</h2>
                                     <div class="controls">
