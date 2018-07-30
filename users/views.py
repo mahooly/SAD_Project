@@ -38,7 +38,7 @@ def handler500(request):
 
 def index(request):
     orgs = Organization.objects.all()[:4]
-    bens = Benefactor.objects.all()[:4]
+    bens = Benefactor.objects.all()[:]
     orgRequirements = []
     orgProjects = []
     benAbilities = []
@@ -479,7 +479,7 @@ def user_profile(request, username):
 
 @login_required
 def rate_user(request, username):
-    user = get_object_or_404(CustomUser, username=username)
+    user = get_object_or_404(CustomUser, username=username, state=True)
     if request.method == 'POST':
         form = RateForm(request.POST)
         rate = form.save(commit=False)
@@ -519,7 +519,7 @@ def rate_user(request, username):
 
 @login_required
 def project(request, username, p_id):
-    user = get_object_or_404(CustomUser, username=username)
+    user = get_object_or_404(CustomUser, username=username, state=True)
     organization = Organization.objects.get(user=user)
     proj = get_object_or_404(Project, id=p_id)
     return render(request, 'project.html', {'user': user, 'org': organization, 'project': proj})
