@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.models import AnonymousUser
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
@@ -60,6 +61,7 @@ def terms(request):
 
 
 def benefactor_registration(request):
+    print(request.user.username)
     abilities = Ability.objects.all()
     if request.method == 'POST':
         user_form = UserForm(request.POST, request.FILES)
@@ -69,7 +71,7 @@ def benefactor_registration(request):
             user = user_form.save()
             user.set_password(user.password)
             user.isBen = True
-            if request.user.is_authorized and not request.user.isBen and not request.user.isOrg:
+            if request.user.username != '' and request.user.is_authorized and not request.user.isBen and not request.user.isOrg:
                 user.state = True
             user.save()
             rate = TotalRate.objects.create()
@@ -102,6 +104,7 @@ def benefactor_registration(request):
     return render(request, 'registration/registerBenefactor.html',
                   {'user_form': user_form, 'form': form, 'week_form': week_form, 'abilities': abilities,
                    'rangee': range(28), 'cities': cities})
+
 
 @admin_only
 def benefactor_registration_admin(request):
@@ -153,7 +156,6 @@ def organization_registration(request):
     if request.method == 'POST':
         user_form = UserForm(request.POST)
         form = OrganizationRegistration(request.POST, request.FILES)
-
         if user_form.is_valid() and form.is_valid():
             user = user_form.save()
             user.set_password(user.password)
@@ -175,6 +177,7 @@ def organization_registration(request):
 
     return render(request, 'registration/registerOrganization.html',
                   {'user_form': user_form, 'form': form, 'cities': cities})
+
 
 @admin_only
 def organization_registration_admin(request):
@@ -750,6 +753,7 @@ def report_cash(request):
     return render(request, 'main/reportCash.html', {'projects': projects})
 
 
+@admin_only
 def report_project(request, p_id):
     get_project = get_object_or_404(Project, id=p_id)
     print(get_project)

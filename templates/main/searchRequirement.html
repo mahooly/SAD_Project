@@ -29,7 +29,7 @@
             {% if request.user.is_authenticated %}
                 <div class="container">
                     <div class="topPhoto">
-                        <img src="{{ request.user.image }}">
+                        <img src="../{{ request.user.image }}">
                     </div>
                     <div class="topmenuelements">
                         {% if request.user.isOrg %}
@@ -176,7 +176,7 @@
                     <div class="container">
                         <div class="controlsname">
                             <input name="org" type="text" placeholder="نام موسسه">
-                            <img src="../static/images/search.png">
+                            <img src="../../static/images/search.png">
                         </div>
                         <h4> مرتب‌سازی بر اساس </h4>
                         <select name="sortType">
