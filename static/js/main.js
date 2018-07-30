@@ -257,3 +257,12 @@ else if (mm === "4") {
 	li2.appendChild(ol1);
 	ul1.appendChild(li2);
 }
+else {
+	var li1 = document.createElement('li');
+	var a1 = document.createElement('a');
+	a1.setAttribute('href', "/");
+	a1.innerText = "صفحه اصلی";
+	li1.appendChild(a1);
+	ul1.appendChild(li1);
+	div1.appendChild(ul1);
+}

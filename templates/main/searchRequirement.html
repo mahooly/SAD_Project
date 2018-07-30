@@ -43,7 +43,7 @@
                         <a href="{% url 'logout' %}">خروج</a>
                     </div>
                     <div class="logo">
-                        <img src="../../static/images/logo.png">
+                        <img src="../static/images/logo.png">
                     </div>
                 </div>
             {% endif %}
@@ -59,7 +59,7 @@
                         <button onclick="popupregister()">ثبت نام</button>
                     </div>
                     <div class="logo">
-                        <img src="../../static/images/logo.png">
+                        <img src="../static/images/logo.png">
                     </div>
                 </div>
             {% endif %}
@@ -84,7 +84,7 @@
                     <div class="enter">
                         <button>ورود</button>
                     </div>
-                    <button class="forget">فراموشی رمز عبور</button>
+                    <a href={% url 'password_reset' %} class="forget">فراموشی رمز عبور</a>
 
                     <p> اگر هنوز حساب کاربری برای خود ایجاد نکرده‌اید، </p>
                     <button class="reg" id="buttonreg" onclick="popupregister()">ثبت نام</button>
@@ -125,51 +125,7 @@
                     <div class="controls">
                         <input name="minimumtotalrating" type="text" placeholder="حداقل امتیاز موسسه (۵-۱)">
                     </div>
-                    {#					<div class="rating">#}
-                    {#					<table id="ratingTable">#}
-                    {#						<tr id="tr1">#}
-                    {#							<td id="firstTd">فعالیت اعضا</td>#}
-                    {#							<td><button id="button11" onclick="rate(1,1)"></button></td>#}
-                    {#							<td><button id="button12" onclick="rate(1,2)"></button></td>#}
-                    {#							<td><button id="button13" onclick="rate(1,3)"></button></td>#}
-                    {#							<td><button id="button14" onclick="rate(1,4)"></button></td>#}
-                    {#							<td><button id="button15" onclick="rate(1,5)"></button></td>#}
-                    {#						</tr>#}
-                    {#						<tr id="tr2">#}
-                    {#							<td id="firstTd">مسيولیت پذیری</td>#}
-                    {#							<td><button id="button21" onclick="rate(2,1)"></button></td>#}
-                    {#							<td><button id="button22" onclick="rate(2,2)"></button></td>#}
-                    {#							<td><button id="button23" onclick="rate(2,3)"></button></td>#}
-                    {#							<td><button id="button24" onclick="rate(2,4)"></button></td>#}
-                    {#							<td><button id="button25" onclick="rate(2,5)"></button></td>#}
-                    {#						</tr>#}
-                    {#						<tr id="tr3">#}
-                    {#							<td id="firstTd">صداقت</td>#}
-                    {#							<td><button id="button31" onclick="rate(3,1)"></button></td>#}
-                    {#							<td><button id="button32" onclick="rate(3,2)"></button></td>#}
-                    {#							<td><button id="button33" onclick="rate(3,3)"></button></td>#}
-                    {#							<td><button id="button34" onclick="rate(3,4)"></button></td>#}
-                    {#							<td><button id="button35" onclick="rate(3,5)"></button></td>#}
-                    {#						</tr>#}
-                    {#						<tr id="tr4">#}
-                    {#							<td id="firstTd">تعهد</td>#}
-                    {#							<td><button id="button41" onclick="rate(4,1)"></button></td>#}
-                    {#							<td><button id="button42" onclick="rate(4,2)"></button></td>#}
-                    {#							<td><button id="button43" onclick="rate(4,3)"></button></td>#}
-                    {#							<td><button id="button44" onclick="rate(4,4)"></button></td>#}
-                    {#							<td><button id="button45" onclick="rate(4,5)"></button></td>#}
-                    {#						</tr>#}
-                    {#						<tr id="tr5">#}
-                    {#							<td id="firstTd">جو</td>#}
-                    {#							<td><button id="button51" onclick="rate(5,1)"></button></td>#}
-                    {#							<td><button id="button52" onclick="rate(5,2)"></button></td>#}
-                    {#							<td><button id="button53" onclick="rate(5,3)"></button></td>#}
-                    {#							<td><button id="button54" onclick="rate(5,4)"></button></td>#}
-                    {#							<td><button id="button55" onclick="rate(5,5)"></button></td>#}
-                    {#						</tr>#}
-                    {#					</table>#}
                     <button class="mybutton" onclick="this.form.submit()">اعمال تغییرات</button>
-                    {#				</div>#}
                 </div>
                 <div class="searchBar">
 
@@ -190,6 +146,9 @@
                 </div>
             </form>
             <div id="result">
+                {% if reqAbilities|length == 0 %}
+                    <h4 style="text-align: center">موردی یافت نشد.</h4>
+                {% endif %}
                 {% for req in reqAbilities %}
                     <div class="project">
                         <div class="specifications">
@@ -203,11 +162,11 @@
                         </div>
                         <div class="cost">
                             <h3>تعداد اعضا</h3>
-                            <span class="budget"> {{ req.0.reqId.NOP }} </span>
+                            <span class="budget"> {{ req.0.reqId.NOPs }} </span>
                         </div>
                         <div class="cost">
                             <h3>میانگین امتیاز موسسه</h3>
-                            <span class="budget">{{ req.0.reqId.user.organizer.rate.totalRate }}</span>
+                            <span class="budget">{{ req.0.reqId.user.organizer.rate.totalRate }}%</span>
                         </div>
                     </div>
                 {% endfor %}

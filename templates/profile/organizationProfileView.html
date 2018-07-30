@@ -11,63 +11,63 @@
 <body>
 	<div class="main">
 		{% if not request.user.is_authenticated %}
-           <div id="checkspann" class="1"></div>
-          {% endif %}
-          {% if request.user.is_authenticated %}
-           {% if request.user.isOrg %}
+        <div id="checkspann" class="1"></div>
+    {% endif %}
+    {% if request.user.is_authenticated %}
+        {% if request.user.isOrg %}
             <div id="checkspann" class="2"></div>
-           {% endif %}
-           {% if request.user.isBen %}
-            <div id="checkspann" class="3"></div>
-            {% endif %}
-           {% if not request.user.isOrg and not request.user.isBen %}
-            <div id="checkspann" class="4"></div>
-           {% endif %}
         {% endif %}
-		<div class="header">
-			<div class="topmenu" id="topmenu">
-                {% if request.user.is_authenticated %}
-				<div class="container">
-					<div class="topPhoto">
-						<img src="{{ request.user.image }}">
-					</div>
-					<div class="topmenuelements">
-						{% if request.user.isOrg %}
-						<a href={% url 'profile' request.user.username %}>{{request.user.organizer.name}}</a>
-						{% endif %}
-						{% if request.user.isBen %}
-						<a href={% url 'profile' request.user.username %}>{{request.user.benefactor.name}}  {{request.user.benefactor.surname}}</a>
-						{% endif %}
-					</div>
-					<div class="topmenudate">
-						<a href="{% url 'logout' %}">خروج</a>
-					</div>
-					<div class="logo">
-						<img src="../../static/images/logo.png">
-					</div>
-				</div>
-				{% endif %}
-                {% if not request.user.is_authenticated %}
-                     <div class="container">
-                        <div class="topmenudate">
-                            <h3>شما هنوز وارد نشده‌اید،</h3>
-                         </div>
-                         <div class="topmenudate">
-                            <button onclick="popup()">ورود</button>
-                         </div>
-                         <div class="topmenudate">
-                            <button onclick="popupregister()">ثبت نام</button>
-                         </div>
-                         <div class="logo">
-                            <img src="../../static/images/logo.png">
-                        </div>
+        {% if request.user.isBen %}
+            <div id="checkspann" class="3"></div>
+        {% endif %}
+        {% if not request.user.isOrg and not request.user.isBen %}
+            <div id="checkspann" class="4"></div>
+        {% endif %}
+    {% endif %}
+    <div class="header">
+        <div class="topmenu" id="topmenu">
+            {% if request.user.is_authenticated %}
+                <div class="container">
+                    <div class="topPhoto">
+                        <img src="../{{ request.user.image }}">
                     </div>
-                {% endif %}
-			</div>
-		</div>
-		<div class="mainPage">
-			<div class="wrapper"></div>
-			<div id="test">
+                    <div class="topmenuelements">
+                        {% if request.user.isOrg %}
+                            <a href={% url 'profile' request.user.username %}>{{ request.user.organizer.name }}</a>
+                        {% endif %}
+                        {% if request.user.isBen %}
+                            <a href={% url 'profile' request.user.username %}>{{ request.user.benefactor.name }} {{ request.user.benefactor.surname }}</a>
+                        {% endif %}
+                    </div>
+                    <div class="topmenudate">
+                        <a href="{% url 'logout' %}">خروج</a>
+                    </div>
+                    <div class="logo">
+                        <img src="../static/images/logo.png">
+                    </div>
+                </div>
+            {% endif %}
+            {% if not request.user.is_authenticated %}
+                <div class="container">
+                    <div class="topmenudate">
+                        <h3>شما هنوز وارد نشده‌اید،</h3>
+                    </div>
+                    <div class="topmenudate">
+                        <button onclick="popup()">ورود</button>
+                    </div>
+                    <div class="topmenudate">
+                        <button onclick="popupregister()">ثبت نام</button>
+                    </div>
+                    <div class="logo">
+                        <img src="../static/images/logo.png">
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="mainPage">
+        <div class="wrapper"></div>
+        <div id="test">
             <div class="wrappers">
                 <form class="login" method="post" action="{% url 'login' %}">
                     {% csrf_token %}
@@ -84,7 +84,7 @@
                     <div class="enter">
                         <button>ورود</button>
                     </div>
-                    <button class="forget">فراموشی رمز عبور</button>
+                    <a href={% url 'password_reset' %} class="forget">فراموشی رمز عبور</a>
 
                     <p> اگر هنوز حساب کاربری برای خود ایجاد نکرده‌اید، </p>
                     <button class="reg" id="buttonreg" onclick="popupregister()">ثبت نام</button>
@@ -103,12 +103,10 @@
                 </form>
             </div>
         </div>
-			<div class="nav" id="nav">
-
-			</div>
+        <div class="nav" id="nav"></div>
 			<div class="container">
 				<div style="position: relative; height: 350px;">
-                <div class="photo"><div id="photo"><img src="{{ user.image }}"></div></div>
+                <div class="photo"><div id="photo"><img src="../{{ user.image }}"></div></div>
 				<div class="personal">
 					<h2> مشخصات </h2>
 					<div id="personal">
@@ -119,28 +117,41 @@
                         <h3>آدرس: {{ org.address }}</h3>
                         <h3>وبسایت: <a style="padding: 4px 10px; background-color: #1abc9c; color: #eeeeee; text-decoration: none; border-radius: 5px" href="{{ org.website }}">{{ org.name }}</a> </h3>
                         <h3>تلفن: {{ org.phone }}</h3>
+                        <br>
+                        <h3>تعداد رای‌ها: {{ count }}</h3>
                     </div>
 				</div>
                 </div>
-				<div class="chartContainer" style="position: relative;">
-					<div id="chart">
+				<div class="chartContainer" style="width: 100%; float: right; display: flex">
+                    <div id="chart" style="width: 60%;">
+                        <div>
                             <table>
                                 <tbody>
                                 <tr class="bars">
                                     <td>
-                                        <div class="one" style="height: {{ org.rate.f1 }}%; position: absolute; width: 100%; bottom: 0px;">{{ org.rate.f1 }}%</div>
+                                        <div class="one"
+                                             style="height: {{ org.rate.f1 }}%; position: absolute; width: 100%; bottom: 0px;">{{ org.rate.f1 }}%
+                                        </div>
                                     </td>
                                     <td>
-                                        <div class="two" style="height: {{ org.rate.f2 }}%; position: absolute; width: 100%; bottom: 0px;">{{ org.rate.f2 }}%</div>
+                                        <div class="two"
+                                             style="height: {{ org.rate.f2 }}%; position: absolute; width: 100%; bottom: 0px;">{{ org.rate.f2 }}%
+                                        </div>
                                     </td>
                                     <td>
-                                        <div class="three" style="height: {{ org.rate.f3 }}%; position: absolute; width: 100%; bottom: 0px;">{{ org.rate.f3 }}%</div>
+                                        <div class="three"
+                                             style="height: {{ org.rate.f3 }}%; position: absolute; width: 100%; bottom: 0px;">{{ org.rate.f3 }}%
+                                        </div>
                                     </td>
                                     <td>
-                                        <div class="four" style="height: {{ org.rate.f4 }}%; position: absolute; width: 100%; bottom: 0px;">{{ org.rate.f4 }}%</div>
+                                        <div class="four"
+                                             style="height: {{ org.rate.f4 }}%; position: absolute; width: 100%; bottom: 0px;">{{ org.rate.f4 }}%
+                                        </div>
                                     </td>
                                     <td>
-                                        <div class="five" style="height: {{ org.rate.f5 }}%; position: absolute; width: 100%; bottom: 0px;">{{ org.rate.f5 }}%</div>
+                                        <div class="five"
+                                             style="height: {{ org.rate.f5 }}%; position: absolute; width: 100%; bottom: 0px;">{{ org.rate.f5 }}%
+                                        </div>
                                     </td>
                                     <td class="legend">
                                             <span class="legbox">
@@ -162,9 +173,23 @@
                                 </tr>
                                 </tbody>
                             </table>
+                        </div>
                     </div>
-				</div>
-                <a style="display: inline-block; padding: 2px 10px; font-size: 14px;  text-decoration: none; color: #fdfdfd; height: 30px; background: #1E90FF; border-radius: 15px;" href={% url 'comment' user.username %}>امتیازدهی به موسسه</a>
+                    <div style="float:left; width: 35%; display: inline-block">
+                        <h3 style="text-align: center;margin-bottom: 10px">نظرات</h3>
+                        <div style="height: 180px; overflow-y:scroll; background: rgba(255,255,255,0.8); padding: 5px">
+                            {% if comments|length == 0 %}
+                                <h5 style="margin-top: 5px;">نظری وجود ندارد</h5>
+                            {% endif %}
+                            {% for comment in comments %}
+                                <h5 style="width: 80%; margin: 10px auto 5px auto;border-bottom: 1px solid #777777">{{ comment.description }}</h5>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% if request.user.is_authenticated and request.user.isBen %}
+                    <a style="display: inline-block; padding: 2px 10px; font-size: 14px;  text-decoration: none; color: #fdfdfd; height: 30px; background: #1E90FF; border-radius: 15px;" href={% url 'comment' user.username %}>امتیازدهی به موسسه</a>
+                {% endif %}
 
 				<div id="projectscurrent">
 					<h2>پروژه های در دست انجام: </h2>
@@ -173,17 +198,18 @@
                         <div class="testreg" id="p{{ project.id }}" style="display: none; position: fixed;width: 100%;height: 1200px;top: 0;right: 0;background: rgba(0,0,0,0.6);z-index: 30;">
                             <div class="wrappers">
                                 <form class="register" method="post" action="{% url 'donate' %}">
-                                    <button class="exit" onclick=popdownProject("p{{ project.id }}")>x</button>
+                                    <button onclick=popdownProject("p{{ project.id }}"); style="width: 10%; padding: 0; text-align: center; float: right">x</button>
                                     <p class="title">{{ project.name }}</p>
                                         <h3 style="font-size: 12px;">میزان کل بودجه مورد نیاز(تومان): {{ project.budget }}</h3>
                                         <h3 style="margin-top: 3px; font-size: 12px;">میزان کل مبلغ پرداخت شده تا کنون(تومان): {{ project.alreadyPaid }}</h3>
-                                        <h3 style="margin-top: 3px; font-size: 12px;">شهر محل اجرای پروژه: {{ project.city }}</h3>
                                         <h3 style="margin-top: 3px; font-size: 12px;">توضیحات بیشتر: {{ project.description }}</h3>
                                         <h3 style="margin: 10px 0; font-size: 10px;">در صورت تمایل به کمک به این پروژه، لطفا مبلغ مورد نظر خود را وارد فرمایید</h3>
                                         {% csrf_token %}
-                                        <input type="number" name="value">
-                                        <input type="text" name="projectId" style="display: none" value="{{ project.id }}">
-                                        <button onclick="this.form.submit()" style="text-align: center">پرداخت</button>
+                                        {% if request.user.is_authenticated and request.user.isBen %}
+                                            <input type="number" name="value" placeholder="مبلغ‌(تومان)" style="text-align: center">
+                                            <input type="text" name="projectId" style="display: none" value="{{ project.id }}">
+                                            <button onclick="this.form.submit()" style="text-align: center">پرداخت</button>
+                                        {% endif %}
                                 </form>
                             </div>
                         </div>
@@ -201,20 +227,21 @@
                         <div class="testreg" id="r{{ req.0.reqId.id }}" style="display: none; position: fixed;width: 100%;height: 1200px;top: 0;right: 0;background: rgba(0,0,0,0.6);z-index: 30;">
                             <div class="wrappers">
 
-                                <form method="post" class="register" action="{% url 'send_request_org'  user.username req.0.reqId.id %}" style="margin-top: -450px; max-width: 500px; height: 500px; overflow-y:scroll; border-radius: 0px">
+                                <form method="post" class="register" action="{% url 'send_request_org'  user.username req.0.reqId.id %}" style="overflow-y:scroll;margin-top: -450px; max-width: 500px; height: 500px; overflow-y:scroll; border-radius: 0px">
                                     {% csrf_token %}
                                     <button onclick=popdownProject("r{{ req.0.reqId.id }}"); style="width: 10%; padding: 0; text-align: center; float: right">x</button>
                                     <p class="title">{{ req.0.reqId.name }}</p>
                                     <h3 style="font-size: 14px;">شهر: {{ req.0.reqId.city }}</h3>
                                     <h3 style="margin-top: 3px; font-size: 14px;">آدرس: {{ req.0.reqId.address }}</h3>
                                     <h3 style="margin-top: 3px; font-size: 14px;">توضیحات بیشتر: {{ req.0.reqId.description }}</h3>
-                                    <h3 style="margin-top: 3px; font-size: 14px;">تعداد مشارکت‌کنندگان: {{ req.0.reqId.NOP }}</h3>
+                                    <h3 style="margin-top: 3px; font-size: 14px;">تعداد مشارکت‌کنندگان: {{ req.0.reqId.NOPs }}</h3>
                                     <h3 style="margin-top: 3px; font-size: 14px;">توانایی‌های مورد نیاز: </h3>
                                     <ul id="ull{{ req.0.reqId.id }}">{% for ability in req %}<span id="{{ ability.abilityId.name }}" class="abilitySpan" style="display: block;margin: 2px 20px 2px 0px">{{ ability.abilityId.name }}</span>{% endfor %}</ul>
                                     {% for ability in req %}
                                         <input type="checkbox" style="display: none;" name="{{ ability.abilityId.name }}"
                                                id="d{{ ability.abilityId.name }}">
                                     {% endfor %}
+
                                     {% if req.0.reqId.typeOfCooperation == "inOffice10" or req.0.reqId.typeOfCooperation == "inOffice20" or req.0.reqId.typeOfCooperation == "inOffice30" or req.0.reqId.typeOfCooperation == "inOfficemore" %}
 
                                         <h3 style="margin: 10px 0; font-size: 10px;">در صورت تمایل به همکاری با این موسسه در این نیازمندی، لطفا زمان‌هایی که می‌خواهید در آن‌ها به کار مشغول شوید را مشخص کنید</h3>
@@ -341,11 +368,13 @@
                                             <h3>دورکاری</h3>
                                         {% endif %}
                                     {% endif %}
+                                    {% if request.user.is_authenticated and request.user.isBen %}
                                     <h2>توضیحات بیشتر</h2>
                                     <div class="controls">
                                         <textarea id="cm" class="floatlabel" placeholder="توضیحات بیشتر" style="width: 80%" name="description"></textarea>
                                     </div>
                                     <input type="submit" class="subreq" value="ارسال پیشنهاد همکاری">
+                                    {% endif %}
                                 </form>
                             </div>
                         </div>

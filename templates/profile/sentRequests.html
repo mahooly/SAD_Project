@@ -29,7 +29,7 @@
             {% if request.user.is_authenticated %}
                 <div class="container">
                     <div class="topPhoto">
-                        <img src="{{ request.user.image }}">
+                        <img src="../{{ request.user.image }}">
                     </div>
                     <div class="topmenuelements">
                         {% if request.user.isOrg %}
@@ -43,7 +43,7 @@
                         <a href="{% url 'logout' %}">خروج</a>
                     </div>
                     <div class="logo">
-                        <img src="../../static/images/logo.png">
+                        <img src="../static/images/logo.png">
                     </div>
                 </div>
             {% endif %}
@@ -59,7 +59,7 @@
                         <button onclick="popupregister()">ثبت نام</button>
                     </div>
                     <div class="logo">
-                        <img src="../../static/images/logo.png">
+                        <img src="../static/images/logo.png">
                     </div>
                 </div>
             {% endif %}
@@ -84,7 +84,7 @@
                     <div class="enter">
                         <button>ورود</button>
                     </div>
-                    <button class="forget">فراموشی رمز عبور</button>
+                    <a href={% url 'password_reset' %} class="forget">فراموشی رمز عبور</a>
 
                     <p> اگر هنوز حساب کاربری برای خود ایجاد نکرده‌اید، </p>
                     <button class="reg" id="buttonreg" onclick="popupregister()">ثبت نام</button>
@@ -111,10 +111,10 @@
                     <div class="project">
                         <div class="specifications">
                             {% if request.user.isBen %}
-                                <a href={% url 'profile' req.0.reqId.organizationId.username %}> {{ req.0.reqId.organizationId.organizer.name }}</a>
+                                <a style="text-align: center" href={% url 'profile' req.0.reqId.organizationId.username %}> {{ req.0.reqId.organizationId.organizer.name }}</a>
                             {% endif %}
                             {% if request.user.isOrg %}
-                                <a href={% url 'profile' req.0.reqId.benefactorId.username %}> {{ req.0.reqId.benefactorId.benefactor.nickname }}</a>
+                                <a style="text-align: center" href={% url 'profile' req.0.reqId.benefactorId.username %}> {{ req.0.reqId.benefactorId.benefactor.nickname }}</a>
                             {% endif %}
                             <ul>
                                 {% for ability in req %}
@@ -123,14 +123,14 @@
                             </ul>
                             {% if req.0.reqId.state %}
                                 {% if req.0.reqId.isAccepted %}
-                                    <h3 style="color: rgb(61, 177, 58);">تایید شد</h3>
+                                    <h3 style="color: rgb(61, 177, 58);text-align: center">تایید شد</h3>
                                 {% endif %}
                                 {% if not req.0.reqId.isAccepted %}
-                                    <h3 style="color: rgb(188, 0, 58);">رد شد</h3>
+                                    <h3 style="color: rgb(188, 0, 58);text-align: center">رد شد</h3>
                                 {% endif %}
                             {% endif %}
                             {% if not req.0.reqId.state %}
-                                <h3>در انتظار</h3>
+                                <h3 style="text-align: center">در انتظار</h3>
                             {% endif %}
                         </div>
                         <div class="week">
@@ -378,22 +378,22 @@
                         </div>
                     </div>
                     <div id="delete{{ req.0.reqId.id }}" style="display: none">
-                                <div class="wrappers" style="width: 100%; min-height: 1200px; position: fixed; top: 0px;z-index: 3;">
-                                    <form class="register" method="post" action="{% url 'delete_request' %}">
-                                        {% csrf_token %}
-                                        <input type="text" name="deletedReq" value="{{ req.0.reqId.id }}" style="display: none;">
-                                        <p class="title">پیشنهاد ارسال شده از سامانه حذف شود؟</p>
-                                        <div class="enter">
-                                            <button class="yes" style="background-color: #f72c2c" onclick="this.form.submit()">بله</button>
-                                        </div>
-                                        <div class="enter">
-                                            <button id="not"
-                                                    onclick="popdownDeleteReq({{ req.0.reqId.id }})">خیر
-                                            </button>
-                                        </div>
-                                    </form>
+                        <div class="wrappers" style="width: 100%; min-height: 1200px; position: fixed; top: 0px;z-index: 3;">
+                            <form class="register" method="post" action="{% url 'delete_request' %}">
+                                {% csrf_token %}
+                                <input type="text" name="deletedReq" value="{{ req.0.reqId.id }}" style="display: none;">
+                                <p class="title">پیشنهاد ارسال شده از سامانه حذف شود؟</p>
+                                <div class="enter">
+                                    <button class="yes" style="background-color: #f72c2c; padding: 0px;" onclick="this.form.submit()">بله</button>
                                 </div>
-                            </div>
+                                <div class="enter">
+                                    <button id="not" style="padding: 0px;"
+                                            onclick="popdownDeleteReq({{ req.0.reqId.id }})">خیر
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             {% endfor %}
         </div>

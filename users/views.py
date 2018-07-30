@@ -310,12 +310,14 @@ def list_projects(request):
         except ValueError:
             projects = projects.filter(budget__gte=0)
 
-        try:
-            projects = projects.filter(
-                user__organizer__rate__totalRate__gte=int(request.POST.get('minimumtotalrating')))
-
-        except ValueError:
-            projects = projects.filter(user__organizer__rate__totalRate__gte=0)
+        tmp = []
+        minrate = request.POST.get('minimumtotalrating')
+        if minrate is not None:
+            for project in projects:
+                count = Rate.objects.filter(ratedUser=project.user).count()
+                if count == 0 or project.user.organizer.rate.totalRate >= float(minrate)*25:
+                    tmp.append(project)
+        projects = tmp
 
         category = request.POST['field']
         if category != "blank":
@@ -358,10 +360,16 @@ def list_requirement(request):
             all_req = all_req.filter(NOPs__gte=0)
 
         try:
-            all_req = all_req.filter(
-                user__organizer__rate__totalRate__gte=int(request.POST.get('minimumtotalrating', 0)))
+            tmp = []
+            minrate = request.POST.get('minimumtotalrating')
+            if minrate is not None:
+                for req in all_req:
+                    count = Rate.objects.filter(ratedUser=req.user).count()
+                    if count == 0 or req.user.organizer.rate.totalRate >= (float(minrate)-1) * 25:
+                        tmp.append(req)
+            all_req = tmp
         except ValueError:
-            all_req = all_req.filter(user__organizer__rate__totalRate__gte=0)
+            tmp = []#do nothing
 
         ability = request.POST['field']
         if ability != "blank":
@@ -443,11 +451,13 @@ def user_logout(request):
 
 def user_profile(request, username):
     user = get_object_or_404(CustomUser, username=username, state=True)
+    count = Rate.objects.filter(ratedUser=user).count()
     if user.isBen:
         benefactor = Benefactor.objects.get(user=user)
         week = WeeklySchedule.objects.get(id=benefactor.wId.id)
         user_abilities = UserAbilities.objects.filter(username=user.username)
         orgs = Request.objects.filter(benefactorId=user, isAccepted=True)
+        comments = Report.objects.filter(benefactor=user, type=1, operator=2)
         organizations = []
         for org in orgs:
             organizations.append(org.organizationId.organizer)
@@ -455,15 +465,16 @@ def user_profile(request, username):
         if request.user.username == username:
             return render(request, 'profile/personalProfileBenefactor.html',
                           {'user': user, 'benefactor': benefactor, 'week': week, 'user_abilities': user_abilities,
-                           'organizations': organizations})
+                           'organizations': organizations, 'count': count, 'comments': comments})
         else:
             return render(request, 'profile/benefactorsProfileView.html',
                           {'user': user, 'benefactor': benefactor, 'week': week, 'user_abilities': user_abilities,
-                           'rangee': range(28), 'organizations': organizations})
+                           'rangee': range(28), 'organizations': organizations, 'count': count, 'comments': comments})
     elif user.isOrg:
         organization = Organization.objects.get(user=user)
         projects = Project.objects.filter(user=user)
         requirements = Requirement.objects.filter(user=user)
+        comments = Report.objects.filter(organization=user, type=1, operator=1)
         reqability = []
         bens = Request.objects.filter(organizationId=user, isAccepted=True)
         benefactors = []
@@ -474,11 +485,13 @@ def user_profile(request, username):
         if request.user.username == username:
             return render(request, 'profile/personalProfileOrganization.html',
                           {'user': user, 'org': organization, 'projects': projects, 'requirements': requirements,
-                           'reqability': reqability, 'rangee': range(28), 'benefactors': benefactors})
+                           'reqability': reqability, 'rangee': range(28), 'benefactors': benefactors, 'count': count
+                              , 'comments': comments})
         else:
             return render(request, 'profile/organizationProfileView.html',
                           {'user': user, 'org': organization, 'projects': projects, 'requirements': requirements,
-                           'reqability': reqability, 'rangee': range(28), 'benefactors': benefactors})
+                           'reqability': reqability, 'rangee': range(28), 'benefactors': benefactors, 'count': count
+                              , 'comments': comments})
 
 
 @login_required
@@ -490,14 +503,17 @@ def rate_user(request, username):
         rate.user = request.user
         rate.ratedUser = user
         rate.save()
+        description = request.POST['description']
         if user.isBen:
             totalRate = TotalRate.objects.get(id=user.benefactor.rate.id)
             Report.objects.create(benefactor=user, organization=request.user, type='1', operator='2', rateId=rate,
-                                  date=datetime.datetime.today(), time=datetime.datetime.now(), payment=0)
+                                  date=datetime.datetime.today(), time=datetime.datetime.now(), payment=0,
+                                  description=description)
         else:
             totalRate = TotalRate.objects.get(id=user.organizer.rate.id)
             Report.objects.create(benefactor=request.user, organization=user, type='1', operator='1', rateId=rate,
-                                  date=datetime.datetime.today(), time=datetime.datetime.now(), payment=0)
+                                  date=datetime.datetime.today(), time=datetime.datetime.now(), payment=0,
+                                  description=description)
 
         count = Rate.objects.filter(ratedUser=user).count()
         totalRate.f1 = ((totalRate.f1 * (count - 1)) + ((rate.f1 - 1) / 4 * 100)) / count
@@ -859,7 +875,7 @@ def delete_request(request):
         Report.objects.filter(reqId=req.id).delete()
         RequestAbilities.objects.filter(reqId=req.id).delete()
         req.delete()
-    return HttpResponseRedirect('/sent_requests')
+    return HttpResponseRedirect('/requests/sent')
 
 
 def donate(request):

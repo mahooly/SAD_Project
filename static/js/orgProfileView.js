@@ -1,3 +1,4 @@
+var mm = document.getElementById("checkspann").className;
 var buttons = document.getElementsByClassName("exit");
 for (var i = 0 ; i < buttons.length; i ++) {
     buttons[i].addEventListener("click", function(event){
@@ -38,7 +39,10 @@ for (var k = 0; k < lis.length; k++) {
                 document.getElementById('a' + lis[k] + 'a' + i + "" + j).value = 3;
             } else {
                 document.getElementById('a' + lis[k] + 'a' + i + "" + j).style.backgroundColor = "rgb(211,233,158)";
-                document.getElementById('a' + lis[k] + 'a' + i + "" + j).value = 2;
+                if (mm === "1")
+                    document.getElementById('a' + lis[k] + 'a' + i + "" + j).value = 3;
+                else
+                    document.getElementById('a' + lis[k] + 'a' + i + "" + j).value = 2;
             }
         }
     }
@@ -58,19 +62,21 @@ function week(a,e,t) {
 
 for (k = 0; k < lis.length; k ++) {
     var uls = document.getElementById("ull"+lis[k]);
-    for (i = 0; i < uls.childNodes.length; i++) {
-        uls.childNodes[i].onclick = function () {
-            if (this.value === 1) {
-                this.style.backgroundColor = "rgba(0,0,0,0.4)";
-                this.value = 2;
-                document.getElementById('d' + this.id).checked = false;
-            }
-            else {
-                this.style.backgroundColor = "rgb(4,80,255)";
-                this.value = 1;
-                document.getElementById('d' + this.id).checked = true;
-            }
-        };
+    if(mm != "1") {
+        for (i = 0; i < uls.childNodes.length; i++) {
+            uls.childNodes[i].onclick = function () {
+                if (this.value === 1) {
+                    this.style.backgroundColor = "rgba(0,0,0,0.4)";
+                    this.value = 2;
+                    document.getElementById('d' + this.id).checked = false;
+                }
+                else {
+                    this.style.backgroundColor = "rgb(4,80,255)";
+                    this.value = 1;
+                    document.getElementById('d' + this.id).checked = true;
+                }
+            };
+        }
     }
 }
 

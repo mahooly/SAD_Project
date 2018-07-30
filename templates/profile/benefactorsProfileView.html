@@ -24,12 +24,18 @@
             <div id="checkspann" class="4"></div>
         {% endif %}
     {% endif %}
+    {% if benefactor.typeOfCooperation == "atHome" %}
+        <div id="checkspann1" class="1"></div>
+    {% endif %}
+    {% if not benefactor.typeOfCooperation == "atHome" %}
+        <div id="checkspann1" class="2"></div>
+    {% endif %}
     <div class="header">
         <div class="topmenu" id="topmenu">
             {% if request.user.is_authenticated %}
                 <div class="container">
                     <div class="topPhoto">
-                        <img src="{{ request.user.image }}">
+                        <img src="../{{ request.user.image }}">
                     </div>
                     <div class="topmenuelements">
                         {% if request.user.isOrg %}
@@ -43,7 +49,7 @@
                         <a href="{% url 'logout' %}">خروج</a>
                     </div>
                     <div class="logo">
-                        <img src="../../static/images/logo.png">
+                        <img src="../static/images/logo.png">
                     </div>
                 </div>
             {% endif %}
@@ -59,7 +65,7 @@
                         <button onclick="popupregister()">ثبت نام</button>
                     </div>
                     <div class="logo">
-                        <img src="../../static/images/logo.png">
+                        <img src="../static/images/logo.png">
                     </div>
                 </div>
             {% endif %}
@@ -84,7 +90,7 @@
                     <div class="enter">
                         <button>ورود</button>
                     </div>
-                    <button class="forget">فراموشی رمز عبور</button>
+                    <a href={% url 'password_reset' %} class="forget">فراموشی رمز عبور</a>
 
                     <p> اگر هنوز حساب کاربری برای خود ایجاد نکرده‌اید، </p>
                     <button class="reg" id="buttonreg" onclick="popupregister()">ثبت نام</button>
@@ -105,10 +111,11 @@
         </div>
         <div class="nav" id="nav"></div>
         <div class="container">
-            <div class="photo">
-                <div id="photo"><img src="{{ user.image }}" alt=""></div>
+            <div style="width:100%; display: inline-block; ">
+            <div style="float: left;" class="photo">
+                <div id="photo"><img src="../{{ user.image }}" alt=""></div>
             </div>
-            <div class="personal">
+            <div style="float: right;" class="personal">
                 <h2> مشخصات </h2>
                 <div id="personal">
                     <h3>نام مستعار: {{ benefactor.nickname }}</h3>
@@ -129,64 +136,80 @@
                         <h3>تحصیلات: دکتری یا بالاتر ( {{ benefactor.major }} )</h3>
                     {% endif %}
                     <h3>شهر محل سکونت: {{ benefactor.city }}</h3>
+                    <br>
+                    <h3>تعداد رای‌ها: {{ count }}</h3>
                 </div>
             </div>
-            <div class="chartContainer">
-                <div id="chart">
-                    <div>
-                        <table>
-                            <tbody>
-                            <tr class="bars">
-                                <td>
-                                    <div class="one"
-                                         style="height: {{ benefactor.rate.f1 }}%; position: absolute; width: 100%; bottom: 0px;">{{ benefactor.rate.f1 }}%
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="two"
-                                         style="height: {{ benefactor.rate.f2 }}%; position: absolute; width: 100%; bottom: 0px;">{{ benefactor.rate.f2 }}%
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="three"
-                                         style="height: {{ benefactor.rate.f3 }}%; position: absolute; width: 100%; bottom: 0px;">{{ benefactor.rate.f3 }}%
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="four"
-                                         style="height: {{ benefactor.rate.f4 }}%; position: absolute; width: 100%; bottom: 0px;">{{ benefactor.rate.f4 }}%
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="five"
-                                         style="height: {{ benefactor.rate.f5 }}%; position: absolute; width: 100%; bottom: 0px;">{{ benefactor.rate.f5 }}%
-                                    </div>
-                                </td>
-                                <td class="legend">
+            </div>
+            <div class="chartContainer" style="width: 100%; float: right; display: flex">
+                    <div id="chart" style="width: 60%;">
+                        <div>
+                            <table>
+                                <tbody>
+                                <tr class="bars">
+                                    <td>
+                                        <div class="one"
+                                             style="height: {{ benefactor.rate.f1 }}%; position: absolute; width: 100%; bottom: 0px;">{{ benefactor.rate.f1 }}%
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="two"
+                                             style="height: {{ benefactor.rate.f2 }}%; position: absolute; width: 100%; bottom: 0px;">{{ benefactor.rate.f2 }}%
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="three"
+                                             style="height: {{ benefactor.rate.f3 }}%; position: absolute; width: 100%; bottom: 0px;">{{ benefactor.rate.f3 }}%
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="four"
+                                             style="height: {{ benefactor.rate.f4 }}%; position: absolute; width: 100%; bottom: 0px;">{{ benefactor.rate.f4 }}%
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="five"
+                                             style="height: {{ benefactor.rate.f5 }}%; position: absolute; width: 100%; bottom: 0px;">{{ benefactor.rate.f5 }}%
+                                        </div>
+                                    </td>
+                                    <td class="legend">
                                             <span class="legbox">
                                                 <span class="one xaxisname"></span><span>صداقت</span>
                                             </span>
-                                    <span class="legbox">
+                                        <span class="legbox">
                                                 <span class="two xaxisname"></span><span>تعهد</span>
                                             </span>
-                                    <span class="legbox">
+                                        <span class="legbox">
                                                 <span class="three xaxisname"></span><span>مسئولیت‌پذیری</span>
                                             </span>
-                                    <span class="legbox">
+                                        <span class="legbox">
                                                 <span class="four xaxisname"></span><span>وقت‌شناسی</span>
                                             </span>
-                                    <span class="legbox">
+                                        <span class="legbox">
                                                 <span class="five xaxisname"></span><span>علاقه به کار</span>
                                             </span>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div style="float:left; width: 35%; display: inline-block">
+                        <h3 style="text-align: center;margin-bottom: 10px">نظرات</h3>
+                        <div style="height: 180px; overflow-y:scroll; background: rgba(255,255,255,0.8); padding: 5px">
+                            {% if comments|length == 0 %}
+                                <h5 style="margin-top: 5px;">نظری وجود ندارد</h5>
+                            {% endif %}
+                            {% for comment in comments %}
+                                <h5 style="width: 80%; margin: 10px auto 5px auto;border-bottom: 1px solid #777777">{{ comment.description }}</h5>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
-            </div>
-            <a style="display: inline-block; padding: 2px 10px; font-size: 14px;  text-decoration: none; color: #fdfdfd; height: 30px; background: #1E90FF; border-radius: 15px;"
-               href={% url 'comment' user.username %}>امتیازدهی به نیکوکار</a>
+            {% if request.user.is_authenticated and request.user.isOrg %}
+                <a style="display: inline-block; padding: 2px 10px; font-size: 14px;  text-decoration: none; color: #fdfdfd; height: 30px; background: #1E90FF; border-radius: 15px;"
+                   href={% url 'comment' user.username %}>امتیازدهی به نیکوکار</a>
+            {% endif %}
             <form method="post" action="{% url 'send_request_ben' user.username %}">
                 {% csrf_token %}
                 <div id="abilities">
@@ -194,16 +217,19 @@
                     <div id="abilities1">{% for ability in user_abilities %}
                         <span class="abilitySpan" style="display: block;margin: 2px 20px 2px 0px" value="1"
                               id="{{ ability.abilityId.name }}">{{ ability.abilityId.name }}</span>{% endfor %}</div>
-                    {% for ability in user_abilities %}
-                        <input type="checkbox" style="display: none;" name="{{ ability.abilityId.name }}"
-                               id="d{{ ability.abilityId.name }}">
-                    {% endfor %}
+                    {% if request.user.is_authenticated %}
+                        {% for ability in user_abilities %}
+                            <input type="checkbox" style="display: none;" name="{{ ability.abilityId.name }}"
+                                   id="d{{ ability.abilityId.name }}">
+                        {% endfor %}
+                    {% endif %}
                 </div>
                 <div id="projects">
                     <h2>موسساتی که تا کنون با این نیکوکار همکاری داشته اند:</h2>
                     <ul>{% for org in organizations %}
                         <li>{{ org.name }}</li> {% endfor %}</ul>
                 </div>
+                {% if request.user.is_authorized %}
                 <div id="weeklyfreetime">
                     <h2>زمانبندی هفتگی</h2>
                     {% if benefactor.typeOfCooperation == "inOffice10" or benefactor.typeOfCooperation == "inOffice20" or benefactor.typeOfCooperation == "inOffice30" or benefactor.typeOfCooperation == "inOfficemore" %}
@@ -383,6 +409,7 @@
                     <textarea style="width: 80%;" id="cm" class="floatlabel" placeholder="توضیحات بیشتر" name="description"></textarea>
                 </div>
                 <button class="subreq"> ارسال پیشنهاد همکاری</button>
+                {% endif %}
             </form>
             {% if request.user.is_authenticated and not request.user.isBen and not request.user.isOrg %}
                 <button class="subreq" style="background-color: #f72c2c; z-index:4" onclick="popupDelete()">حذف کاربر</button>

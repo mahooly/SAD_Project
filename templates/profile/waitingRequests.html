@@ -29,7 +29,7 @@
             {% if request.user.is_authenticated %}
                 <div class="container">
                     <div class="topPhoto">
-                        <img src="{{ request.user.image }}">
+                        <img src="../{{ request.user.image }}">
                     </div>
                     <div class="topmenuelements">
                         {% if request.user.isOrg %}
@@ -43,7 +43,7 @@
                         <a href="{% url 'logout' %}">خروج</a>
                     </div>
                     <div class="logo">
-                        <img src="../../static/images/logo.png">
+                        <img src="../static/images/logo.png">
                     </div>
                 </div>
             {% endif %}
@@ -59,7 +59,7 @@
                         <button onclick="popupregister()">ثبت نام</button>
                     </div>
                     <div class="logo">
-                        <img src="../../static/images/logo.png">
+                        <img src="../static/images/logo.png">
                     </div>
                 </div>
             {% endif %}
@@ -84,7 +84,7 @@
                     <div class="enter">
                         <button>ورود</button>
                     </div>
-                    <button class="forget">فراموشی رمز عبور</button>
+                    <a href={% url 'password_reset' %} class="forget">فراموشی رمز عبور</a>
 
                     <p> اگر هنوز حساب کاربری برای خود ایجاد نکرده‌اید، </p>
                     <button class="reg" id="buttonreg" onclick="popupregister()">ثبت نام</button>
@@ -111,10 +111,10 @@
                     <div class="project">
                         <div class="specifications">
                             {% if request.user.isBen %}
-                                <a href={% url 'profile' req.0.reqId.organizationId.username %}> {{ req.0.reqId.organizationId.organizer.name }}</a>
+                                <a style="text-align: center" href={% url 'profile' req.0.reqId.organizationId.username %}> {{ req.0.reqId.organizationId.organizer.name }}</a>
                             {% endif %}
                             {% if request.user.isOrg %}
-                                <a href={% url 'profile' req.0.reqId.benefactorId.username %}> {{ req.0.reqId.benefactorId.benefactor.nickname }}</a>
+                                <a style="text-align: center" href={% url 'profile' req.0.reqId.benefactorId.username %}> {{ req.0.reqId.benefactorId.benefactor.nickname }}</a>
                             {% endif %}
                             <ul>
                                 {% for ability in req %}

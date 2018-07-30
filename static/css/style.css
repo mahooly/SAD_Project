@@ -86,7 +86,6 @@ h2{
 	position: relative;
 }
 .login, .register{
-	overflow-y:scroll;
 	border-radius: 10px;
 	padding: 0px 20px 20px 20px;
 	width: 100%;
