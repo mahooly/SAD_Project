@@ -1,12 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 {% load staticfiles %}
 <html lang="fa" dir="rtl">
 <head>
-    <title>گزارش تامین مالی پروژه</title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href= {% static "css/reportCash.css" %}>
-    <link rel="stylesheet" type="text/css" href= {% static "css/style.css" %}>
-    <link rel="stylesheet" href= {% static "css/ionicons.min.css" %}>
+    <meta charset="UTF-8">
+    <title>مهرانه</title>
+    <link rel="stylesheet" type="text/css" href={% static "css/style.css" %}>
 </head>
 <body>
 <div class="main">
@@ -43,7 +41,7 @@
                         <a href="{% url 'logout' %}">خروج</a>
                     </div>
                     <div class="logo">
-                        <img src="../../static/images/logo.png">
+                        <img src="../static/images/logo.png">
                     </div>
                 </div>
             {% endif %}
@@ -59,14 +57,14 @@
                         <button onclick="popupregister()">ثبت نام</button>
                     </div>
                     <div class="logo">
-                        <img src="../../static/images/logo.png">
+                        <img src="../static/images/logo.png">
                     </div>
                 </div>
             {% endif %}
         </div>
     </div>
     <div class="mainPage">
-        <div class="wrapper"></div>
+        <div class="wrappera"></div>
         <div id="test">
             <div class="wrappers">
                 <form class="login" method="post" action="{% url 'login' %}">
@@ -103,28 +101,16 @@
                 </form>
             </div>
         </div>
-        <div class="nav" id="nav"></div>
-        <div class="container">
-            <div class="mainheader">
-                <h1>گزارش تامین مالی پروژه ها</h1>
-                <br><br>
-            </div>
-            <h3>نام پروژه: {{ project.name }}</h3>
-            <h3>مجموع پول پرداخت شده: {{ project.alreadyPaid }}</h3>
-            <h3>میزان بودجه مورد نیاز: {{ project.budget }}</h3>
-            <div id="result" style="width: 60%; margin: auto">
-                {% for report in reports %}
-                    <div class="report">
-                        <div class="benefactor" style="float: right; display: inline-block;"><span class="benefactor">{{ report.benefactor.benefactor.nickname }}</span></div>
-                        <div class="project" style="float: left; display: inline-block;">
-                            <h3>مبلغ: {{ report.payment }}</h3>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
+        <div class="nav" id="nav">
+
+        </div>
+        <div style="z-index: 2;">
+            <h4 style="width: 80%; margin: auto; text-align: center; margin-top: 200px; color: #222222;">کمک مالی شما با موفقیت در سامانه ثبت شد.</h4>
+            <a style="display: block; width: 80%; margin: auto; text-align: center; margin-top: 20px; text-decoration: none; color: #222222;"
+               href={% url 'profile' org.user.username %}>بازگشت به حساب کاربری {{ org.name }}</a>
+            <a style="display: block; width: 80%; margin: auto; text-align: center; margin-top: 20px; text-decoration: none; color: #222222;" href={% url 'index' %}>صفحه اصلی</a>
         </div>
     </div>
-
     <div class="footer">
         <div class="container">
             <div class="addr">
@@ -138,6 +124,5 @@
     </div>
 </div>
 <script type="text/javascript" src={% static "js/main.js" %}></script>
-<script src={% static "js/jquery.min.js" %}></script>
 </body>
 </html>

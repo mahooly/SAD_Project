@@ -69,6 +69,52 @@ def benefactor_registration(request):
             user = user_form.save()
             user.set_password(user.password)
             user.isBen = True
+            if request.user.is_authorized and not request.user.isBen and not request.user.isOrg:
+                user.state = True
+            user.save()
+            rate = TotalRate.objects.create()
+            benefactor = form.save(commit=False)
+            benefactor.user = user
+            if benefactor.typeOfCooperation != 'atHome':
+                week = week_form.save()
+                week.save()
+            else:
+                week = None
+            benefactor.wId = week
+            benefactor.rate = rate
+            benefactor.save()
+
+            for a in abilities:
+                name = a.name
+                if request.POST.get(name) is not None:
+                    UserAbilities.objects.create(abilityId=a, username=user)
+
+            return render(request, 'registration/thanks.html')
+
+        else:
+            print(user_form.errors, form.errors)
+
+    else:
+        user_form = UserForm()
+        form = BenefactorRegistraton()
+        week_form = WeekForm()
+    cities = City.objects.all()
+    return render(request, 'registration/registerBenefactor.html',
+                  {'user_form': user_form, 'form': form, 'week_form': week_form, 'abilities': abilities,
+                   'rangee': range(28), 'cities': cities})
+
+@admin_only
+def benefactor_registration_admin(request):
+    abilities = Ability.objects.all()
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, request.FILES)
+        form = BenefactorRegistraton(request.POST)
+        week_form = WeekForm(request.POST)
+        if form.is_valid() and user_form.is_valid() and week_form.is_valid():
+            user = user_form.save()
+            user.set_password(user.password)
+            user.isBen = True
+            user.state = True
             user.save()
             rate = TotalRate.objects.create()
             benefactor = form.save(commit=False)
@@ -112,6 +158,36 @@ def organization_registration(request):
             user = user_form.save()
             user.set_password(user.password)
             user.isOrg = True
+            user.save()
+            organizer = form.save(commit=False)
+            organizer.user = user
+            organizer.rate = TotalRate.objects.create()
+            organizer.save()
+
+            return render(request, 'registration/thanks.html')
+
+        else:
+            print(user_form.errors, form.errors)
+
+    else:
+        user_form = UserForm()
+        form = BenefactorRegistraton()
+
+    return render(request, 'registration/registerOrganization.html',
+                  {'user_form': user_form, 'form': form, 'cities': cities})
+
+@admin_only
+def organization_registration_admin(request):
+    cities = City.objects.all()
+    if request.method == 'POST':
+        user_form = UserForm(request.POST)
+        form = OrganizationRegistration(request.POST, request.FILES)
+
+        if user_form.is_valid() and form.is_valid():
+            user = user_form.save()
+            user.set_password(user.password)
+            user.isOrg = True
+            user.state = True
             user.save()
             organizer = form.save(commit=False)
             organizer.user = user
@@ -674,12 +750,13 @@ def report_cash(request):
     return render(request, 'main/reportCash.html', {'projects': projects})
 
 
-@admin_only
 def report_project(request, p_id):
     get_project = get_object_or_404(Project, id=p_id)
+    print(get_project)
     reports = []
     if get_project.user == request.user:
-        reports.append(Report.objects.filter(description=get_project.id, organization=get_project.user, type=3))
+        reports = Report.objects.filter(description=get_project.id, organization=get_project.user, type=3)
+    print(reports)
     return render(request, 'admin/reportProject.html', {'project': get_project, 'reports': reports})
 
 
@@ -787,7 +864,7 @@ def remove_report(request, r_id):
         req.delete()
 
     report.delete()
-    return HttpResponseRedirect('/reports')
+    return HttpResponseRedirect('/admin/reports')
 
 
 @login_required
@@ -802,7 +879,7 @@ def accept_request(request):
             req.isAccepted = False
         req.state = True
         req.save()
-    return HttpResponseRedirect('/waiting_requests')
+    return HttpResponseRedirect('/requests/pending')
 
 
 @login_required
@@ -856,3 +933,32 @@ def delete_request(request):
         RequestAbilities.objects.filter(reqId=req.id).delete()
         req.delete()
     return HttpResponseRedirect('/sent_requests')
+
+
+def donate(request):
+    print("in")
+    if request.method == 'POST':
+        print("in in")
+        id = request.POST['projectId']
+        value = request.POST['value']
+        project = Project.objects.get(id=id)
+        if project is None:
+            return render(request, '404.html', status=404)
+        else:
+            print(project.alreadyPaid)
+            print(value)
+            project.alreadyPaid = project.alreadyPaid + int(value)
+            project.save()
+            r = Report.objects.create(benefactor=request.user, organization=project.user, type=3, description=project.id,
+                                      operator=1,
+                                      date=datetime.datetime.today(), time=datetime.datetime.now(), payment=value)
+            r.save()
+        return render(request, 'registration/thanksDonateProject.html', {'org': project.user.organizer})
+
+@login_required
+def changeProject(request, pId):
+    project = Project.objects.get(id=pId)
+    if request.method == 'POST':
+        project.budget = request.POST['budget']
+        project.description = request.POST['description']
+        project.save()

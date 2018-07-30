@@ -28,6 +28,8 @@ urlpatterns = [
     url(r'^register/benefactor/', views.benefactor_registration, name='register'),
     url(r'^register/organization/', views.organization_registration, name='registerOrg'),
     url(r'^register/project/', views.project_creation, name='createProject'),
+    url(r'^register/organization_admin/', views.organization_registration_admin, name='registerOrgAdmin'),
+    url(r'^register/benefactor_admin/', views.benefactor_registration_admin, name='createProjectAdmin'),
     url(r'^register/requirement/', views.submit_requirement, name='submit_requirement'),
 
     url(r'^login/', views.my_login, name='login'),
@@ -66,6 +68,7 @@ urlpatterns = [
     url(r'^delete_requirement/', views.delete_requirement, name='delete_requirement'),
     url(r'^delete_project/', views.delete_project, name='delete_project'),
     url(r'^delete_request/', views.delete_request, name='delete_request'),
+    url(r'^donate/', views.donate, name='donate'),
 
     url(r'^404/', views.handler404, name='404'),
     url(r'^500/', views.handler500, name='500'),

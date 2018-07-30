@@ -209,13 +209,13 @@ else if (mm === "4") {
 	ol1.setAttribute('class', "innermenu");
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "/register/benefactor");
+	a1.setAttribute('href', "/register/benefactor_admin");
 	a1.innerText = "نیکوکار";
 	li1.appendChild(a1);
 	ol1.appendChild(li1);
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "/register/organization");
+	a1.setAttribute('href', "/register/organization_admin");
 	a1.innerText = "موسسه";
 	li1.appendChild(a1);
 	ol1.appendChild(li1);
