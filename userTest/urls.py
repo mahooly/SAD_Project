@@ -28,8 +28,6 @@ urlpatterns = [
     url(r'^register/benefactor/', views.benefactor_registration, name='register'),
     url(r'^register/organization/', views.organization_registration, name='registerOrg'),
     url(r'^register/project/', views.project_creation, name='createProject'),
-    url(r'^register/organization_admin/', views.organization_registration_admin, name='registerOrgAdmin'),
-    url(r'^register/benefactor_admin/', views.benefactor_registration_admin, name='createProjectAdmin'),
     url(r'^register/requirement/', views.submit_requirement, name='submit_requirement'),
 
     url(r'^login/', views.my_login, name='login'),
@@ -41,6 +39,7 @@ urlpatterns = [
 
     url(r'^profile/edit_benefactor/', views.update_benefactor_profile, name='editprofileben'),
     url(r'^profile/edit_organization/', views.update_organization_profile, name='editprofileorg'),
+    url(r'^edit_project/(?P<pId>[0-9A-Za-z_\-]+)', views.changeProject, name='changeProject'),
     url(r'^profile/(?P<username>[a-zA-Z0-9]+)$', views.user_profile, name='profile'),
     url(r'^requests/pending/', views.waiting_requests, name='waiting_requests'),
     url(r'^requests/sent/', views.sent_requests, name='sent_requests'),

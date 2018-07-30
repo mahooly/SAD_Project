@@ -44,7 +44,7 @@ if (mm === "2") {
 
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "register/project");
+	a1.setAttribute('href', "/register/project");
 	a1.innerText = "ثبت پروژه جدید";
 	li1.appendChild(a1);
 	ul1.appendChild(li1);
