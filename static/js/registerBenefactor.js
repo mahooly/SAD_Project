@@ -1,5 +1,3 @@
-
-
 function addItem(){
     var ul = document.getElementById("dynamiclist");
     var candidate1 = document.getElementById("candidate").value;

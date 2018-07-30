@@ -40,8 +40,8 @@ urlpatterns = [
     url(r'^profile/edit_benefactor/', views.update_benefactor_profile, name='editprofileben'),
     url(r'^profile/edit_organization/', views.update_organization_profile, name='editprofileorg'),
     url(r'^profile/(?P<username>[a-zA-Z0-9]+)$', views.user_profile, name='profile'),
-    url(r'^profile/requests/pending/', views.waiting_requests, name='waiting_requests'),
-    url(r'^profile/requests/sent/', views.sent_requests, name='sent_requests'),
+    url(r'^requests/pending/', views.waiting_requests, name='waiting_requests'),
+    url(r'^requests/sent/', views.sent_requests, name='sent_requests'),
     url(r'^profile/delete/', views.delete_user, name='delete_user'),
 
     url(r'^admin/reports/', views.report_admin, name='report'),
