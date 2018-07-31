@@ -217,7 +217,7 @@
 				</div>
 				<div id="projects">
 					<h2>نیکوکارانی که تا کنون با این موسسه همکاری داشته اند:</h2>
-                    <ul>{% for ben in benefactors %} <li>{{ ben.nickname }}</li> {% endfor %}</ul>
+                    <ul>{% for ben in benefactors %} <a href="{% url 'profile' ben.user.username %}" style="text-decoration: none; color: #222222">{{ ben.nickname }}</a> {% endfor %}</ul>
 				</div>
 				<div id="abilities">
 					<h2>نیازمند همکاری در زمینه های: </h2>

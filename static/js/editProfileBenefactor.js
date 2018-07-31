@@ -95,24 +95,26 @@ document.getElementById("add").addEventListener("click", function(event){
         event.preventDefault()
     });
 
-var cities = ["تهران","مشهد","اصفهان","شیراز"];
-var sel = document.getElementById('city');
-for (var i=0;i<cities.length;i++) {
-    var opt = document.createElement('option');
-    opt.setAttribute('value', cities[i]);
-    opt.innerHTML = cities[i];
-    sel.appendChild(opt);
-}
-
-for (i = 1; i <=7; i ++) {
+for (i = 1; i <= 7; i++) {
     var j;
-    for (j = 1; j <= 4; j ++ ) {
-        if (document.getElementById('a' + ((i-1)*4+j-1)).checked === true) {
+    for (j = 1; j <= 4; j++) {
+        if (document.getElementById('a' + ((i - 1) * 4 + j - 1)).checked === true) {
             document.getElementById(i + "" + j).style.backgroundColor = "rgb(57,183,250)";
             document.getElementById(i + "" + j).value = 1;
         } else {
             document.getElementById(i + "" + j).style.backgroundColor = "rgb(211,233,158)";
             document.getElementById(i + "" + j).value = 2;
         }
+    }
+}
+
+
+function s() {
+    var a = document.getElementById("typeOfParticipation").value;
+    if (a !== "atHome") {
+        document.getElementById("tab").style.display = "block";
+    }
+    else {
+        document.getElementById("tab").style.display = "none";
     }
 }

@@ -227,9 +227,9 @@
                 <div id="projects">
                     <h2>موسساتی که تا کنون با این نیکوکار همکاری داشته اند:</h2>
                     <ul>{% for org in organizations %}
-                        <li>{{ org.name }}</li> {% endfor %}</ul>
+                        <a href="{% url 'profile' org.user.username %}" style="text-decoration: none; color: #222222">{{ org.name }}</a> {% endfor %}</ul>
                 </div>
-                {% if request.user.is_authorized %}
+                {% if request.user.is_authenticated %}
                 <div id="weeklyfreetime">
                     <h2>زمانبندی هفتگی</h2>
                     {% if benefactor.typeOfCooperation == "inOffice10" or benefactor.typeOfCooperation == "inOffice20" or benefactor.typeOfCooperation == "inOffice30" or benefactor.typeOfCooperation == "inOfficemore" %}

@@ -144,6 +144,9 @@
                 </div>
             </form>
             <div id="result">
+                {% if userAbilities|length == 0 %}
+                    <h3 style="text-align: center;">موردی یافت نشد</h3>
+                {% endif %}
                 {% for abb in userAbilities %}
                     <div class="project">
                         <div class="specifications">

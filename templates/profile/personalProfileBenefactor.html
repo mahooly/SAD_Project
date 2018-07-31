@@ -208,7 +208,7 @@
                 <div id="projects">
                     <h2>موسسه هایی که با آنها همکاری داشته</h2>
                     <ul>{% for org in organizations %}
-                        <li>{{ org.name }}</li> {% endfor %}</ul>
+                        <a href="{% url 'profile' org.user.username %}" style="text-decoration: none; color: #222222">{{ org.name }}</a> {% endfor %}</ul>
                 </div>
                 <div id="weeklyfreetime">
                     <h2>زمانبندی هفتگی</h2>

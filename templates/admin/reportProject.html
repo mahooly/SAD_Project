@@ -66,7 +66,7 @@
         </div>
     </div>
     <div class="mainPage">
-        <div class="wrappera"></div>
+        <div class="wrapper"></div>
         <div id="test">
             <div class="wrappers">
                 <form class="login" method="post" action="{% url 'login' %}">
@@ -113,9 +113,12 @@
             <h3>مجموع پول پرداخت شده: {{ project.alreadyPaid }}</h3>
             <h3>میزان بودجه مورد نیاز: {{ project.budget }}</h3>
             <div id="result" style="width: 60%; margin: auto">
+                {% if reports|length == 0 %}
+                    <h4 style="text-align: center">موردی یافت نشد</h4>
+                {% endif %}
                 {% for report in reports %}
                     <div class="report">
-                        <div class="benefactor" style="float: right; display: inline-block;"><span class="benefactor">{{ report.benefactor.benefactor.nickname }}</span></div>
+                        <div class="benefactor" style="float: right; display: inline-block;"><a href="/profile/{{ report.benefactor.username }}" style="text-decoration: none; color: #333333" class="benefactor">{{ report.benefactor.benefactor.nickname }}</a></div>
                         <div class="project" style="float: left; display: inline-block;">
                             <h3>مبلغ: {{ report.payment }}</h3>
                         </div>

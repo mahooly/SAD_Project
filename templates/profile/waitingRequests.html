@@ -106,6 +106,9 @@
         <div class="nav" id="nav"></div>
         <div class="container">
             <div id="result">
+                {% if requestAbilities|length == 0 %}
+                    <h3 style="text-align: center;">موردی یافت نشد</h3>
+                {% endif %}
                 <ul id="uls" style="display: none">{% for req in requestsAbilities %}<li value="{{ req.0.reqId.id }}"></li>{% endfor %}</ul>
                 {% for req in requestsAbilities %}
                     <div class="project">

@@ -105,6 +105,9 @@
         </div>
         <div class="nav" id="nav"></div>
         <div class="container">
+            {% if requestAbilities|length == 0 %}
+                <h3 style="text-align: center;">موردی یافت نشد</h3>
+            {% endif %}
             <ul id="uls" style="display: none">{% for req in requestAbilities %}<li value="{{ req.0.reqId.id }}"></li>{% endfor %}</ul>
             {% for req in requestAbilities %}
                 <div id="result">
@@ -379,7 +382,7 @@
                     </div>
                     <div id="delete{{ req.0.reqId.id }}" style="display: none">
                         <div class="wrappers" style="width: 100%; min-height: 1200px; position: fixed; top: 0px;z-index: 3;">
-                            <form class="register" method="post" action="{% url 'delete_request' %}">
+                            <form class="register" method="post" action="{% url 'delete_request' req.0.reqId.id %}">
                                 {% csrf_token %}
                                 <input type="text" name="deletedReq" value="{{ req.0.reqId.id }}" style="display: none;">
                                 <p class="title">پیشنهاد ارسال شده از سامانه حذف شود؟</p>

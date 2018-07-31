@@ -66,7 +66,7 @@
         </div>
     </div>
     <div class="mainPage">
-        <div class="wrappera"></div>
+        <div class="wrapper"></div>
         <div id="test">
             <div class="wrappers">
                 <form class="login" method="post" action="{% url 'login' %}">
@@ -105,6 +105,9 @@
         </div>
         <div class="nav" id="nav"></div>
         <div class="container">
+            {% if users|length == 0 %}
+                <h3 style="text-align: center">موردی یافت نشد</h3>
+            {% endif %}
             {% for user in users %}
                 <div id="result">
                     <div class="project">

@@ -66,7 +66,7 @@
         </div>
     </div>
     <div class="mainPage">
-        <div class="wrappera"></div>
+        <div class="wrapper"></div>
         <div id="test">
             <div class="wrappers">
                 <form class="login" method="post" action="{% url 'login' %}">
@@ -122,60 +122,71 @@
                 </div>
             </div>
         </div>
-            <div class="chartContainer">
-                <div id="chart">
-                    <div>
-                        <table>
-                            <tbody>
-                            <tr class="bars">
-                                <td>
-                                    <div class="one"
-                                         style="height: {{ org.rate.f1 }}%; position: absolute; width: 100%; bottom: 0px;">{{ org.rate.f1 }}%
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="two"
-                                         style="height: {{ org.rate.f2 }}%; position: absolute; width: 100%; bottom: 0px;">{{ org.rate.f2 }}%
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="three"
-                                         style="height: {{ org.rate.f3 }}%; position: absolute; width: 100%; bottom: 0px;">{{ org.rate.f3 }}%
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="four"
-                                         style="height: {{ org.rate.f4 }}%; position: absolute; width: 100%; bottom: 0px;">{{ org.rate.f4 }}%
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="five"
-                                         style="height: {{ org.rate.f5 }}%; position: absolute; width: 100%; bottom: 0px;">{{ org.rate.f5 }}%
-                                    </div>
-                                </td>
-                                <td class="legend">
+            <div class="chartContainer" style="width: 100%; float: right; display: flex">
+                    <div id="chart" style="width: 60%;">
+                        <div>
+                            <table>
+                                <tbody>
+                                <tr class="bars">
+                                    <td>
+                                        <div class="one"
+                                             style="height: {{ org.rate.f1 }}%; position: absolute; width: 100%; bottom: 0px;">{{ org.rate.f1 }}%
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="two"
+                                             style="height: {{ org.rate.f2 }}%; position: absolute; width: 100%; bottom: 0px;">{{ org.rate.f2 }}%
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="three"
+                                             style="height: {{ org.rate.f3 }}%; position: absolute; width: 100%; bottom: 0px;">{{ org.rate.f3 }}%
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="four"
+                                             style="height: {{ org.rate.f4 }}%; position: absolute; width: 100%; bottom: 0px;">{{ org.rate.f4 }}%
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="five"
+                                             style="height: {{ org.rate.f5 }}%; position: absolute; width: 100%; bottom: 0px;">{{ org.rate.f5 }}%
+                                        </div>
+                                    </td>
+                                    <td class="legend">
                                             <span class="legbox">
                                                 <span class="one xaxisname"></span><span>صداقت</span>
                                             </span>
-                                    <span class="legbox">
+                                        <span class="legbox">
                                                 <span class="two xaxisname"></span><span>تعهد</span>
                                             </span>
-                                    <span class="legbox">
+                                        <span class="legbox">
                                                 <span class="three xaxisname"></span><span>مسئولیت‌پذیری</span>
                                             </span>
-                                    <span class="legbox">
+                                        <span class="legbox">
                                                 <span class="four xaxisname"></span><span>وقت‌شناسی</span>
                                             </span>
-                                    <span class="legbox">
+                                        <span class="legbox">
                                                 <span class="five xaxisname"></span><span>علاقه به کار</span>
                                             </span>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div style="float:left; width: 35%; display: inline-block">
+                        <h3 style="text-align: center;margin-bottom: 10px">نظرات</h3>
+                        <div style="height: 180px; overflow-y:scroll; background: rgba(255,255,255,0.8); padding: 5px">
+                            {% if comments|length == 0 %}
+                                <h5 style="margin-top: 5px;">نظری وجود ندارد</h5>
+                            {% endif %}
+                            {% for comment in comments %}
+                                <h5 style="width: 80%; margin: 10px auto 5px auto;border-bottom: 1px solid #777777">{{ comment.description }}</h5>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
-            </div>
 
             <div id="projectscurrent">
                 <h2>پروژه های در دست انجام: </h2>
@@ -224,7 +235,7 @@
             <div id="projects">
                 <h2>نیکوکارانی که تا کنون با این موسسه همکاری داشته اند:</h2>
                 <ul>{% for ben in benefactors %}
-                    <li>{{ ben.nickname }}</li> {% endfor %}</ul>
+                    <a href="{% url 'profile' ben.user.username %}" style="text-decoration: none; color: #222222">{{ ben.nickname }}</a> {% endfor %}</ul>
             </div>
             <div id="abilities">
                 <h2>نیازمند همکاری در زمینه های: </h2>
@@ -254,7 +265,7 @@
                          style="display: none; position: fixed;width: 100%;height: 1200px;top: 0;right: 0;background: rgba(0,0,0,0.6);z-index: 30;">
                         <div class="wrappers">
 
-                            <form method="post" class="register" style="margin-top: -450px; max-width: 500px; height: 500px; overflow-y:scroll; border-radius: 0px">
+                            <form method="post" action="/edit_requirement/{{ req.0.reqId.id }}" class="register" style="margin-top: -450px; max-width: 500px; height: 500px; overflow-y:scroll; border-radius: 0px">
                                 {% csrf_token %}
                                 <button onclick=popdownProject("r{{ req.0.reqId.id }}"); style="width: 10%; padding: 0; text-align: center; float: right">x</button>
                                 <p class="title">{{ req.0.reqId.name }}</p>
@@ -264,7 +275,7 @@
                                 <h3 style="margin-top: 3px; font-size: 14px;">توضیحات بیشتر: </h3> <input type="text" name="description"
                                                                                                           value="{{ req.0.reqId.description }}">
                                 <h3 style="margin-top: 3px; font-size: 14px;">تعداد
-                                    مشارکت‌کنندگان: {{ req.0.reqId.NOP }}</h3>
+                                    مشارکت‌کنندگان: {{ req.0.reqId.NOPs }}</h3>
                                 <h3 style="margin-top: 3px; font-size: 14px;">توانایی‌های مورد نیاز: </h3>
                                 <ul>
                                     {% for ability in req %}
@@ -274,9 +285,7 @@
                                 </ul>
                                 {% if req.0.reqId.typeOfCooperation == "inOffice10" or req.0.reqId.typeOfCooperation == "inOffice20" or req.0.reqId.typeOfCooperation == "inOffice30" or req.0.reqId.typeOfCooperation == "inOfficemore" %}
 
-                                    <h3 style="margin: 10px 0; font-size: 10px;">در صورت تمایل به همکاری با این موسسه در
-                                        این نیازمندی، لطفا زمان‌هایی که می‌خواهید در آن‌ها به کار مشغول شوید را مشخص
-                                        کنید</h3>
+                                    <h3 style="margin: 10px 0; font-size: 10px;">زمان‌های غیرفعال را مشخص کنید</h3>
                                     <table id="tab">
                                         <tbody>
                                         <tr>
