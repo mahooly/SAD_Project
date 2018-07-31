@@ -219,6 +219,12 @@ else if (mm === "4") {
 	a1.innerText = "موسسه";
 	li1.appendChild(a1);
 	ol1.appendChild(li1);
+	var li1 = document.createElement('li');
+	var a1 = document.createElement('a');
+	a1.setAttribute('href', "/register/admin");
+	a1.innerText = "مدیر";
+	li1.appendChild(a1);
+	ol1.appendChild(li1);
 	li2.appendChild(ol1);
 	ul1.appendChild(li2);
 

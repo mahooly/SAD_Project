@@ -312,7 +312,7 @@ def list_projects(request):
         if minrate is not None:
             for p in projects:
                 count = Rate.objects.filter(ratedUser=p.user).count()
-                if count == 0 or p.user.organizer.rate.totalRate >= float(minrate)*25:
+                if count == 0 or p.user.organizer.rate.totalRate >= float(minrate) * 25:
                     tmp.append(p)
         projects = tmp
 
@@ -362,7 +362,7 @@ def list_requirement(request):
             if minrate is not None:
                 for req in all_req:
                     count = Rate.objects.filter(ratedUser=req.user).count()
-                    if count == 0 or req.user.organizer.rate.totalRate >= (float(minrate)-1) * 25:
+                    if count == 0 or req.user.organizer.rate.totalRate >= (float(minrate) - 1) * 25:
                         tmp.append(req)
             all_req = tmp
         except ValueError:
@@ -388,7 +388,8 @@ def list_requirement(request):
 @admin_org_only
 def list_abilities(request):
     name = request.POST.get('orgName', '')
-    all_user_abilities = UserAbilities.objects.filter(username__benefactor__nickname__icontains=name, username__state=True)
+    all_user_abilities = UserAbilities.objects.filter(username__benefactor__nickname__icontains=name,
+                                                      username__state=True)
     all_abilities = Ability.objects.all()
     user_abilities = []
 
@@ -419,7 +420,7 @@ def list_abilities(request):
             if minrate is not None:
                 for ua in all_user_abilities:
                     count = Rate.objects.filter(ratedUser=ua.username).count()
-                    if count == 0 or ua.username.benefactor.rate.totalRate >= (float(minrate)-1) * 25:
+                    if count == 0 or ua.username.benefactor.rate.totalRate >= (float(minrate) - 1) * 25:
                         tmp.append(ua)
             all_user_abilities = tmp
         except ValueError:
@@ -488,12 +489,13 @@ def user_profile(request, username):
         if request.user.username == username:
             return render(request, 'profile/personalProfileOrganization.html',
                           {'user': user, 'org': organization, 'projects': projects, 'requirements': requirements,
-                           'reqability': reqability, 'rangee': range(28), 'benefactors': benefactors, 'count': count, 'comments': comments})
+                           'reqability': reqability, 'rangee': range(28), 'benefactors': benefactors, 'count': count,
+                           'comments': comments})
         else:
             return render(request, 'profile/organizationProfileView.html',
                           {'user': user, 'org': organization, 'projects': projects, 'requirements': requirements,
-                           'reqability': reqability, 'rangee': range(28), 'benefactors': benefactors, 'count': count
-                              , 'comments': comments})
+                           'reqability': reqability, 'rangee': range(28), 'benefactors': benefactors, 'count': count,
+                           'comments': comments})
 
 
 @login_required
@@ -891,7 +893,8 @@ def donate(request):
         else:
             project_donate.alreadyPaid += int(value)
             project_donate.save()
-            r = Report.objects.create(benefactor=request.user, organization=project_donate.user, type=3, description=project_donate.id,
+            r = Report.objects.create(benefactor=request.user, organization=project_donate.user, type=3,
+                                      description=project_donate.id,
                                       operator=1,
                                       date=datetime.datetime.today(), time=datetime.datetime.now(), payment=value)
             r.save()
@@ -921,3 +924,21 @@ def change_requirement(request, req_id):
             requirement.wId = week
             requirement.save()
     return render(request, 'registration/thanksSubmitRequirement.html')
+
+
+def admin_registration(request):
+    if request.method == 'POST':
+        form = AdminCreationForm(request.POST, request.FILES)
+        if form.is_valid():
+            admin = form.save()
+            admin.set_password(admin.password)
+            admin.is_staff = True
+            admin.state = True
+            admin.save()
+        else:
+            print(form.errors)
+
+    else:
+        form = AdminCreationForm()
+
+    return render(request, 'registration/createAdmin.html', {'form': form})

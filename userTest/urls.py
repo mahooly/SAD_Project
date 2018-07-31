@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^register/organization/', views.organization_registration, name='registerOrg'),
     url(r'^register/project/', views.project_creation, name='createProject'),
     url(r'^register/requirement/', views.submit_requirement, name='submit_requirement'),
+    url(r'^register/admin/', views.admin_registration, name='admin_registration'),
 
     url(r'^login/', views.my_login, name='login'),
     url(r'^logout', views.user_logout, name='logout'),
