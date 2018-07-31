@@ -466,7 +466,7 @@ def user_profile(request, username):
         for org in orgs:
             organizations.append(org.organizationId.organizer)
 
-        if request.user.username == username:
+        if request.user.username == username or request.user.is_staff:
             return render(request, 'profile/personalProfileBenefactor.html',
                           {'user': user, 'benefactor': benefactor, 'week': week, 'user_abilities': user_abilities,
                            'organizations': organizations, 'count': count, 'comments': comments})
@@ -486,7 +486,7 @@ def user_profile(request, username):
             benefactors.append(ben.benefactorId.benefactor)
         for req in requirements:
             reqability.append(RequirementAbilities.objects.filter(reqId=req))
-        if request.user.username == username:
+        if request.user.username == username or request.user.is_staff:
             return render(request, 'profile/personalProfileOrganization.html',
                           {'user': user, 'org': organization, 'projects': projects, 'requirements': requirements,
                            'reqability': reqability, 'rangee': range(28), 'benefactors': benefactors, 'count': count,
@@ -926,6 +926,7 @@ def change_requirement(request, req_id):
     return render(request, 'registration/thanksSubmitRequirement.html')
 
 
+@admin_only
 def admin_registration(request):
     if request.method == 'POST':
         form = AdminCreationForm(request.POST, request.FILES)

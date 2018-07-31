@@ -134,3 +134,10 @@ class AdminCreationForm(forms.ModelForm):
     class Meta:
         model = CustomUser
         fields = ('username', 'password', 'email', 'password2', 'image', 'first_name', 'last_name')
+
+    def clean(self):
+        cleaned_data = super(AdminCreationForm, self).clean()
+        confirm_password = cleaned_data.get('password2')
+        password = cleaned_data.get('password')
+        if not password == confirm_password:
+            raise forms.ValidationError('Password does not match.')

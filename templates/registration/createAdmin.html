@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="fa" dir="rtl">
+<head>
+    <title>ثبت نام- مدیر </title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href={% static "css/style.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "css/editProfileBenefactor.css" %}>
+    <link rel="stylesheet" href={% static "css/ionicons.min.css" %}>
+</head>
+<body>
+{{ form.errors }}
+<div class="main">
+    {% if not request.user.is_authenticated %}
+        <div id="checkspann" class="1"></div>
+    {% endif %}
+    {% if request.user.is_authenticated %}
+        {% if request.user.isOrg %}
+            <div id="checkspann" class="2"></div>
+        {% endif %}
+        {% if request.user.isBen %}
+            <div id="checkspann" class="3"></div>
+        {% endif %}
+        {% if not request.user.isOrg and not request.user.isBen %}
+            <div id="checkspann" class="4"></div>
+        {% endif %}
+    {% endif %}
+    <div class="header">
+        <div class="topmenu" id="topmenu">
+            {% if request.user.is_authenticated %}
+                <div class="container">
+                    <div class="topPhoto">
+                        <img src="../{{ request.user.image }}">
+                    </div>
+                    <div class="topmenuelements">
+                        {% if request.user.isOrg %}
+                            <a href={% url 'profile' request.user.username %}>{{ request.user.organizer.name }}</a>
+                        {% endif %}
+                        {% if request.user.isBen %}
+                            <a href={% url 'profile' request.user.username %}>{{ request.user.benefactor.name }} {{ request.user.benefactor.surname }}</a>
+                        {% endif %}
+                    </div>
+                    <div class="topmenudate">
+                        <a href="{% url 'logout' %}">خروج</a>
+                    </div>
+                    <div class="logo">
+                        <img src="../../static/images/logo.png">
+                    </div>
+                </div>
+            {% endif %}
+            {% if not request.user.is_authenticated %}
+                <div class="container">
+                    <div class="topmenudate">
+                        <h3>شما هنوز وارد نشده‌اید،</h3>
+                    </div>
+                    <div class="topmenudate">
+                        <button onclick="popup()">ورود</button>
+                    </div>
+                    <div class="topmenudate">
+                        <button onclick="popupregister()">ثبت نام</button>
+                    </div>
+                    <div class="logo">
+                        <img src="../../static/images/logo.png">
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="mainPage">
+        <div class="wrapper"></div>
+        <div id="test">
+            <div class="wrappers">
+                <form class="login" method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    <button id="button2" class="exit1" onclick="popdown()">x</button>
+                    <p class="title">ورود</p>
+                    <p>
+                        <input type="text" placeholder="نام کاربری" class="login-text" name="username">
+                        <i class="ion-person"></i>
+                    </p>
+                    <p>
+                        <input type="password" placeholder="رمز عبور" class="login-text" name="password">
+                        <i class="ion-ios-locked"></i>
+                    </p>
+                    <div class="enter">
+                        <button>ورود</button>
+                    </div>
+                    <a href={% url 'password_reset' %} class="forget">فراموشی رمز عبور</a>
+
+                    <p> اگر هنوز حساب کاربری برای خود ایجاد نکرده‌اید، </p>
+                    <button class="reg" id="buttonreg" onclick="popupregister()">ثبت نام</button>
+                    <p>کنید</p>
+                </form>
+            </div>
+        </div>
+
+        <div id="testreg">
+            <div class="wrappers">
+                <form class="register">
+                    <button id="buttonreg2" class="exit" onclick="popdownregister()">x</button>
+                    <p class="title">ثبت نام</p>
+                    <div class="enter"><a href="{% url 'register' %}">نیکوکار</a></div>
+                    <div class="enter"><a href="{% url 'registerOrg' %}">موسسه</a></div>
+                </form>
+            </div>
+        </div>
+        <div class="nav" id="nav"></div>
+        <div class="formm" style="z-index:9">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <h2>مشخصات</h2>
+                <div class="controls">
+                    <input type="text" id="name" class="floatlabel" placeholder="نام" name="first_name">
+                </div>
+
+                <div class="controls">
+                    <input type="text" id="lastname" class="floatlabel" placeholder="نام خانوادگی" , name="last_name">
+                </div>
+
+                <div class="controls">
+                    <input type="text" id="username" class="floatlabel" placeholder="نام کاربری" , name="username">
+                </div>
+
+                <div class="controls">
+                    <input type="password" id="pass1" class="floatlabel" placeholder="کلمه عبور" , name="password">
+                </div>
+                <div class="controls">
+                    {{ form.password2 }}
+                </div>
+
+                {{ form.errors }}
+
+                <div class="controls">
+                    <input type="email" id="email" class="floatlabel" placeholder="ایمیل" name="email">
+                </div>
+
+                <div class="controls">
+                    <h4 style="display: inline; margin-left: 10px;"> عکس </h4>
+                    <input type="file" id="photo" name="image">
+                </div>
+                <button>ثبت</button>
+            </form>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="container">
+            <div class="addr">
+                <h4> خیابان آزادی، بلوار اکبری، خیابان قاسمی، پلاک ۳۶، واحد ۲ </h4>
+                <h4>تلفن: ۰۲۱۸۸۳۴۲۸۹۱</h4>
+            </div>
+        </div>
+        <div class="copy">
+            <h4>کپی‌رایت رعایت شود.</h4>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src={% static "js/registerBenefactor.js" %}></script>
+<script type="text/javascript" src={% static "js/main.js" %}></script>
+<script src={% static "js/jquery.min.js" %}></script>
+</body>
+</html>
