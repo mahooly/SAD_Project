@@ -9,7 +9,7 @@ class CustomUser(AbstractUser):
     state = models.NullBooleanField(default=None)
     isBen = models.BooleanField(default=False)
     isOrg = models.BooleanField(default=False)
-    image = models.ImageField(upload_to='../media/profile_pics/', default='../../media/profile_pics/no-picture.png')
+    image = models.ImageField(upload_to='../media/profile_pics/', default='../media/profile_pics/no-picture.png')
 
     def __str__(self):
         return self.username

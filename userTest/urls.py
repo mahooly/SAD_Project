@@ -39,7 +39,7 @@ urlpatterns = [
 
     url(r'^profile/edit_benefactor/', views.update_benefactor_profile, name='editprofileben'),
     url(r'^profile/edit_organization/', views.update_organization_profile, name='editprofileorg'),
-    url(r'^edit_project/(?P<pId>[0-9A-Za-z_\-]+)', views.change_project, name='changeProject'),
+    url(r'^edit_project/(?P<p_id>[0-9A-Za-z_\-]+)', views.change_project, name='changeProject'),
     url(r'^edit_requirement/(?P<req_id>[0-9A-Za-z_\-]+)', views.change_requirement, name='changeRequirement'),
     url(r'^profile/(?P<username>[a-zA-Z0-9]+)$', views.user_profile, name='profile'),
     url(r'^requests/pending/', views.waiting_requests, name='waiting_requests'),
@@ -67,7 +67,7 @@ urlpatterns = [
 
     url(r'^delete_requirement/', views.delete_requirement, name='delete_requirement'),
     url(r'^delete_project/', views.delete_project, name='delete_project'),
-    url(r'^delete_request/(?P<id>[a-zA-Z0-9]+)', views.delete_request, name='delete_request'),
+    url(r'^delete_request/(?P<req_id>[a-zA-Z0-9]+)', views.delete_request, name='delete_request'),
     url(r'^donate/', views.donate, name='donate'),
 
     url(r'^404/', views.handler404, name='404'),

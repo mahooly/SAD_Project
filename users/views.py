@@ -310,10 +310,10 @@ def list_projects(request):
         tmp = []
         minrate = request.POST.get('minimumtotalrating')
         if minrate is not None:
-            for project in projects:
-                count = Rate.objects.filter(ratedUser=project.user).count()
-                if count == 0 or project.user.organizer.rate.totalRate >= float(minrate)*25:
-                    tmp.append(project)
+            for p in projects:
+                count = Rate.objects.filter(ratedUser=p.user).count()
+                if count == 0 or p.user.organizer.rate.totalRate >= float(minrate)*25:
+                    tmp.append(p)
         projects = tmp
 
         category = request.POST['field']
@@ -366,7 +366,7 @@ def list_requirement(request):
                         tmp.append(req)
             all_req = tmp
         except ValueError:
-            tmp = []#do nothing
+            pass
 
         ability = request.POST['field']
         if ability != "blank":
@@ -388,7 +388,7 @@ def list_requirement(request):
 @admin_org_only
 def list_abilities(request):
     name = request.POST.get('orgName', '')
-    all_user_abilities = UserAbilities.objects.filter(username__benefactor__nickname__icontains=name)
+    all_user_abilities = UserAbilities.objects.filter(username__benefactor__nickname__icontains=name, username__state=True)
     all_abilities = Ability.objects.all()
     user_abilities = []
 
@@ -423,7 +423,7 @@ def list_abilities(request):
                         tmp.append(ua)
             all_user_abilities = tmp
         except ValueError:
-            tmp = []#do nothing
+            pass
 
         ability = request.POST['field']
         if ability != "blank":
@@ -488,8 +488,7 @@ def user_profile(request, username):
         if request.user.username == username:
             return render(request, 'profile/personalProfileOrganization.html',
                           {'user': user, 'org': organization, 'projects': projects, 'requirements': requirements,
-                           'reqability': reqability, 'rangee': range(28), 'benefactors': benefactors, 'count': count
-                              , 'comments': comments})
+                           'reqability': reqability, 'rangee': range(28), 'benefactors': benefactors, 'count': count, 'comments': comments})
         else:
             return render(request, 'profile/organizationProfileView.html',
                           {'user': user, 'org': organization, 'projects': projects, 'requirements': requirements,
@@ -820,7 +819,7 @@ def accept_request(request):
         if split[1] == '1':
             req.isAccepted = True
             if req.whoSubmit == '1':
-                req.reqId.NOPs = req.reqId.NOPs + 1
+                req.reqId.NOPs += 1
                 req.reqId.save()
             send_mail('تایید پیشنهاد', 'پیشنهاد شما تایید شده است!', 'sender@mehraneh.com', [request.user.email])
         else:
@@ -873,19 +872,15 @@ def delete_project(request):
     return render(request, 'admin/thanksDeleteProj.html')
 
 
-@admin_only
-def delete_request(request, id):
+@admin_org_only
+def delete_request(request, req_id):
     if request.method == 'POST':
-        print(id)
-        # req = Request.objects.get(id=id)
-        # print(req)
-        # Report.objects.filter(reqId=req.id).delete()
-        # RequestAbilities.objects.filter(reqId=req.id).delete()
-        # req.delete()
-    print(id)
+        req = Request.objects.get(id=req_id)
+        req.delete()
     return HttpResponseRedirect('/requests/sent')
 
 
+@login_required
 def donate(request):
     if request.method == 'POST':
         p_id = request.POST['projectId']
@@ -903,17 +898,17 @@ def donate(request):
         return render(request, 'registration/thanksDonateProject.html', {'org': project_donate.user.organizer})
 
 
-@login_required
-def change_project(request, pId):
+@admin_org_only
+def change_project(request, p_id):
     if request.method == 'POST':
-        project_change = Project.objects.get(id=pId)
+        project_change = Project.objects.get(id=p_id)
         project_change.budget = request.POST['budget']
         project_change.description = request.POST['description']
         project_change.save()
     return render(request, 'registration/thanksSubmitProject.html')
 
 
-@login_required
+@admin_org_only
 def change_requirement(request, req_id):
     if request.method == 'POST':
         week_form = WeekForm(request.POST)
