@@ -29,7 +29,7 @@
             {% if request.user.is_authenticated %}
                 <div class="container">
                     <div class="topPhoto">
-                        <img src="{{ request.user.image }}">
+                        <img src="../{{ request.user.image }}">
                     </div>
                     <div class="topmenuelements">
                         {% if request.user.isOrg %}
@@ -43,7 +43,7 @@
                         <a href="{% url 'logout' %}">خروج</a>
                     </div>
                     <div class="logo">
-                        <img src="../../static/images/logo.png">
+                        <img src="../static/images/logo.png">
                     </div>
                 </div>
             {% endif %}
@@ -59,7 +59,7 @@
                         <button onclick="popupregister()">ثبت نام</button>
                     </div>
                     <div class="logo">
-                        <img src="../../static/images/logo.png">
+                        <img src="../static/images/logo.png">
                     </div>
                 </div>
             {% endif %}
@@ -84,7 +84,7 @@
                     <div class="enter">
                         <button>ورود</button>
                     </div>
-                    <button class="forget">فراموشی رمز عبور</button>
+                    <a href={% url 'password_reset' %} class="forget">فراموشی رمز عبور</a>
 
                     <p> اگر هنوز حساب کاربری برای خود ایجاد نکرده‌اید، </p>
                     <button class="reg" id="buttonreg" onclick="popupregister()">ثبت نام</button>
@@ -103,9 +103,7 @@
                 </form>
             </div>
         </div>
-        <div class="nav" id="nav">
-
-        </div>
+        <div class="nav" id="nav"></div>
         <div class="container">
         <div style="display: inline-block; width: 100%">
             <div class="photo">
@@ -124,60 +122,71 @@
                 </div>
             </div>
         </div>
-            <div class="chartContainer">
-                <div id="chart">
-                    <div>
-                        <table>
-                            <tbody>
-                            <tr class="bars">
-                                <td>
-                                    <div class="one"
-                                         style="height: {{ org.rate.f1 }}%; position: absolute; width: 100%; bottom: 0px;">{{ org.rate.f1 }}%
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="two"
-                                         style="height: {{ org.rate.f2 }}%; position: absolute; width: 100%; bottom: 0px;">{{ org.rate.f2 }}%
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="three"
-                                         style="height: {{ org.rate.f3 }}%; position: absolute; width: 100%; bottom: 0px;">{{ org.rate.f3 }}%
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="four"
-                                         style="height: {{ org.rate.f4 }}%; position: absolute; width: 100%; bottom: 0px;">{{ org.rate.f4 }}%
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="five"
-                                         style="height: {{ org.rate.f5 }}%; position: absolute; width: 100%; bottom: 0px;">{{ org.rate.f5 }}%
-                                    </div>
-                                </td>
-                                <td class="legend">
+            <div class="chartContainer" style="width: 100%; float: right; display: flex">
+                    <div id="chart" style="width: 60%;">
+                        <div>
+                            <table>
+                                <tbody>
+                                <tr class="bars">
+                                    <td>
+                                        <div class="one"
+                                             style="height: {{ org.rate.f1 }}%; position: absolute; width: 100%; bottom: 0px;">{{ org.rate.f1 }}%
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="two"
+                                             style="height: {{ org.rate.f2 }}%; position: absolute; width: 100%; bottom: 0px;">{{ org.rate.f2 }}%
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="three"
+                                             style="height: {{ org.rate.f3 }}%; position: absolute; width: 100%; bottom: 0px;">{{ org.rate.f3 }}%
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="four"
+                                             style="height: {{ org.rate.f4 }}%; position: absolute; width: 100%; bottom: 0px;">{{ org.rate.f4 }}%
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="five"
+                                             style="height: {{ org.rate.f5 }}%; position: absolute; width: 100%; bottom: 0px;">{{ org.rate.f5 }}%
+                                        </div>
+                                    </td>
+                                    <td class="legend">
                                             <span class="legbox">
                                                 <span class="one xaxisname"></span><span>صداقت</span>
                                             </span>
-                                    <span class="legbox">
+                                        <span class="legbox">
                                                 <span class="two xaxisname"></span><span>تعهد</span>
                                             </span>
-                                    <span class="legbox">
+                                        <span class="legbox">
                                                 <span class="three xaxisname"></span><span>مسئولیت‌پذیری</span>
                                             </span>
-                                    <span class="legbox">
+                                        <span class="legbox">
                                                 <span class="four xaxisname"></span><span>وقت‌شناسی</span>
                                             </span>
-                                    <span class="legbox">
+                                        <span class="legbox">
                                                 <span class="five xaxisname"></span><span>علاقه به کار</span>
                                             </span>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div style="float:left; width: 35%; display: inline-block">
+                        <h3 style="text-align: center;margin-bottom: 10px">نظرات</h3>
+                        <div style="height: 180px; overflow-y:scroll; background: rgba(255,255,255,0.8); padding: 5px">
+                            {% if comments|length == 0 %}
+                                <h5 style="margin-top: 5px;">نظری وجود ندارد</h5>
+                            {% endif %}
+                            {% for comment in comments %}
+                                <h5 style="width: 80%; margin: 10px auto 5px auto;border-bottom: 1px solid #777777">{{ comment.description }}</h5>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
-            </div>
 
             <div id="projectscurrent">
                 <h2>پروژه های در دست انجام: </h2>
@@ -199,27 +208,24 @@
                             </form>
                         </div>
                     </div>
-                    <button onclick=deleteReq({{ project.id }}); style="color: #e8eeef; width:30px; height: 30px; background-color: #c72424; border-radius: 5px; display: inline-block">x</button>
+                    <button class="exitbutton" onclick=deleteReq({{ project.id }}); style="color: #e8eeef; width:30px; height: 30px; background-color: #c72424; border-radius: 5px; display: inline-block">x</button>
                     <button style="display: inline-block; padding: 2px 10px; font-size: 17px;  text-decoration: none; color: #fdfdfd; height: 30px; background: #009eff; border-radius: 5px; margin-top: 20px;"
                             onclick=popupProject("p{{ project.id }}")>{{ project.name }}</button><br>
                     <div class="testreg" id="p{{ project.id }}"
                          style="display: none; position: fixed;width: 100%;height: 1200px;top: 0;right: 0;background: rgba(0,0,0,0.6);z-index: 30; border-radius: 0px;">
                         <div class="wrappers">
-                            <form class="register" style="border-radius: 0">
+                            <form method="post" action="/edit_project/{{ project.id }}" class="register" style="border-radius: 0">
+                                {% csrf_token %}
                                 <button onclick=popdownProject("p{{ project.id }}");
                                         style="width: 10%; padding: 0; text-align: center; float: right">x
                                 </button>
                                 <p class="title">{{ project.name }}</p>
-                                <h3 style="font-size: 12px;">میزان کل بودجه مورد نیاز(تومان): </h3> <input type="text"
-                                                                                                           name="budget{{ project.id }}p"
-                                                                                                           value="{{ project.budget }}">
+                                <h3 style="font-size: 12px;">میزان کل بودجه مورد نیاز(تومان): </h3> <input type="number" name="budget" value="{{ project.budget }}">
                                 <h3 style="margin-top: 3px; font-size: 12px;">میزان کل مبلغ پرداخت شده تا
                                     کنون(تومان): {{ project.alreadyPaid }}</h3>
                                 <h3 style="margin-top: 3px; font-size: 12px;">شهر محل اجرای
                                     پروژه: {{ project.city }}</h3>
-                                <h3 style="margin-top: 3px; font-size: 12px;">توضیحات بیشتر: </h3><input type="text"
-                                                                                                         name="description{{ project.id }}p"
-                                                                                                         value="{{ project.description }}">
+                                <h3 style="margin-top: 3px; font-size: 12px;">توضیحات بیشتر: </h3><input type="text" name="description" value="{{ project.description }}">
                                 <input type="submit" class="mybutton" value="ثبت تغییرات">
                             </form>
                         </div>
@@ -229,7 +235,7 @@
             <div id="projects">
                 <h2>نیکوکارانی که تا کنون با این موسسه همکاری داشته اند:</h2>
                 <ul>{% for ben in benefactors %}
-                    <li>{{ ben.nickname }}</li> {% endfor %}</ul>
+                    <a href="{% url 'profile' ben.user.username %}" style="text-decoration: none; color: #222222">{{ ben.nickname }}</a> {% endfor %}</ul>
             </div>
             <div id="abilities">
                 <h2>نیازمند همکاری در زمینه های: </h2>
@@ -252,26 +258,24 @@
                             </form>
                         </div>
                     </div>
-                    <button onclick=deleteReq({{ req.0.reqId.id }}); style="color: #e8eeef; width:30px; height: 30px; background-color: #c72424; border-radius: 5px; display: inline-block">x</button>
+                    <button class="exitbutton" onclick=deleteReq({{ req.0.reqId.id }}); style="color: #e8eeef; width:30px; height: 30px; background-color: #c72424; border-radius: 5px; display: inline-block">x</button>
                     <button style="display: inline-block; padding: 2px 10px; font-size: 17px;  text-decoration: none; color: #fdfdfd; height: 30px; background: #009eff; border-radius: 5px; margin-top: 20px;"
                             onclick=popupProject("r{{ req.0.reqId.id }}")>{{ req.0.reqId.name }}</button><br>
                     <div class="testreg" id="r{{ req.0.reqId.id }}"
                          style="display: none; position: fixed;width: 100%;height: 1200px;top: 0;right: 0;background: rgba(0,0,0,0.6);z-index: 30;">
                         <div class="wrappers">
 
-                            <form method="post" class="register"
-                                  style="margin-top: -450px; max-width: 500px; height: 500px; overflow-y:scroll; border-radius: 0px">
-                                <button onclick=popdownProject("r{{ req.0.reqId.id }}");
-                                        style="width: 10%; padding: 0; text-align: center; float: right">x
-                                </button>
+                            <form method="post" action="/edit_requirement/{{ req.0.reqId.id }}" class="register" style="margin-top: -450px; max-width: 500px; height: 500px; overflow-y:scroll; border-radius: 0px">
+                                {% csrf_token %}
+                                <button onclick=popdownProject("r{{ req.0.reqId.id }}"); style="width: 10%; padding: 0; text-align: center; float: right">x</button>
                                 <p class="title">{{ req.0.reqId.name }}</p>
                                 <h3 style="font-size: 14px;">شهر: {{ req.0.reqId.city }}</h3>
-                                <h3 style="margin-top: 3px; font-size: 14px;">آدرس: </h3> <input type="text"
+                                <h3 style="margin-top: 3px; font-size: 14px;">آدرس: </h3> <input type="text" name="address"
                                                                                                  value="{{ req.0.reqId.address }}">
-                                <h3 style="margin-top: 3px; font-size: 14px;">توضیحات بیشتر: </h3> <input type="text"
+                                <h3 style="margin-top: 3px; font-size: 14px;">توضیحات بیشتر: </h3> <input type="text" name="description"
                                                                                                           value="{{ req.0.reqId.description }}">
                                 <h3 style="margin-top: 3px; font-size: 14px;">تعداد
-                                    مشارکت‌کنندگان: {{ req.0.reqId.NOP }}</h3>
+                                    مشارکت‌کنندگان: {{ req.0.reqId.NOPs }}</h3>
                                 <h3 style="margin-top: 3px; font-size: 14px;">توانایی‌های مورد نیاز: </h3>
                                 <ul>
                                     {% for ability in req %}
@@ -281,9 +285,7 @@
                                 </ul>
                                 {% if req.0.reqId.typeOfCooperation == "inOffice10" or req.0.reqId.typeOfCooperation == "inOffice20" or req.0.reqId.typeOfCooperation == "inOffice30" or req.0.reqId.typeOfCooperation == "inOfficemore" %}
 
-                                    <h3 style="margin: 10px 0; font-size: 10px;">در صورت تمایل به همکاری با این موسسه در
-                                        این نیازمندی، لطفا زمان‌هایی که می‌خواهید در آن‌ها به کار مشغول شوید را مشخص
-                                        کنید</h3>
+                                    <h3 style="margin: 10px 0; font-size: 10px;">زمان‌های غیرفعال را مشخص کنید</h3>
                                     <table id="tab">
                                         <tbody>
                                         <tr>
@@ -375,174 +377,177 @@
                                             بزنید</h5>
                                     </table>
                                     {% if req.0.reqId.wId.c0 == "on" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b0"
+                                        <input type="checkbox" name="c0"
                                                id="a{{ req.0.reqId.id }}b0" style="display: none" checked>{% endif %}
                                     {% if req.0.reqId.wId.c0 == "off" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b0"
+                                        <input type="checkbox" name="c0"
                                                id="a{{ req.0.reqId.id }}b0" style="display: none">{% endif %}
                                     {% if req.0.reqId.wId.c1 == "on" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b1"
+                                        <input type="checkbox" name="c1"
                                                id="a{{ req.0.reqId.id }}b1" style="display: none" checked>{% endif %}
                                     {% if req.0.reqId.wId.c1 == "off" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b1"
+                                        <input type="checkbox" name="c1"
                                                id="a{{ req.0.reqId.id }}b1" style="display: none">{% endif %}
                                     {% if req.0.reqId.wId.c2 == "on" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b2"
+                                        <input type="checkbox" name="c2"
                                                id="a{{ req.0.reqId.id }}b2" style="display: none" checked>{% endif %}
                                     {% if req.0.reqId.wId.c2 == "off" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b2"
+                                        <input type="checkbox" name="c2"
                                                id="a{{ req.0.reqId.id }}b2" style="display: none">{% endif %}
                                     {% if req.0.reqId.wId.c3 == "on" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b3"
+                                        <input type="checkbox" name="c3"
                                                id="a{{ req.0.reqId.id }}b3" style="display: none" checked>{% endif %}
                                     {% if req.0.reqId.wId.c3 == "off" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b3"
+                                        <input type="checkbox" name="c3"
                                                id="a{{ req.0.reqId.id }}b3" style="display: none">{% endif %}
                                     {% if req.0.reqId.wId.c4 == "on" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b4"
+                                        <input type="checkbox" name="c4"
                                                id="a{{ req.0.reqId.id }}b4" style="display: none" checked>{% endif %}
                                     {% if req.0.reqId.wId.c4 == "off" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b4"
+                                        <input type="checkbox" name="c4"
                                                id="a{{ req.0.reqId.id }}b4" style="display: none">{% endif %}
                                     {% if req.0.reqId.wId.c5 == "on" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b5"
+                                        <input type="checkbox" name="c5"
                                                id="a{{ req.0.reqId.id }}b5" style="display: none" checked>{% endif %}
                                     {% if req.0.reqId.wId.c5 == "off" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b5"
+                                        <input type="checkbox" name="c5"
                                                id="a{{ req.0.reqId.id }}b5" style="display: none">{% endif %}
                                     {% if req.0.reqId.wId.c6 == "on" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b6"
+                                        <input type="checkbox" name="c6"
                                                id="a{{ req.0.reqId.id }}b6" style="display: none" checked>{% endif %}
                                     {% if req.0.reqId.wId.c6 == "off" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b6"
+                                        <input type="checkbox" name="c6"
                                                id="a{{ req.0.reqId.id }}b6" style="display: none">{% endif %}
                                     {% if req.0.reqId.wId.c7 == "on" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b7"
+                                        <input type="checkbox" name="c7"
                                                id="a{{ req.0.reqId.id }}b7" style="display: none" checked>{% endif %}
                                     {% if req.0.reqId.wId.c7 == "off" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b7"
+                                        <input type="checkbox" name="c7"
                                                id="a{{ req.0.reqId.id }}b7" style="display: none">{% endif %}
                                     {% if req.0.reqId.wId.c8 == "on" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b8"
+                                        <input type="checkbox" name="c8"
                                                id="a{{ req.0.reqId.id }}b8" style="display: none" checked>{% endif %}
                                     {% if req.0.reqId.wId.c8 == "off" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b8"
+                                        <input type="checkbox" name="c8"
                                                id="a{{ req.0.reqId.id }}b8" style="display: none">{% endif %}
                                     {% if req.0.reqId.wId.c9 == "on" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b9"
+                                        <input type="checkbox" name="c9"
                                                id="a{{ req.0.reqId.id }}b9" style="display: none" checked>{% endif %}
                                     {% if req.0.reqId.wId.c9 == "off" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b9"
+                                        <input type="checkbox" name="c9"
                                                id="a{{ req.0.reqId.id }}b9" style="display: none">{% endif %}
                                     {% if req.0.reqId.wId.c10 == "on" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b10"
+                                        <input type="checkbox" name="c10"
                                                id="a{{ req.0.reqId.id }}b10" style="display: none" checked>{% endif %}
                                     {% if req.0.reqId.wId.c10 == "off" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b10"
+                                        <input type="checkbox" name="c10"
                                                id="a{{ req.0.reqId.id }}b10" style="display: none">{% endif %}
                                     {% if req.0.reqId.wId.c11 == "on" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b11"
+                                        <input type="checkbox" name="c11"
                                                id="a{{ req.0.reqId.id }}b11" style="display: none" checked>{% endif %}
                                     {% if req.0.reqId.wId.c11 == "off" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b11"
+                                        <input type="checkbox" name="c11"
                                                id="a{{ req.0.reqId.id }}b11" style="display: none">{% endif %}
                                     {% if req.0.reqId.wId.c12 == "on" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b12"
+                                        <input type="checkbox" name="c12"
                                                id="a{{ req.0.reqId.id }}b12" style="display: none" checked>{% endif %}
                                     {% if req.0.reqId.wId.c12 == "off" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b12"
+                                        <input type="checkbox" name="c12"
                                                id="a{{ req.0.reqId.id }}b12" style="display: none">{% endif %}
                                     {% if req.0.reqId.wId.c13 == "on" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b13"
+                                        <input type="checkbox" name="c13"
                                                id="a{{ req.0.reqId.id }}b13" style="display: none" checked>{% endif %}
                                     {% if req.0.reqId.wId.c13 == "off" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b13"
+                                        <input type="checkbox" name="c13"
                                                id="a{{ req.0.reqId.id }}b13" style="display: none">{% endif %}
                                     {% if req.0.reqId.wId.c14 == "on" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b14"
+                                        <input type="checkbox" name="c14"
                                                id="a{{ req.0.reqId.id }}b14" style="display: none" checked>{% endif %}
                                     {% if req.0.reqId.wId.c14 == "off" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b14"
+                                        <input type="checkbox" name="c14"
                                                id="a{{ req.0.reqId.id }}b14" style="display: none">{% endif %}
                                     {% if req.0.reqId.wId.c15 == "on" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b15"
+                                        <input type="checkbox" name="c15"
                                                id="a{{ req.0.reqId.id }}b15" style="display: none" checked>{% endif %}
                                     {% if req.0.reqId.wId.c15 == "off" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b15"
+                                        <input type="checkbox" name="c15"
                                                id="a{{ req.0.reqId.id }}b15" style="display: none">{% endif %}
                                     {% if req.0.reqId.wId.c16 == "on" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b16"
+                                        <input type="checkbox" name="c16"
                                                id="a{{ req.0.reqId.id }}b16" style="display: none" checked>{% endif %}
                                     {% if req.0.reqId.wId.c16 == "off" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b16"
+                                        <input type="checkbox" name="c16"
                                                id="a{{ req.0.reqId.id }}b16" style="display: none">{% endif %}
                                     {% if req.0.reqId.wId.c17 == "on" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b17"
+                                        <input type="checkbox" name="c17"
                                                id="a{{ req.0.reqId.id }}b17" style="display: none" checked>{% endif %}
                                     {% if req.0.reqId.wId.c17 == "off" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b17"
+                                        <input type="checkbox" name="c17"
                                                id="a{{ req.0.reqId.id }}b17" style="display: none">{% endif %}
                                     {% if req.0.reqId.wId.c18 == "on" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b18"
+                                        <input type="checkbox" name="c18"
                                                id="a{{ req.0.reqId.id }}b18" style="display: none" checked>{% endif %}
                                     {% if req.0.reqId.wId.c18 == "off" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b18"
+                                        <input type="checkbox" name="c18"
                                                id="a{{ req.0.reqId.id }}b18" style="display: none">{% endif %}
                                     {% if req.0.reqId.wId.c19 == "on" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b19"
+                                        <input type="checkbox" name="c19"
                                                id="a{{ req.0.reqId.id }}b19" style="display: none" checked>{% endif %}
                                     {% if req.0.reqId.wId.c19 == "off" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b19"
+                                        <input type="checkbox" name="c19"
                                                id="a{{ req.0.reqId.id }}b19" style="display: none">{% endif %}
                                     {% if req.0.reqId.wId.c20 == "on" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b20"
+                                        <input type="checkbox" name="c20"
                                                id="a{{ req.0.reqId.id }}b20" style="display: none" checked>{% endif %}
                                     {% if req.0.reqId.wId.c20 == "off" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b20"
+                                        <input type="checkbox" name="c20"
                                                id="a{{ req.0.reqId.id }}b20" style="display: none">{% endif %}
                                     {% if req.0.reqId.wId.c21 == "on" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b21"
+                                        <input type="checkbox" name="c21"
                                                id="a{{ req.0.reqId.id }}b21" style="display: none" checked>{% endif %}
                                     {% if req.0.reqId.wId.c21 == "off" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b21"
+                                        <input type="checkbox" name="c21"
                                                id="a{{ req.0.reqId.id }}b21" style="display: none">{% endif %}
                                     {% if req.0.reqId.wId.c22 == "on" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b22"
+                                        <input type="checkbox" name="c22"
                                                id="a{{ req.0.reqId.id }}b22" style="display: none" checked>{% endif %}
                                     {% if req.0.reqId.wId.c22 == "off" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b22"
+                                        <input type="checkbox" name="c22"
                                                id="a{{ req.0.reqId.id }}b22" style="display: none">{% endif %}
                                     {% if req.0.reqId.wId.c23 == "on" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b23"
+                                        <input type="checkbox" name="c23"
                                                id="a{{ req.0.reqId.id }}b23" style="display: none" checked>{% endif %}
                                     {% if req.0.reqId.wId.c23 == "off" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b23"
+                                        <input type="checkbox" name="c23"
                                                id="a{{ req.0.reqId.id }}b23" style="display: none">{% endif %}
                                     {% if req.0.reqId.wId.c24 == "on" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b24"
+                                        <input type="checkbox" name="c24"
                                                id="a{{ req.0.reqId.id }}b24" style="display: none" checked>{% endif %}
                                     {% if req.0.reqId.wId.c24 == "off" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b24"
+                                        <input type="checkbox" name="c24"
                                                id="a{{ req.0.reqId.id }}b24" style="display: none">{% endif %}
                                     {% if req.0.reqId.wId.c25 == "on" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b25"
+                                        <input type="checkbox" name="c25"
                                                id="a{{ req.0.reqId.id }}b25" style="display: none" checked>{% endif %}
                                     {% if req.0.reqId.wId.c25 == "off" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b25"
+                                        <input type="checkbox" name="c25"
                                                id="a{{ req.0.reqId.id }}b25" style="display: none">{% endif %}
                                     {% if req.0.reqId.wId.c26 == "on" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b26"
+                                        <input type="checkbox" name="c26"
                                                id="a{{ req.0.reqId.id }}b26" style="display: none" checked>{% endif %}
                                     {% if req.0.reqId.wId.c26 == "off" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b26"
+                                        <input type="checkbox" name="c26"
                                                id="a{{ req.0.reqId.id }}b26" style="display: none">{% endif %}
                                     {% if req.0.reqId.wId.c27 == "on" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b27"
+                                        <input type="checkbox" name="c27"
                                                id="a{{ req.0.reqId.id }}b27" style="display: none" checked>{% endif %}
                                     {% if req.0.reqId.wId.c27 == "off" %}
-                                        <input type="checkbox" name="a{{ req.0.reqId.id }}b27"
+                                        <input type="checkbox" name="c27"
                                                id="a{{ req.0.reqId.id }}b27" style="display: none">{% endif %}
 
+                                {% endif %}
+                                {% if req.0.reqId.typeOfCooperation == "atHome" %}
+                                    <h3>دورکاری</h3>
                                 {% endif %}
 
                                 <input type="submit" class="subreq" value="ثبت تغییرات" style="margin-bottom: 20px;">

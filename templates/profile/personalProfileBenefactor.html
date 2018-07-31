@@ -29,7 +29,7 @@
             {% if request.user.is_authenticated %}
                 <div class="container">
                     <div class="topPhoto">
-                        <img src="{{ request.user.image }}">
+                        <img src="../{{ request.user.image }}">
                     </div>
                     <div class="topmenuelements">
                         {% if request.user.isOrg %}
@@ -43,7 +43,7 @@
                         <a href="{% url 'logout' %}">خروج</a>
                     </div>
                     <div class="logo">
-                        <img src="../../static/images/logo.png">
+                        <img src="../static/images/logo.png">
                     </div>
                 </div>
             {% endif %}
@@ -59,7 +59,7 @@
                         <button onclick="popupregister()">ثبت نام</button>
                     </div>
                     <div class="logo">
-                        <img src="../../static/images/logo.png">
+                        <img src="../static/images/logo.png">
                     </div>
                 </div>
             {% endif %}
@@ -84,7 +84,7 @@
                     <div class="enter">
                         <button>ورود</button>
                     </div>
-                    <button class="forget">فراموشی رمز عبور</button>
+                    <a href={% url 'password_reset' %} class="forget">فراموشی رمز عبور</a>
 
                     <p> اگر هنوز حساب کاربری برای خود ایجاد نکرده‌اید، </p>
                     <button class="reg" id="buttonreg" onclick="popupregister()">ثبت نام</button>
@@ -103,12 +103,11 @@
                 </form>
             </div>
         </div>
-        <div class="nav" id="nav">
-        </div>
+        <div class="nav" id="nav"></div>
         {% if request.user.is_authenticated and request.user.username == user.username %}
             <div class="container">
                 <div class="photo">
-                    <div id="photo"><img src="{{ user.image }}" alt=""></div>
+                    <div id="photo"><img src="../{{ user.image }}" alt=""></div>
                 </div>
                 <div class="personal">
                     <h2> مشخصات </h2>
@@ -131,10 +130,12 @@
                             <h3>تحصیلات: دکتری یا بالاتر ( {{ benefactor.major }} )</h3>
                         {% endif %}
                         <h3>شهر محل سکونت: {{ benefactor.city }}</h3>
+                        <br>
+                        <h3>تعداد رای‌ها: {{ count }}</h3>
                     </div>
                 </div>
-                <div class="chartContainer">
-                    <div id="chart">
+                <div class="chartContainer" style="width: 100%; float: right; display: flex">
+                    <div id="chart" style="width: 60%;">
                         <div>
                             <table>
                                 <tbody>
@@ -186,6 +187,17 @@
                             </table>
                         </div>
                     </div>
+                    <div style="float:left; width: 35%; display: inline-block">
+                        <h3 style="text-align: center;margin-bottom: 10px">نظرات</h3>
+                        <div style="height: 180px; overflow-y:scroll; background: rgba(255,255,255,0.8); padding: 5px">
+                            {% if comments|length == 0 %}
+                                <h5 style="margin-top: 5px;">نظری وجود ندارد</h5>
+                            {% endif %}
+                            {% for comment in comments %}
+                                <h5 style="width: 80%; margin: 10px auto 5px auto;border-bottom: 1px solid #777777">{{ comment.description }}</h5>
+                            {% endfor %}
+                        </div>
+                    </div>
                 </div>
                 <div id="abilities">
                     <h2>توانایی‌ها </h2>
@@ -196,7 +208,7 @@
                 <div id="projects">
                     <h2>موسسه هایی که با آنها همکاری داشته</h2>
                     <ul>{% for org in organizations %}
-                        <li>{{ org.name }}</li> {% endfor %}</ul>
+                        <a href="{% url 'profile' org.user.username %}" style="text-decoration: none; color: #222222">{{ org.name }}</a> {% endfor %}</ul>
                 </div>
                 <div id="weeklyfreetime">
                     <h2>زمانبندی هفتگی</h2>
@@ -364,6 +376,10 @@
                         <input type="checkbox" name="a27" id="a27" style="display: none" checked>{% endif %}
                     {% if week.c27 == "off" %}
                         <input type="checkbox" name="a27" id="a27" style="display: none">{% endif %}
+
+                    {% if benefactor.typeOfCooperation == "atHome" %}
+                        <h3>دورکاری</h3>
+                    {% endif %}
                 </div>
                 <button class="subreq" style="background-color: #f72c2c; z-index:4" onclick="popupDelete()">حذف کاربر</button>
             </div>

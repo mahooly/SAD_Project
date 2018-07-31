@@ -29,7 +29,7 @@
             {% if request.user.is_authenticated %}
                 <div class="container">
                     <div class="topPhoto">
-                        <img src="{{ request.user.image }}">
+                        <img src="../{{ request.user.image }}">
                     </div>
                     <div class="topmenuelements">
                         {% if request.user.isOrg %}
@@ -84,7 +84,7 @@
                     <div class="enter">
                         <button>ورود</button>
                     </div>
-                    <button class="forget">فراموشی رمز عبور</button>
+                    <a href={% url 'password_reset' %} class="forget">فراموشی رمز عبور</a>
 
                     <p> اگر هنوز حساب کاربری برای خود ایجاد نکرده‌اید، </p>
                     <button class="reg" id="buttonreg" onclick="popupregister()">ثبت نام</button>
@@ -112,7 +112,7 @@
             <div id="result">
                 {% for project in projects %}
                     <div class="report">
-                        <a style="text-decoration: none; background: rgba(0,158,255,0.7); border-radius: 5px; width: 250px; text-align: center; display: inline-block; color: #202020;" href={% url 'reportProject' project.id %}>{{ project.name }}</a>
+                        <a style="text-decoration: none; background: rgba(0,158,255,0.7); border-radius: 5px; width: 250px; text-align: center; display: inline-block; color: #202020;" href="/admin/report_project/{{ project.id }}">{{ project.name }}</a>
                         <div class="project" style="display: inline-block; float: left">
                             <h3>مبلغ پرداخت شده تا کنون: {{ project.alreadyPaid }}</h3>
                         </div>

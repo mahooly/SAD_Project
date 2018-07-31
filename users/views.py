@@ -37,8 +37,8 @@ def handler500(request):
 
 
 def index(request):
-    orgs = Organization.objects.all()[:4]
-    bens = Benefactor.objects.all()[:4]
+    orgs = Organization.objects.all().order_by('-rate__totalRate')[:4]
+    bens = Benefactor.objects.all().order_by('-rate__totalRate')[:4]
     orgRequirements = []
     orgProjects = []
     benAbilities = []
@@ -69,15 +69,14 @@ def benefactor_registration(request):
             user = user_form.save()
             user.set_password(user.password)
             user.isBen = True
+            if request.user.username != '' and request.user.is_authorized and not request.user.isBen and not request.user.isOrg:
+                user.state = True
             user.save()
             rate = TotalRate.objects.create()
             benefactor = form.save(commit=False)
             benefactor.user = user
-            if benefactor.typeOfCooperation != 'atHome':
-                week = week_form.save()
-                week.save()
-            else:
-                week = None
+            week = week_form.save()
+            week.save()
             benefactor.wId = week
             benefactor.rate = rate
             benefactor.save()
@@ -112,6 +111,8 @@ def organization_registration(request):
             user = user_form.save()
             user.set_password(user.password)
             user.isOrg = True
+            if request.user.username != '' and request.user.is_authorized and not request.user.isBen and not request.user.isOrg:
+                user.state = True
             user.save()
             organizer = form.save(commit=False)
             organizer.user = user
@@ -306,12 +307,14 @@ def list_projects(request):
         except ValueError:
             projects = projects.filter(budget__gte=0)
 
-        try:
-            projects = projects.filter(
-                user__organizer__rate__totalRate__gte=int(request.POST.get('minimumtotalrating')))
-
-        except ValueError:
-            projects = projects.filter(user__organizer__rate__totalRate__gte=0)
+        tmp = []
+        minrate = request.POST.get('minimumtotalrating')
+        if minrate is not None:
+            for project in projects:
+                count = Rate.objects.filter(ratedUser=project.user).count()
+                if count == 0 or project.user.organizer.rate.totalRate >= float(minrate)*25:
+                    tmp.append(project)
+        projects = tmp
 
         category = request.POST['field']
         if category != "blank":
@@ -354,10 +357,16 @@ def list_requirement(request):
             all_req = all_req.filter(NOPs__gte=0)
 
         try:
-            all_req = all_req.filter(
-                user__organizer__rate__totalRate__gte=int(request.POST.get('minimumtotalrating', 0)))
+            tmp = []
+            minrate = request.POST.get('minimumtotalrating')
+            if minrate is not None:
+                for req in all_req:
+                    count = Rate.objects.filter(ratedUser=req.user).count()
+                    if count == 0 or req.user.organizer.rate.totalRate >= (float(minrate)-1) * 25:
+                        tmp.append(req)
+            all_req = tmp
         except ValueError:
-            all_req = all_req.filter(user__organizer__rate__totalRate__gte=0)
+            tmp = []#do nothing
 
         ability = request.POST['field']
         if ability != "blank":
@@ -405,10 +414,16 @@ def list_abilities(request):
             all_user_abilities = all_user_abilities.filter(username__benefactor__year__gte=0)
 
         try:
-            all_user_abilities = all_user_abilities.filter(
-                username__benefactor__rate__totalRate__gte=int(request.POST.get('minimumtotalrating', 0)))
+            tmp = []
+            minrate = request.POST.get('minimumtotalrating')
+            if minrate is not None:
+                for ua in all_user_abilities:
+                    count = Rate.objects.filter(ratedUser=ua.username).count()
+                    if count == 0 or ua.username.benefactor.rate.totalRate >= (float(minrate)-1) * 25:
+                        tmp.append(ua)
+            all_user_abilities = tmp
         except ValueError:
-            all_user_abilities = all_user_abilities.filter(username__benefactor__rate__totalRate__gte=0)
+            tmp = []#do nothing
 
         ability = request.POST['field']
         if ability != "blank":
@@ -439,11 +454,13 @@ def user_logout(request):
 
 def user_profile(request, username):
     user = get_object_or_404(CustomUser, username=username, state=True)
+    count = Rate.objects.filter(ratedUser=user).count()
     if user.isBen:
         benefactor = Benefactor.objects.get(user=user)
         week = WeeklySchedule.objects.get(id=benefactor.wId.id)
         user_abilities = UserAbilities.objects.filter(username=user.username)
         orgs = Request.objects.filter(benefactorId=user, isAccepted=True)
+        comments = Report.objects.filter(benefactor=user, type=1, operator=2)
         organizations = []
         for org in orgs:
             organizations.append(org.organizationId.organizer)
@@ -451,15 +468,16 @@ def user_profile(request, username):
         if request.user.username == username:
             return render(request, 'profile/personalProfileBenefactor.html',
                           {'user': user, 'benefactor': benefactor, 'week': week, 'user_abilities': user_abilities,
-                           'organizations': organizations})
+                           'organizations': organizations, 'count': count, 'comments': comments})
         else:
             return render(request, 'profile/benefactorsProfileView.html',
                           {'user': user, 'benefactor': benefactor, 'week': week, 'user_abilities': user_abilities,
-                           'rangee': range(28), 'organizations': organizations})
+                           'rangee': range(28), 'organizations': organizations, 'count': count, 'comments': comments})
     elif user.isOrg:
         organization = Organization.objects.get(user=user)
         projects = Project.objects.filter(user=user)
         requirements = Requirement.objects.filter(user=user)
+        comments = Report.objects.filter(organization=user, type=1, operator=1)
         reqability = []
         bens = Request.objects.filter(organizationId=user, isAccepted=True)
         benefactors = []
@@ -470,30 +488,35 @@ def user_profile(request, username):
         if request.user.username == username:
             return render(request, 'profile/personalProfileOrganization.html',
                           {'user': user, 'org': organization, 'projects': projects, 'requirements': requirements,
-                           'reqability': reqability, 'rangee': range(28), 'benefactors': benefactors})
+                           'reqability': reqability, 'rangee': range(28), 'benefactors': benefactors, 'count': count
+                              , 'comments': comments})
         else:
             return render(request, 'profile/organizationProfileView.html',
                           {'user': user, 'org': organization, 'projects': projects, 'requirements': requirements,
-                           'reqability': reqability, 'rangee': range(28), 'benefactors': benefactors})
+                           'reqability': reqability, 'rangee': range(28), 'benefactors': benefactors, 'count': count
+                              , 'comments': comments})
 
 
 @login_required
 def rate_user(request, username):
-    user = get_object_or_404(CustomUser, username=username)
+    user = get_object_or_404(CustomUser, username=username, state=True)
     if request.method == 'POST':
         form = RateForm(request.POST)
         rate = form.save(commit=False)
         rate.user = request.user
         rate.ratedUser = user
         rate.save()
+        description = request.POST['description']
         if user.isBen:
             totalRate = TotalRate.objects.get(id=user.benefactor.rate.id)
             Report.objects.create(benefactor=user, organization=request.user, type='1', operator='2', rateId=rate,
-                                  date=datetime.datetime.today(), time=datetime.datetime.now(), payment=0)
+                                  date=datetime.datetime.today(), time=datetime.datetime.now(), payment=0,
+                                  description=description)
         else:
             totalRate = TotalRate.objects.get(id=user.organizer.rate.id)
             Report.objects.create(benefactor=request.user, organization=user, type='1', operator='1', rateId=rate,
-                                  date=datetime.datetime.today(), time=datetime.datetime.now(), payment=0)
+                                  date=datetime.datetime.today(), time=datetime.datetime.now(), payment=0,
+                                  description=description)
 
         count = Rate.objects.filter(ratedUser=user).count()
         totalRate.f1 = ((totalRate.f1 * (count - 1)) + ((rate.f1 - 1) / 4 * 100)) / count
@@ -519,7 +542,7 @@ def rate_user(request, username):
 
 @login_required
 def project(request, username, p_id):
-    user = get_object_or_404(CustomUser, username=username)
+    user = get_object_or_404(CustomUser, username=username, state=True)
     organization = Organization.objects.get(user=user)
     proj = get_object_or_404(Project, id=p_id)
     return render(request, 'project.html', {'user': user, 'org': organization, 'project': proj})
@@ -583,7 +606,6 @@ def send_request_organization(request, username, req_id):
             weekForm = WeekForm(request.POST)
             week = weekForm.save()
             week.save()
-            print(week)
             req = Request.objects.create(benefactorId=request.user, organizationId=user, wId=week,
                                          city=requirement.city,
                                          description=desc, reqId=requirement)
@@ -666,7 +688,6 @@ def waiting_requests(request):
         requests = Request.objects.filter(organizationId=request.user, whoSubmit='1', state=False)
     for req in requests:
         requestsAbilities.append(RequestAbilities.objects.filter(reqId=req))
-    print(requestsAbilities)
     return render(request, 'profile/waitingRequests.html', {'requestsAbilities': requestsAbilities})
 
 
@@ -676,12 +697,11 @@ def report_cash(request):
     return render(request, 'main/reportCash.html', {'projects': projects})
 
 
-@admin_only
 def report_project(request, p_id):
     get_project = get_object_or_404(Project, id=p_id)
     reports = []
     if get_project.user == request.user:
-        reports.append(Report.objects.filter(description=get_project.id, organization=get_project.user, type=3))
+        reports = Report.objects.filter(description=get_project.id, organization=get_project.user, type=3)
     return render(request, 'admin/reportProject.html', {'project': get_project, 'reports': reports})
 
 
@@ -757,12 +777,9 @@ def sent_requests(request):
     else:
         requests = Request.objects.filter(organizationId=request.user, whoSubmit='2')
     for req in requests:
-        print(req)
         r = RequestAbilities.objects.filter(reqId=req)
         if len(r) > 0:
             requestsAbilities.append(r)
-    print(requestsAbilities)
-    print(requests)
     return render(request, 'profile/sentRequests.html', {'requestAbilities': requestsAbilities})
 
 
@@ -779,7 +796,6 @@ def remove_report(request, r_id):
             count = Rate.objects.filter(ratedUser=report.benefactor).count()
 
         totalRate.f1 = ((totalRate.f1 * count) - ((rate.f1 - 1) / 4 * 100)) / (count - 1)
-        print(totalRate.f1)
         totalRate.f2 = ((totalRate.f2 * count) - ((rate.f2 - 1) / 4 * 100)) / (count - 1)
         totalRate.f3 = ((totalRate.f3 * count) - ((rate.f3 - 1) / 4 * 100)) / (count - 1)
         totalRate.f4 = ((totalRate.f4 * count) - ((rate.f4 - 1) / 4 * 100)) / (count - 1)
@@ -793,7 +809,7 @@ def remove_report(request, r_id):
         req.delete()
 
     report.delete()
-    return HttpResponseRedirect('/reports')
+    return HttpResponseRedirect('/admin/reports')
 
 
 @login_required
@@ -803,12 +819,15 @@ def accept_request(request):
         req = Request.objects.get(id=split[0])
         if split[1] == '1':
             req.isAccepted = True
+            if req.whoSubmit == '1':
+                req.reqId.NOPs = req.reqId.NOPs + 1
+                req.reqId.save()
             send_mail('تایید پیشنهاد', 'پیشنهاد شما تایید شده است!', 'sender@mehraneh.com', [request.user.email])
         else:
             req.isAccepted = False
         req.state = True
         req.save()
-    return HttpResponseRedirect('/waiting_requests')
+    return HttpResponseRedirect('/requests/pending')
 
 
 @login_required
@@ -855,10 +874,55 @@ def delete_project(request):
 
 
 @admin_only
-def delete_request(request):
+def delete_request(request, id):
     if request.method == 'POST':
-        req = Request.objects.get(id=request.POST['deletedReq'])
-        Report.objects.filter(reqId=req.id).delete()
-        RequestAbilities.objects.filter(reqId=req.id).delete()
-        req.delete()
-    return HttpResponseRedirect('/sent_requests')
+        print(id)
+        # req = Request.objects.get(id=id)
+        # print(req)
+        # Report.objects.filter(reqId=req.id).delete()
+        # RequestAbilities.objects.filter(reqId=req.id).delete()
+        # req.delete()
+    print(id)
+    return HttpResponseRedirect('/requests/sent')
+
+
+def donate(request):
+    if request.method == 'POST':
+        p_id = request.POST['projectId']
+        value = request.POST['value']
+        project_donate = Project.objects.get(id=p_id)
+        if project_donate is None:
+            return render(request, 'main/404.html', status=404)
+        else:
+            project_donate.alreadyPaid += int(value)
+            project_donate.save()
+            r = Report.objects.create(benefactor=request.user, organization=project_donate.user, type=3, description=project_donate.id,
+                                      operator=1,
+                                      date=datetime.datetime.today(), time=datetime.datetime.now(), payment=value)
+            r.save()
+        return render(request, 'registration/thanksDonateProject.html', {'org': project_donate.user.organizer})
+
+
+@login_required
+def change_project(request, pId):
+    if request.method == 'POST':
+        project_change = Project.objects.get(id=pId)
+        project_change.budget = request.POST['budget']
+        project_change.description = request.POST['description']
+        project_change.save()
+    return render(request, 'registration/thanksSubmitProject.html')
+
+
+@login_required
+def change_requirement(request, req_id):
+    if request.method == 'POST':
+        week_form = WeekForm(request.POST)
+        if week_form.is_valid():
+            week = week_form.save()
+            week.save()
+            requirement = Requirement.objects.get(id=req_id)
+            requirement.address = request.POST['address']
+            requirement.description = request.POST['description']
+            requirement.wId = week
+            requirement.save()
+    return render(request, 'registration/thanksSubmitRequirement.html')

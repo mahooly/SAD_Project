@@ -29,7 +29,7 @@
             {% if request.user.is_authenticated %}
                 <div class="container">
                     <div class="topPhoto">
-                        <img src="{{ request.user.image }}">
+                        <img src="../{{ request.user.image }}">
                     </div>
                     <div class="topmenuelements">
                         {% if request.user.isOrg %}
@@ -84,7 +84,7 @@
                     <div class="enter">
                         <button>ورود</button>
                     </div>
-                    <button class="forget">فراموشی رمز عبور</button>
+                    <a href={% url 'password_reset' %} class="forget">فراموشی رمز عبور</a>
 
                     <p> اگر هنوز حساب کاربری برای خود ایجاد نکرده‌اید، </p>
                     <button class="reg" id="buttonreg" onclick="popupregister()">ثبت نام</button>
@@ -114,7 +114,7 @@
                         <select name="field">
                             <option value="blank">زمینه فعالیت</option>
                             {% for cat in categories %}
-                                <option value="{{ cat.name }}">{{ cat.name }}</option>
+                                <option value="{{ cat.id }}">{{ cat.name }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -135,7 +135,7 @@
                             {% csrf_token %}
                             <div class="controlsname">
                                 <input id="orgName" type="text" placeholder="نام موسسه" onchange="show()" name="org">
-                                <img src="../static/images/search.png" onclick="show()">
+                                <img src="../../static/images/search.png" onclick="show()">
                             </div>
                             <h4> مرتب‌سازی بر اساس </h4>
                             <select id="sortType" name="sortType">
@@ -156,11 +156,13 @@
                             <h3>مجری پروژه: {{ project.user.organizer.name }}</h3>
 
                         </div>
-                        <div class="cost">
-                            <input id="value{{ project.id }}" placeholder="مبلغ مورد نظر" type="number">
-                            <a style="text-decoration: none;background-color: rgb(61,177,58);display:inline-block; color: rgb(238,238,238); border-radius: 5px;"
-                               href="#">پرداخت</a>
-                        </div>
+                        <form method="post" action="{% url 'donate' %}" class="cost">
+                            {% csrf_token %}
+                            <input id="value{{ project.id }}" placeholder="مبلغ مورد نظر" type="number" name="value">
+                            <input type="text" name="projectId" value="{{ project.id }}" style="display: none">
+                            <button style="text-decoration: none;background-color: rgb(61,177,58);display:inline-block; color: rgb(238,238,238); border-radius: 5px;"
+                               onclick="this.form.submit()">پرداخت</button>
+                        </form>
                         <div class="cost">
                             <h3>مبلغ مورد نیاز</h3>
                             <span class="budget">{{ project.budget }} تومان</span>

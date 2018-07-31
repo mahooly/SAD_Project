@@ -44,7 +44,7 @@ if (mm === "2") {
 
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "register/project");
+	a1.setAttribute('href', "/register/project");
 	a1.innerText = "ثبت پروژه جدید";
 	li1.appendChild(a1);
 	ul1.appendChild(li1);
@@ -70,13 +70,13 @@ if (mm === "2") {
 	ol1.appendChild(li1);
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "/profile/requests/sent");
+	a1.setAttribute('href', "/requests/sent");
 	a1.innerText = "پیشنهادهای ارسال‌ شده";
 	li1.appendChild(a1);
 	ol1.appendChild(li1);
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "/profile/requests/pending");
+	a1.setAttribute('href', "/requests/pending");
 	a1.innerText = "پیشنهادهای دریافت شده";
 	li1.appendChild(a1);
 	ol1.appendChild(li1);
@@ -136,13 +136,13 @@ else if (mm === "3") {
 	li2.appendChild(a1);
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "/profile/requests/sent");
+	a1.setAttribute('href', "/requests/sent");
 	a1.innerText = "پیشنهادهای ارسال‌ شده";
 	li1.appendChild(a1);
 	ol1.appendChild(li1);
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "/profile/requests/pending");
+	a1.setAttribute('href', "/requests/pending");
 	a1.innerText = "پیشنهادهای دریافت شده";
 	li1.appendChild(a1);
 	ol1.appendChild(li1);
@@ -209,13 +209,13 @@ else if (mm === "4") {
 	ol1.setAttribute('class', "innermenu");
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "/register/benefactor");
+	a1.setAttribute('href', "/register/benefactor_admin");
 	a1.innerText = "نیکوکار";
 	li1.appendChild(a1);
 	ol1.appendChild(li1);
 	var li1 = document.createElement('li');
 	var a1 = document.createElement('a');
-	a1.setAttribute('href', "/register/organization");
+	a1.setAttribute('href', "/register/organization_admin");
 	a1.innerText = "موسسه";
 	li1.appendChild(a1);
 	ol1.appendChild(li1);
@@ -256,4 +256,13 @@ else if (mm === "4") {
 	ol1.appendChild(li1);
 	li2.appendChild(ol1);
 	ul1.appendChild(li2);
+}
+else {
+	var li1 = document.createElement('li');
+	var a1 = document.createElement('a');
+	a1.setAttribute('href', "/");
+	a1.innerText = "صفحه اصلی";
+	li1.appendChild(a1);
+	ul1.appendChild(li1);
+	div1.appendChild(ul1);
 }

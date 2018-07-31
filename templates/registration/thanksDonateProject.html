@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <title>مهرانه</title>
-	<link rel="stylesheet" type="text/css" href={% static "css/style.css" %}>
+    <link rel="stylesheet" type="text/css" href={% static "css/style.css" %}>
 </head>
 <body>
-    <div class="main">
-		{% if not request.user.is_authenticated %}
+<div class="main">
+    {% if not request.user.is_authenticated %}
         <div id="checkspann" class="1"></div>
     {% endif %}
     {% if request.user.is_authenticated %}
@@ -102,23 +102,25 @@
             </div>
         </div>
         <div class="nav" id="nav"></div>
-            <div style="z-index: 2;">
-            <h4 style="width: 80%; margin: auto; text-align: center; margin-top: 200px; color: #222222;">در صورتی که مشخصات ورودی شما در پایگاه داده پیدا شود، یک نامهٔ الکترونیکی شامل دستورالعمل‌هایی در مورد نحوه دسترسی دوباره به آدرس پست الکترونیک شما ارسال خواهد شد.</h4>
-            <a style="display: block; width: 80%; margin: auto; text-align: center; margin-top: 20px; text-decoration: none; color: #222222;" href={% url 'index' %}>بازگشت به صفحه اصلی</a>
+        <div style="z-index: 2;">
+            <h4 style="width: 80%; margin: auto; text-align: center; margin-top: 200px; color: #222222;">کمک مالی شما با موفقیت در سامانه ثبت شد.</h4>
+            <a style="display: block; width: 80%; margin: auto; text-align: center; margin-top: 20px; text-decoration: none; color: #222222;"
+               href={% url 'profile' org.user.username %}>انتقال به حساب کاربری {{ org.name }}</a>
+            <a style="display: block; width: 80%; margin: auto; text-align: center; margin-top: 20px; text-decoration: none; color: #222222;" href={% url 'index' %}>صفحه اصلی</a>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="container">
+            <div class="addr">
+                <h4> خیابان آزادی، بلوار اکبری، خیابان قاسمی، پلاک ۳۶، واحد ۲ </h4>
+                <h4>تلفن: ۰۲۱۸۸۳۴۲۸۹۱</h4>
             </div>
         </div>
-		<div class="footer">
-			<div class="container">
-				<div class="addr">
-					<h4> خیابان آزادی، بلوار اکبری، خیابان قاسمی، پلاک ۳۶، واحد ۲ </h4>
-					<h4>تلفن: ۰۲۱۸۸۳۴۲۸۹۱</h4>
-				</div>
-			</div>
-			<div class="copy">
-				<h4>کپی‌رایت رعایت شود.</h4>
-			</div>
-		</div>
-	</div>
-    <script type="text/javascript" src={% static "js/main.js" %}></script>
+        <div class="copy">
+            <h4>کپی‌رایت رعایت شود.</h4>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src={% static "js/main.js" %}></script>
 </body>
 </html>

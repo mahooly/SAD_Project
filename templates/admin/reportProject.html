@@ -29,7 +29,7 @@
             {% if request.user.is_authenticated %}
                 <div class="container">
                     <div class="topPhoto">
-                        <img src="{{ request.user.image }}">
+                        <img src="../{{ request.user.image }}">
                     </div>
                     <div class="topmenuelements">
                         {% if request.user.isOrg %}
@@ -43,7 +43,7 @@
                         <a href="{% url 'logout' %}">خروج</a>
                     </div>
                     <div class="logo">
-                        <img src="../../static/images/logo.png">
+                        <img src="../static/images/logo.png">
                     </div>
                 </div>
             {% endif %}
@@ -59,7 +59,7 @@
                         <button onclick="popupregister()">ثبت نام</button>
                     </div>
                     <div class="logo">
-                        <img src="../../static/images/logo.png">
+                        <img src="../static/images/logo.png">
                     </div>
                 </div>
             {% endif %}
@@ -84,7 +84,7 @@
                     <div class="enter">
                         <button>ورود</button>
                     </div>
-                    <button class="forget">فراموشی رمز عبور</button>
+                    <a href={% url 'password_reset' %} class="forget">فراموشی رمز عبور</a>
 
                     <p> اگر هنوز حساب کاربری برای خود ایجاد نکرده‌اید، </p>
                     <button class="reg" id="buttonreg" onclick="popupregister()">ثبت نام</button>
@@ -112,12 +112,15 @@
             <h3>نام پروژه: {{ project.name }}</h3>
             <h3>مجموع پول پرداخت شده: {{ project.alreadyPaid }}</h3>
             <h3>میزان بودجه مورد نیاز: {{ project.budget }}</h3>
-            <div id="result">
+            <div id="result" style="width: 60%; margin: auto">
+                {% if reports|length == 0 %}
+                    <h4 style="text-align: center">موردی یافت نشد</h4>
+                {% endif %}
                 {% for report in reports %}
                     <div class="report">
-                        <div class="benefactor"><span class="benefactor">{{ report.benefactor.benefactor.nickname }}</span></div>
-                        <div class="project">
-                            <h3>مبلغ: {{ report.payement }}</h3>
+                        <div class="benefactor" style="float: right; display: inline-block;"><a href="/profile/{{ report.benefactor.username }}" style="text-decoration: none; color: #333333" class="benefactor">{{ report.benefactor.benefactor.nickname }}</a></div>
+                        <div class="project" style="float: left; display: inline-block;">
+                            <h3>مبلغ: {{ report.payment }}</h3>
                         </div>
                     </div>
                 {% endfor %}

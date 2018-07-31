@@ -27,7 +27,7 @@
             {% if request.user.is_authenticated %}
                 <div class="container">
                     <div class="topPhoto">
-                        <img src="{{ request.user.image }}">
+                        <img src="../{{ request.user.image }}">
                     </div>
                     <div class="topmenuelements">
                         {% if request.user.isOrg %}
@@ -131,6 +131,7 @@
                 <div id="p22" class="enter"><a href="{% url 'registerOrg' %}">ثبت نام موسسات</a></div>
             </div>
             <div class="section3" id="c3">
+                {% if orgs|length > 0 %}
                 <div class="organization">
                     <h3><a style="text-decoration: none; color: #eeeeee;"
                            href={% url 'profile' orgs.0.user.username %}> {{ orgs.0.name }}</a></h3>
@@ -177,6 +178,8 @@
                         </ul>
                     </div>
                 </div>
+                {% endif %}
+                {% if orgs|length > 1 %}
                 <div class="organization">
                     <h3><a style="text-decoration: none; color: #eeeeee;"
                            href={% url 'profile' orgs.1.user.username %}> {{ orgs.1.name }}</a></h3>
@@ -223,6 +226,8 @@
                         </ul>
                     </div>
                 </div>
+                {% endif %}
+                {% if orgs|length > 2 %}
                 <div class="organization">
                     <h3><a style="text-decoration: none; color: #eeeeee;"
                            href={% url 'profile' orgs.2.user.username %}> {{ orgs.2.name }}</a></h3>
@@ -269,6 +274,8 @@
                         </ul>
                     </div>
                 </div>
+                {% endif %}
+                {% if orgs|length > 3 %}
                 <div class="organization">
                     <h3><a style="text-decoration: none; color: #eeeeee;"
                            href={% url 'profile' orgs.3.user.username %}> {{ orgs.3.name }}</a></h3>
@@ -317,6 +324,7 @@
                 </div>
 
             </div>
+            {% endif %}
             <div class="section4" id="c4">
                 <div id="p4">
 
@@ -328,6 +336,7 @@
                 <div id="p42" class="enter"><a href="{% url 'register' %}">ثبت نام نیکوکاران</a></div>
             </div>
             <div class="section5" id="c5">
+                {% if bens|length > 0 %}
                 <div class="organization">
                     <h3><a style="text-decoration: none; color: #eeeeee;"
                            href={% url 'profile' bens.0.user.username %}> {{ bens.0.nickname }} </a></h3>
@@ -366,6 +375,8 @@
                         </ul>
                     </div>
                 </div>
+                {% endif %}
+                {% if bens|length > 1 %}
                 <div class="organization">
                     <h3><a style="text-decoration: none; color: #eeeeee;"
                            href={% url 'profile' bens.1.user.username %}> {{ bens.1.nickname }}</a></h3>
@@ -404,6 +415,8 @@
                         </ul>
                     </div>
                 </div>
+                {% endif %}
+                {% if bens|length > 2 %}
                 <div class="organization">
                     <h3><a style="text-decoration: none; color: #eeeeee;"
                            href={% url 'profile' bens.2.user.username %}> {{ bens.2.nickname }}</a></h3>
@@ -442,6 +455,8 @@
                         </ul>
                     </div>
                 </div>
+                {% endif %}
+                {% if bens|length > 3 %}
                 <div class="organization">
                     <h3><a style="text-decoration: none; color: #eeeeee;"
                            href={% url 'profile' bens.3.user.username %}> {{ bens.3.nickname }}</a></h3>
@@ -480,6 +495,7 @@
                         </ul>
                     </div>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>

@@ -1,5 +1,5 @@
 var fields = {
-  "data": ["پیشنهاد همکاری", "امتیازدهی", "کمک مالی", "ویرایش حساب کاربری"]
+  "data": ["امتیازدهی", "پیشنهاد همکاری", "کمک مالی", "ویرایش حساب کاربری"]
 };
 var sel = document.getElementById("field");
 var opt = document.createElement('option');
@@ -8,7 +8,7 @@ opt.innerText = "زمینه فعالیت";
 sel.appendChild(opt);
 for (var i = 0; i < fields.data.length; i++) {
   opt = document.createElement('option');
-  opt.setAttribute('value',i);
+  opt.setAttribute('value',i+1);
   opt.innerText = fields.data[i];
   sel.appendChild(opt);
 }
