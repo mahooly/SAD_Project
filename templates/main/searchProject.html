@@ -43,7 +43,7 @@
                         <a href="{% url 'logout' %}">خروج</a>
                     </div>
                     <div class="logo">
-                        <img src="../static/images/logo.png">
+                        <img src="../../static/images/logo.png">
                     </div>
                 </div>
             {% endif %}
@@ -59,7 +59,7 @@
                         <button onclick="popupregister()">ثبت نام</button>
                     </div>
                     <div class="logo">
-                        <img src="../static/images/logo.png">
+                        <img src="../../static/images/logo.png">
                     </div>
                 </div>
             {% endif %}
@@ -158,7 +158,7 @@
                         </div>
                         <form method="post" action="{% url 'donate' %}" class="cost">
                             {% csrf_token %}
-                            <input id="value{{ project.id }}" placeholder="مبلغ مورد نظر" type="number" name="value">
+                            <input id="value{{ project.id }}" placeholder="مبلغ مورد نظر" type="text" name="value">
                             <input type="text" name="projectId" value="{{ project.id }}" style="display: none">
                             <button style="text-decoration: none;background-color: rgb(61,177,58);display:inline-block; color: rgb(238,238,238); border-radius: 5px;"
                                onclick="this.form.submit()">پرداخت</button>

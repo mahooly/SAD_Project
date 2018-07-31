@@ -126,3 +126,11 @@ class RequirementForm(forms.ModelForm):
     class Meta:
         model = Requirement
         exclude = ('id', 'user', 'wId', 'NOPs',)
+
+
+class AdminCreationForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput)
+    password2 = forms.CharField(widget=forms.PasswordInput)
+    class Meta:
+        model = CustomUser
+        fields = ('username', 'password', 'email', 'password2', 'image', 'first_name', 'last_name')
